@@ -1,0 +1,1720 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FLOW Design System — Generated Token Variables
+   Source of truth: /src/app/tokens.ts
+   Architecture: ref → sys → comp
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── REF: Raw scales (absolute values) ────────────── */
+:root {
+  /* ref.energy.neutral — Figma Edenred Slate palette */
+  --ref-energy-neutral-0: #ffffff;
+  --ref-energy-neutral-cold-white: #f1f7ff;
+  --ref-energy-neutral-50: #f8fafc;
+  --ref-energy-neutral-100: #f1f5f9;
+  --ref-energy-neutral-150: #e9eef5;
+  --ref-energy-neutral-200: #e2e8f0;
+  --ref-energy-neutral-300: #cbd5e1;
+  --ref-energy-neutral-400: #94a3b8;
+  --ref-energy-neutral-450: #7b8da0;
+  --ref-energy-neutral-500: #64748b;
+  --ref-energy-neutral-550: #56657a;
+  --ref-energy-neutral-600: #475569;
+  --ref-energy-neutral-700: #334155;
+  --ref-energy-neutral-800: #1e293b;
+  --ref-energy-neutral-900: #0f172a;
+  --ref-energy-neutral-950: #080e1b;
+
+  /* ref.energy.blue — Figma Edenred */
+  --ref-energy-blue-50: #e0eeff;
+  --ref-energy-blue-100: #c7dfff;
+  --ref-energy-blue-200: #8abcff;
+  --ref-energy-blue-300: #529cff;
+  --ref-energy-blue-400: #1a7cff;
+  --ref-energy-blue-500: #0060df;
+  --ref-energy-blue-600: #004db3;
+  --ref-energy-blue-700: #003985;
+  --ref-energy-blue-800: #002557;
+  --ref-energy-blue-900: #00142e;
+  /* RGB decompositions for compositing (e.g. selected-overlay) */
+  --ref-energy-blue-500-rgb: 0, 96, 223;
+  --ref-energy-blue-200-rgb: 138, 188, 255;
+
+  /* ref.energy.red — Figma Edenred (10 steps) */
+  --ref-energy-red-50: #ffe3e0;
+  --ref-energy-red-subtle-tint: #ffeeed;
+  --ref-energy-red-100: #ffc6c2;
+  --ref-energy-red-200: #ff8d85;
+  --ref-energy-red-300: #ff5447;
+  --ref-energy-red-400: #ff1b0a;
+  --ref-energy-red-500: #ca0e00;
+  --ref-energy-red-600: #a30b00;
+  --ref-energy-red-700: #7a0800;
+  --ref-energy-red-800: #520600;
+  --ref-energy-red-900: #290300;
+  --ref-energy-brand-accent: #F72717; /* Flow logo accent dot */
+
+  /* ref.energy.green — Figma Edenred (10 steps) */
+  --ref-energy-green-50: #e1f4eb;
+  --ref-energy-green-100: #c3efda;
+  --ref-energy-green-200: #79e6b4;
+  --ref-energy-green-300: #2ee590;
+  --ref-energy-green-400: #0dba69;
+  --ref-energy-green-500: #007840;
+  --ref-energy-green-600: #065b33;
+  --ref-energy-green-700: #084026;
+  --ref-energy-green-800: #072718;
+  --ref-energy-green-900: #05140d;
+
+  /* ref.energy.orange — Figma Edenred (renamed from amber, 10 steps) */
+  --ref-energy-orange-50: #fdeae3;
+  --ref-energy-orange-100: #fbd5c6;
+  --ref-energy-orange-200: #f6ab8e;
+  --ref-energy-orange-300: #f28155;
+  --ref-energy-orange-400: #ed571c;
+  --ref-energy-orange-500: #bf410f;
+  --ref-energy-orange-600: #97330c;
+  --ref-energy-orange-700: #712709;
+  --ref-energy-orange-800: #4c1a06;
+  --ref-energy-orange-900: #260d03;
+
+  /* ref.energy.purple */
+  --ref-energy-purple-50: #f3eefb;
+  --ref-energy-purple-100: #ddd2f3;
+  --ref-energy-purple-200: #c4b5e8;
+  --ref-energy-purple-300: #a88fdb;
+  --ref-energy-purple-400: #8d6dd1;
+  --ref-energy-purple-500: #6b4dc7;
+  --ref-energy-purple-600: #5a43a8;
+  --ref-energy-purple-700: #503a99;
+  --ref-energy-purple-800: #3a2b6e;
+  --ref-energy-purple-900: #241a42;
+
+  /* ref.energy.teal */
+  --ref-energy-teal-50: #e8f7f7;
+  --ref-energy-teal-100: #c0ebeb;
+  --ref-energy-teal-200: #8bd9d9;
+  --ref-energy-teal-300: #52c4c4;
+  --ref-energy-teal-400: #1aafaf;
+  --ref-energy-teal-500: #0a7a7a;
+  --ref-energy-teal-600: #096b6b;
+  --ref-energy-teal-700: #075c5c;
+  --ref-energy-teal-800: #053e3e;
+  --ref-energy-teal-900: #032121;
+
+  /* ref.energy.olive */
+  --ref-energy-olive-50: #f5f3ec;
+  --ref-energy-olive-100: #e5dfc0;
+  --ref-energy-olive-500: #8a5a2a;
+  --ref-energy-olive-700: #68431f;
+
+  /* ref.energy.yellow */
+  --ref-energy-yellow-50: #fffbeb;
+  --ref-energy-yellow-100: #fef3c7;
+  --ref-energy-yellow-200: #fde68a;
+  --ref-energy-yellow-300: #fcd34d;
+  --ref-energy-yellow-400: #fbbf24;
+  --ref-energy-yellow-500: #f59e0b;
+  --ref-energy-yellow-600: #d97706;
+  --ref-energy-yellow-700: #b45309;
+  --ref-energy-yellow-800: #92400e;
+  --ref-energy-yellow-900: #78350f;
+
+  /* ref.energy.pink */
+  --ref-energy-pink-50: #fdf2f8;
+  --ref-energy-pink-100: #fce7f3;
+  --ref-energy-pink-200: #fbcfe8;
+  --ref-energy-pink-300: #f9a8d4;
+  --ref-energy-pink-400: #f472b6;
+  --ref-energy-pink-500: #ec4899;
+  --ref-energy-pink-600: #db2777;
+  --ref-energy-pink-700: #be185d;
+  --ref-energy-pink-800: #9d174d;
+  --ref-energy-pink-900: #831843;
+
+  /* ref.energy.transparent — formal ref token */
+  --ref-energy-transparent: transparent;
+
+  /* ref.frame.space */
+  --ref-frame-space-0: 0px;
+  --ref-frame-space-1: 4px;
+  --ref-frame-space-2: 8px;
+  --ref-frame-space-3: 12px;
+  --ref-frame-space-4: 16px;
+  --ref-frame-space-5: 20px;
+  --ref-frame-space-6: 24px;
+  --ref-frame-space-7: 28px;
+  --ref-frame-space-8: 32px;
+  --ref-frame-space-9: 36px;
+  --ref-frame-space-10: 40px;
+  --ref-frame-space-11: 44px;
+  --ref-frame-space-12: 48px;
+  --ref-frame-space-13: 52px;
+  --ref-frame-space-14: 56px;
+  --ref-frame-space-15: 60px;
+  --ref-frame-space-16: 64px;
+  --ref-frame-space-20: 80px;
+  --ref-frame-space-24: 96px;
+  --ref-frame-space-32: 128px;
+  --ref-frame-space-40: 160px;
+  --ref-frame-space-micro: 2px;
+
+  /* ref.frame.radius */
+  --ref-frame-radius-0: 0px;
+  --ref-frame-radius-1: 4px;
+  --ref-frame-radius-2: 8px;
+  --ref-frame-radius-3: 12px;
+  --ref-frame-radius-4: 16px;
+  --ref-frame-radius-5: 20px;
+  --ref-frame-radius-6: 24px;
+  --ref-frame-radius-7: 28px;
+  --ref-frame-radius-8: 32px;
+  --ref-frame-radius-9: 36px;
+  --ref-frame-radius-10: 40px;
+  --ref-frame-radius-11: 44px;
+  --ref-frame-radius-12: 48px;
+  --ref-frame-radius-full: 9999px;
+
+  /* ref.frame.height — control sizing (density-switchable) */
+  --ref-frame-height-control-sm: 48px;
+  --ref-frame-height-control-md: 60px;
+  --ref-frame-height-control-lg: 72px;
+  --ref-frame-height-control-xl: 88px;
+  /* ref.frame.height — density variants */
+  --ref-frame-height-control-sm-compact: 44px; /* 40→44: WCAG touch-target floor */
+  --ref-frame-height-control-md-compact: 50px;
+  --ref-frame-height-control-lg-compact: 60px;
+  --ref-frame-height-control-sm-comfortable: 58px; /* 48 × 1.2 → 58 */
+  --ref-frame-height-control-md-comfortable: 72px; /* 60 × 1.2 → 72 (exact) */
+  --ref-frame-height-control-lg-comfortable: 86px; /* 72 × 1.2 → 86 */
+  --ref-frame-height-control-xl-compact: 74px; /* 88 / 1.2 → 74 */
+  --ref-frame-height-control-xl-comfortable: 106px; /* 88 × 1.2 → 106 */
+  /* ref.frame.height — input-specific (floating-label dual-text layout)
+     Formula: control_height + caption_zone (accounts for label + gap above field).
+     Linear progression: +16px steps (56 → 72 → 88 → 104). */
+  --ref-frame-height-input-sm: 56px; /* 48 + 8  — caption(10) zone */
+  --ref-frame-height-input-md: 72px; /* 60 + 12 — caption(12) zone */
+  --ref-frame-height-input-lg: 88px; /* 72 + 16 — caption(14) zone */
+  --ref-frame-height-input-xl: 104px; /* 88 + 16 — caption(18) zone */
+  /* ref.frame.height — input density variants */
+  --ref-frame-height-input-sm-compact: 48px; /* 56 ÷ 1.2 → 46.7 → 48 snap */
+  --ref-frame-height-input-md-compact: 60px; /* 72 ÷ 1.2 → 60 (exact) */
+  --ref-frame-height-input-lg-compact: 72px; /* 88 ÷ 1.2 → 73.3 → 72 snap */
+  --ref-frame-height-input-xl-compact: 88px; /* 104 ÷ 1.2 → 86.7 → 88 snap */
+  --ref-frame-height-input-sm-comfortable: 68px; /* 56 × 1.2 → 67.2 → 68 snap */
+  --ref-frame-height-input-md-comfortable: 88px; /* 72 × 1.2 → 86.4 → 88 snap */
+  --ref-frame-height-input-lg-comfortable: 104px; /* 88 �� 1.2 → 105.6 → 104 snap */
+  --ref-frame-height-input-xl-comfortable: 124px; /* 104 × 1.2 → 124.8 → 124 snap */
+
+  /* ref.frame.sidebar — structural widths */
+  --ref-frame-sidebar-expanded: 280px;
+  --ref-frame-sidebar-collapsed: 56px;
+
+  /* ref.frame.content — content width constraints */
+  --ref-frame-content-prose: 680px;
+  --ref-frame-content-prose-wide: 960px;
+  --ref-frame-content-narrow: 640px;
+  --ref-frame-content-max: 1440px;
+  --ref-frame-content-dialog: 480px;
+  --ref-frame-content-form: 400px;
+  --ref-frame-content-compact: 320px;
+  --ref-frame-content-sidebar-demo: 400px;
+
+  /* ref.frame.border — accent indicator widths */
+  --ref-frame-border-thin: 1px;
+  --ref-frame-border-control: 1.5px;
+  --ref-frame-border-medium: 2px;
+  --ref-frame-border-indicator: 3px;
+
+  /* ref.frame.doc — documentation layout column & demo dimensions */
+  --ref-frame-doc-col-num: 28px;
+  --ref-frame-doc-col-value-sm: 50px;
+  --ref-frame-doc-col-bar: 120px;
+  --ref-frame-doc-col-token: 200px;
+  --ref-frame-doc-col-token-lg: 220px;
+  --ref-frame-doc-col-preview: 240px;
+  --ref-frame-doc-demo-radius: 56px;
+  --ref-frame-doc-badge-sm: 36px;
+
+  /* ref.frame.breakpoint — responsive thresholds */
+  --ref-frame-breakpoint-sm: 576px;
+  --ref-frame-breakpoint-md: 992px;
+
+  /* ref.frame.grid — layout grid specification per tier */
+  --ref-frame-grid-lg-columns: 12;
+  --ref-frame-grid-lg-gutter: 24px;
+  --ref-frame-grid-lg-margin: 48px;
+  --ref-frame-grid-lg-max-width: 1440px;
+  --ref-frame-grid-md-columns: 6;
+  --ref-frame-grid-md-gutter: 24px;
+  --ref-frame-grid-md-margin: 24px;
+  --ref-frame-grid-sm-columns: 1;
+  --ref-frame-grid-sm-gutter: 0px;
+  --ref-frame-grid-sm-margin: 16px;
+
+  /* ref.voice.family */
+  --ref-voice-family-brand:
+    "Edenred", "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ref-voice-family-sans: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ref-voice-family-mono: "Ubuntu Mono", "SF Mono", "Fira Code", monospace;
+
+  /* ref.voice.weight */
+  --ref-voice-weight-regular: 400;
+  --ref-voice-weight-medium: 500;
+  --ref-voice-weight-semibold: 600;
+  --ref-voice-weight-bold: 700;
+
+  /* ref.voice.size — 14-step indexed scale, all integers, aligned 1:1 with Figma Edenred */
+  --ref-voice-size-1: 10px;
+  --ref-voice-size-2: 11px;
+  --ref-voice-size-3: 12px;
+  --ref-voice-size-4: 13px;
+  --ref-voice-size-5: 14px;
+  --ref-voice-size-6: 16px;
+  --ref-voice-size-7: 18px;
+  --ref-voice-size-8: 20px;
+  --ref-voice-size-9: 24px;
+  --ref-voice-size-10: 32px;
+  --ref-voice-size-11: 40px;
+  --ref-voice-size-12: 48px;
+  --ref-voice-size-13: 56px;
+  --ref-voice-size-14: 64px;
+  --ref-voice-size-15: 72px;
+
+  /* ref.voice — backward-compatible aliases for p12 components
+     Maps short-name scale (xs/sm/md/lg) to numbered voice-size steps.
+     Canonical refs above remain the source of truth. */
+  --ref-typo-scale-xs: var(--ref-voice-size-3); /* 12px */
+  --ref-typo-scale-sm: var(--ref-voice-size-5); /* 14px */
+  --ref-typo-scale-md: var(--ref-voice-size-6); /* 16px */
+  --ref-typo-scale-lg: var(--ref-voice-size-7); /* 18px */
+  --ref-typo-font-mono: var(--ref-voice-family-mono);
+
+  /* ref.voice.letterSpacing */
+  --ref-voice-letter-spacing-tighter: -0.02em;
+  --ref-voice-letter-spacing-tight: -0.01em;
+  --ref-voice-letter-spacing-snug: -0.005em;
+  --ref-voice-letter-spacing-normal: 0em;
+  --ref-voice-letter-spacing-wide: 0.02em;
+  --ref-voice-letter-spacing-expanded: 0.05em;
+  --ref-voice-letter-spacing-wider: 0.06em;
+  --ref-voice-letter-spacing-widest: 0.08em;
+  --ref-voice-letter-spacing-caps: 0.12em;
+
+  /* ref.voice.lineHeight — unitless ratios aligned with Figma Edenred */
+  --ref-voice-line-height-none: 1;
+  --ref-voice-line-height-tight: 1.2;
+  --ref-voice-line-height-dense: 1.333;
+  --ref-voice-line-height-snug: 1.35;
+  --ref-voice-line-height-display: 1.484;
+  --ref-voice-line-height-normal: 1.5;
+  --ref-voice-line-height-relaxed: 1.556;
+  --ref-voice-line-height-loose: 1.6;
+  --ref-voice-line-height-body: 1.7;
+
+  /* ref.depth.shadow — light scale (navy blue branded: #101A77 = 16,26,119) */
+  /* Figma Edenred alignment: Light→1, Medium→2, High→3, Critical→4 */
+  /* Spread values 4-8px at higher levels for depth richness */
+  --ref-depth-shadow-color-rgb: 16, 26, 119;
+  --ref-depth-shadow-0: none;
+  --ref-depth-shadow-1: 0 1px 3px 0 rgba(16, 26, 119, 0.06), 0 1px 2px 0 rgba(16, 26, 119, 0.04);
+  --ref-depth-shadow-2: 0 4px 12px 4px rgba(16, 26, 119, 0.08), 0 2px 4px 0 rgba(16, 26, 119, 0.04);
+  --ref-depth-shadow-3:
+    0 10px 32px 6px rgba(16, 26, 119, 0.12), 0 4px 12px 0 rgba(16, 26, 119, 0.06);
+  --ref-depth-shadow-4:
+    0 20px 56px 8px rgba(16, 26, 119, 0.16), 0 8px 20px 2px rgba(16, 26, 119, 0.08);
+  /* ref.depth.shadow — dark scale (pure black, opacity boosted for dark surface visibility) */
+  --ref-depth-shadow-dark-1: 0 1px 3px 0 rgba(0, 0, 0, 0.35), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  --ref-depth-shadow-dark-2: 0 4px 12px 4px rgba(0, 0, 0, 0.35), 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  --ref-depth-shadow-dark-3: 0 10px 32px 6px rgba(0, 0, 0, 0.40), 0 4px 12px 0 rgba(0, 0, 0, 0.24);
+  --ref-depth-shadow-dark-4: 0 20px 56px 8px rgba(0, 0, 0, 0.48), 0 8px 20px 2px rgba(0, 0, 0, 0.3);
+
+  /* ref.frame.shadow — shorthand aliases for p12 components */
+  --ref-frame-shadow-md: var(--ref-depth-shadow-2);
+  --ref-frame-shadow-lg: var(--ref-depth-shadow-3);
+
+  /* ref.depth.overlay */
+  --ref-depth-overlay-light: rgba(10, 10, 15, 0.5);
+  --ref-depth-overlay-dark: rgba(0, 0, 0, 0.65);
+
+  /* ref.depth.blur — backdrop blur scale */
+  --ref-depth-blur-sm: 4px;
+  --ref-depth-blur-md: 8px;
+  --ref-depth-blur-lg: 16px;
+
+  /* ref.depth.zIndex — stacking context scale */
+  --ref-depth-z-index-base: 0;
+  --ref-depth-z-index-content: 1;
+  --ref-depth-z-index-dropdown: 100;
+  --ref-depth-z-index-sticky: 200;
+  --ref-depth-z-index-overlay: 1000;
+  --ref-depth-z-index-modal: 1001;
+  --ref-depth-z-index-tooltip: 1050;
+  --ref-depth-z-index-toast: 1100;
+
+  /* ref.momentum */
+  --ref-momentum-duration-instant: 0ms;
+  --ref-momentum-duration-fast: 100ms;
+  --ref-momentum-duration-normal: 200ms;
+  --ref-momentum-duration-slow: 350ms;
+  --ref-momentum-duration-slower: 500ms;
+  --ref-momentum-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ref-momentum-easing-enter: cubic-bezier(0, 0, 0, 1);
+  --ref-momentum-easing-exit: cubic-bezier(0.2, 0, 1, 1);
+  --ref-momentum-easing-linear: cubic-bezier(0, 0, 1, 1);
+  --ref-momentum-stagger-fast: 30ms;
+  --ref-momentum-stagger-normal: 50ms;
+  --ref-momentum-stagger-slow: 80ms;
+  --ref-momentum-duration-cycle: 1400ms;
+  --ref-momentum-duration-skeleton: 1.8s;
+  --ref-momentum-duration-progress: 1.5s;
+  --ref-momentum-duration-spin: 0.8s;
+  --ref-momentum-duration-bounce: 1.2s;
+  --ref-momentum-duration-slide: 250ms;
+
+  /* ref.icon.size */
+  --ref-icon-size-xs: 12px;
+  --ref-icon-size-sm: 16px;
+  --ref-icon-size-md: 20px;
+  --ref-icon-size-lg: 24px;
+  --ref-icon-size-xl: 32px;
+
+  /* ref.state.opacity */
+  --ref-state-opacity-disabled: 0.42;
+  --ref-state-opacity-hover: 0.06;
+  --ref-state-opacity-pressed: 0.12;
+  --ref-state-opacity-selected: 0.1;
+
+  /* ref.state.opacity — decorative/hierarchy */
+  --ref-state-opacity-dimmed: 0.5;
+  --ref-state-opacity-subtle: 0.6;
+  --ref-state-opacity-muted: 0.7;
+  --ref-state-opacity-soft: 0.85;
+  --ref-state-opacity-faint: 0.3;
+
+  /* ref.state.border base (used to compose sys border tokens) */
+  --ref-state-border-light-base: 10, 10, 15;
+  --ref-state-border-dark-base: 255, 255, 255;
+  --ref-state-border-default-alpha: 0.08;
+  --ref-state-border-strong-alpha: 0.15;
+
+  /* ref.state.focusRing */
+  --ref-state-focus-ring-width: 2px;
+  --ref-state-focus-ring-offset: 2px;
+
+  /* ── Container Query Breakpoints ──────────────────────────────────── */
+  --ref-frame-container-sm: 320px;
+  --ref-frame-container-md: 480px;
+  --ref-frame-container-lg: 640px;
+  --ref-frame-container-xl: 960px;
+}
+
+/* ── SYS: Semantic roles (Light) ──────────────────── */
+:root,
+[data-theme="light"] {
+  /* sys.energy.surface */
+  --sys-energy-surface-primary: var(--ref-energy-neutral-0);
+  --sys-energy-surface-secondary: var(--ref-energy-neutral-50);
+  --sys-energy-surface-tertiary: var(--ref-energy-neutral-100);
+  --sys-energy-surface-sunken: var(--ref-energy-neutral-150);
+  --sys-energy-surface-inverse: var(--ref-energy-neutral-900);
+  /* Tinted surfaces — leverage expanded 10-step scales */
+  --sys-energy-surface-cold-white: var(--ref-energy-neutral-cold-white);
+  --sys-energy-surface-accent: var(--ref-energy-blue-50);
+  --sys-energy-surface-accent-subtle: var(--ref-energy-blue-50); /* alias for p12 components */
+  --sys-energy-surface-danger: var(--ref-energy-red-50);
+  --sys-energy-surface-success: var(--ref-energy-green-50);
+  --sys-energy-surface-warning: var(--ref-energy-yellow-50);
+
+  /* sys.energy.text */
+  --sys-energy-text-primary: var(--ref-energy-neutral-800);
+  --sys-energy-text-secondary: var(--ref-energy-neutral-500);
+  --sys-energy-text-tertiary: var(--ref-energy-neutral-450);
+  --sys-energy-text-inverse: var(--ref-energy-neutral-0);
+  --sys-energy-text-on-action: var(--ref-energy-neutral-0);
+  --sys-energy-text-link: var(--ref-energy-blue-600);
+  --sys-energy-text-accent: var(--ref-energy-blue-500);
+  --sys-energy-text-danger: var(--ref-energy-red-500);
+  --sys-energy-text-success: var(--ref-energy-green-500);
+  --sys-energy-text-warning: var(--ref-energy-yellow-700);
+  --sys-energy-text-disabled: var(--ref-energy-neutral-300); /* alias for p12+ components */
+
+  /* sys.energy.border — composed from ref.state.border */
+  --sys-energy-border-default: rgba(
+    var(--ref-state-border-light-base),
+    var(--ref-state-border-default-alpha)
+  );
+  --sys-energy-border-strong: rgba(
+    var(--ref-state-border-light-base),
+    var(--ref-state-border-strong-alpha)
+  );
+  --sys-energy-border-focus: var(--ref-energy-blue-500);
+  --sys-energy-border-accent: var(--ref-energy-blue-200);
+  --sys-energy-border-danger: var(--ref-energy-red-200);
+  --sys-energy-border-success: var(--ref-energy-green-200);
+  --sys-energy-border-warning: var(--ref-energy-yellow-300);
+  --sys-energy-border-subtle: rgba(
+    var(--ref-state-border-light-base),
+    0.08
+  ); /* lighter than default */
+  /* sys.energy.border.control — opaque form-control borders (Figma Edenred input spec) */
+  --sys-energy-border-control: var(--ref-energy-neutral-600);
+  --sys-energy-border-control-error: var(--ref-energy-red-600);
+  --sys-energy-border-control-disabled: var(--ref-energy-neutral-300);
+
+  /* sys.energy.action */
+  --sys-energy-action-primary: var(--ref-energy-blue-500);
+  --sys-energy-action-primary-hover: var(--ref-energy-blue-700);
+  --sys-energy-action-primary-active: var(--ref-energy-blue-600);
+  --sys-energy-action-secondary: var(--ref-energy-neutral-100);
+  --sys-energy-action-secondary-hover: var(--ref-energy-neutral-200);
+  --sys-energy-action-ghost: transparent;
+  --sys-energy-action-ghost-hover: var(--ref-energy-neutral-100);
+  --sys-energy-action-destructive: var(--ref-energy-red-500);
+  --sys-energy-action-destructive-hover: var(--ref-energy-red-700);
+  /* Figma Edenred emphasis model (D1-D8 alignment) */
+  --sys-energy-action-high: var(--ref-energy-neutral-900);
+  --sys-energy-action-high-hover: var(--ref-energy-neutral-700);
+  --sys-energy-action-high-active: var(--ref-energy-neutral-800);
+  --sys-energy-action-medium-border: var(--ref-energy-neutral-900);
+  --sys-energy-action-medium-active: var(--ref-energy-neutral-300);
+  --sys-energy-action-low-active: var(--ref-energy-blue-600);
+  --sys-energy-action-destructive-subtle: var(--ref-energy-red-subtle-tint);
+  --sys-energy-action-destructive-active: var(--ref-energy-red-600);
+
+  /* sys.energy.state — explicit disabled colors (D3: Figma alignment) */
+  --sys-energy-state-hover: rgba(10, 10, 15, 0.06); /* Hover overlay — ref.state.opacity.hover */
+  --sys-energy-state-disabled-bg: var(--ref-energy-neutral-300);
+  --sys-energy-state-disabled-text: var(--ref-energy-neutral-500);
+  --sys-energy-state-disabled-border: var(--ref-energy-neutral-300);
+
+  /* sys.energy.status */
+  --sys-energy-status-success: var(--ref-energy-green-500);
+  --sys-energy-status-success-subtle: var(--ref-energy-green-50);
+  --sys-energy-status-success-muted: var(--ref-energy-green-100);
+  --sys-energy-status-warning: var(--ref-energy-yellow-600);
+  --sys-energy-status-warning-subtle: var(--ref-energy-yellow-50);
+  --sys-energy-status-warning-muted: var(--ref-energy-yellow-100);
+  --sys-energy-status-error: var(--ref-energy-red-500);
+  --sys-energy-status-error-subtle: var(--ref-energy-red-50);
+  --sys-energy-status-error-muted: var(--ref-energy-red-100);
+  --sys-energy-status-info: var(--ref-energy-blue-500);
+  --sys-energy-status-info-subtle: var(--ref-energy-blue-50);
+  --sys-energy-status-info-muted: var(--ref-energy-blue-100);
+
+  /* sys.energy.extended — extended palette mappings for specialized use cases */
+  /* Purple: creative, premium, luxury contexts */
+  --sys-energy-surface-purple: var(--ref-energy-purple-50);
+  --sys-energy-text-purple: var(--ref-energy-purple-500);
+  --sys-energy-border-purple: var(--ref-energy-purple-200);
+  --sys-energy-status-purple: var(--ref-energy-purple-500);
+  --sys-energy-status-purple-subtle: var(--ref-energy-purple-50);
+  --sys-energy-status-purple-muted: var(--ref-energy-purple-100);
+  /* Teal: calm, balanced, neutral-positive contexts */
+  --sys-energy-surface-teal: var(--ref-energy-teal-50);
+  --sys-energy-text-teal: var(--ref-energy-teal-500);
+  --sys-energy-border-teal: var(--ref-energy-teal-200);
+  --sys-energy-status-teal: var(--ref-energy-teal-500);
+  --sys-energy-status-teal-subtle: var(--ref-energy-teal-50);
+  --sys-energy-status-teal-muted: var(--ref-energy-teal-100);
+  /* Yellow: caution, attention, highlights */
+  --sys-energy-surface-yellow: var(--ref-energy-yellow-50);
+  --sys-energy-text-yellow: var(--ref-energy-yellow-600);
+  --sys-energy-border-yellow: var(--ref-energy-yellow-200);
+  --sys-energy-status-yellow: var(--ref-energy-yellow-500);
+  --sys-energy-status-yellow-subtle: var(--ref-energy-yellow-50);
+  --sys-energy-status-yellow-muted: var(--ref-energy-yellow-100);
+  /* Pink: playful, friendly, special occasions */
+  --sys-energy-surface-pink: var(--ref-energy-pink-50);
+  --sys-energy-text-pink: var(--ref-energy-pink-500);
+  --sys-energy-border-pink: var(--ref-energy-pink-200);
+  --sys-energy-status-pink: var(--ref-energy-pink-500);
+  --sys-energy-status-pink-subtle: var(--ref-energy-pink-50);
+  --sys-energy-status-pink-muted: var(--ref-energy-pink-100);
+
+  /* sys.energy.icon — semantic icon color roles (light theme) */
+  --sys-energy-icon-default: var(--ref-energy-neutral-900);
+  --sys-energy-icon-secondary: var(--ref-energy-neutral-500);
+  --sys-energy-icon-tertiary: var(--ref-energy-neutral-450);
+  --sys-energy-icon-action: var(--ref-energy-blue-500);
+  --sys-energy-icon-inverse: var(--ref-energy-neutral-50);
+  --sys-energy-icon-on-action: var(--ref-energy-neutral-0);
+  --sys-energy-icon-disabled: var(--ref-energy-neutral-300);
+  --sys-energy-icon-success: var(--ref-energy-green-500);
+  --sys-energy-icon-warning: var(--ref-energy-yellow-600);
+  --sys-energy-icon-error: var(--ref-energy-red-500);
+  --sys-energy-icon-info: var(--ref-energy-blue-500);
+
+  /* sys.depth — numeric elevation scale (0-4) */
+  --sys-depth-elevation-0: var(--ref-depth-shadow-0);
+  --sys-depth-elevation-1: var(--ref-depth-shadow-1);
+  --sys-depth-elevation-2: var(--ref-depth-shadow-2);
+  --sys-depth-elevation-3: var(--ref-depth-shadow-3);
+  --sys-depth-elevation-4: var(--ref-depth-shadow-4);
+  /* sys.depth.elevation — semantic aliases (Figma Edenred: Light/Medium/High) */
+  --sys-depth-elevation-light: var(--ref-depth-shadow-1);
+  --sys-depth-elevation-medium: var(--ref-depth-shadow-2);
+  --sys-depth-elevation-high: var(--ref-depth-shadow-3);
+  --sys-depth-overlay: var(--ref-depth-overlay-light);
+
+  /* sys.frame — default density */
+  --sys-frame-padding-inset-s: var(--ref-frame-space-2); /* 8px — small inset padding */
+  --sys-frame-padding-control: var(--ref-frame-space-5); /* 20px — default density */
+  --sys-frame-padding-container: var(
+    --ref-frame-space-6
+  ); /* 24px — default density (cards, dialogs, panels) */
+  --sys-frame-padding-surface: var(--ref-frame-space-12); /* 48px — default density */
+  --sys-frame-gap-component: var(--ref-frame-space-5); /* 20px — default density */
+  --sys-frame-gap-component-lg: var(
+    --ref-frame-space-7
+  ); /* 28px — default density (between component and subsection) */
+  --sys-frame-gap-subsection: var(--ref-frame-space-9); /* 36px — default density */
+  --sys-frame-gap-section: var(--ref-frame-space-16); /* 64px — default density */
+  --sys-frame-gap-page: var(--ref-frame-space-20); /* 80px — default density */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-3
+  ); /* 12px — unified for all inline controls */
+  --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px — cards, dialogs, panels */
+  --sys-frame-radius-surface: var(
+    --ref-frame-radius-4
+  ); /* 16px — section/page surfaces (one step above container) */
+  --sys-frame-height-control-sm: var(--ref-frame-height-control-sm);
+  --sys-frame-height-control-md: var(--ref-frame-height-control-md);
+  --sys-frame-height-control-lg: var(--ref-frame-height-control-lg);
+  --sys-frame-height-control-xl: var(--ref-frame-height-control-xl);
+
+  /* sys.frame.button — semantic button spacing roles */
+  --sys-frame-button-padding-x-sm: var(--ref-frame-space-4); /* 16px */
+  --sys-frame-button-padding-x-md: var(--ref-frame-space-5); /* 20px */
+  --sys-frame-button-padding-x-lg: var(--ref-frame-space-6); /* 24px */
+  --sys-frame-button-padding-x-xl: var(--ref-frame-space-7); /* 28px */
+
+  /* sys.frame.border — structural border widths (consumed by comp controls) */
+  --sys-frame-border-thin: var(--ref-frame-border-thin); /* 1px */
+  --sys-frame-border-control: var(--ref-frame-border-control); /* 1.5px */
+  --sys-frame-border-medium: var(--ref-frame-border-medium); /* 2px */
+  --sys-frame-border-indicator: var(--ref-frame-border-indicator); /* 3px */
+
+  /* sys.frame.radius — additional shape tokens */
+  --sys-frame-radius-sm: var(--ref-frame-radius-1); /* 4px — checkbox corners */
+  --sys-frame-radius-full: var(--ref-frame-radius-full); /* 9999px — pills (chip, tag, switch) */
+
+  /* sys.frame.content — content width constraints (breakpoint-responsive) */
+  --sys-frame-content-dialog: var(--ref-frame-content-dialog); /* 480px */
+  --sys-frame-content-narrow: 100%; /* mobile: fluid */
+  --sys-frame-content-prose: 100%; /* mobile: fluid */
+  --sys-frame-content-prose-wide: 100%; /* mobile: fluid */
+
+  /* sys.frame.width — control width defaults (consumed by comp tokens) */
+  --sys-frame-width-control: 100%; /* form controls fill parent by default */
+  --sys-frame-max-width-control: none; /* no constraint — layout responsibility */
+  --sys-frame-min-width-control: 0; /* flex-safe: allows shrinking in flex contexts */
+
+  /* sys.frame.sidebar — structural widths */
+  --sys-frame-sidebar-expanded: var(--ref-frame-sidebar-expanded); /* 280px */
+  --sys-frame-sidebar-collapsed: var(--ref-frame-sidebar-collapsed); /* 56px */
+
+  /* sys.frame.space — micro spacing (sub-grid, not scale-based) */
+  --sys-frame-space-micro: var(--ref-frame-space-micro); /* 2px */
+
+  /* sys.icon.size — per-tier icon dimensions (consumed by comp.iconButton) */
+  --sys-icon-size-xs: var(--ref-icon-size-xs); /* 12px */
+  --sys-icon-size-sm: var(--ref-icon-size-sm); /* 16px */
+  --sys-icon-size-md: var(--ref-icon-size-md); /* 20px */
+  --sys-icon-size-lg: var(--ref-icon-size-lg); /* 24px */
+  --sys-icon-size-xl: var(--ref-icon-size-xl); /* 32px */
+
+  /* sys.tone — brand voice/personality variants for text-heavy components
+     Theme-dependent (light/dark remapped). Components with tone prop apply these
+     to enforce brand hierarchy. Neutral=default, brand=product, marketing=conversion, system=feedback */
+  --sys-tone-neutral-text: var(--ref-energy-neutral-800);
+  --sys-tone-neutral-text-subtle: var(--ref-energy-neutral-500);
+  --sys-tone-neutral-weight: var(--ref-voice-weight-regular);
+  --sys-tone-brand-text: var(--ref-energy-blue-700);
+  --sys-tone-brand-text-subtle: var(--ref-energy-blue-500);
+  --sys-tone-brand-weight: var(--ref-voice-weight-medium);
+  --sys-tone-marketing-text: var(--ref-energy-orange-700);
+  --sys-tone-marketing-text-subtle: var(--ref-energy-orange-500);
+  --sys-tone-marketing-weight: var(--ref-voice-weight-medium);
+  --sys-tone-system-text: var(--ref-energy-neutral-600);
+  --sys-tone-system-text-subtle: var(--ref-energy-neutral-400);
+  --sys-tone-system-weight: var(--ref-voice-weight-regular);
+
+  /* sys.energy.control — shared indicator state colors (Radio, Checkbox, Switch)
+     Theme-dependent (light/dark remapped), consumed by comp.radio/checkbox/switch */
+  --sys-energy-control-border-inactive: var(--ref-energy-neutral-500); /* unselected border */
+  --sys-energy-control-border-inactive-pressed: var(
+    --ref-energy-neutral-600
+  ); /* pressed unselected */
+  --sys-energy-control-border-disabled: var(--ref-energy-neutral-300); /* disabled border */
+  --sys-energy-control-fill-pressed: var(--ref-energy-blue-600); /* selected pressed fill */
+  --sys-energy-control-fill-disabled: var(--ref-energy-neutral-300); /* disabled selected fill */
+  --sys-energy-control-dot: var(--ref-energy-neutral-0); /* inner dot/icon on filled */
+  --sys-energy-control-state-layer-inactive: var(
+    --ref-energy-neutral-500
+  ); /* unselected hover ring */
+
+  /* sys.energy.switch — switch-specific state colors (theme-dependent) */
+  --sys-energy-switch-track-off: var(--ref-energy-neutral-300);
+  --sys-energy-switch-track-off-hover: var(--ref-energy-neutral-400);
+  --sys-energy-switch-track-disabled: var(--ref-energy-neutral-200);
+  --sys-energy-switch-thumb-off: var(--ref-energy-neutral-0);
+  --sys-energy-switch-thumb-on: var(--ref-energy-neutral-0);
+  --sys-energy-switch-thumb-disabled: var(--ref-energy-neutral-100);
+  --sys-energy-switch-thumb-icon-disabled: var(--ref-energy-neutral-300);
+
+  /* sys.frame.grid — default density (overrides for spacious baseline) */
+  --sys-frame-grid-lg-columns: var(--ref-frame-grid-lg-columns);
+  --sys-frame-grid-lg-gutter: var(--ref-frame-space-8); /* 32px — default density */
+  --sys-frame-grid-lg-margin: var(--ref-frame-space-12); /* 48px — default density */
+  --sys-frame-grid-lg-max-width: var(--ref-frame-grid-lg-max-width);
+  --sys-frame-grid-md-columns: var(--ref-frame-grid-md-columns);
+  --sys-frame-grid-md-gutter: var(--ref-frame-grid-md-gutter);
+  --sys-frame-grid-md-margin: var(--ref-frame-grid-md-margin);
+  --sys-frame-grid-sm-columns: var(--ref-frame-grid-sm-columns);
+  --sys-frame-grid-sm-gutter: var(--ref-frame-grid-sm-gutter);
+  --sys-frame-grid-sm-margin: var(--ref-frame-grid-sm-margin);
+
+  /* sys.depth.layer — stacking context for layout regions */
+  --sys-depth-layer-content: var(--ref-depth-z-index-content);
+  --sys-depth-layer-sticky: var(--ref-depth-z-index-sticky);
+  --sys-depth-layer-dropdown: var(--ref-depth-z-index-dropdown);
+  --sys-depth-layer-overlay: var(--ref-depth-z-index-overlay);
+  --sys-depth-layer-modal: var(--ref-depth-z-index-modal);
+  --sys-depth-layer-tooltip: var(--ref-depth-z-index-tooltip);
+  --sys-depth-layer-toast: var(--ref-depth-z-index-toast);
+
+  /* sys.depth.backdrop — blur effect for overlay surfaces */
+  --sys-depth-backdrop: blur(var(--ref-depth-blur-sm));
+
+  /* sys.momentum */
+  --sys-momentum-transition-fast: var(--ref-momentum-duration-fast)
+    var(--ref-momentum-easing-standard);
+  --sys-momentum-transition-default: var(--ref-momentum-duration-normal)
+    var(--ref-momentum-easing-standard);
+  --sys-momentum-transition-slow: var(--ref-momentum-duration-slow)
+    var(--ref-momentum-easing-standard);
+
+  /* sys.voice — semantic typographic roles (default density) */
+  /* PHASE A REFACTOR: 4×4 grid (Display/Heading/Label/Paragraph × xl/l/m/s) + 2 utilities (Caption/Overline) */
+  /* Eliminates overlaps: Display(64-24) > Heading(20-14) > Label/Paragraph(16-12) > Caption(11) > Overline(10) */
+
+  /* sys.voice.display — brand font, density-responsive, 4 levels (xl/l/m/s) */
+  --sys-voice-display-xl-family: var(--ref-voice-family-brand);
+  --sys-voice-display-xl-weight: var(--ref-voice-weight-bold);
+  --sys-voice-display-xl-size: var(--ref-voice-size-14); /* 64px */
+  --sys-voice-display-xl-line-height: var(--ref-voice-line-height-display);
+  --sys-voice-display-xl-letter-spacing: var(--ref-voice-letter-spacing-tight);
+  --sys-voice-display-l-family: var(--ref-voice-family-brand);
+  --sys-voice-display-l-weight: var(--ref-voice-weight-bold);
+  --sys-voice-display-l-size: var(--ref-voice-size-12); /* 48px */
+  --sys-voice-display-l-line-height: var(--ref-voice-line-height-display);
+  --sys-voice-display-l-letter-spacing: var(--ref-voice-letter-spacing-tight);
+  --sys-voice-display-m-family: var(--ref-voice-family-brand);
+  --sys-voice-display-m-weight: var(--ref-voice-weight-bold);
+  --sys-voice-display-m-size: var(--ref-voice-size-10); /* 32px */
+  --sys-voice-display-m-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-display-m-letter-spacing: var(--ref-voice-letter-spacing-snug);
+  --sys-voice-display-s-family: var(--ref-voice-family-brand);
+  --sys-voice-display-s-weight: var(--ref-voice-weight-bold);
+  --sys-voice-display-s-size: var(--ref-voice-size-9); /* 24px */
+  --sys-voice-display-s-line-height: var(--ref-voice-line-height-snug);
+  --sys-voice-display-s-letter-spacing: var(--ref-voice-letter-spacing-snug);
+
+  /* sys.voice.heading — brand font, density-responsive, 4 levels (xl/l/m/s) — EXPANDED from 2 to 4 levels */
+  --sys-voice-heading-xl-family: var(--ref-voice-family-brand);
+  --sys-voice-heading-xl-weight: var(--ref-voice-weight-bold);
+  --sys-voice-heading-xl-size: var(--ref-voice-size-8); /* 20px */
+  --sys-voice-heading-xl-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-heading-xl-letter-spacing: var(--ref-voice-letter-spacing-normal);
+  --sys-voice-heading-l-family: var(--ref-voice-family-brand);
+  --sys-voice-heading-l-weight: var(--ref-voice-weight-bold);
+  --sys-voice-heading-l-size: var(--ref-voice-size-7); /* 18px */
+  --sys-voice-heading-l-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-heading-l-letter-spacing: var(--ref-voice-letter-spacing-normal);
+  --sys-voice-heading-m-family: var(--ref-voice-family-brand);
+  --sys-voice-heading-m-weight: var(--ref-voice-weight-bold);
+  --sys-voice-heading-m-size: var(--ref-voice-size-6); /* 16px */
+  --sys-voice-heading-m-line-height: var(--ref-voice-line-height-loose);
+  --sys-voice-heading-m-letter-spacing: var(--ref-voice-letter-spacing-normal);
+  --sys-voice-heading-s-family: var(--ref-voice-family-brand);
+  --sys-voice-heading-s-weight: var(--ref-voice-weight-bold);
+  --sys-voice-heading-s-size: var(--ref-voice-size-5); /* 14px */
+  --sys-voice-heading-s-line-height: var(--ref-voice-line-height-loose);
+  --sys-voice-heading-s-letter-spacing: var(--ref-voice-letter-spacing-normal);
+
+  /* sys.voice.label — sans font, DENSITY-RESPONSIVE (size shifts ±1 step), 4 levels (xl/l/m/s) */
+  --sys-voice-label-xl-size: var(--ref-voice-size-6); /* 16px */
+  --sys-voice-label-xl-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-label-l-size: var(--ref-voice-size-5); /* 14px */
+  --sys-voice-label-l-line-height: var(--ref-voice-line-height-loose);
+  --sys-voice-label-m-size: var(--ref-voice-size-4); /* 13px */
+  --sys-voice-label-m-line-height: var(--ref-voice-line-height-dense);
+  --sys-voice-label-s-size: var(--ref-voice-size-3); /* 12px */
+  --sys-voice-label-s-line-height: var(--ref-voice-line-height-normal);
+
+  /* sys.voice.paragraph — sans font, DENSITY-RESPONSIVE, 4 levels (xl/l/m/s) */
+  --sys-voice-paragraph-xl-size: var(--ref-voice-size-6); /* 16px */
+  --sys-voice-paragraph-xl-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-paragraph-l-size: var(--ref-voice-size-5); /* 14px */
+  --sys-voice-paragraph-l-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-paragraph-m-size: var(--ref-voice-size-4); /* 13px */
+  --sys-voice-paragraph-m-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-paragraph-s-size: var(--ref-voice-size-3); /* 12px */
+  --sys-voice-paragraph-s-line-height: var(--ref-voice-line-height-relaxed);
+
+  /* sys.voice utility roles — DENSITY-RESPONSIVE */
+  --sys-voice-caption-size: var(--ref-voice-size-2); /* 11px */
+  --sys-voice-caption-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px */
+  --sys-voice-overline-line-height: var(--ref-voice-line-height-normal);
+
+  /* code — 7th semantic category (mono, DENSITY-RESPONSIVE) */
+  --sys-voice-code-size: var(--ref-voice-size-5); /* 14px baseline */
+  --sys-voice-code-xs-size: var(--ref-voice-size-2); /* 11px baseline */
+  --sys-voice-code-line-height: var(--ref-voice-line-height-normal);
+
+  /* sys.voice.control — family/weight for interactive controls (buttons, chips, inputs) */
+  --sys-voice-family-control: var(--ref-voice-family-sans);
+  --sys-voice-weight-control: var(--ref-voice-weight-semibold);
+  --sys-voice-line-height-control: var(--ref-voice-line-height-none);
+  --sys-voice-letter-spacing-control: var(--ref-voice-letter-spacing-normal);
+
+  /* Legacy flat aliases (backward-compat, maps to new composite vars) */
+  --sys-voice-size-body: var(--sys-voice-paragraph-m-size);
+  --sys-voice-size-body-sm: var(--sys-voice-paragraph-s-size);
+  --sys-voice-size-label: var(--sys-voice-label-xs-size);
+  --sys-voice-size-caption: var(--sys-voice-caption-size);
+  --sys-voice-size-overline: var(--sys-voice-overline-size);
+  --sys-voice-line-height-body: var(--sys-voice-paragraph-m-line-height);
+  --sys-voice-line-height-body-sm: var(--sys-voice-paragraph-s-line-height);
+  --sys-voice-line-height-dense: var(--ref-voice-line-height-dense);
+
+  /* sys.momentum.duration — semantic durations (default density) */
+  --sys-momentum-duration-fast: var(--ref-momentum-duration-fast);
+  --sys-momentum-duration-default: var(--ref-momentum-duration-normal);
+  --sys-momentum-duration-slow: var(--ref-momentum-duration-slow);
+
+  /* sys.state */
+  --sys-state-hover-overlay: rgba(
+    var(--ref-state-border-light-base),
+    var(--ref-state-opacity-hover)
+  );
+  --sys-state-pressed-overlay: rgba(
+    var(--ref-state-border-light-base),
+    var(--ref-state-opacity-pressed)
+  );
+  --sys-state-selected-overlay: rgba(
+    var(--ref-energy-blue-500-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --sys-state-disabled-opacity: var(--ref-state-opacity-disabled);
+  --sys-state-focus-ring-color: var(--ref-energy-blue-500);
+  --sys-state-focus-ring-width: var(--ref-state-focus-ring-width);
+  --sys-state-focus-ring-offset: var(--ref-state-focus-ring-offset);
+
+  /* sys.size — active size tokens (default = md tier)
+     Overridden by [data-size] blocks. Components consume via comp refs or directly. */
+  /* Inline controls */
+  --sys-size-control-height: var(--ref-frame-height-control-md); /* 60px */
+  /* Selection indicators (Radio, Checkbox) */
+  --sys-size-indicator: 24px;
+  --sys-size-indicator-state-layer: 40px;
+  /* Icons in controls */
+  --sys-size-icon: var(--ref-icon-size-md); /* 20px */
+  /* Label text on indicator controls — deprecated: CSS classes now use voice.body */
+  --sys-size-label-font: var(--ref-voice-size-6); /* 16px — ≡ voice.body (geometric) */
+  /* Data display (Table) */
+  --sys-size-table-cell-py: var(--ref-frame-space-3); /* 12px */
+  --sys-size-table-cell-px: var(--ref-frame-space-4); /* 16px */
+  --sys-size-table-font: var(--ref-voice-size-5); /* 14px — deprecated: ≡ voice.label (geometric) */
+  --sys-size-table-header-font: var(--ref-voice-size-3); /* 12px */
+
+  /* sys.size.voice — semantic typographic scale per size tier (default = md)
+     Guarantees hierarchy: headline > body > label > caption at every tier.
+     Components consume these directly in CSS classes (not through comp aliases)
+     because passthrough aliases in :root resolve at declaration site, not lazily. */
+  --sys-size-voice-headline: var(--ref-voice-size-8); /* 20px — title hierarchy (unchanged) */
+  --sys-size-voice-body: var(--ref-voice-size-6); /* 16px — geometric ×1.23 from sm(13) */
+  --sys-size-voice-label: var(--ref-voice-size-5); /* 14px — geometric ×1.17 from sm(12) */
+  --sys-size-voice-caption: var(--ref-voice-size-3); /* 12px — geometric ×1.20 from sm(10) */
+
+  /* sys.size.gap — compositional spacing per size tier (default = md)
+     gap-field: between related form elements. gap-section: between major sections.
+     inset: generous container padding (dialogs, cards, panels). */
+  --sys-size-gap-field: var(--ref-frame-space-3); /* 12px */
+  --sys-size-gap-section: var(--ref-frame-space-5); /* 20px */
+  --sys-size-inset: var(--ref-frame-space-5); /* 20px */
+
+  /* comp — component-specific layout tokens (audit remediation) */
+  --comp-tooltip-arrow-offset: -4px;
+  --comp-badge-offset-top: -2px;
+  --comp-badge-offset-right-sm: 8px;
+  --comp-badge-offset-right-lg: 12px;
+  --comp-loading-dot-gap: 3px;
+  --comp-loading-dot-size: 4px;
+  --comp-multi-select-dropdown-max-height: 240px;
+  --comp-color-picker-hex-width: 90px;
+  --comp-rich-text-btn-size: 30px;
+  --comp-date-range-trigger-min-width: 260px;
+  --comp-date-range-presets-min-width: 140px;
+  --comp-input-surface-min-width: 40px;
+  --comp-command-palette-max-height: 320px;
+  --comp-snackbar-max-width: 480px;
+  --comp-swipe-action-min-width: 72px;
+  --comp-grid-auto-min: 200px;
+  --comp-swatch-grid-min-xs: 80px;
+  --comp-swatch-grid-min-sm: 95px;
+  --comp-swatch-grid-min-md: 115px;
+  --comp-swatch-grid-min-lg: 135px;
+  --comp-focus-ring-opacity: 0.12;
+  --comp-skeleton-pulse-opacity: 0.4;
+  --comp-split-pane-separator-size: 6px;
+  --comp-split-pane-handle-width: 2px;
+  --comp-split-pane-handle-length: 24px;
+  --comp-drag-handle-dot-size: 3px;
+  --comp-drag-handle-dot-gap: 2px;
+  --comp-drag-handle-row-gap: 1px;
+  --comp-notification-panel-width: 400px;
+  --comp-notification-badge-padding-x: 6px;
+  --comp-notification-dot-size: 6px;
+  --comp-transfer-list-height-sm: 180px;
+  --comp-transfer-list-height-md: 250px;
+  --comp-transfer-list-height-lg: 320px;
+  --comp-transfer-list-item-height-sm: 28px;
+  --comp-transfer-list-item-height-md: 32px;
+  --comp-transfer-list-item-height-lg: 38px;
+  --comp-virtual-table-header-z: 1;
+  --comp-virtual-table-overlay-z: 2;
+  --comp-tree-item-height-sm: 28px;
+  --comp-tree-item-height-md: 34px;
+  --comp-tree-item-height-lg: 40px;
+  --comp-tree-indent-sm: 16px;
+  --comp-tree-indent-md: 22px;
+  --comp-tree-indent-lg: 28px;
+}
+
+/* ── Density: Compact ── ratio ×1.2 (default ÷ 1.2, snapped to space scale) */
+[data-density="compact"] {
+  --sys-frame-padding-control: var(--ref-frame-space-4); /* 16px — compact (20 ÷ 1.2) */
+  --sys-frame-padding-container: var(--ref-frame-space-5); /* 20px — compact (24 ÷ 1.2) */
+  --sys-frame-padding-surface: var(--ref-frame-space-10); /* 40px — compact (48 ÷ 1.2) */
+  --sys-frame-gap-component: var(--ref-frame-space-4); /* 16px — compact (20 ÷ 1.2) */
+  --sys-frame-gap-component-lg: var(--ref-frame-space-6); /* 24px — compact (28 ÷ 1.2) */
+  --sys-frame-gap-subsection: var(--ref-frame-space-7); /* 28px — compact (36 ÷ 1.2) */
+  --sys-frame-gap-section: var(--ref-frame-space-12); /* 48px — compact (64 ÷ 1.2) */
+  --sys-frame-gap-page: var(--ref-frame-space-16); /* 64px — compact (80 ÷ 1.2) */
+  --sys-frame-radius-control: var(--ref-frame-radius-2); /* 8px — compact (12 ÷ 1.2 → 8 snap) */
+  --sys-frame-radius-container: var(--ref-frame-radius-2); /* 8px — compact (12 ÷ 1.2 → 8 snap) */
+  --sys-frame-radius-surface: var(--ref-frame-radius-3); /* 12px — compact (16 ÷ 1.2 → 12 snap) */
+  --sys-frame-height-control-sm: var(--ref-frame-height-control-sm-compact);
+  --sys-frame-height-control-md: var(--ref-frame-height-control-md-compact);
+  --sys-frame-height-control-lg: var(--ref-frame-height-control-lg-compact);
+  --sys-frame-height-control-xl: var(--ref-frame-height-control-xl-compact);
+  /* Grid density: compact — ×1.2 ratio */
+  --sys-frame-grid-lg-gutter: var(--ref-frame-space-6); /* 24px (32 ÷ 1.2) */
+  --sys-frame-grid-lg-margin: var(--ref-frame-space-10); /* 40px (48 ÷ 1.2) */
+  --sys-frame-grid-md-gutter: var(--ref-frame-space-5); /* 20px (24 ÷ 1.2) */
+  --sys-frame-grid-md-margin: var(--ref-frame-space-5); /* 20px (24 ÷ 1.2) */
+  --sys-frame-grid-sm-margin: var(--ref-frame-space-3); /* 12px (16 ÷ 1.2) */
+  /* Indicator & table density: compact — −1 step from default */
+  --sys-size-label-font: var(--ref-voice-size-5); /* 14px (default 16px −1 step) */
+  --sys-size-table-font: var(--ref-voice-size-4); /* 13px (default 14px −1 step) */
+  --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px (default 12px ��1 step) */
+  /* sys.size.voice density: compact — −1 step from default per-tier */
+  --sys-size-voice-headline: var(--ref-voice-size-7); /* 18px (md 20 −1) */
+  --sys-size-voice-body: var(--ref-voice-size-5); /* 14px (md 16 −1) */
+  --sys-size-voice-label: var(--ref-voice-size-4); /* 13px (md 14 −1) */
+  --sys-size-voice-caption: var(--ref-voice-size-2); /* 11px (md 12 −1) */
+  --sys-size-gap-field: var(--ref-frame-space-2); /* 8px */
+  --sys-size-gap-section: var(--ref-frame-space-4); /* 16px */
+  --sys-size-inset: var(--ref-frame-space-4); /* 16px */
+  /* Voice density: compact — all categories shift −1 step (4×4 grid maintained) */
+  /* Display: compact (56, 40, 24, 20) */
+  --sys-voice-display-xl-size: var(--ref-voice-size-13); /* 56px ← 64px −1 */
+  --sys-voice-display-l-size: var(--ref-voice-size-11); /* 40px ← 48px −1 */
+  --sys-voice-display-m-size: var(--ref-voice-size-9); /* 24px ← 32px −1 */
+  --sys-voice-display-s-size: var(--ref-voice-size-8); /* 20px ← 24px −1 */
+  /* Heading: compact (18, 16, 14, 13) — 4 levels */
+  --sys-voice-heading-xl-size: var(--ref-voice-size-7); /* 18px ← 20px −1 */
+  --sys-voice-heading-l-size: var(--ref-voice-size-6); /* 16px ← 18px −1 */
+  --sys-voice-heading-m-size: var(--ref-voice-size-5); /* 14px ← 16px −1 */
+  --sys-voice-heading-s-size: var(--ref-voice-size-4); /* 13px ← 14px −1 */
+  /* Label: compact (14, 13, 12, 11) — 4 levels */
+  --sys-voice-label-xl-size: var(--ref-voice-size-5); /* 14px ← 16px −1 */
+  --sys-voice-label-l-size: var(--ref-voice-size-4); /* 13px ← 14px −1 */
+  --sys-voice-label-m-size: var(--ref-voice-size-3); /* 12px ← 13px −1 */
+  --sys-voice-label-s-size: var(--ref-voice-size-2); /* 11px ← 12px −1 */
+  --sys-voice-label-xl-line-height: var(--ref-voice-line-height-dense);
+  --sys-voice-label-l-line-height: var(--ref-voice-line-height-dense);
+  --sys-voice-label-m-line-height: var(--ref-voice-line-height-dense);
+  --sys-voice-label-s-line-height: var(--ref-voice-line-height-normal);
+  /* Paragraph: compact (14, 13, 12, 11) — 4 levels */
+  --sys-voice-paragraph-xl-size: var(--ref-voice-size-5); /* 14px ← 16px −1 */
+  --sys-voice-paragraph-l-size: var(--ref-voice-size-4); /* 13px ← 14px −1 */
+  --sys-voice-paragraph-m-size: var(--ref-voice-size-3); /* 12px ← 13px −1 */
+  --sys-voice-paragraph-s-size: var(--ref-voice-size-2); /* 11px ← 12px −1 */
+  --sys-voice-paragraph-xl-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-paragraph-l-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-paragraph-m-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-paragraph-s-line-height: var(--ref-voice-line-height-normal);
+  /* Utilities: compact */
+  --sys-voice-caption-size: var(--ref-voice-size-1); /* 10px ← 11px −1 */
+  --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+  /* code: compact −1 step */
+  --sys-voice-code-size: var(--ref-voice-size-4); /* 13px ← 14 −1 */
+  --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+  /* Legacy flat aliases (auto-derived from composite) */
+  --sys-voice-size-body: var(--sys-voice-paragraph-m-size);
+  --sys-voice-size-body-sm: var(--sys-voice-paragraph-s-size);
+  --sys-voice-size-label: var(--sys-voice-label-xs-size);
+  --sys-voice-size-caption: var(--sys-voice-caption-size);
+  --sys-voice-size-overline: var(--sys-voice-overline-size);
+  --sys-voice-line-height-body: var(--ref-voice-line-height-normal);
+  --sys-voice-line-height-body-sm: var(--ref-voice-line-height-normal);
+  --sys-voice-line-height-dense: var(--ref-voice-line-height-tight);
+  /* Momentum density: faster transitions for dense UIs */
+  --sys-momentum-duration-default: var(--ref-momentum-duration-fast);
+  --sys-momentum-duration-slow: var(--ref-momentum-duration-normal);
+  --sys-momentum-transition-default: var(--ref-momentum-duration-fast)
+    var(--ref-momentum-easing-standard);
+  --sys-momentum-transition-slow: var(--ref-momentum-duration-normal)
+    var(--ref-momentum-easing-standard);
+  /* CircularProgress density: compact — faster spin */
+  --comp-circular-progress-transition: var(--sys-momentum-transition-fast);
+  --comp-circular-progress-spin-duration: 1000ms;
+  /* TextInput density: compact — base=xl compact, input-specific heights */
+  --comp-textinput-height: var(--ref-frame-height-input-xl-compact);
+  --comp-textinput-radius: var(--ref-frame-radius-1); /* 4px — compact density */
+  /* Per-size compact height overrides */
+  --comp-textinput-height-sm: var(--ref-frame-height-input-sm-compact); /* 48px */
+  --comp-textinput-height-md: var(--ref-frame-height-input-md-compact); /* 60px */
+  --comp-textinput-height-lg: var(--ref-frame-height-input-lg-compact); /* 72px */
+  --comp-textinput-height-xl: var(--ref-frame-height-input-xl-compact); /* 88px */
+  --comp-textinput-padding: var(--ref-frame-space-5); /* 20px — compact keeps default padding */
+  --comp-textinput-label-scale: 1.25; /* compact xl: body(20)/caption(16) */
+  /* Per-size compact overrides — geometry (padding = default, heights compact) */
+  --comp-textinput-padding-sm: var(--ref-frame-space-2); /* 8px */
+  --comp-textinput-padding-md: var(--ref-frame-space-3); /* 12px */
+  --comp-textinput-padding-lg: var(--ref-frame-space-4); /* 16px */
+  --comp-textinput-padding-xl: var(--ref-frame-space-5); /* 20px */
+  /* Per-size compact overrides — typography (−2 ref steps from default per-size) */
+  --comp-textinput-label-size-sm: var(--ref-voice-size-2); /* 11px (floor) */
+  --comp-textinput-label-size-md: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-label-size-lg: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-label-size-xl: var(--ref-voice-size-7); /* 18px */
+  --comp-textinput-value-size-sm: var(--ref-voice-size-2); /* 11px — value −2 from default */
+  --comp-textinput-value-size-md: var(--ref-voice-size-2); /* 11px */
+  --comp-textinput-value-size-lg: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-value-size-xl: var(--ref-voice-size-4); /* 13px */
+  --comp-textinput-label-size-float-sm: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-label-size-float-md: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-label-size-float-lg: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-label-size-float-xl: var(--ref-voice-size-2); /* 11px */
+  --comp-textinput-hint-size-sm: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-hint-size-md: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-hint-size-lg: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-hint-size-xl: var(--ref-voice-size-2); /* 11px */
+  --comp-textinput-label-scale-sm: 1.2; /* compact: body(12)/caption(10) — unchanged */
+  --comp-textinput-label-scale-md: 1.273; /* compact: body(14)/caption(11) */
+  --comp-textinput-label-scale-lg: 1.385; /* compact: body(18)/caption(13) */
+  --comp-textinput-label-scale-xl: 1.25; /* compact: body(20)/caption(16) */
+  /* label-size & value-size auto-shift via sys-voice-label-s-size (ref-5 in compact) */
+  /* Comp-level padding/gap overrides: tighter internal spacing for compact controls */
+  --comp-button-height: var(
+    --sys-frame-height-control-sm
+  ); /* 40px — compact default (via sys, density-shifted) */
+  --comp-button-font: var(--ref-voice-size-4); /* 13px — compact default */
+  --comp-button-padding-x: var(--ref-frame-space-4); /* 16px — aligned with sm */
+  --comp-button-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-chip-padding-x: var(--ref-frame-space-4); /* 16px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-micro); /* 2px — compact vertical */
+  --comp-chip-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-tag-padding-x: var(--ref-frame-space-2); /* 8px */
+  --comp-card-padding: var(--ref-frame-space-4); /* 16px */
+  --comp-dialog-padding: var(--ref-frame-space-4); /* 16px */
+  --comp-panel-padding: var(--ref-frame-space-4); /* 16px */
+  --comp-phoneinput-prefix-gap: var(--ref-frame-space-1); /* 4px */
+  /* Comp-level font overrides: −1 step (geometric scale → ±1 replaces old ±2 arithmetic) */
+  --comp-button-font-sm: var(--ref-voice-size-3); /* 12px (sm body 13 −1) */
+  --comp-button-font-md: var(--ref-voice-size-5); /* 14px (md body 16 −1) */
+  --comp-button-font-lg: var(--ref-voice-size-7); /* 18px (lg body 20 −1) */
+  --comp-button-font-xl: var(--ref-voice-size-8); /* 20px (xl body 24 −1) */
+  /* Comp-level padding-x/gap overrides: −1 step per size (compact density) */
+  --comp-button-padding-x-sm: var(--ref-frame-space-3); /* 12px (16 −1) */
+  --comp-button-padding-x-md: var(--ref-frame-space-4); /* 16px (20 −1) */
+  --comp-button-padding-x-lg: var(--ref-frame-space-5); /* 20px (24 −1) */
+  --comp-button-padding-x-xl: var(--ref-frame-space-6); /* 24px (28 −1) */
+  --comp-button-gap-sm: var(--ref-frame-space-1); /* 4px (floor) */
+  --comp-button-gap-md: var(--ref-frame-space-1); /* 4px (8 −1) */
+  --comp-button-gap-lg: var(--ref-frame-space-2); /* 8px (8 −0) */
+  --comp-button-gap-xl: var(--ref-frame-space-2); /* 8px (12 −1) */
+  --comp-textinput-label-size: var(--ref-voice-size-7); /* 18px — compact xl */
+  --comp-textinput-value-size: var(--ref-voice-size-4); /* 13px — compact xl value */
+  --comp-textinput-label-size-float: var(--ref-voice-size-2); /* 11px — compact xl */
+  --comp-textinput-hint-size: var(--ref-voice-size-2); /* 11px — compact xl */
+  --comp-chip-font-sm: var(--ref-voice-size-2); /* 11px (sm label 12 −1) */
+  --comp-chip-font-md: var(--ref-voice-size-4); /* 13px (md label 14 −1) */
+  --comp-chip-font-lg: var(--ref-voice-size-6); /* 16px (lg label 18 −1) */
+  --comp-chip-font-xl: var(--ref-voice-size-7); /* 18px (xl label 20 −1) */
+  /* --comp-tag-font: inherits from sys-size-voice-caption (auto-shifts with density) */
+  /* Breadcrumbs density: compact — −1 step from default */
+  --comp-breadcrumbs-font: var(--ref-voice-size-3); /* 12px (default 13px −1) */
+  --comp-breadcrumbs-separator-font: var(--ref-voice-size-3); /* 12px */
+  --comp-breadcrumbs-gap: var(--ref-frame-space-1); /* 4px (default 8px −1) */
+  --comp-breadcrumbs-item-padding-x: var(--ref-frame-space-micro); /* 2px (default 4px −1) */
+  --comp-breadcrumbs-item-padding-y: var(--ref-frame-space-micro); /* 2px (default 4px −1) */
+  --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-7); /* 28px (default 32px −1) */
+  /* Accordion density: compact — −1 step heights + fonts */
+  --comp-accordion-height-sm: 36px; /* 40 ÷ 1.2 → 36 snap */
+  --comp-accordion-height-md: 40px; /* 44 ÷ 1.2 → 40 snap */
+  --comp-accordion-height-lg: 44px; /* 48 ÷ 1.2 → 44 snap */
+  --comp-accordion-height-xl: 48px; /* 56 ÷ 1.2 → 48 snap */
+  --comp-accordion-font-sm: var(--ref-voice-size-3); /* 12px (13 −1) */
+  --comp-accordion-font-md: var(--ref-voice-size-4); /* 13px (14 −1) */
+  --comp-accordion-font-lg: var(--ref-voice-size-5); /* 14px (16 −1) */
+  --comp-accordion-font-xl: var(--ref-voice-size-6); /* 16px (18 −1) */
+  --comp-accordion-padding-x: var(--ref-frame-space-4); /* 16px (20 −1) */
+  --comp-accordion-content-padding-x: var(--ref-frame-space-4); /* 16px */
+  --comp-accordion-content-padding-y: var(--ref-frame-space-3); /* 12px */
+  /* Tabs density: compact — −1 step heights */
+  --comp-tabs-height-sm: 36px; /* 40 ÷ 1.2 → 36 */
+  --comp-tabs-height-md: 40px; /* 44 ÷ 1.2 → 40 */
+  --comp-tabs-height-lg: 44px; /* 48 ÷ 1.2 → 44 */
+  --comp-tabs-height-xl: 48px; /* 56 ÷ 1.2 → 48 */
+  --comp-tabs-padding-x-sm: var(--ref-frame-space-2); /* 8px (12 −1) */
+  --comp-tabs-padding-x-md: var(--ref-frame-space-3); /* 12px (16 −1) */
+  --comp-tabs-padding-x-lg: var(--ref-frame-space-4); /* 16px (20 −1) */
+  --comp-tabs-padding-x-xl: var(--ref-frame-space-5); /* 20px (24 −1) */
+  --comp-tabs-gap: var(--ref-frame-space-1); /* 4px (8 −1) */
+  /* SegmentedControl density: compact — −1 step heights + fonts */
+  --comp-segmented-height-sm: 36px; /* 40 ÷ 1.2 → 36 */
+  --comp-segmented-height-md: 40px; /* 44 ÷ 1.2 → 40 */
+  --comp-segmented-height-lg: 44px; /* 48 ÷ 1.2 → 44 */
+  --comp-segmented-height-xl: 48px; /* 56 ÷ 1.2 → 48 */
+  --comp-segmented-font-sm: var(--ref-voice-size-3); /* 12px (13 −1) */
+  --comp-segmented-font-md: var(--ref-voice-size-4); /* 13px (14 −1) */
+  --comp-segmented-font-lg: var(--ref-voice-size-5); /* 14px (16 −1) */
+  --comp-segmented-font-xl: var(--ref-voice-size-6); /* 16px (18 −1) */
+  --comp-segmented-segment-padding-x: var(--ref-frame-space-3); /* 12px (16 −1) */
+  /* Switch density: compact — smaller track/thumb */
+  --comp-switch-track-width: 44px; /* 52 ÷ 1.2 → 44 snap */
+  --comp-switch-track-height: 28px; /* 32 ÷ 1.2 → 28 snap */
+  --comp-switch-thumb-size: 14px; /* 16 ÷ 1.2 → 14 snap */
+  --comp-switch-thumb-size-pressed: 16px; /* 18 ÷ 1.2 → 16 snap */
+  --comp-switch-thumb-inset: 7px; /* 8 ÷ 1.2 → 7 snap */
+  --comp-switch-state-layer-size: 36px; /* 40 ÷ 1.2 → 36 snap */
+  /* FAB density: compact — smaller touch targets */
+  --comp-fab-size-sm: 32px; /* 40 ÷ 1.2 → 32 snap */
+  --comp-fab-size-md: 48px; /* 56 ÷ 1.2 → 48 snap */
+  --comp-fab-size-lg: 60px; /* 72 ÷ 1.2 → 60 snap */
+  --comp-fab-padding-x: var(--ref-frame-space-3); /* 12px (16 −1) */
+  --comp-fab-label-font: var(--ref-voice-size-4); /* 13px (14 −1) */
+  /* Stepper density: compact — smaller indicators + fonts */
+  --comp-stepper-indicator-size-sm: 24px; /* 28 ÷ 1.2 → 24 snap */
+  --comp-stepper-indicator-size-md: 28px; /* 32 ÷ 1.2 → 28 snap */
+  --comp-stepper-indicator-size-lg: 32px; /* 40 ÷ 1.2 → 32 snap */
+  --comp-stepper-indicator-size-xl: 40px; /* 48 ÷ 1.2 → 40 snap */
+  --comp-stepper-font-sm: var(--ref-voice-size-2); /* 11px (12 −1) */
+  --comp-stepper-font-md: var(--ref-voice-size-3); /* 12px (13 −1) */
+  --comp-stepper-font-lg: var(--ref-voice-size-4); /* 13px (14 −1) */
+  --comp-stepper-font-xl: var(--ref-voice-size-5); /* 14px (16 −1) */
+  --comp-stepper-label-font-sm: var(--ref-voice-size-2); /* 11px */
+  --comp-stepper-label-font-md: var(--ref-voice-size-3); /* 12px */
+  --comp-stepper-label-font-lg: var(--ref-voice-size-4); /* 13px */
+  --comp-stepper-label-font-xl: var(--ref-voice-size-5); /* 14px */
+  --comp-stepper-desc-font-sm: var(--ref-voice-size-1); /* 10px (floor) */
+  --comp-stepper-desc-font-md: var(--ref-voice-size-1); /* 10px */
+  --comp-stepper-desc-font-lg: var(--ref-voice-size-2); /* 11px */
+  --comp-stepper-desc-font-xl: var(--ref-voice-size-3); /* 12px */
+  /* Slider density: compact — thinner track, smaller thumb */
+  --comp-slider-track-height: 3px; /* 4 ÷ 1.2 → 3 snap */
+  --comp-slider-thumb-size: 16px; /* 20 ÷ 1.2 → 16 snap */
+  --comp-slider-focus-ring-size: 28px; /* 36 ÷ 1.2 → 28 snap */
+  /* Pagination density: compact — smaller buttons */
+  --comp-pagination-height: 28px; /* 36 ÷ 1.2 → 28 snap */
+  --comp-pagination-min-width: 28px; /* 36 ÷ 1.2 → 28 snap */
+  --comp-pagination-font: var(--ref-voice-size-3); /* 12px (13 −1) */
+  /* Avatar density: compact — smaller sizes */
+  --comp-avatar-size-sm: 28px; /* 32 ÷ 1.2 → 28 snap */
+  --comp-avatar-size-md: 32px; /* 40 ÷ 1.2 → 32 snap */
+  --comp-avatar-size-lg: 40px; /* 48 ÷ 1.2 → 40 snap */
+  --comp-avatar-size-xl: 52px; /* 64 ÷ 1.2 → 52 snap */
+  --comp-avatar-font-sm: var(--ref-voice-size-2); /* 11px (12 −1) */
+  --comp-avatar-font-md: var(--ref-voice-size-3); /* 12px (14 −1) */
+  --comp-avatar-font-lg: var(--ref-voice-size-5); /* 14px (16 −1) */
+  --comp-avatar-font-xl: var(--ref-voice-size-7); /* 18px (20 −1) */
+  --comp-avatar-status-size-sm: 6px; /* 8 ÷ 1.2 → 6 snap */
+  --comp-avatar-status-size-md: 8px; /* 10 ÷ 1.2 → 8 snap */
+  --comp-avatar-status-size-lg: 10px; /* 12 ÷ 1.2 → 10 snap */
+  --comp-avatar-status-size-xl: 12px; /* 16 ÷ 1.2 → 12 snap */
+  /* ToggleButton density: compact */
+  --comp-togglebutton-height-sm: 36px; /* 40 ÷ 1.2 → 36 */
+  --comp-togglebutton-height-md: 40px; /* 44 ÷ 1.2 → 40 */
+  --comp-togglebutton-height-lg: 44px; /* 48 ÷ 1.2 → 44 */
+  --comp-togglebutton-height-xl: 48px; /* 56 ÷ 1.2 → 48 */
+  --comp-togglebutton-font-sm: var(--ref-voice-size-3); /* 12px (13 -1) */
+  --comp-togglebutton-font-md: var(--ref-voice-size-4); /* 13px (14 -1) */
+  --comp-togglebutton-font-lg: var(--ref-voice-size-5); /* 14px (16 -1) */
+  --comp-togglebutton-font-xl: var(--ref-voice-size-6); /* 16px (18 -1) */
+  --comp-togglebutton-padding-x: var(--ref-frame-space-3); /* 12px (16 -1) */
+  /* Badge density: compact */
+  --comp-badge-height: 16px; /* 20 ÷ 1.2 → 16 snap */
+  --comp-badge-font: var(--ref-voice-size-1); /* 10px (11 -1) */
+  --comp-badge-padding-x: var(--ref-frame-space-1); /* 4px */
+  --comp-badge-min-width: 16px;
+  /* List density: compact */
+  --comp-list-item-padding-x: var(--ref-frame-space-3); /* 12px (16 -1) */
+  --comp-list-item-padding-y: var(--ref-frame-space-2); /* 8px (12 -1) */
+  --comp-list-item-font-primary: var(--ref-voice-size-4); /* 13px (14 -1) */
+  --comp-list-item-font-secondary: var(--ref-voice-size-2); /* 11px (12 -1) */
+  --comp-list-item-min-height: 40px; /* 48 ÷ 1.2 → 40 */
+  --comp-list-item-gap: var(--ref-frame-space-2); /* 8px (12 -1) */
+  /* Search density: compact */
+  --comp-search-height: 36px; /* 40 ÷ 1.2 → 36 */
+  --comp-search-font: var(--ref-voice-size-4); /* 13px (14 -1) */
+  --comp-search-padding-x: var(--ref-frame-space-3); /* 12px (16 -1) */
+  --comp-search-icon-size: 16px; /* 20 ÷ 1.2 → 16 snap */
+  /* Toolbar density: compact */
+  --comp-toolbar-height: 40px; /* 48 ÷ 1.2 → 40 */
+  --comp-toolbar-padding: var(--ref-frame-space-2); /* 8px (12 -1) */
+  --comp-toolbar-gap: var(--ref-frame-space-1); /* 4px (8 -1) */
+  /* Menu density: compact */
+  --comp-menu-item-padding-x: var(--ref-frame-space-3); /* 12px (16 -1) */
+  --comp-menu-item-padding-y: var(--ref-frame-space-1); /* 4px (8 -1) */
+  --comp-menu-item-font: var(--ref-voice-size-4); /* 13px (14 -1) */
+  --comp-menu-item-icon-size: 16px; /* 20 ÷ 1.2 → 16 */
+  --comp-menu-padding: var(--ref-frame-space-1); /* 4px */
+  /* Popover density: compact */
+  --comp-popover-padding: var(--ref-frame-space-3); /* 12px (16 -1) */
+  /* BottomSheet density: compact */
+  --comp-bottomsheet-padding: var(--ref-frame-space-4); /* 16px (20 -1) */
+  --comp-bottomsheet-header-font: var(--ref-voice-size-6); /* 16px (18 -1) */
+  --comp-bottomsheet-handle-width: 28px; /* 32 ÷ 1.2 → 28 */
+  --comp-bottomsheet-handle-height: 3px; /* 4 ÷ 1.2 → 3 */
+  /* Sidebar density: compact */
+  --comp-sidebar-item-padding: var(--ref-frame-space-2) var(--ref-frame-space-3); /* 8px 12px */
+  --comp-sidebar-item-font: var(--ref-voice-size-4); /* 13px (14 -1) */
+  --comp-sidebar-group-label-font: var(--ref-voice-size-2); /* 11px (12 -1) */
+  --comp-sidebar-icon-size: 16px; /* 20 ÷ 1.2 → 16 */
+  /* Topbar density: compact */
+  --comp-topbar-height: 48px; /* 56 ÷ 1.2 → 48 */
+  --comp-topbar-padding-x: var(--ref-frame-space-4); /* 16px (20 -1) */
+  --comp-topbar-title-font: var(--ref-voice-size-6); /* 16px (18 -1) */
+  --comp-topbar-gap: var(--ref-frame-space-2); /* 8px (12 -1) */
+  /* BottomNav density: compact */
+  --comp-bottomnav-height: 52px; /* 64 ÷ 1.2 → 52 snap */
+  --comp-bottomnav-label-font: var(--ref-voice-size-1); /* 10px (11 -1) */
+  --comp-bottomnav-icon-size: 20px; /* 24 ÷ 1.2 → 20 snap */
+  /* OTPInput density: compact */
+  --comp-otpinput-cell-size: 40px; /* 48 ÷ 1.2 → 40 */
+  --comp-otpinput-font: var(--ref-voice-size-7); /* 18px (20 -1) */
+  --comp-otpinput-gap: var(--ref-frame-space-2); /* 8px (12 -1) */
+  /* DatePicker density: compact */
+  --comp-datepicker-cell-size: 32px; /* 40 ÷ 1.2 → 32 */
+  --comp-datepicker-grid-gap: var(--ref-frame-space-1); /* 4px (8 -1) */
+  --comp-datepicker-header-font: var(--ref-voice-size-4); /* 13px (14 -1) */
+}
+
+/* ── Density: Comfortable ── ratio ×1.2 (default × 1.2, snapped to space scale) */
+[data-density="comfortable"] {
+  --sys-frame-padding-control: var(--ref-frame-space-6); /* 24px — comfortable (20 × 1.2) */
+  --sys-frame-padding-container: var(--ref-frame-space-7); /* 28px — comfortable (24 × 1.2) */
+  --sys-frame-padding-surface: var(
+    --ref-frame-space-16
+  ); /* 64px — comfortable (48 × 1.2 → 64 snap) */
+  --sys-frame-gap-component: var(--ref-frame-space-6); /* 24px — comfortable (20 × 1.2) */
+  --sys-frame-gap-component-lg: var(--ref-frame-space-8); /* 32px — comfortable (28 × 1.2) */
+  --sys-frame-gap-subsection: var(--ref-frame-space-11); /* 44px — comfortable (36 × 1.2) */
+  --sys-frame-gap-section: var(--ref-frame-space-20); /* 80px — comfortable (64 × 1.2) */
+  --sys-frame-gap-page: var(--ref-frame-space-24); /* 96px — comfortable (80 × 1.2) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-4
+  ); /* 16px — comfortable (12 × 1.2 → 16 snap) */
+  --sys-frame-radius-container: var(
+    --ref-frame-radius-4
+  ); /* 16px — comfortable (12 × 1.2 → 16 snap) */
+  --sys-frame-radius-surface: var(
+    --ref-frame-radius-5
+  ); /* 20px — comfortable (16 × 1.2 → 20 snap) */
+  --sys-frame-height-control-sm: var(--ref-frame-height-control-sm-comfortable);
+  --sys-frame-height-control-md: var(--ref-frame-height-control-md-comfortable);
+  --sys-frame-height-control-lg: var(--ref-frame-height-control-lg-comfortable);
+  --sys-frame-height-control-xl: var(--ref-frame-height-control-xl-comfortable);
+  /* Grid density: comfortable — ×1.2 ratio */
+  --sys-frame-grid-lg-gutter: var(--ref-frame-space-10); /* 40px (32 × 1.2) */
+  --sys-frame-grid-lg-margin: var(--ref-frame-space-16); /* 64px (48 × 1.2 → 64 snap) */
+  --sys-frame-grid-md-gutter: var(--ref-frame-space-7); /* 28px (24 × 1.2) */
+  --sys-frame-grid-md-margin: var(--ref-frame-space-7); /* 28px (24 × 1.2) */
+  --sys-frame-grid-sm-margin: var(--ref-frame-space-5); /* 20px (16 × 1.2) */
+  /* Indicator & table density: comfortable — +1 step from default */
+  --sys-size-label-font: var(--ref-voice-size-7); /* 18px (default 16px +1 step) */
+  --sys-size-table-font: var(--ref-voice-size-6); /* 16px (default 14px +1 step) */
+  --sys-size-table-header-font: var(--ref-voice-size-4); /* 13px (default 12px +1 step) */
+  /* sys.size.voice density: comfortable — +1 step from default per-tier */
+  --sys-size-voice-headline: var(--ref-voice-size-9); /* 24px (md 20 +1) */
+  --sys-size-voice-body: var(--ref-voice-size-7); /* 18px (md 16 +1) */
+  --sys-size-voice-label: var(--ref-voice-size-6); /* 16px (md 14 +1) */
+  --sys-size-voice-caption: var(--ref-voice-size-4); /* 13px (md 12 +1) */
+  --sys-size-gap-field: var(--ref-frame-space-4); /* 16px */
+  --sys-size-gap-section: var(--ref-frame-space-6); /* 24px */
+  --sys-size-inset: var(--ref-frame-space-6); /* 24px */
+  /* Voice density: comfortable — all categories shift +1 step (4×4 grid maintained) */
+  /* Display: comfortable (72, 56, 40, 32) */
+  --sys-voice-display-xl-size: var(--ref-voice-size-15); /* 72px ← 64px +1 */
+  --sys-voice-display-l-size: var(--ref-voice-size-13); /* 56px ← 48px +1 */
+  --sys-voice-display-m-size: var(--ref-voice-size-11); /* 40px ← 32px +1 */
+  --sys-voice-display-s-size: var(--ref-voice-size-10); /* 32px ← 24px +1 */
+  /* Heading: comfortable (24, 20, 18, 16) — 4 levels */
+  --sys-voice-heading-xl-size: var(--ref-voice-size-9); /* 24px ← 20px +1 */
+  --sys-voice-heading-l-size: var(--ref-voice-size-8); /* 20px ← 18px +1 */
+  --sys-voice-heading-m-size: var(--ref-voice-size-7); /* 18px ← 16px +1 */
+  --sys-voice-heading-s-size: var(--ref-voice-size-6); /* 16px ← 14px +1 */
+  /* Label: comfortable (18, 16, 14, 13) — 4 levels */
+  --sys-voice-label-xl-size: var(--ref-voice-size-7); /* 18px ← 16px +1 */
+  --sys-voice-label-l-size: var(--ref-voice-size-6); /* 16px ← 14px +1 */
+  --sys-voice-label-m-size: var(--ref-voice-size-5); /* 14px ← 13px +1 */
+  --sys-voice-label-s-size: var(--ref-voice-size-4); /* 13px ← 12px +1 */
+  --sys-voice-label-xl-line-height: var(--ref-voice-line-height-normal);
+  --sys-voice-label-l-line-height: var(--ref-voice-line-height-loose);
+  --sys-voice-label-m-line-height: var(--ref-voice-line-height-loose);
+  --sys-voice-label-s-line-height: var(--ref-voice-line-height-normal);
+  /* Paragraph: comfortable (18, 16, 14, 13) — 4 levels */
+  --sys-voice-paragraph-xl-size: var(--ref-voice-size-7); /* 18px ← 16px +1 */
+  --sys-voice-paragraph-l-size: var(--ref-voice-size-6); /* 16px ← 14px +1 */
+  --sys-voice-paragraph-m-size: var(--ref-voice-size-5); /* 14px ← 13px +1 */
+  --sys-voice-paragraph-s-size: var(--ref-voice-size-4); /* 13px ← 12px +1 */
+  --sys-voice-paragraph-xl-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-paragraph-l-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-paragraph-m-line-height: var(--ref-voice-line-height-relaxed);
+  --sys-voice-paragraph-s-line-height: var(--ref-voice-line-height-normal);
+  /* Utilities: comfortable */
+  --sys-voice-caption-size: var(--ref-voice-size-3); /* 12px ← 11px +1 */
+  --sys-voice-overline-size: var(--ref-voice-size-2); /* 11px ← 10px +1 */
+  /* code: comfortable +1 step */
+  --sys-voice-code-size: var(--ref-voice-size-6); /* 16px ← 14 +1 */
+  --sys-voice-code-xs-size: var(--ref-voice-size-3); /* 12px ← 11 +1 */
+  /* Legacy flat aliases (auto-derived from composite) */
+  --sys-voice-size-body: var(--sys-voice-paragraph-m-size);
+  --sys-voice-size-body-sm: var(--sys-voice-paragraph-s-size);
+  --sys-voice-size-label: var(--sys-voice-label-xs-size);
+  --sys-voice-size-caption: var(--sys-voice-caption-size);
+  --sys-voice-size-overline: var(--sys-voice-overline-size);
+  --sys-voice-line-height-body: var(--ref-voice-line-height-body);
+  --sys-voice-line-height-body-sm: var(--ref-voice-line-height-body);
+  --sys-voice-line-height-dense: var(--ref-voice-line-height-normal);
+  /* Momentum density: more expressive transitions for spacious UIs */
+  --sys-momentum-duration-slow: var(--ref-momentum-duration-slower);
+  --sys-momentum-transition-slow: var(--ref-momentum-duration-slower)
+    var(--ref-momentum-easing-standard);
+  /* CircularProgress density: comfortable — more expressive spin */
+  --comp-circular-progress-spin-duration: 1600ms;
+  /* TextInput density: comfortable — base=xl comfortable, input-specific heights */
+  --comp-textinput-height: var(--ref-frame-height-input-xl-comfortable);
+  --comp-textinput-radius: var(--ref-frame-radius-3); /* 12px — comfortable density */
+  /* Per-size comfortable height overrides */
+  --comp-textinput-height-sm: var(--ref-frame-height-input-sm-comfortable); /* 68px */
+  --comp-textinput-height-md: var(--ref-frame-height-input-md-comfortable); /* 88px */
+  --comp-textinput-height-lg: var(--ref-frame-height-input-lg-comfortable); /* 104px */
+  --comp-textinput-height-xl: var(--ref-frame-height-input-xl-comfortable); /* 124px */
+  --comp-textinput-padding: var(--ref-frame-space-6); /* 24px — comfortable xl (+4 vs default) */
+  --comp-textinput-label-scale: 1.6; /* comfortable xl: body(32)/caption(20) */
+  /* Per-size comfortable overrides — geometry (padding = default + 4px per size) */
+  --comp-textinput-padding-sm: var(--ref-frame-space-3); /* 12px */
+  --comp-textinput-padding-md: var(--ref-frame-space-4); /* 16px */
+  --comp-textinput-padding-lg: var(--ref-frame-space-5); /* 20px */
+  --comp-textinput-padding-xl: var(--ref-frame-space-6); /* 24px */
+  /* Per-size comfortable overrides — typography (geometric ×1.2 from default per-size) */
+  --comp-textinput-label-size-sm: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-label-size-md: var(--ref-voice-size-7); /* 18px */
+  --comp-textinput-label-size-lg: var(--ref-voice-size-9); /* 24px */
+  --comp-textinput-label-size-xl: var(
+    --ref-voice-size-9
+  ); /* 24px — capped to match sys-size-voice xl body, avoids excessive 32px (V10 fix) */
+  --comp-textinput-value-size-sm: var(
+    --ref-voice-size-4
+  ); /* 13px — value comfortable, moderate curve */
+  --comp-textinput-value-size-md: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-value-size-lg: var(
+    --ref-voice-size-7
+  ); /* 18px — geometric: aligned with label ×1.2 progression */
+  --comp-textinput-value-size-xl: var(
+    --ref-voice-size-8
+  ); /* 20px — geometric: aligned with sys-size-voice-body xl */
+  --comp-textinput-label-size-float-sm: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-label-size-float-md: var(--ref-voice-size-4); /* 13px */
+  --comp-textinput-label-size-float-lg: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-label-size-float-xl: var(--ref-voice-size-6); /* 16px */
+  --comp-textinput-hint-size-sm: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-hint-size-md: var(--ref-voice-size-4); /* 13px */
+  --comp-textinput-hint-size-lg: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-hint-size-xl: var(--ref-voice-size-6); /* 16px */
+  --comp-textinput-label-scale-sm: 1.273; /* comfortable: body(14)/caption(11) — unchanged */
+  --comp-textinput-label-scale-md: 1.385; /* comfortable: body(18)/caption(13) */
+  --comp-textinput-label-scale-lg: 1.5; /* comfortable: body(24)/caption(16) */
+  --comp-textinput-label-scale-xl: 1.5; /* comfortable: body(24)/caption(16) — V10 fix, was 1.6 (32/20) */
+  /* label-size & value-size auto-shift via sys-voice-label-s-size (ref-7 in comfortable) */
+  /* Comp-level padding/gap overrides: roomier internal spacing for comfortable controls */
+  --comp-button-height: var(
+    --sys-frame-height-control-lg
+  ); /* 86px — comfortable default (via sys, density-shifted) */
+  --comp-button-font: var(--ref-voice-size-6); /* 16px — comfortable default */
+  --comp-button-padding-x: var(--ref-frame-space-7); /* 28px — aligned with lg */
+  --comp-button-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-chip-padding-x: var(--ref-frame-space-7); /* 28px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-2); /* 8px — comfortable vertical */
+  --comp-chip-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-tag-padding-x: var(--ref-frame-space-3); /* 12px — comfortable but still compact vs Chip */
+  --comp-tag-padding-y: var(
+    --ref-frame-space-1
+  ); /* 4px — Tags stay tight even at comfortable density */
+  --comp-card-padding: var(--ref-frame-space-8); /* 32px */
+  --comp-dialog-padding: var(--ref-frame-space-8); /* 32px */
+  --comp-panel-padding: var(--ref-frame-space-8); /* 32px */
+  --comp-phoneinput-prefix-gap: var(--ref-frame-space-3); /* 12px */
+  /* Comp-level font overrides: +1 step (geometric scale → ±1 replaces old ±2 arithmetic) */
+  --comp-button-font-sm: var(--ref-voice-size-5); /* 14px (sm body 13 +1) */
+  --comp-button-font-md: var(--ref-voice-size-7); /* 18px (md body 16 +1) */
+  --comp-button-font-lg: var(--ref-voice-size-9); /* 24px (lg body 20 +1) */
+  --comp-button-font-xl: var(--ref-voice-size-10); /* 32px (xl body 24 +1) */
+  /* Comp-level padding-x/gap overrides: +1 step per size (comfortable density) */
+  --comp-button-padding-x-sm: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-button-padding-x-md: var(--ref-frame-space-7); /* 28px (20 +1) */
+  --comp-button-padding-x-lg: var(--ref-frame-space-8); /* 32px (24 +1) */
+  --comp-button-padding-x-xl: var(--ref-frame-space-9); /* 36px (28 +1) */
+  --comp-button-gap-sm: var(--ref-frame-space-2); /* 8px (4 +1) */
+  --comp-button-gap-md: var(--ref-frame-space-3); /* 12px (8 +1) */
+  --comp-button-gap-lg: var(--ref-frame-space-3); /* 12px (8 +1) */
+  --comp-button-gap-xl: var(--ref-frame-space-4); /* 16px (12 +1) */
+  --comp-textinput-label-size: var(
+    --ref-voice-size-9
+  ); /* 24px — comfortable xl (capped from 32px for V10 fix) */
+  --comp-textinput-value-size: var(
+    --ref-voice-size-8
+  ); /* 20px — comfortable xl value (geometric aligned) */
+  --comp-textinput-label-size-float: var(--ref-voice-size-6); /* 16px — comfortable xl */
+  --comp-textinput-hint-size: var(--ref-voice-size-6); /* 16px — comfortable xl */
+  --comp-chip-font-sm: var(--ref-voice-size-4); /* 13px (sm label 12 +1) */
+  --comp-chip-font-md: var(--ref-voice-size-6); /* 16px (md label 14 +1) */
+  --comp-chip-font-lg: var(--ref-voice-size-8); /* 20px (lg label 18 +1) */
+  --comp-chip-font-xl: var(--ref-voice-size-9); /* 24px (xl label 20 +1) */
+  /* --comp-tag-font: inherits from sys-size-voice-caption (auto-shifts with density) */
+  /* Breadcrumbs density: comfortable — +1 step from default */
+  --comp-breadcrumbs-font: var(--ref-voice-size-5); /* 14px (default 13px +1) */
+  --comp-breadcrumbs-separator-font: var(--ref-voice-size-5); /* 14px */
+  --comp-breadcrumbs-gap: var(--ref-frame-space-3); /* 12px (default 8px +1) */
+  --comp-breadcrumbs-item-padding-x: var(--ref-frame-space-2); /* 8px (default 4px +1) */
+  --comp-breadcrumbs-item-padding-y: var(
+    --ref-frame-space-1
+  ); /* 4px (keep — vertical stays subtle) */
+  --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-9); /* 36px (default 32px +1) */
+  /* Accordion density: comfortable — +1 step heights + fonts */
+  --comp-accordion-height-sm: 48px; /* 40 × 1.2 → 48 snap */
+  --comp-accordion-height-md: 52px; /* 44 × 1.2 → 52 snap */
+  --comp-accordion-height-lg: 56px; /* 48 × 1.2 → 56 snap */
+  --comp-accordion-height-xl: 68px; /* 56 × 1.2 → 68 snap */
+  --comp-accordion-font-sm: var(--ref-voice-size-5); /* 14px (13 +1) */
+  --comp-accordion-font-md: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-accordion-font-lg: var(--ref-voice-size-7); /* 18px (16 +1) */
+  --comp-accordion-font-xl: var(--ref-voice-size-8); /* 20px (18 +1) */
+  --comp-accordion-padding-x: var(--ref-frame-space-6); /* 24px (20 +1) */
+  --comp-accordion-content-padding-x: var(--ref-frame-space-6); /* 24px */
+  --comp-accordion-content-padding-y: var(--ref-frame-space-5); /* 20px */
+  /* Tabs density: comfortable — +1 step heights */
+  --comp-tabs-height-sm: 48px; /* 40 × 1.2 → 48 */
+  --comp-tabs-height-md: 52px; /* 44 × 1.2 → 52 */
+  --comp-tabs-height-lg: 56px; /* 48 × 1.2 → 56 */
+  --comp-tabs-height-xl: 68px; /* 56 × 1.2 → 68 */
+  --comp-tabs-padding-x-sm: var(--ref-frame-space-4); /* 16px (12 +1) */
+  --comp-tabs-padding-x-md: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-tabs-padding-x-lg: var(--ref-frame-space-6); /* 24px (20 +1) */
+  --comp-tabs-padding-x-xl: var(--ref-frame-space-7); /* 28px (24 +1) */
+  --comp-tabs-gap: var(--ref-frame-space-3); /* 12px (8 +1) */
+  /* SegmentedControl density: comfortable — +1 step heights + fonts */
+  --comp-segmented-height-sm: 48px; /* 40 × 1.2 → 48 */
+  --comp-segmented-height-md: 52px; /* 44 × 1.2 → 52 */
+  --comp-segmented-height-lg: 56px; /* 48 × 1.2 → 56 */
+  --comp-segmented-height-xl: 68px; /* 56 × 1.2 → 68 */
+  --comp-segmented-font-sm: var(--ref-voice-size-5); /* 14px (13 +1) */
+  --comp-segmented-font-md: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-segmented-font-lg: var(--ref-voice-size-7); /* 18px (16 +1) */
+  --comp-segmented-font-xl: var(--ref-voice-size-8); /* 20px (18 +1) */
+  --comp-segmented-segment-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  /* Switch density: comfortable — larger track/thumb */
+  --comp-switch-track-width: 62px; /* 52 × 1.2 → 62 snap */
+  --comp-switch-track-height: 38px; /* 32 × 1.2 → 38 snap */
+  --comp-switch-thumb-size: 20px; /* 16 × 1.2 → 20 snap */
+  --comp-switch-thumb-size-pressed: 22px; /* 18 × 1.2 → 22 snap */
+  --comp-switch-thumb-inset: 9px; /* 8 × 1.2 → 9 snap */
+  --comp-switch-state-layer-size: 48px; /* 40 × 1.2 → 48 snap */
+  /* FAB density: comfortable — larger touch targets */
+  --comp-fab-size-sm: 48px; /* 40 × 1.2 → 48 snap */
+  --comp-fab-size-md: 68px; /* 56 × 1.2 → 68 snap */
+  --comp-fab-size-lg: 86px; /* 72 × 1.2 → 86 snap */
+  --comp-fab-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-fab-label-font: var(--ref-voice-size-6); /* 16px (14 +1) */
+  /* Stepper density: comfortable — larger indicators + fonts */
+  --comp-stepper-indicator-size-sm: 32px; /* 28 × 1.2 → 32 snap */
+  --comp-stepper-indicator-size-md: 40px; /* 32 × 1.2 → 40 snap */
+  --comp-stepper-indicator-size-lg: 48px; /* 40 × 1.2 → 48 snap */
+  --comp-stepper-indicator-size-xl: 56px; /* 48 × 1.2 → 56 snap */
+  --comp-stepper-font-sm: var(--ref-voice-size-4); /* 13px (12 +1) */
+  --comp-stepper-font-md: var(--ref-voice-size-5); /* 14px (13 +1) */
+  --comp-stepper-font-lg: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-stepper-font-xl: var(--ref-voice-size-7); /* 18px (16 +1) */
+  --comp-stepper-label-font-sm: var(--ref-voice-size-4); /* 13px */
+  --comp-stepper-label-font-md: var(--ref-voice-size-5); /* 14px */
+  --comp-stepper-label-font-lg: var(--ref-voice-size-6); /* 16px */
+  --comp-stepper-label-font-xl: var(--ref-voice-size-7); /* 18px */
+  --comp-stepper-desc-font-sm: var(--ref-voice-size-2); /* 11px */
+  --comp-stepper-desc-font-md: var(--ref-voice-size-3); /* 12px */
+  --comp-stepper-desc-font-lg: var(--ref-voice-size-4); /* 13px */
+  --comp-stepper-desc-font-xl: var(--ref-voice-size-5); /* 14px */
+  /* Slider density: comfortable — thicker track, larger thumb */
+  --comp-slider-track-height: 6px; /* 4 × 1.2 → 6 snap */
+  --comp-slider-thumb-size: 24px; /* 20 × 1.2 → 24 snap */
+  --comp-slider-focus-ring-size: 44px; /* 36 × 1.2 → 44 snap */
+  /* Pagination density: comfortable — larger buttons */
+  --comp-pagination-height: 44px; /* 36 × 1.2 → 44 snap */
+  --comp-pagination-min-width: 44px; /* 36 × 1.2 → 44 snap */
+  --comp-pagination-font: var(--ref-voice-size-5); /* 14px (13 +1) */
+  /* Avatar density: comfortable — larger sizes */
+  --comp-avatar-size-sm: 40px; /* 32 × 1.2 → 40 snap */
+  --comp-avatar-size-md: 48px; /* 40 × 1.2 → 48 snap */
+  --comp-avatar-size-lg: 56px; /* 48 × 1.2 → 56 snap */
+  --comp-avatar-size-xl: 76px; /* 64 × 1.2 → 76 snap */
+  --comp-avatar-font-sm: var(--ref-voice-size-4); /* 13px (12 +1) */
+  --comp-avatar-font-md: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-avatar-font-lg: var(--ref-voice-size-7); /* 18px (16 +1) */
+  --comp-avatar-font-xl: var(--ref-voice-size-9); /* 24px (20 +1) */
+  --comp-avatar-status-size-sm: 10px; /* 8 × 1.2 → 10 snap */
+  --comp-avatar-status-size-md: 12px; /* 10 × 1.2 → 12 snap */
+  --comp-avatar-status-size-lg: 14px; /* 12 × 1.2 → 14 snap */
+  --comp-avatar-status-size-xl: 20px; /* 16 × 1.2 → 20 snap */
+  /* ToggleButton density: comfortable */
+  --comp-togglebutton-height-sm: 48px; /* 40 × 1.2 → 48 */
+  --comp-togglebutton-height-md: 52px; /* 44 × 1.2 → 52 */
+  --comp-togglebutton-height-lg: 56px; /* 48 × 1.2 → 56 */
+  --comp-togglebutton-height-xl: 68px; /* 56 × 1.2 → 68 */
+  --comp-togglebutton-font-sm: var(--ref-voice-size-5); /* 14px (13 +1) */
+  --comp-togglebutton-font-md: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-togglebutton-font-lg: var(--ref-voice-size-7); /* 18px (16 +1) */
+  --comp-togglebutton-font-xl: var(--ref-voice-size-8); /* 20px (18 +1) */
+  --comp-togglebutton-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  /* Badge density: comfortable */
+  --comp-badge-height: 24px; /* 20 × 1.2 → 24 snap */
+  --comp-badge-font: var(--ref-voice-size-3); /* 12px (11 +1) */
+  --comp-badge-padding-x: var(--ref-frame-space-2); /* 8px */
+  --comp-badge-min-width: 24px;
+  /* List density: comfortable */
+  --comp-list-item-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-list-item-padding-y: var(--ref-frame-space-4); /* 16px (12 +1) */
+  --comp-list-item-font-primary: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-list-item-font-secondary: var(--ref-voice-size-4); /* 13px (12 +1) */
+  --comp-list-item-min-height: 56px; /* 48 × 1.2 → 56 */
+  --comp-list-item-gap: var(--ref-frame-space-4); /* 16px (12 +1) */
+  /* Search density: comfortable */
+  --comp-search-height: 48px; /* 40 × 1.2 → 48 */
+  --comp-search-font: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-search-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-search-icon-size: 24px; /* 20 × 1.2 → 24 snap */
+  /* Toolbar density: comfortable */
+  --comp-toolbar-height: 56px; /* 48 × 1.2 → 56 */
+  --comp-toolbar-padding: var(--ref-frame-space-4); /* 16px (12 +1) */
+  --comp-toolbar-gap: var(--ref-frame-space-3); /* 12px (8 +1) */
+  /* Menu density: comfortable */
+  --comp-menu-item-padding-x: var(--ref-frame-space-5); /* 20px (16 +1) */
+  --comp-menu-item-padding-y: var(--ref-frame-space-3); /* 12px (8 +1) */
+  --comp-menu-item-font: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-menu-item-icon-size: 24px; /* 20 × 1.2 → 24 */
+  --comp-menu-padding: var(--ref-frame-space-3); /* 12px */
+  /* Popover density: comfortable */
+  --comp-popover-padding: var(--ref-frame-space-5); /* 20px (16 +1) */
+  /* BottomSheet density: comfortable */
+  --comp-bottomsheet-padding: var(--ref-frame-space-6); /* 24px (20 +1) */
+  --comp-bottomsheet-header-font: var(--ref-voice-size-8); /* 20px (18 +1) */
+  --comp-bottomsheet-handle-width: 38px; /* 32 × 1.2 → 38 */
+  --comp-bottomsheet-handle-height: 5px; /* 4 × 1.2 → 5 */
+  /* Sidebar density: comfortable */
+  --comp-sidebar-item-padding: var(--ref-frame-space-4) var(--ref-frame-space-5); /* 16px 20px */
+  --comp-sidebar-item-font: var(--ref-voice-size-6); /* 16px (14 +1) */
+  --comp-sidebar-group-label-font: var(--ref-voice-size-4); /* 13px (12 +1) */
+  --comp-sidebar-icon-size: 24px; /* 20 × 1.2 → 24 */
+  /* Topbar density: comfortable */
+  --comp-topbar-height: 68px; /* 56 × 1.2 → 68 */
+  --comp-topbar-padding-x: var(--ref-frame-space-6); /* 24px (20 +1) */
+  --comp-topbar-title-font: var(--ref-voice-size-8); /* 20px (18 +1) */
+  --comp-topbar-gap: var(--ref-frame-space-4); /* 16px (12 +1) */
+  /* BottomNav density: comfortable */
+  --comp-bottomnav-height: 76px; /* 64 × 1.2 → 76 snap */
+  --comp-bottomnav-label-font: var(--ref-voice-size-3); /* 12px (11 +1) */
+  --comp-bottomnav-icon-size: 28px; /* 24 × 1.2 → 28 snap */
+  /* OTPInput density: comfortable */
+  --comp-otpinput-cell-size: 56px; /* 48 × 1.2 → 56 */
+  --comp-otpinput-font: var(--ref-voice-size-9); /* 24px (20 +1) */
+  --comp-otpinput-gap: var(--ref-frame-space-4); /* 16px (12 +1) */
+  /* DatePicker density: comfortable */
+  --comp-datepicker-cell-size: 48px; /* 40 × 1.2 → 48 */
+  --comp-datepicker-grid-gap: var(--ref-frame-space-3); /* 12px (8 +1) */
+  --comp-datepicker-header-font: var(--ref-voice-size-6); /* 16px (14 +1) */
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━
+   Viewport-responsive voice sizing
+   ─────────────────────────────────────────────────
+   Uniform −1 ref-step per breakpoint tier across ALL
+   voice categories (display, heading, label, paragraph,
+   caption, overline). Desktop = baseline (values in :root).
+   Tablet (< 992px) = −1 step.  Phone (< 576px) = −2 steps.
+   Overline clamps at ref-voice-size-1 (10 px floor).
+   Line-heights are unitless ratios → scale automatically.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Tablet: −1 step (< 992 px) ── */
+@media (max-width: 991px) {
+  :root {
+    /* display */
+    --sys-voice-display-xl-size: var(--ref-voice-size-13); /* 56px ← 64 */
+    --sys-voice-display-l-size: var(--ref-voice-size-12); /* 48px ← 56 */
+    --sys-voice-display-m-size: var(--ref-voice-size-11); /* 40px ← 48 */
+    --sys-voice-display-s-size: var(--ref-voice-size-10); /* 32px ← 40 */
+    --sys-voice-display-xs-size: var(--ref-voice-size-9); /* 24px ← 32 */
+    /* heading */
+    --sys-voice-heading-l-size: var(--ref-voice-size-8); /* 20px ← 24 */
+    --sys-voice-heading-m-size: var(--ref-voice-size-7); /* 18px ← 20 */
+    /* label */
+    --sys-voice-label-xl-size: var(--ref-voice-size-8); /* 20px ← 24 */
+    --sys-voice-label-l-size: var(--ref-voice-size-7); /* 18px ← 20 */
+    --sys-voice-label-m-size: var(--ref-voice-size-6); /* 16px ← 18 */
+    --sys-voice-label-s-size: var(--ref-voice-size-5); /* 14px ← 16 */
+    --sys-voice-label-xs-size: var(--ref-voice-size-4); /* 13px ← 14 */
+    /* paragraph */
+    --sys-voice-paragraph-xl-size: var(--ref-voice-size-7); /* 18px ← 20 −1 */
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-6); /* 16px ← 18 */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-5); /* 14px ← 16 */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-4); /* 13px ← 14 */
+    /* caption */
+    --sys-voice-caption-size: var(--ref-voice-size-3); /* 12px ← 13 */
+    /* overline */
+    --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+    /* code: −1 viewport */
+    --sys-voice-code-size: var(--ref-voice-size-4); /* 13px ← 14 −1 */
+    --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+  }
+}
+
+/* ── Phone: −2 steps (< 576 px) ── */
+@media (max-width: 575px) {
+  :root {
+    /* display */
+    --sys-voice-display-xl-size: var(--ref-voice-size-12); /* 48px ← 64 */
+    --sys-voice-display-l-size: var(--ref-voice-size-11); /* 40px ← 56 */
+    --sys-voice-display-m-size: var(--ref-voice-size-10); /* 32px ← 48 */
+    --sys-voice-display-s-size: var(--ref-voice-size-9); /* 24px ← 40 */
+    --sys-voice-display-xs-size: var(--ref-voice-size-8); /* 20px ← 32 */
+    /* heading */
+    --sys-voice-heading-l-size: var(--ref-voice-size-7); /* 18px ← 24 */
+    --sys-voice-heading-m-size: var(--ref-voice-size-6); /* 16px ← 20 */
+    /* label */
+    --sys-voice-label-xl-size: var(--ref-voice-size-7); /* 18px ← 24 */
+    --sys-voice-label-l-size: var(--ref-voice-size-6); /* 16px ← 20 */
+    --sys-voice-label-m-size: var(--ref-voice-size-5); /* 14px ← 18 */
+    --sys-voice-label-s-size: var(--ref-voice-size-4); /* 13px ← 16 */
+    --sys-voice-label-xs-size: var(--ref-voice-size-3); /* 12px ← 14 */
+    /* paragraph */
+    --sys-voice-paragraph-xl-size: var(--ref-voice-size-6); /* 16px ← 20 −2 */
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-5); /* 14px ← 18 */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-4); /* 13px ← 16 */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-3); /* 12px ← 14 */
+    /* caption */
+    --sys-voice-caption-size: var(--ref-voice-size-2); /* 11px ← 13 */
+    /* overline */
+    --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+    /* code: −2 viewport */
+    --sys-voice-code-size: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+    /* radius: +1 step on phone — controls & surfaces need proportionally more radius */
+    --sys-frame-radius-control: var(--ref-frame-radius-4); /* 16px ← 12px */
+    --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px ← 12px */
+    --sys-frame-radius-surface: var(--ref-frame-radius-5); /* 20px ← 16px */
+    /* breadcrumbs: −2 viewport steps */
+    --comp-breadcrumbs-font: var(--ref-voice-size-2); /* 11px (default 13px −2) */
+    --comp-breadcrumbs-separator-font: var(--ref-voice-size-2); /* 11px */
+    --comp-breadcrumbs-gap: var(--ref-frame-space-micro); /* 2px (default 8px −2) */
+    --comp-breadcrumbs-item-padding-x: var(
+      --ref-frame-space-micro
+    ); /* 2px (default 4px −1, floor) */
+    --comp-breadcrumbs-item-padding-y: var(--ref-frame-space-micro); /* 2px */
+    --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-6); /* 24px (default 32px −2) */
+  }
+}
+
+/* ── Gallery component tokens ── */
+:root {
+  --comp-gallery-thumb-width: 88px;
+  --comp-gallery-thumb-height: 60px;
+  --comp-gallery-thumb-height-overlay: 44px;
+  --comp-gallery-image-height: 480px;
+}
+
+/* ── Compatibility aliases — tokens referenced under alternate names ── */
+:root {
+  /* ref-layer aliases */
+  --ref-frame-border-subtle: var(--ref-frame-border-thin);
+  --ref-frame-border-width: var(--ref-frame-border-thin);
+  --ref-frame-radius-md: var(--ref-frame-radius-2);
+  --ref-frame-radius-round: var(--ref-frame-radius-full);
+  --ref-voice-tracking-wide: var(--ref-voice-letter-spacing-wide);
+
+  /* sys-layer aliases (namespace normalization) */
+  --sys-color-border-default: var(--sys-energy-border-default);
+  --sys-color-content-brand: var(--sys-energy-text-accent);
+  --sys-depth-elevation-low: var(--sys-depth-elevation-light);
+  --sys-depth-scrim: var(--sys-depth-overlay);
+  --sys-energy-surface-interactive: var(--sys-energy-surface-accent);
+  --sys-energy-text-on-accent: var(--sys-energy-text-on-action);
+  --sys-frame-gap-element: var(--sys-size-gap-field);
+  --sys-frame-radius-md: var(--sys-frame-radius-control);
+  --sys-momentum-duration-normal: var(--sys-momentum-duration-default);
+  --sys-momentum-easing-standard: var(--ref-momentum-easing-standard);
+  --sys-size-height-control: var(--sys-size-control-height);
+
+  /* sys-state aliases (word-order / namespace normalization) */
+  --sys-state-disabled-bg: var(--sys-energy-state-disabled-bg);
+  --sys-state-disabled-border: var(--sys-energy-state-disabled-border);
+  --sys-state-disabled-text: var(--sys-energy-state-disabled-text);
+  --sys-state-opacity-disabled: var(--sys-state-disabled-opacity);
+
+  /* comp-layer tokens for hardcoded-value remediation */
+  --comp-chip-brightness-hover: 0.96;
+  --comp-chip-brightness-active: 0.92;
+  --ref-frame-stroke-icon: 2;
+  --comp-textarea-min-height: 4em;
+  --comp-snackbar-action-opacity: 0.9;
+  --comp-stepper-hover-opacity: 0.85;
+  --comp-toolbar-divider-height: 60%;
+  --comp-chip-line-height: 1.4;
+
+  /* dev-tool tokens — grid overlay & devmode affordances */
+  --dev-grid-color: rgb(95, 0, 250);
+  --dev-grid-color-subtle: rgba(95, 0, 250, 0.08);
+  --dev-grid-color-muted: rgba(95, 0, 250, 0.10);
+
+  /* comp-toggle tokens — inline toggle pill (theme & grid switches) */
+  --comp-toggle-track-width: var(--ref-frame-space-8);     /* 32px */
+  --comp-toggle-track-height: 18px;
+  --comp-toggle-knob-size: var(--ref-frame-space-3);        /* 12px */
+  --comp-toggle-knob-inset: 3px;
+  --comp-toggle-knob-active-left: 17px;
+  --comp-toggle-dot-size: 6px;
+  --comp-toggle-dot-offset: 6px;
+  --comp-badge-micro-padding: 1px 5px;
+  --comp-badge-micro-radius: 3px;
+
+  /* comp-layout tokens — doc-layout z-layering & sizing */
+  --comp-layout-z-topbar: 50;
+  --comp-layout-z-backdrop: 99;
+  --comp-layout-z-drawer: 100;
+  --comp-layout-loading-min-height: 200px;
+}
+
+/* end tokens */

@@ -1,0 +1,427 @@
+/**
+ * FLOW - Demo Utilities
+ * Reusable utility classes for component demos
+ * All values flow through tokens (ref → sys → comp)
+ */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Motion Demo Utilities
+   Demonstrates FLOW's Momentum foundation:
+   duration scale, easing curves, stagger choreography.
+   These classes ONLY appear in demo contexts — never in production.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/**
+ * Fade-in: opacity 0 → 1 using momentum enter easing.
+ * Duration set by parent via animation-duration or per-element overrides.
+ * Usage: <div className="flow-demo-fade-in" style={{ animationDuration: 'var(--ref-momentum-duration-slow)' }}>
+ */
+@keyframes flow-demo-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Slide-up: translateY(12px) + opacity 0 → natural position + opacity 1.
+ * Mirrors common "list item appears" pattern in production UIs.
+ */
+@keyframes flow-demo-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ref-frame-space-3, 12px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Slide-in from left: for stagger choreography comparisons.
+ */
+@keyframes flow-demo-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--ref-frame-space-4, 16px)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Easing ball: moves a circle across a track to visualize easing curves.
+ * Apply to an element with position:absolute inside a relative container.
+ */
+@keyframes flow-demo-ease-move {
+  from {
+    left: 0;
+  }
+  to {
+    left: calc(100% - 36px);
+  }
+}
+
+/**
+ * Utility class: applies slide-up + fade animation.
+ * animation-fill-mode: both ensures the element starts invisible.
+ * Override animation-delay for stagger effect.
+ */
+.flow-demo-slide-up {
+  animation-name: flow-demo-slide-up;
+  animation-fill-mode: both;
+}
+
+.flow-demo-fade-in {
+  animation-name: flow-demo-fade-in;
+  animation-fill-mode: both;
+}
+
+.flow-demo-slide-in {
+  animation-name: flow-demo-slide-in;
+  animation-fill-mode: both;
+}
+
+/**
+ * Motion track: visual container for easing/duration comparisons.
+ * The "ball" inside moves using animation-duration + easing overrides.
+ */
+.flow-demo-motion-track {
+  position: relative;
+  height: 36px;
+  border-radius: var(--sys-frame-radius-full, 999px);
+  background: var(--sys-energy-surface-sunken);
+  overflow: hidden;
+}
+
+.flow-demo-motion-ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--sys-energy-action-primary);
+}
+
+/**
+ * Duration bar: horizontal fill bar used to visualize each duration tier.
+ * Set width via inline style or JS.
+ * transition is set inline per-bar using the relevant token.
+ */
+.flow-demo-duration-bar {
+  height: 8px;
+  border-radius: var(--sys-frame-radius-full, 999px);
+  background: var(--sys-energy-action-primary);
+  width: 0%;
+  /* transition set inline per-bar so each can demonstrate its own token */
+}
+
+/**
+ * Duration bar track: background track behind the fill bar.
+ */
+.flow-demo-duration-track {
+  height: 8px;
+  border-radius: var(--sys-frame-radius-full, 999px);
+  background: var(--sys-energy-surface-sunken);
+  overflow: hidden;
+  width: 100%;
+}
+
+/**
+ * Replay button: small, low-emphasis trigger to re-run animations.
+ * Intentionally unstyled beyond semantics — uses FlowButton in JSX.
+ */
+.flow-demo-motion-replay-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sys-frame-gap-component);
+  flex-wrap: wrap;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Container Frames for Demos
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/**
+ * Mobile device frame for previewing mobile components
+ * Usage: FlowBottomNav, mobile-specific demos
+ */
+.demo-mobile-frame {
+  max-width: 375px;
+  border: var(--ref-frame-border-width) solid var(--ref-frame-border-subtle);
+  border-radius: var(--ref-frame-radius-md);
+  overflow: hidden;
+}
+
+/**
+ * Sidebar frame for previewing sidebar navigation
+ * Usage: FlowSidebar demos
+ */
+.demo-sidebar-frame {
+  max-width: 280px;
+  height: 500px;
+  border: var(--ref-frame-border-width) solid var(--ref-frame-border-subtle);
+  border-radius: var(--ref-frame-radius-md);
+  overflow: hidden;
+}
+
+/**
+ * Generic content frame for constraining component width
+ * Usage: FlowList, FlowTextInput, form demos
+ */
+.demo-content-frame {
+  max-width: 500px;
+}
+
+.demo-content-frame-sm {
+  max-width: 300px;
+}
+
+.demo-content-frame-md {
+  max-width: 400px;
+}
+
+/**
+ * Per-size proportional width for "Sizes" demos
+ * Visualizes the design-intent that larger sizes belong in wider containers.
+ * Mobile: all 100% (no staircase — viewport too narrow).
+ * Desktop (≥640px): sm 50% → md 65% → lg 80% → xl 100%.
+ */
+.demo-input-scale-sm,
+.demo-input-scale-md,
+.demo-input-scale-lg,
+.demo-input-scale-xl {
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .demo-input-scale-sm {
+    max-width: 50%;
+  }
+  .demo-input-scale-md {
+    max-width: 65%;
+  }
+  .demo-input-scale-lg {
+    max-width: 80%;
+  }
+  .demo-input-scale-xl {
+    max-width: 100%;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Spacing Utilities
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/**
+ * Top spacing for interactive elements following demos
+ * Usage: Status text after interactive components
+ */
+.demo-spacing-top-sm {
+  margin-top: var(--ref-frame-space-2);
+}
+
+.demo-spacing-top-md {
+  margin-top: var(--ref-frame-space-3);
+}
+
+.demo-spacing-top-lg {
+  margin-top: var(--ref-frame-space-4);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Decorative Elements
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/**
+ * Display block helper for labels
+ */
+.demo-label {
+  display: block;
+  margin-bottom: var(--ref-frame-space-2);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Accent Border Utilities
+   Left-border accent pattern used across documentation pages.
+   Default: text-accent. Modifiers for status colors.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-doc-accent {
+  border-left: 3px solid var(--sys-energy-text-accent);
+}
+
+.flow-doc-accent--success {
+  border-left-color: var(--sys-energy-status-success);
+}
+
+.flow-doc-accent--warning {
+  border-left-color: var(--sys-energy-status-warning);
+}
+
+.flow-doc-accent--error {
+  border-left-color: var(--sys-energy-status-error);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Error Boundary UI
+   Systematic recovery surface for lazy-module load failures and render errors.
+   Used by PageErrorBoundary and DemoErrorBoundary.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/**
+ * Base error boundary container
+ * Page variant: full viewport centering
+ */
+.flow-error-boundary--page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: var(--sys-frame-padding-container);
+}
+
+/**
+ * Demo variant: inline within the documentation page
+ */
+.flow-error-boundary--demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-component);
+  padding: var(--sys-frame-padding-container);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-md);
+  background: var(--sys-energy-surface-primary);
+}
+
+/**
+ * Card wrapper (page variant only)
+ */
+.flow-error-boundary__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sys-frame-gap-component);
+  max-width: 480px;
+  width: 100%;
+  padding: var(--sys-frame-padding-container);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-md);
+  background: var(--sys-energy-surface-primary);
+  text-align: center;
+}
+
+/**
+ * Icon (emoji) shown at top of card
+ */
+.flow-error-boundary__icon {
+  font-size: var(--ref-voice-size-11);
+  line-height: 1;
+}
+
+/**
+ * Primary heading: "Module failed to load" / "Page crashed"
+ */
+.flow-error-boundary__heading {
+  font-size: var(--sys-voice-label-l-size);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--sys-energy-text-primary);
+  margin: 0;
+}
+
+/**
+ * Body text: human-readable explanation
+ */
+.flow-error-boundary__body {
+  font-size: var(--sys-voice-paragraph-s-size);
+  color: var(--sys-energy-text-secondary);
+  margin: 0;
+  max-width: 38ch;
+  text-wrap: pretty;
+}
+
+/**
+ * Collapsible technical details (error message)
+ */
+.flow-error-boundary__details {
+  width: 100%;
+  text-align: left;
+}
+
+.flow-error-boundary__details summary {
+  font-size: var(--sys-voice-caption-size);
+  color: var(--sys-energy-text-tertiary);
+  cursor: pointer;
+  user-select: none;
+  padding: var(--ref-frame-space-1) 0;
+}
+
+.flow-error-boundary__details summary:hover {
+  color: var(--sys-energy-text-secondary);
+}
+
+/**
+ * Monospace error text inside <details>
+ */
+.flow-error-boundary__code {
+  display: block;
+  margin-top: var(--sys-frame-gap-component);
+  padding: var(--sys-frame-gap-component);
+  border-radius: var(--sys-frame-radius-sm);
+  background: var(--sys-energy-surface-tertiary);
+  font-family: var(--ref-voice-family-mono);
+  font-size: var(--sys-voice-caption-size);
+  color: var(--sys-energy-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+/**
+ * Action row
+ */
+.flow-error-boundary__actions {
+  display: flex;
+  gap: var(--sys-frame-gap-component);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--sys-frame-gap-component);
+}
+
+/**
+ * Buttons (intentionally bare — avoids dependency on FlowButton token chain)
+ */
+.flow-error-boundary__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-4);
+  border-radius: var(--sys-frame-radius-sm);
+  font-size: var(--sys-voice-paragraph-s-size);
+  font-weight: var(--ref-voice-weight-medium);
+  cursor: pointer;
+  border: var(--sys-frame-border-thin) solid transparent;
+  text-decoration: none;
+  transition: opacity var(--sys-momentum-transition-fast);
+}
+
+.flow-error-boundary__btn:hover {
+  opacity: 0.85;
+}
+
+.flow-error-boundary__btn--primary {
+  background: var(--sys-energy-action-primary);
+  color: var(--ref-energy-neutral-0);
+}
+
+.flow-error-boundary__btn--ghost {
+  background: transparent;
+  border-color: var(--sys-energy-border-default);
+  color: var(--sys-energy-text-secondary);
+}

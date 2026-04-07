@@ -1,0 +1,39 @@
+Pattern Key,Category,Pattern Name,Component Name,Platform,Overview Demo Function,UseCases Demo Function,Demo Source,Status
+feedback/empty-state,Feedback,Empty State,FlowEmptyState,shared,EmptyStateOverviewDemo,EmptyStateUseCasesDemo,pattern-registry.tsx,complete
+feedback/snackbar-provider,Feedback,Snackbar Provider,FlowSnackbarProvider,shared,SnackbarProviderOverviewDemo,SnackbarProviderUseCasesDemo,pattern-registry.tsx,complete
+feedback/notification-panel,Feedback,Notification Panel,FlowNotificationPanel,shared,NotificationPanelOverviewDemo,NotificationPanelUseCasesDemo,pattern-registry.tsx,complete
+display-patterns/avatar-group,Display Patterns,Avatar Group,FlowAvatarGroup,shared,AvatarGroupOverviewDemo,AvatarGroupUseCasesDemo,pattern-registry.tsx,complete
+display-patterns/hover-card,Display Patterns,Hover Card,FlowHoverCard,desktop,HoverCardOverviewDemo,HoverCardUseCasesDemo,pattern-registry.tsx,complete
+input-patterns/phone-input,Input Patterns,Phone Input,FlowPhoneInput,shared,PhoneInputOverviewDemo,PhoneInputUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/search,Input Patterns,Search,FlowSearch,shared,SearchOverviewDemo,SearchUseCasesDemo,input-pattern-demos.tsx,complete (3 functions)
+input-patterns/autocomplete,Input Patterns,Autocomplete,FlowAutocomplete,shared,AutocompleteOverviewDemo,AutocompleteUseCasesDemo,input-pattern-demos.tsx,complete
+input-patterns/multi-select,Input Patterns,Multi-Select,FlowMultiSelect,shared,MultiSelectOverviewDemo,MultiSelectUseCasesDemo,input-pattern-demos.tsx,complete
+input-patterns/date-picker,Input Patterns,Date Picker,FlowDatePicker,shared,DatePickerOverviewDemo,DatePickerUseCasesDemo,input-pattern-demos.tsx,complete
+input-patterns/date-range-picker,Input Patterns,Date Range Picker,FlowDateRangePicker,shared,DateRangePickerOverviewDemo,DateRangePickerUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/color-picker,Input Patterns,Color Picker,FlowColorPicker,shared,ColorPickerOverviewDemo,ColorPickerUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/otp-input,Input Patterns,OTP Input,FlowOTPInput,shared,OTPInputOverviewDemo,OTPInputUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/inline-editable,Input Patterns,Inline Editable,FlowInlineEditable,shared,InlineEditableOverviewDemo,InlineEditableUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/rich-text-editor,Input Patterns,Rich Text Editor,FlowRichTextEditor,shared,RichTextEditorOverviewDemo,RichTextEditorUseCasesDemo,input-pattern-demos-2.tsx,complete
+input-patterns/file-upload,Input Patterns,File Upload,FlowFileUpload,shared,FileUploadOverviewDemo,FileUploadUseCasesDemo,input-pattern-demos.tsx,complete
+content/filter-chip-group,Content Patterns,Filter Chip Group,FlowFilterChipGroup,shared,FilterChipGroupOverviewDemo,FilterChipGroupUseCasesDemo,pattern-registry.tsx,complete
+content/timeline,Content Patterns,Timeline,FlowTimeline,shared,TimelineOverviewDemo,TimelineUseCasesDemo,pattern-registry.tsx,complete
+content/section-header,Content Patterns,Section Header,FlowSectionHeader,shared,SectionHeaderOverviewDemo,SectionHeaderUseCasesDemo,pattern-registry.tsx,complete
+content/kpi-card,Content Patterns,KPI Card,FlowKPICard,shared,KPICardOverviewDemo,KPICardUseCasesDemo,pattern-registry.tsx,complete
+overlay/confirmation-dialog,Overlay Patterns,Confirmation Dialog,FlowConfirmationDialog,shared,ConfirmationDialogOverviewDemo,ConfirmationDialogUseCasesDemo,pattern-registry.tsx,complete
+overlay/command-palette,Overlay Patterns,Command Palette,FlowCommandPalette,shared,CommandPaletteOverviewDemo,CommandPaletteUseCasesDemo,pattern-registry.tsx,complete
+overlay/action-sheet,Overlay Patterns,Action Sheet,FlowActionSheet,mobile,ActionSheetOverviewDemo,ActionSheetUseCasesDemo,pattern-registry.tsx,complete
+overlay/fullscreen-sheet,Overlay Patterns,Fullscreen Sheet,FlowFullscreenSheet,mobile,FullscreenSheetOverviewDemo,FullscreenSheetUseCasesDemo,pattern-registry.tsx,complete
+layout-patterns/form-section,Layout Patterns,Form Section,FlowFormSection,shared,FormSectionOverviewDemo,FormSectionUseCasesDemo,pattern-registry.tsx,complete
+layout-patterns/toolbar,Layout Patterns,Toolbar,FlowToolbar,shared,ToolbarOverviewDemo,ToolbarUseCasesDemo,pattern-registry.tsx,complete
+layout-patterns/swipe-actions,Layout Patterns,Swipe Actions,FlowSwipeActions,mobile,SwipeActionsOverviewDemo,SwipeActionsUseCasesDemo,pattern-registry.tsx,complete
+layout-patterns/quick-actions-grid,Layout Patterns,Quick Actions Grid,FlowQuickActions,mobile,QuickActionsOverviewDemo,QuickActionsUseCasesDemo,pattern-registry.tsx,complete
+navigation-patterns/topbar,Navigation Patterns,Topbar,FlowTopbar,desktop,TopbarOverviewDemo,TopbarUseCasesDemo,pattern-registry.tsx,complete
+navigation-patterns/drawer-adapter,Navigation Patterns,Drawer Adapter,FlowDrawerAdapter,shared,DrawerAdapterOverviewDemo,DrawerAdapterUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/data-table,Data Patterns,Data Table,FlowDataTable,desktop,DataTableOverviewDemo,DataTableUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/virtual-data-table,Data Patterns,Virtual Data Table,FlowVirtualDataTable,desktop,VirtualDataTableOverviewDemo,VirtualDataTableUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/transfer-list,Data Patterns,Transfer List,FlowTransferList,shared,TransferListOverviewDemo,TransferListUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/drag-sortable-list,Data Patterns,Drag Sortable List,FlowDragSortableList,shared,DragSortableListOverviewDemo,DragSortableListUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/advanced-filters,Data Patterns,Advanced Filters,FlowAdvancedFilters,shared,AdvancedFiltersOverviewDemo,AdvancedFiltersUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/column-configurator,Data Patterns,Column Configurator,FlowColumnConfigurator,shared,ColumnConfiguratorOverviewDemo,ColumnConfiguratorUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/calendar-view,Data Patterns,Calendar View,FlowCalendarView,shared,CalendarViewOverviewDemo,CalendarViewUseCasesDemo,pattern-registry.tsx,complete
+data-patterns/chart-wrapper,Data Patterns,Chart Wrapper,FlowChartWrapper,shared,ChartWrapperOverviewDemo,ChartWrapperUseCasesDemo,pattern-registry.tsx,complete

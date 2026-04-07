@@ -1,0 +1,6 @@
+/* Edenred — Brand typeface (proprietary).
+   Load via self-hosted @font-face in production.
+   Falls back to Ubuntu Bold → system sans-serif when unavailable.
+
+   Google Fonts (Ubuntu) loaded via <link> in index.html
+   to avoid @import url() inside Vite's injected <style> tag. */

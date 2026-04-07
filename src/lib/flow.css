@@ -1,0 +1,23 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FLOW Design System — Library CSS
+   Pre-built: consumers do NOT need Tailwind installed.
+   Import: @flow/design-system/css
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Core token variables (ref, sys, comp) */
+@import "../styles/modules/tokens.css";
+
+/* Responsive overrides (density × viewport, compound selectors) */
+@import "../styles/modules/responsive.css";
+
+/* Input surface primitive (shared input-family CSS) */
+@import "../styles/modules/input-surface.css";
+
+/* Utility classes (typography, code, table — used by Text, Code, FlowTable) */
+@import "../styles/modules/utilities.css";
+
+/* L2 Primitives (Surface, Stack, Inline, Grid, Text, etc.) */
+@import "../styles/modules/primitives.css";
+
+/* L3 Components (Avatar, Slider, Progress, etc.) */
+@import "../styles/modules/components.css";

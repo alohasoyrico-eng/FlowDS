@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "flow-docs",
+      "runtimeExecutable": "/tmp/node-v20.18.3-darwin-arm64/bin/node",
+      "runtimeArgs": ["/Users/r1c0/Desktop/Flow/node_modules/.bin/vite", "--port", "3999"],
+      "port": 3999
+    }
+  ]
+}

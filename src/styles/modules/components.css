@@ -1,0 +1,4656 @@
+/* ── Button v2: Emphasis-model CSS (D1-D8) ────────── */
+/* Proper :hover/:active pseudo-classes for the subtle→filled
+   paradigm and per-variant state transitions that inline styles
+   cannot express. data-variant drives variant selection. */
+
+.flow-btn-v2 {
+  /* Resolve comp tokens per-element so they track the local sys value
+     (varies by [data-size], @media phone, [data-density]) */
+  --comp-button-radius: var(--sys-frame-radius-control);
+  /* Focus ring comp tokens — alias sys tokens so variants or context
+     can override (e.g. button on dark surface needs different gap fill) */
+  --comp-button-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-button-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-button-focus-ring-color: var(--sys-state-focus-ring-color);
+  --comp-button-focus-gap-color: var(--sys-energy-surface-primary);
+  position: relative;
+  z-index: var(--comp-button-z-index, auto);
+  height: var(--comp-button-height);
+  max-width: 100%;
+  font-size: var(--comp-button-font);
+  line-height: var(--comp-button-line-height);
+  letter-spacing: var(--comp-button-letter-spacing);
+  border-radius: var(--comp-button-radius);
+  font-family: var(--comp-button-font-family);
+  font-weight: var(--comp-button-font-weight);
+  transition:
+    background var(--comp-button-transition),
+    color var(--comp-button-transition),
+    border-color var(--comp-button-transition),
+    box-shadow var(--comp-button-transition),
+    opacity var(--comp-button-transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-button-gap);
+  padding: 0 var(--comp-button-padding-x);
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  width: fit-content;
+  text-align: center;
+}
+
+/* Button label — truncation safety net for constrained containers.
+   Moves overflow responsibility from flex container to flex item so
+   padding and border-radius remain intact when the button shrinks. */
+.flow-btn-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Full width — via data-attribute for CSS cascade compatibility */
+.flow-btn-v2[data-full-width] {
+  width: 100%;
+}
+
+/* ── Button size — per-instance [data-size] → per-size comp tokens ──
+   Height auto-shifts with density because --comp-button-height-{size}
+   references --sys-frame-height-control-{size} which density redefines.
+   Font, padding-x, and gap per-size tokens are explicitly overridden
+   in [data-density] blocks. md is default (no selector needed for
+   buttons without data-size, but included for explicit composition). */
+.flow-btn-v2[data-size="sm"] {
+  --comp-button-height: var(--comp-button-height-sm);
+  --comp-button-font: var(--comp-button-font-sm);
+  --comp-button-padding-x: var(--comp-button-padding-x-sm);
+  --comp-button-gap: var(--comp-button-gap-sm);
+}
+.flow-btn-v2[data-size="md"] {
+  --comp-button-height: var(--comp-button-height-md);
+  --comp-button-font: var(--comp-button-font-md);
+  --comp-button-padding-x: var(--comp-button-padding-x-md);
+  --comp-button-gap: var(--comp-button-gap-md);
+}
+.flow-btn-v2[data-size="lg"] {
+  --comp-button-height: var(--comp-button-height-lg);
+  --comp-button-font: var(--comp-button-font-lg);
+  --comp-button-padding-x: var(--comp-button-padding-x-lg);
+  --comp-button-gap: var(--comp-button-gap-lg);
+}
+.flow-btn-v2[data-size="xl"] {
+  --comp-button-height: var(--comp-button-height-xl);
+  --comp-button-font: var(--comp-button-font-xl);
+  --comp-button-padding-x: var(--comp-button-padding-x-xl);
+  --comp-button-gap: var(--comp-button-gap-xl);
+}
+
+/* HIGH — dark filled (light filled on dark) */
+.flow-btn-v2[data-variant="high"] {
+  background: var(--comp-button-bg-high);
+  color: var(--comp-button-text-high);
+  border: var(--comp-button-border-width) solid transparent;
+}
+.flow-btn-v2[data-variant="high"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-high-hover);
+}
+.flow-btn-v2[data-variant="high"]:active:not(:disabled) {
+  background: var(--comp-button-bg-high-active);
+}
+
+/* MEDIUM — outlined */
+.flow-btn-v2[data-variant="medium"] {
+  background: var(--comp-button-bg-medium);
+  color: var(--comp-button-text-medium);
+  border: var(--comp-button-border-width) solid var(--comp-button-border-medium);
+}
+.flow-btn-v2[data-variant="medium"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-medium-hover);
+}
+.flow-btn-v2[data-variant="medium"]:active:not(:disabled) {
+  background: var(--comp-button-bg-medium-active);
+}
+
+/* LOW — link button with underline (D4) */
+.flow-btn-v2[data-variant="low"] {
+  background: var(--comp-button-bg-low);
+  color: var(--comp-button-text-low);
+  border: var(--comp-button-border-width) solid transparent;
+  text-decoration: underline;
+  text-underline-offset: var(--ref-frame-space-micro);
+  padding: 0 var(--comp-button-padding-x);
+  height: auto;
+  min-height: var(--comp-button-height);
+}
+.flow-btn-v2[data-variant="low"]:hover:not(:disabled) {
+  color: var(--comp-button-text-low-hover);
+}
+.flow-btn-v2[data-variant="low"]:active:not(:disabled) {
+  color: var(--comp-button-text-low-active);
+}
+
+/* GHOST — transparent bg, text-secondary color, padding + hover bg (D6)
+   Used for navigation items (breadcrumbs, toolbars) where buttons
+   need chrome on hover but are visually invisible at rest. */
+.flow-btn-v2[data-variant="ghost"] {
+  background: transparent;
+  color: var(--comp-button-text-ghost);
+  border: var(--comp-button-border-width) solid transparent;
+  text-decoration: none;
+}
+.flow-btn-v2[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-ghost-hover);
+  color: var(--comp-button-text-ghost-hover);
+}
+.flow-btn-v2[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--comp-button-bg-ghost-active);
+  color: var(--comp-button-text-ghost-hover);
+}
+
+/* OUTLINE — transparent bg, accent text, strong border (D5) */
+.flow-btn-v2[data-variant="outline"] {
+  background: var(--comp-button-bg-outline);
+  color: var(--comp-button-text-outline);
+  border: var(--comp-button-border-width) solid var(--comp-button-border-outline);
+}
+.flow-btn-v2[data-variant="outline"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-outline-hover);
+}
+.flow-btn-v2[data-variant="outline"]:active:not(:disabled) {
+  background: var(--comp-button-bg-outline-active);
+}
+
+/* DANGER — subtle→filled paradigm (D2) */
+.flow-btn-v2[data-variant="danger"] {
+  background: var(--comp-button-bg-danger-subtle);
+  color: var(--comp-button-text-danger-subtle);
+  border: var(--comp-button-border-width) solid transparent;
+}
+.flow-btn-v2[data-variant="danger"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-danger-hover);
+  color: var(--comp-button-text-danger-on-filled);
+}
+.flow-btn-v2[data-variant="danger"]:active:not(:disabled) {
+  background: var(--comp-button-bg-danger-active);
+  color: var(--comp-button-text-danger-on-filled);
+}
+
+/* WARNING — subtle→filled paradigm (mirrors danger with yellow palette) */
+.flow-btn-v2[data-variant="warning"] {
+  background: var(--comp-button-bg-warning-subtle);
+  color: var(--comp-button-text-warning-subtle);
+  border: var(--comp-button-border-width) solid transparent;
+}
+.flow-btn-v2[data-variant="warning"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-warning-hover);
+  color: var(--comp-button-text-warning-on-filled);
+}
+.flow-btn-v2[data-variant="warning"]:active:not(:disabled) {
+  background: var(--comp-button-bg-warning-active);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+/* DISABLED — per-emphasis identity preservation (D3)
+   Each emphasis retains its structural identity when disabled so users
+   can still distinguish button hierarchy at a glance. */
+.flow-btn-v2:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1; /* Override ActionSurface base opacity — Button uses explicit disabled colors */
+}
+/* HIGH disabled: dimmed filled → still reads as primary action */
+.flow-btn-v2[data-variant="high"]:disabled {
+  background: var(--comp-button-bg-disabled-high);
+  color: var(--comp-button-text-disabled-high);
+  border-color: transparent;
+}
+/* MEDIUM disabled: transparent + faded border → preserves bordered structure */
+.flow-btn-v2[data-variant="medium"]:disabled {
+  background: var(--comp-button-bg-disabled-medium);
+  color: var(--comp-button-text-disabled-medium);
+  border-color: var(--comp-button-border-disabled-medium);
+}
+/* LOW disabled: transparent + dimmed underline text */
+.flow-btn-v2[data-variant="low"]:disabled {
+  background: transparent;
+  color: var(--comp-button-text-disabled);
+  border-color: transparent;
+  text-decoration: underline;
+}
+/* GHOST disabled: transparent + dimmed text */
+.flow-btn-v2[data-variant="ghost"]:disabled {
+  background: transparent;
+  color: var(--comp-button-text-disabled);
+  border-color: transparent;
+}
+/* OUTLINE disabled: transparent + lighter faded border → preserves outlined structure */
+.flow-btn-v2[data-variant="outline"]:disabled {
+  background: var(--comp-button-bg-disabled-outline);
+  color: var(--comp-button-text-disabled-outline);
+  border-color: var(--comp-button-border-disabled-outline);
+}
+/* DANGER disabled: faint red tint → preserves semantic danger identity */
+.flow-btn-v2[data-variant="danger"]:disabled {
+  background: var(--comp-button-bg-disabled-danger);
+  color: var(--comp-button-text-disabled-danger);
+  border-color: transparent;
+}
+/* WARNING disabled: faint yellow tint → preserves semantic warning identity */
+.flow-btn-v2[data-variant="warning"]:disabled {
+  background: var(--comp-button-bg-disabled-warning);
+  color: var(--comp-button-text-disabled-warning);
+  border-color: transparent;
+}
+
+/* LOADING — preserve active colors, only change cursor.
+   aria-busy indicates loading state (ActionSurface sets disabled
+   when loading, but we override visual styles to maintain emphasis
+   colors so loading≠disabled visually).
+   cursor/pointer-events are handled by the shared rule below. */
+/* HIGH loading: maintain filled style */
+.flow-btn-v2[data-variant="high"][aria-busy="true"] {
+  background: var(--comp-button-bg-high);
+  color: var(--comp-button-text-high);
+  border-color: transparent;
+}
+/* MEDIUM loading: maintain outlined style */
+.flow-btn-v2[data-variant="medium"][aria-busy="true"] {
+  background: var(--comp-button-bg-medium);
+  color: var(--comp-button-text-medium);
+  border-color: var(--comp-button-border-medium);
+}
+/* LOW loading: maintain link style */
+.flow-btn-v2[data-variant="low"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-button-text-low);
+  border-color: transparent;
+  text-decoration: underline;
+}
+/* OUTLINE loading: maintain outlined accent style */
+.flow-btn-v2[data-variant="outline"][aria-busy="true"] {
+  background: var(--comp-button-bg-outline);
+  color: var(--comp-button-text-outline);
+  border-color: var(--comp-button-border-outline);
+}
+/* GHOST loading: maintain transparent style */
+.flow-btn-v2[data-variant="ghost"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-button-text-ghost);
+  border-color: transparent;
+}
+/* DANGER loading: maintain subtle danger style */
+.flow-btn-v2[data-variant="danger"][aria-busy="true"] {
+  background: var(--comp-button-bg-danger-subtle);
+  color: var(--comp-button-text-danger-subtle);
+  border-color: transparent;
+}
+/* WARNING loading: maintain subtle warning style */
+.flow-btn-v2[data-variant="warning"][aria-busy="true"] {
+  background: var(--comp-button-bg-warning-subtle);
+  color: var(--comp-button-text-warning-subtle);
+  border-color: transparent;
+}
+
+/* ── Loading label transition (P9 — moved from inline style to CSS) ── */
+.flow-btn-v2[aria-busy="true"] .flow-btn-label {
+  transition: opacity var(--comp-button-transition);
+}
+
+/* ── State layer: data-state selectors (P11 — connect resolveState to CSS) ──
+   ActionSurface emits data-state for programmatic states. These selectors
+   mirror the existing :disabled / [aria-busy] rules so the state system
+   is connected to styling regardless of which attribute is used. */
+.flow-btn-v2[data-state="disabled"] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1;
+}
+.flow-btn-v2[data-state="loading"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ── Tone override — brand voice/personality variants ── */
+/* Applies tone color+weight when data-tone is present (LOW/MEDIUM/OUTLINE/GHOST emphasis only).
+   HIGH/DANGER emphasis preserve their semantic colors. */
+.flow-btn-v2[data-variant="low"][data-tone="brand"],
+.flow-btn-v2[data-variant="medium"][data-tone="brand"],
+.flow-btn-v2[data-variant="outline"][data-tone="brand"],
+.flow-btn-v2[data-variant="ghost"][data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+.flow-btn-v2[data-variant="low"][data-tone="marketing"],
+.flow-btn-v2[data-variant="medium"][data-tone="marketing"],
+.flow-btn-v2[data-variant="outline"][data-tone="marketing"],
+.flow-btn-v2[data-variant="ghost"][data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+.flow-btn-v2[data-variant="low"][data-tone="system"],
+.flow-btn-v2[data-variant="medium"][data-tone="system"],
+.flow-btn-v2[data-variant="outline"][data-tone="system"],
+.flow-btn-v2[data-variant="ghost"][data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+.flow-btn-v2[data-variant="low"][data-tone="neutral"],
+.flow-btn-v2[data-variant="medium"][data-tone="neutral"],
+.flow-btn-v2[data-variant="outline"][data-tone="neutral"],
+.flow-btn-v2[data-variant="ghost"][data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+/* Focus ring — consistent across all emphasis levels.
+   Uses double box-shadow (gap fill + ring) because CSS outline does NOT
+   follow border-radius reliably in all Chromium builds.
+   outline: none suppresses the native rectangular ring completely.
+   WHCM (forced-colors) gets a dedicated outline so the ring is visible
+   in Windows High Contrast Mode where box-shadow is ignored. */
+.flow-btn-v2:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  box-shadow:
+    0 0 0 var(--comp-button-focus-ring-offset) var(--comp-button-focus-gap-color),
+    0 0 0 calc(var(--comp-button-focus-ring-offset) + var(--comp-button-focus-ring-width))
+      var(--comp-button-focus-ring-color);
+}
+@media (forced-colors: active) {
+  .flow-btn-v2:focus-visible {
+    outline: var(--comp-button-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-button-focus-ring-offset);
+  }
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-btn-v2[data-demo-state="hover"]:not(:disabled) {
+  /* Apply hover styles per emphasis */
+}
+.flow-btn-v2[data-variant="high"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-high-hover);
+}
+.flow-btn-v2[data-variant="medium"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-medium-hover);
+}
+.flow-btn-v2[data-variant="low"][data-demo-state="hover"]:not(:disabled) {
+  color: var(--comp-button-text-low-hover);
+}
+.flow-btn-v2[data-variant="outline"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-outline-hover);
+}
+.flow-btn-v2[data-variant="danger"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-danger-hover);
+  color: var(--comp-button-text-danger-on-filled);
+}
+.flow-btn-v2[data-variant="ghost"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-ghost-hover);
+  color: var(--comp-button-text-ghost-hover);
+}
+.flow-btn-v2[data-variant="warning"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-warning-hover);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+.flow-btn-v2[data-demo-state="focus"]:not(:disabled) {
+  /* Mirror :focus-visible ring for static documentation previews.
+     Uses double box-shadow (gap fill + ring) instead of outline because
+     outline only follows border-radius on elements with an active focus
+     pseudo-class (:focus/:focus-visible) in some rendering engines.
+     box-shadow always respects border-radius unconditionally.
+     outline: transparent kept for Windows High Contrast Mode (WHCM). */
+  outline: var(--comp-button-focus-ring-width) solid transparent;
+  box-shadow:
+    0 0 0 var(--comp-button-focus-ring-offset) var(--comp-button-focus-gap-color),
+    0 0 0 calc(var(--comp-button-focus-ring-offset) + var(--comp-button-focus-ring-width))
+      var(--comp-button-focus-ring-color);
+}
+
+.flow-btn-v2[data-demo-state="pressed"]:not(:disabled) {
+  /* Apply active/pressed styles per emphasis */
+}
+.flow-btn-v2[data-variant="high"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-high-active);
+}
+.flow-btn-v2[data-variant="medium"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-medium-active);
+}
+.flow-btn-v2[data-variant="low"][data-demo-state="pressed"]:not(:disabled) {
+  color: var(--comp-button-text-low-active);
+}
+.flow-btn-v2[data-variant="outline"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-outline-active);
+}
+.flow-btn-v2[data-variant="danger"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-danger-active);
+  color: var(--comp-button-text-danger-on-filled);
+}
+.flow-btn-v2[data-variant="ghost"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-ghost-active);
+  color: var(--comp-button-text-ghost-hover);
+}
+.flow-btn-v2[data-variant="warning"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-warning-active);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+/* Loading state — Momentum-aligned pulsing dots (shared by Button + IconButton) */
+.flow-btn-v2[aria-busy="true"],
+.flow-icon-btn[aria-busy="true"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* Loading dots inside buttons inherit text color for contrast */
+.flow-btn-v2 .flow-loading-dots > span,
+.flow-icon-btn .flow-loading-dots > span { background: currentColor; }
+
+
+/* ── IconButton: Emphasis-model CSS ────────────────── */
+/* Square button with only an icon. data-variant drives style. */
+
+.flow-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-icon-button-size);
+  height: var(--comp-icon-button-size);
+  border-radius: var(--comp-icon-button-radius);
+  transition: all var(--comp-icon-button-transition);
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* ── IconButton size — per-instance [data-size] → per-size comp tokens ──
+   Same pattern as FlowButton: size auto-shifts with density via sys layer. */
+.flow-icon-btn[data-size="sm"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-sm);
+}
+.flow-icon-btn[data-size="md"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-md);
+}
+.flow-icon-btn[data-size="lg"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-lg);
+}
+.flow-icon-btn[data-size="xl"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-xl);
+}
+
+/* HIGH — dark filled (same as Button.high) */
+.flow-icon-btn[data-variant="high"] {
+  background: var(--comp-icon-button-bg-high);
+  color: var(--comp-icon-button-icon-high);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+.flow-icon-btn[data-variant="high"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-hover);
+}
+.flow-icon-btn[data-variant="high"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-active);
+}
+
+/* MEDIUM — outlined (same as Button.medium) */
+.flow-icon-btn[data-variant="medium"] {
+  background: var(--comp-icon-button-bg-medium);
+  color: var(--comp-icon-button-icon-medium);
+  border: var(--comp-icon-button-border-width) solid var(--comp-icon-button-border-medium);
+}
+.flow-icon-btn[data-variant="medium"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-hover);
+}
+.flow-icon-btn[data-variant="medium"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-active);
+}
+
+/* LOW — ghost, subtle icon (toolbars) */
+.flow-icon-btn[data-variant="low"] {
+  background: var(--comp-icon-button-bg-low);
+  color: var(--comp-icon-button-icon-low);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+.flow-icon-btn[data-variant="low"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-hover);
+}
+.flow-icon-btn[data-variant="low"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-active);
+}
+
+/* GHOST — transparent, minimal chrome. Hover/active reveal surface. */
+.flow-icon-btn[data-variant="ghost"] {
+  background: var(--comp-icon-button-bg-ghost);
+  color: var(--comp-icon-button-icon-ghost);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+.flow-icon-btn[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-hover);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+.flow-icon-btn[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-active);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+/* OUTLINE — transparent bg, accent icon, strong border */
+.flow-icon-btn[data-variant="outline"] {
+  background: var(--comp-icon-button-bg-outline);
+  color: var(--comp-icon-button-icon-outline);
+  border: var(--comp-icon-button-border-width) solid var(--comp-icon-button-border-outline);
+}
+.flow-icon-btn[data-variant="outline"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-hover);
+}
+.flow-icon-btn[data-variant="outline"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-active);
+}
+
+/* DANGER — subtle→filled (same as Button.danger) */
+.flow-icon-btn[data-variant="danger"] {
+  background: var(--comp-icon-button-bg-danger-subtle);
+  color: var(--comp-icon-button-icon-danger);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+.flow-icon-btn[data-variant="danger"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-hover);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+.flow-icon-btn[data-variant="danger"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-active);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+
+/* DISABLED — per-emphasis identity preservation (mirrors FlowButton pattern) */
+.flow-icon-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1; /* Override ActionSurface base opacity — IconButton uses explicit disabled colors */
+}
+/* HIGH disabled: dimmed filled → still reads as primary action */
+.flow-icon-btn[data-variant="high"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-high);
+  color: var(--comp-icon-button-icon-disabled-high);
+  border-color: transparent;
+}
+/* MEDIUM disabled: transparent + faded border → preserves bordered structure */
+.flow-icon-btn[data-variant="medium"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-medium);
+  color: var(--comp-icon-button-icon-disabled-medium);
+  border-color: var(--comp-icon-button-border-disabled-medium);
+}
+/* LOW disabled: transparent + dim icon */
+.flow-icon-btn[data-variant="low"]:disabled {
+  background: transparent;
+  color: var(--comp-icon-button-icon-disabled);
+  border-color: transparent;
+}
+/* OUTLINE disabled: transparent + lighter faded border */
+.flow-icon-btn[data-variant="outline"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-outline);
+  color: var(--comp-icon-button-icon-disabled-outline);
+  border-color: var(--comp-icon-button-border-disabled-outline);
+}
+/* DANGER disabled: faint red tint → preserves semantic danger identity */
+.flow-icon-btn[data-variant="danger"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-danger);
+  color: var(--comp-icon-button-icon-disabled-danger);
+  border-color: transparent;
+}
+/* GHOST disabled: transparent + dim icon */
+.flow-icon-btn[data-variant="ghost"]:disabled {
+  background: transparent;
+  color: var(--comp-icon-button-icon-disabled);
+  border-color: transparent;
+}
+
+/* LOADING — preserve emphasis colors so loading≠disabled visually.
+   ActionSurface sets disabled when loading; [aria-busy] overrides win
+   by specificity. Spinner inherits color via currentColor.
+   cursor/pointer-events are handled by the shared rule above. */
+/* HIGH loading: maintain filled style */
+.flow-icon-btn[data-variant="high"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-high);
+  color: var(--comp-icon-button-icon-high);
+  border-color: transparent;
+}
+/* MEDIUM loading: maintain bordered style */
+.flow-icon-btn[data-variant="medium"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-medium);
+  color: var(--comp-icon-button-icon-medium);
+  border-color: var(--comp-icon-button-border-medium);
+}
+/* LOW loading: maintain subtle icon style */
+.flow-icon-btn[data-variant="low"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-icon-button-icon-low);
+  border-color: transparent;
+}
+/* GHOST loading: maintain transparent style */
+.flow-icon-btn[data-variant="ghost"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-ghost);
+  color: var(--comp-icon-button-icon-ghost);
+  border-color: transparent;
+}
+/* OUTLINE loading: maintain outlined accent style */
+.flow-icon-btn[data-variant="outline"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-outline);
+  color: var(--comp-icon-button-icon-outline);
+  border-color: var(--comp-icon-button-border-outline);
+}
+/* DANGER loading: maintain subtle danger style */
+.flow-icon-btn[data-variant="danger"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-danger-subtle);
+  color: var(--comp-icon-button-icon-danger);
+  border-color: transparent;
+}
+
+/* SELECTED — toggle/toolbar active state */
+/* LOW selected: accent tint bg + accent icon */
+.flow-icon-btn[data-variant="low"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-low);
+  color: var(--comp-icon-button-icon-selected-low);
+}
+.flow-icon-btn[data-variant="low"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-low-hover);
+}
+/* MEDIUM selected: accent tint + accent border (proportional shift) */
+.flow-icon-btn[data-variant="medium"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-medium);
+  color: var(--comp-icon-button-icon-selected-medium);
+  border-color: var(--comp-icon-button-border-selected-medium);
+}
+.flow-icon-btn[data-variant="medium"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-medium-hover);
+}
+/* HIGH selected: accent-primary fill (hue shift from neutral-dark) */
+.flow-icon-btn[data-variant="high"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-high);
+  color: var(--comp-icon-button-icon-selected-high);
+}
+.flow-icon-btn[data-variant="high"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-high-hover);
+}
+/* OUTLINE selected: accent tint + accent border preserves outline identity */
+.flow-icon-btn[data-variant="outline"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-outline);
+  color: var(--comp-icon-button-icon-selected-outline);
+  border-color: var(--comp-icon-button-border-selected-outline);
+}
+.flow-icon-btn[data-variant="outline"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-outline-hover);
+}
+/* DANGER selected: filled destructive */
+.flow-icon-btn[data-variant="danger"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-danger);
+  color: var(--comp-icon-button-icon-selected-danger);
+}
+.flow-icon-btn[data-variant="danger"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-danger-hover);
+}
+/* GHOST selected: no chrome, accent icon only */
+.flow-icon-btn[data-variant="ghost"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-ghost);
+  color: var(--comp-icon-button-icon-selected-ghost);
+}
+.flow-icon-btn[data-variant="ghost"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-ghost-hover);
+}
+
+/* Focus ring — outline (follows border-radius) + box-shadow gap fill */
+.flow-icon-btn:focus-visible {
+  outline: var(--comp-icon-button-focus-ring-width) solid var(--comp-icon-button-focus-ring-color);
+  outline-offset: var(--comp-icon-button-focus-ring-offset);
+  box-shadow: 0 0 0 var(--comp-icon-button-focus-ring-offset)
+    var(--comp-icon-button-focus-ring-shadow-color);
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-icon-btn[data-variant="high"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-hover);
+}
+.flow-icon-btn[data-variant="medium"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-hover);
+}
+.flow-icon-btn[data-variant="low"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-hover);
+}
+.flow-icon-btn[data-variant="outline"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-hover);
+}
+.flow-icon-btn[data-variant="danger"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-hover);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+.flow-icon-btn[data-variant="ghost"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-hover);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+.flow-icon-btn[data-demo-state="focus"]:not(:disabled) {
+  outline: var(--comp-icon-button-focus-ring-width) solid var(--comp-icon-button-focus-ring-color);
+  outline-offset: var(--comp-icon-button-focus-ring-offset);
+  box-shadow: 0 0 0 var(--comp-icon-button-focus-ring-offset)
+    var(--comp-icon-button-focus-ring-shadow-color);
+}
+
+.flow-icon-btn[data-variant="high"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-active);
+}
+.flow-icon-btn[data-variant="medium"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-active);
+}
+.flow-icon-btn[data-variant="low"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-active);
+}
+.flow-icon-btn[data-variant="outline"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-active);
+}
+.flow-icon-btn[data-variant="danger"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-active);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+.flow-icon-btn[data-variant="ghost"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-active);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+/* ── Chip: Variant-model CSS ───────────────────────── */
+/* Pill-shaped token with optional remove button.
+   data-variant drives color scheme; data-selected overrides.
+   Structural sizing comes from centralized [data-size] blocks. */
+
+.flow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-chip-gap);
+  max-width: 100%;
+  padding: var(--comp-chip-padding-y) var(--comp-chip-padding-x);
+  border-radius: var(--comp-chip-radius);
+  font-size: var(--comp-chip-font);
+  font-weight: var(--comp-chip-font-weight);
+  font-family: var(--comp-chip-font-family);
+  transition: all var(--comp-chip-transition);
+  user-select: none;
+  cursor: default;
+  outline: none;
+  width: auto;
+}
+
+/* ── Chip sizing — padding-driven ──
+   Chip uses padding-y + padding-x instead of fixed height.
+   [data-size] shifts padding, gap, and font via the density/viewport cascade.
+   No height token needed — the chip grows from its content + padding. */
+
+/* ��─ Chip label — inherits all font/color from parent .flow-chip ── */
+.flow-chip-label {
+  font: inherit;
+  color: inherit;
+  line-height: var(--comp-chip-line-height);
+}
+
+.flow-chip-remove.flow-action-surface {
+  padding: 0;
+  border-radius: 50%;
+  width: var(--ref-frame-space-4);
+  height: var(--ref-frame-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+
+/* ── Variant colors ── */
+.flow-chip[data-variant="default"] {
+  background: var(--comp-chip-bg);
+  color: var(--sys-energy-text-accent);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+.flow-chip[data-variant="accent"] {
+  background: var(--sys-energy-status-info-subtle);
+  color: var(--sys-energy-text-accent);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+.flow-chip[data-variant="success"] {
+  background: var(--sys-energy-status-success-subtle);
+  color: var(--sys-energy-status-success);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+.flow-chip[data-variant="warning"] {
+  background: var(--sys-energy-status-warning-subtle);
+  color: var(--sys-energy-status-warning);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+.flow-chip[data-variant="danger"] {
+  background: var(--sys-energy-status-error-subtle);
+  color: var(--sys-energy-status-error);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+.flow-chip[data-variant="outlined"] {
+  background: transparent;
+  color: var(--sys-energy-text-primary);
+  border: var(--comp-chip-border-width) solid var(--sys-energy-border-strong);
+}
+.flow-chip[data-variant="tonal"] {
+  background: var(--sys-energy-surface-sunken);
+  color: var(--sys-energy-text-accent);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+
+/* ── Selected state — overrides variant bg/border ── */
+.flow-chip[data-selected] {
+  background: var(--sys-state-selected-overlay);
+  border: var(--comp-chip-border-width) solid var(--sys-energy-border-focus);
+}
+
+/* ── Disabled state ── */
+.flow-chip[data-state="disabled"] {
+  opacity: var(--comp-chip-disabled-opacity);
+  pointer-events: none;
+}
+
+/* ── Interactive chip hover/active ── */
+.flow-chip:hover:not(:disabled):not([data-state="disabled"]) {
+  filter: brightness(var(--comp-chip-brightness-hover));
+}
+.flow-chip:active:not(:disabled):not([data-state="disabled"]) {
+  filter: brightness(var(--comp-chip-brightness-active));
+}
+
+/* ── Focus ring — outline + box-shadow gap fill ── */
+.flow-chip:focus-visible {
+  outline: var(--comp-chip-focus-ring-width) solid var(--comp-chip-focus-ring-color);
+  outline-offset: var(--comp-chip-focus-ring-offset);
+  box-shadow: 0 0 0 var(--comp-chip-focus-ring-offset) var(--comp-chip-focus-gap-color);
+}
+
+/* ── Tone override — brand voice/personality variants ── */
+/* Applies tone color+weight when data-tone is present. Only affects default/outlined/tonal variants. */
+.flow-chip[data-variant="default"][data-tone="brand"],
+.flow-chip[data-variant="outlined"][data-tone="brand"],
+.flow-chip[data-variant="tonal"][data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+.flow-chip[data-variant="default"][data-tone="marketing"],
+.flow-chip[data-variant="outlined"][data-tone="marketing"],
+.flow-chip[data-variant="tonal"][data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+.flow-chip[data-variant="default"][data-tone="system"],
+.flow-chip[data-variant="outlined"][data-tone="system"],
+.flow-chip[data-variant="tonal"][data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+.flow-chip[data-variant="default"][data-tone="neutral"],
+.flow-chip[data-variant="outlined"][data-tone="neutral"],
+.flow-chip[data-variant="tonal"][data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+/* ── Remove button ── */
+.flow-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-chip-remove-size);
+  height: var(--comp-chip-remove-size);
+  border-radius: var(--comp-chip-remove-radius);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AVATAR — Profile image / initials display (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-avatar {
+  --avatar-size: var(--comp-avatar-size-md);
+  --avatar-font: var(--comp-avatar-font-md);
+  --avatar-status-size: var(--comp-avatar-status-size-md);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: var(--comp-avatar-radius);
+  background: var(--comp-avatar-bg);
+  color: var(--comp-avatar-text);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--avatar-font);
+  font-weight: var(--ref-voice-weight-semibold);
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+}
+.flow-avatar[data-shape="square"] {
+  border-radius: var(--comp-avatar-radius-square);
+}
+.flow-avatar[data-size="sm"] {
+  --avatar-size: var(--comp-avatar-size-sm);
+  --avatar-font: var(--comp-avatar-font-sm);
+  --avatar-status-size: var(--comp-avatar-status-size-sm);
+}
+.flow-avatar[data-size="lg"] {
+  --avatar-size: var(--comp-avatar-size-lg);
+  --avatar-font: var(--comp-avatar-font-lg);
+  --avatar-status-size: var(--comp-avatar-status-size-lg);
+}
+.flow-avatar[data-size="xl"] {
+  --avatar-size: var(--comp-avatar-size-xl);
+  --avatar-font: var(--comp-avatar-font-xl);
+  --avatar-status-size: var(--comp-avatar-status-size-xl);
+}
+
+.flow-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.flow-avatar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sys-energy-text-secondary);
+}
+.flow-avatar-status {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  width: var(--avatar-status-size);
+  height: var(--avatar-status-size);
+  border-radius: var(--ref-frame-radius-full);
+  border: var(--comp-avatar-status-ring-width) solid var(--comp-avatar-status-ring);
+  background: var(--comp-avatar-status-offline);
+}
+.flow-avatar-status[data-status="online"] {
+  background: var(--comp-avatar-status-online);
+}
+.flow-avatar-status[data-status="busy"] {
+  background: var(--comp-avatar-status-busy);
+}
+.flow-avatar-status[data-status="away"] {
+  background: var(--comp-avatar-status-away);
+}
+
+/* Avatar group — overlapping stack */
+.flow-avatar-group {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.flow-avatar-group .flow-avatar {
+  border: var(--comp-avatar-status-ring-width) solid var(--comp-avatar-status-ring);
+  margin-inline-start: calc(var(--ref-frame-space-2) * -1);
+}
+.flow-avatar-group .flow-avatar:last-child {
+  margin-inline-start: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BADGE — Notification dot / count overlay (L3)
+   ━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-badge-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+.flow-badge {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-badge-height);
+  height: var(--comp-badge-height);
+  padding: 0 var(--comp-badge-padding-x);
+  border-radius: var(--comp-badge-radius);
+  background: var(--comp-badge-bg-default);
+  color: var(--comp-badge-text);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-badge-font);
+  font-weight: var(--comp-badge-font-weight);
+  line-height: var(--ref-voice-line-height-none);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 0 0 var(--comp-badge-ring-width) var(--comp-badge-ring);
+  z-index: var(--sys-depth-layer-content);
+}
+.flow-badge[data-variant="dot"] {
+  min-width: var(--comp-badge-min-size);
+  width: var(--comp-badge-min-size);
+  height: var(--comp-badge-min-size);
+  padding: 0;
+}
+.flow-badge[data-color="accent"] {
+  background: var(--comp-badge-bg-accent);
+}
+.flow-badge[data-color="success"] {
+  background: var(--comp-badge-bg-success);
+}
+.flow-badge[data-color="warning"] {
+  background: var(--comp-badge-bg-warning);
+}
+.flow-badge[data-hidden] {
+  display: none;
+}
+
+/* Standalone badge (no wrapping) */
+.flow-badge-standalone {
+  position: static;
+  transform: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TABS — Adaptive tab navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.flow-tablist {
+  --tab-height: var(--comp-tabs-height-md);
+  --tab-font: var(--comp-tabs-font-md);
+  --tab-px: var(--comp-tabs-padding-x-md);
+  display: flex;
+  align-items: stretch;
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-tabs-border-default);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.flow-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.flow-tablist[data-size="sm"] {
+  --tab-height: var(--comp-tabs-height-sm);
+  --tab-font: var(--comp-tabs-font-sm);
+  --tab-px: var(--comp-tabs-padding-x-sm);
+}
+.flow-tablist[data-size="lg"] {
+  --tab-height: var(--comp-tabs-height-lg);
+  --tab-font: var(--comp-tabs-font-lg);
+  --tab-px: var(--comp-tabs-padding-x-lg);
+}
+.flow-tablist[data-size="xl"] {
+  --tab-height: var(--comp-tabs-height-xl);
+  --tab-font: var(--comp-tabs-font-xl);
+  --tab-px: var(--comp-tabs-padding-x-xl);
+}
+
+/* Filled variant */
+.flow-tablist[data-variant="filled"] {
+  border-block-end: none;
+  background: var(--comp-tabs-filled-bg);
+  border-radius: var(--comp-tabs-filled-radius);
+  padding: var(--ref-frame-space-1);
+  gap: var(--ref-frame-space-1);
+}
+
+.flow-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-tabs-gap);
+  height: var(--tab-height);
+  padding: 0 var(--tab-px);
+  border: none;
+  background: transparent;
+  color: var(--comp-tabs-text-default);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--tab-font);
+  font-weight: var(--ref-voice-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition:
+    color var(--sys-momentum-transition-default),
+    background var(--sys-momentum-transition-default);
+  flex-shrink: 0;
+}
+.flow-tab:hover {
+  color: var(--comp-tabs-text-hover);
+}
+.flow-tab[aria-selected="true"] {
+  color: var(--comp-tabs-text-active);
+  font-weight: var(--ref-voice-weight-semibold);
+}
+
+/* Focus ring — double box-shadow (gap fill + ring).
+   outline doesn't follow border-radius in Chromium sandbox.
+   Matches FlowButton pattern. */
+.flow-tab:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  border-radius: var(--comp-tabs-focus-radius);
+  box-shadow:
+    0 0 0 var(--comp-tabs-focus-ring-offset) var(--comp-tabs-focus-gap-color),
+    0 0 0 calc(var(--comp-tabs-focus-ring-offset) + var(--comp-tabs-focus-ring-width))
+      var(--comp-tabs-focus-ring-color);
+}
+@media (forced-colors: active) {
+  .flow-tab:focus-visible {
+    outline: var(--comp-tabs-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-tabs-focus-ring-offset);
+    box-shadow: none;
+  }
+}
+
+.flow-tab[disabled] {
+  opacity: var(--sys-state-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Label wrapper — inline-grid overlap prevents layout shift
+   when font-weight changes between medium ↔ semibold on selection.
+   The invisible bold ::after reserves the maximum text width. */
+.flow-tab-label {
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+}
+.flow-tab-label > span,
+.flow-tab-label::after {
+  grid-column: 1;
+  grid-row: 1;
+}
+.flow-tab-label::after {
+  content: attr(data-text);
+  font-weight: var(--ref-voice-weight-semibold);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Line indicator */
+.flow-tab::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: var(--tab-px);
+  inset-inline-end: var(--tab-px);
+  height: var(--comp-tabs-indicator-height);
+  background: transparent;
+  border-radius: var(--comp-tabs-indicator-height);
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-tab[aria-selected="true"]::after {
+  background: var(--comp-tabs-indicator);
+}
+
+/* Filled variant tab */
+.flow-tablist[data-variant="filled"] .flow-tab {
+  border-radius: calc(var(--comp-tabs-filled-radius) - var(--ref-frame-space-1));
+}
+.flow-tablist[data-variant="filled"] .flow-tab::after {
+  display: none;
+}
+.flow-tablist[data-variant="filled"] .flow-tab[aria-selected="true"] {
+  background: var(--comp-tabs-filled-active-bg);
+  box-shadow: var(--comp-tabs-filled-active-shadow);
+}
+
+/* Tab panel */
+.flow-tabpanel {
+  padding-block-start: var(--sys-frame-gap-component);
+}
+/* Tabpanel focus ring — double box-shadow pattern */
+.flow-tabpanel:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  border-radius: var(--comp-tabs-focus-radius);
+  box-shadow:
+    0 0 0 var(--comp-tabs-focus-ring-offset) var(--comp-tabs-focus-gap-color),
+    0 0 0 calc(var(--comp-tabs-focus-ring-offset) + var(--comp-tabs-focus-ring-width))
+      var(--comp-tabs-focus-ring-color);
+}
+@media (forced-colors: active) {
+  .flow-tabpanel:focus-visible {
+    outline: var(--comp-tabs-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-tabs-focus-ring-offset);
+    box-shadow: none;
+  }
+}
+
+/* ── Tabs responsive step-down ──
+   Font already scales via sys.voice aliases; height, padding-x, and gap
+   step down −1 (tablet) / −2 (phone), sm = floor.
+   Scroll safety-net in .flow-tablist remains as passive fallback. */
+
+/* Tablet: −1 step (< 992px) */
+@media (max-width: 991px) {
+  :root {
+    --comp-tabs-height-md: var(--ref-frame-space-10); /* 40px ← 44 (= sm) */
+    --comp-tabs-height-lg: var(--ref-frame-space-11); /* 44px ← 48 (= md) */
+    --comp-tabs-height-xl: var(--ref-frame-space-12); /* 48px ← 56 (= lg) */
+    --comp-tabs-padding-x-md: var(--ref-frame-space-3); /* 12px ← 16 (= sm) */
+    --comp-tabs-padding-x-lg: var(--ref-frame-space-4); /* 16px ← 20 (= md) */
+    --comp-tabs-padding-x-xl: var(--ref-frame-space-5); /* 20px ← 24 (= lg) */
+  }
+}
+
+/* Phone: −2 steps (< 576px) */
+@media (max-width: 575px) {
+  :root {
+    --comp-tabs-height-md: var(--ref-frame-space-10); /* 40px — floor (= sm) */
+    --comp-tabs-height-lg: var(--ref-frame-space-10); /* 40px — floor (= sm) */
+    --comp-tabs-height-xl: var(--ref-frame-space-11); /* 44px ← 56 (= md−2) */
+    --comp-tabs-padding-x-md: var(--ref-frame-space-3); /* 12px — floor (= sm) */
+    --comp-tabs-padding-x-lg: var(--ref-frame-space-3); /* 12px — floor (= sm) */
+    --comp-tabs-padding-x-xl: var(--ref-frame-space-4); /* 16px ← 24 (= md−2) */
+    --comp-tabs-gap: var(--ref-frame-space-1); /* 4px ← 8 */
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━━━━━━━━━━━━━
+   LIST / LIST ITEM — Content display (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.flow-list-divider {
+  display: block;
+  height: var(--sys-frame-border-thin);
+  min-height: var(--sys-frame-border-thin);
+  pointer-events: none;
+  flex-shrink: 0;
+  background: var(--comp-list-divider);
+  margin-inline: var(--comp-list-item-padding-x);
+}
+
+.flow-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-list-item-gap);
+  padding: var(--comp-list-item-padding-y) var(--comp-list-item-padding-x);
+  background: var(--comp-list-item-bg);
+  cursor: default;
+  transition: background var(--comp-list-item-transition);
+  border-radius: 0;
+  min-height: var(--comp-list-item-min-height);
+  width: 100%;
+  text-align: start;
+}
+.flow-list-item[data-interactive] {
+  cursor: pointer;
+}
+.flow-list-item[data-interactive]:hover {
+  background: var(--comp-list-item-bg-hover);
+}
+.flow-list-item[data-interactive]:active {
+  background: var(--comp-list-item-bg-active);
+}
+.flow-list-item[data-selected],
+.flow-list-item[data-state="selected"] {
+  background: var(--comp-list-item-bg-selected);
+}
+.flow-list-item[data-state="disabled"] {
+  opacity: var(--comp-list-item-disabled-opacity);
+  pointer-events: none;
+}
+
+.flow-list-item-leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--comp-list-text-secondary);
+}
+.flow-list-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-list-content-gap);
+}
+.flow-list-item-primary {
+  color: var(--comp-list-text-primary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-primary);
+}
+.flow-list-item-secondary {
+  color: var(--comp-list-text-secondary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.architecture-layer-item .flow-list-item-secondary {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+.architecture-layer-item .flow-list-item-leading {
+  color: var(--comp-list-text-primary);
+}
+.architecture-layer-item .flow-list-item-trailing {
+  color: var(--comp-list-text-primary);
+  align-self: center;
+}
+.architecture-layer-item .flow-list-item-content {
+  align-items: center;
+  text-align: center;
+}
+.flow-list-item-tertiary {
+  color: var(--comp-list-text-tertiary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+}
+.flow-list-item-trailing {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--comp-list-text-tertiary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+}
+
+/* ── TreeView ── */
+[role="tree"] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.flow-tree-item {
+  list-style: none;
+  outline: none;
+}
+.flow-tree-item[aria-disabled="true"] {
+  cursor: default;
+}
+.flow-tree-item:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+.flow-tree-item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-1);
+  padding-inline: var(--ref-frame-space-2);
+  border-radius: var(--sys-frame-radius-sm);
+  color: var(--sys-energy-text-primary);
+  background: transparent;
+  transition: background var(--sys-momentum-transition-fast);
+  height: var(--comp-tree-item-height-md);
+  font-size: var(--sys-voice-paragraph-s-size);
+}
+[data-size="sm"] > .flow-tree-item .flow-tree-item-row,
+[data-size="sm"] > .flow-tree-item > .flow-tree-item-row {
+  height: var(--comp-tree-item-height-sm);
+  font-size: var(--sys-voice-caption-size);
+}
+[data-size="lg"] > .flow-tree-item .flow-tree-item-row,
+[data-size="lg"] > .flow-tree-item > .flow-tree-item-row {
+  height: var(--comp-tree-item-height-lg);
+  font-size: var(--sys-voice-heading-m-size);
+}
+.flow-tree-item[aria-disabled="true"] .flow-tree-item-row {
+  color: var(--sys-energy-text-disabled);
+}
+.flow-tree-item[aria-selected="true"] .flow-tree-item-row {
+  background: var(--sys-energy-surface-accent-subtle);
+}
+.flow-tree-item:not([aria-selected="true"]):not([aria-disabled="true"]) .flow-tree-item-row:hover {
+  background: var(--sys-energy-state-hover);
+}
+.flow-tree-item-chevron {
+  width: var(--ref-icon-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.flow-tree-item-group {
+  margin: 0;
+  padding: 0;
+}
+.flow-tree-skeleton {
+  list-style: none;
+}
+.flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-md);
+  border-radius: var(--sys-frame-radius-sm);
+  margin-bottom: var(--ref-frame-space-micro);
+}
+[data-size="sm"] .flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-sm);
+}
+[data-size="lg"] .flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-lg);
+}
+
+/* ━━━��━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SLIDER — Range input control (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━ */
+
+.flow-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+}
+.flow-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flow-slider .flow-slider-label {
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-label);
+  color: var(--comp-slider-label);
+}
+.flow-slider-value {
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-label);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--comp-slider-value);
+}
+.flow-slider-track-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--comp-slider-thumb-size);
+  cursor: pointer;
+}
+.flow-slider[data-state="disabled"] .flow-slider-track-container {
+  cursor: not-allowed;
+}
+.flow-slider-track {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  height: var(--comp-slider-track-height);
+  border-radius: var(--comp-slider-track-radius);
+  background: var(--comp-slider-track-bg);
+  overflow: hidden;
+}
+.flow-slider-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--comp-slider-track-fill);
+  transition: width 0s;
+}
+.flow-slider:hover .flow-slider-fill {
+  background: var(--comp-slider-track-fill-hover);
+}
+.flow-slider[data-state="disabled"] .flow-slider-fill {
+  background: var(--comp-slider-track-disabled);
+}
+.flow-slider-thumb {
+  position: absolute;
+  width: var(--comp-slider-thumb-size);
+  height: var(--comp-slider-thumb-size);
+  border-radius: var(--comp-slider-thumb-radius);
+  background: var(--comp-slider-thumb-bg);
+  border: var(--comp-slider-thumb-border-width) solid var(--comp-slider-thumb-border);
+  box-shadow: var(--comp-slider-thumb-shadow);
+  transform: translateX(-50%);
+  cursor: grab;
+  transition:
+    box-shadow var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default);
+  z-index: var(--sys-depth-layer-content);
+}
+.flow-slider-thumb:hover {
+  border-color: var(--comp-slider-thumb-border-hover);
+  box-shadow:
+    var(--comp-slider-thumb-shadow),
+    0 0 0 calc((var(--comp-slider-focus-ring-size) - var(--comp-slider-thumb-size)) / 2)
+      rgba(var(--ref-energy-blue-500-rgb), var(--comp-slider-focus-ring-opacity));
+}
+.flow-slider-thumb:active {
+  cursor: grabbing;
+}
+.flow-slider-thumb:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+.flow-slider[data-state="disabled"] .flow-slider-thumb {
+  border-color: var(--comp-slider-thumb-border-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+/* Hidden native input for accessibility */
+.flow-slider-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+/* Marks */
+.flow-slider-marks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+.flow-slider-mark {
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-caption);
+  color: var(--comp-slider-label);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CIRCULAR PROGRESS — Circular loading indicator (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-circular-progress {
+  --cp-size: var(--comp-circular-progress-size-md);
+  --cp-font: var(--comp-circular-progress-font-md);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cp-size);
+  height: var(--cp-size);
+}
+.flow-circular-progress[data-size="sm"] {
+  --cp-size: var(--comp-circular-progress-size-sm);
+  --cp-font: var(--comp-circular-progress-font-sm);
+}
+.flow-circular-progress[data-size="lg"] {
+  --cp-size: var(--comp-circular-progress-size-lg);
+  --cp-font: var(--comp-circular-progress-font-lg);
+}
+.flow-circular-progress[data-size="xl"] {
+  --cp-size: var(--comp-circular-progress-size-xl);
+  --cp-font: var(--comp-circular-progress-font-xl);
+}
+
+.flow-circular-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.flow-circular-progress-track {
+  fill: none;
+  stroke: var(--comp-circular-progress-track-color);
+  stroke-width: var(--comp-circular-progress-stroke-width);
+}
+.flow-circular-progress-fill {
+  fill: none;
+  stroke: var(--comp-circular-progress-fill-default);
+  stroke-width: var(--comp-circular-progress-stroke-width);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--comp-circular-progress-transition);
+}
+.flow-circular-progress-fill[data-variant="success"] {
+  stroke: var(--comp-circular-progress-fill-success);
+}
+.flow-circular-progress-fill[data-variant="warning"] {
+  stroke: var(--comp-circular-progress-fill-warning);
+}
+.flow-circular-progress-fill[data-variant="error"] {
+  stroke: var(--comp-circular-progress-fill-error);
+}
+
+/* Indeterminate animation */
+.flow-circular-progress[data-indeterminate] .flow-circular-progress-svg {
+  animation: flow-cp-rotate var(--comp-circular-progress-spin-duration)
+    var(--comp-circular-progress-spin-easing-rotate) infinite;
+}
+.flow-circular-progress[data-indeterminate] .flow-circular-progress-fill {
+  stroke-dasharray: 80, 200;
+  stroke-dashoffset: 0;
+  animation: flow-cp-dash var(--comp-circular-progress-spin-duration)
+    var(--comp-circular-progress-spin-easing-dash) infinite;
+}
+@keyframes flow-cp-rotate {
+  100% {
+    transform: rotate(270deg);
+  }
+}
+@keyframes flow-cp-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -15;
+  }
+  100% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -125;
+  }
+}
+
+.flow-circular-progress-label {
+  position: absolute;
+  font-family: var(--comp-circular-progress-label-family);
+  font-size: var(--cp-font);
+  font-weight: var(--comp-circular-progress-label-weight);
+  color: var(--comp-circular-progress-label);
+  line-height: var(--ref-voice-line-height-none);
+}
+
+/* When CircularProgress is used inside a button, inherit text color for spinner */
+.flow-btn-v2 .flow-circular-progress-fill,
+.flow-icon-btn .flow-circular-progress-fill {
+  stroke: currentColor;
+}
+.flow-btn-v2 .flow-circular-progress-track,
+.flow-icon-btn .flow-circular-progress-track {
+  stroke: currentColor;
+  opacity: var(--ref-state-opacity-faint);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ACCORDION — Expandable content sections (L3)
+   ━━━━━━━━━━━━━━━━━━━━���━━━━━━���━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.flow-accordion[data-bordered] .flow-accordion-item {
+  border: var(--ref-frame-border-thin) solid var(--comp-accordion-border);
+}
+.flow-accordion[data-bordered] .flow-accordion-item:not(:last-child) {
+  border-block-end: none;
+}
+.flow-accordion[data-bordered] .flow-accordion-item:first-child {
+  border-radius: var(--comp-accordion-radius) var(--comp-accordion-radius) 0 0;
+}
+.flow-accordion[data-bordered] .flow-accordion-item:last-child {
+  border-radius: 0 0 var(--comp-accordion-radius) var(--comp-accordion-radius);
+}
+.flow-accordion[data-bordered] .flow-accordion-item:only-child {
+  border-radius: var(--comp-accordion-radius);
+}
+.flow-accordion[data-bordered] .flow-accordion-item[data-expanded] {
+  border-color: var(--comp-accordion-border-expanded);
+}
+.flow-accordion[data-bordered] .flow-accordion-item[data-expanded] + .flow-accordion-item {
+  border-block-start: var(--ref-frame-border-thin) solid var(--comp-accordion-border);
+}
+
+.flow-accordion-trigger {
+  --acc-height: var(--comp-accordion-height-md);
+  --acc-font: var(--comp-accordion-font-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--acc-height);
+  padding: 0 var(--comp-accordion-padding-x);
+  border: none;
+  background: var(--comp-accordion-bg);
+  color: var(--comp-accordion-text);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--acc-font);
+  font-weight: var(--ref-voice-weight-medium);
+  cursor: pointer;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-accordion-trigger:hover {
+  background: var(--comp-accordion-bg-hover);
+}
+.flow-accordion-trigger:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+  border-radius: var(--ref-frame-radius-1);
+  z-index: var(--sys-depth-layer-content);
+}
+.flow-accordion-trigger[data-size="sm"] {
+  --acc-height: var(--comp-accordion-height-sm);
+  --acc-font: var(--comp-accordion-font-sm);
+}
+.flow-accordion-trigger[data-size="lg"] {
+  --acc-height: var(--comp-accordion-height-lg);
+  --acc-font: var(--comp-accordion-font-lg);
+}
+.flow-accordion-trigger[data-size="xl"] {
+  --acc-height: var(--comp-accordion-height-xl);
+  --acc-font: var(--comp-accordion-font-xl);
+}
+.flow-accordion-trigger[disabled] {
+  opacity: var(--sys-state-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.flow-accordion-trigger-content {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-3);
+  min-width: 0;
+  flex: 1;
+}
+.flow-accordion-trigger-subtitle {
+  color: var(--comp-accordion-text-secondary);
+  font-weight: var(--ref-voice-weight-regular);
+  margin-inline-start: var(--ref-frame-space-2);
+}
+.flow-accordion-icon {
+  flex-shrink: 0;
+  color: var(--comp-accordion-icon);
+  transition: transform var(--sys-momentum-transition-default);
+}
+.flow-accordion-icon[data-expanded] {
+  transform: rotate(180deg);
+}
+
+.flow-accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--sys-momentum-duration-normal) var(--sys-momentum-easing-standard);
+}
+.flow-accordion-content[data-expanded="true"] {
+  grid-template-rows: 1fr;
+}
+.flow-accordion-content > .flow-accordion-content-inner {
+  overflow: hidden;
+}
+.flow-accordion-content-inner {
+  padding: var(--comp-accordion-content-padding-y) var(--comp-accordion-content-padding-x);
+}
+/* Separator between items (non-bordered mode) */
+.flow-accordion:not([data-bordered]) .flow-accordion-item:not(:last-child) {
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-accordion-border);
+}
+
+/* ━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━
+   BREADCRUMBS — Navigation trail (L3) — composes FlowButton
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  min-width: 0;
+}
+.flow-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-gap);
+  flex-shrink: 0;
+}
+.flow-breadcrumb-item:last-child {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+/* ── <a> and <button> items without href ── */
+.flow-breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-item-gap);
+  padding: var(--comp-breadcrumbs-item-padding-y) var(--comp-breadcrumbs-item-padding-x);
+  border: none;
+  background: transparent;
+  color: var(--comp-breadcrumbs-text);
+  font-family: var(--comp-breadcrumbs-font-family);
+  font-size: var(--comp-breadcrumbs-font);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--comp-breadcrumbs-item-radius);
+  transition:
+    color var(--comp-breadcrumbs-transition),
+    background var(--comp-breadcrumbs-transition);
+  white-space: nowrap;
+}
+.flow-breadcrumb-link:hover {
+  color: var(--comp-breadcrumbs-text-hover);
+  background: var(--sys-energy-surface-secondary);
+}
+.flow-breadcrumb-link:focus-visible {
+  outline: var(--comp-breadcrumbs-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--comp-breadcrumbs-focus-ring-offset);
+}
+
+/* ── Current page (non-interactive span) ── */
+.flow-breadcrumb-current {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-item-gap);
+  padding: var(--comp-breadcrumbs-item-padding-y) var(--comp-breadcrumbs-item-padding-x);
+  color: var(--comp-breadcrumbs-text-active);
+  font-family: var(--comp-breadcrumbs-font-family);
+  font-size: var(--comp-breadcrumbs-font);
+  font-weight: var(--comp-breadcrumbs-font-weight);
+  cursor: default;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.flow-breadcrumb-separator {
+  color: var(--comp-breadcrumbs-separator);
+  font-size: var(--comp-breadcrumbs-separator-font);
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* ── Icon-only root item (variant="icon-root") ── */
+.flow-breadcrumb-icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-breadcrumbs-icon-only-size);
+  height: var(--comp-breadcrumbs-icon-only-size);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--comp-breadcrumbs-text);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--comp-breadcrumbs-item-radius);
+  transition:
+    color var(--comp-breadcrumbs-transition),
+    background var(--comp-breadcrumbs-transition);
+}
+.flow-breadcrumb-icon-only:hover {
+  color: var(--comp-breadcrumbs-text-hover);
+  background: var(--sys-energy-surface-secondary);
+}
+.flow-breadcrumb-icon-only:focus-visible {
+  outline: var(--comp-breadcrumbs-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--comp-breadcrumbs-focus-ring-offset);
+}
+
+/* ── Screen-reader only utility ── */
+.flow-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGINATION — Page navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-pagination-gap);
+}
+.flow-pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  padding: 0 var(--ref-frame-space-2);
+  border: var(--ref-frame-border-thin) solid transparent;
+  border-radius: var(--comp-pagination-radius);
+  background: var(--comp-pagination-bg);
+  color: var(--comp-pagination-text);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-pagination-font);
+  font-weight: var(--comp-pagination-font-weight);
+  cursor: pointer;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default);
+  user-select: none;
+  line-height: var(--ref-voice-line-height-none);
+}
+.flow-pagination-btn:hover:not([disabled]):not([data-active]) {
+  background: var(--comp-pagination-bg-hover);
+  color: var(--comp-pagination-text-hover);
+  border-color: var(--comp-pagination-border);
+}
+.flow-pagination-btn[data-active] {
+  background: var(--comp-pagination-bg-active);
+  color: var(--comp-pagination-text-active);
+  border-color: transparent;
+  cursor: default;
+}
+.flow-pagination-btn:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+.flow-pagination-btn[disabled] {
+  color: var(--comp-pagination-text-disabled);
+  cursor: not-allowed;
+  opacity: var(--sys-state-disabled-opacity);
+}
+.flow-pagination-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  border: none;
+  border-radius: var(--comp-pagination-radius);
+  background: transparent;
+  color: var(--comp-pagination-nav-icon);
+  cursor: pointer;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default);
+}
+.flow-pagination-nav:hover:not([disabled]) {
+  background: var(--comp-pagination-bg-hover);
+  color: var(--comp-pagination-text-hover);
+}
+.flow-pagination-nav:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+.flow-pagination-nav[disabled] {
+  color: var(--comp-pagination-nav-icon-disabled);
+  cursor: not-allowed;
+  opacity: var(--sys-state-disabled-opacity);
+}
+.flow-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  color: var(--comp-pagination-text);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-pagination-font);
+  user-select: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEGMENTED CONTROL — Mutually exclusive options (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-segmented {
+  --seg-height: var(--comp-segmented-height-md);
+  --seg-font: var(--comp-segmented-font-md);
+  display: inline-flex;
+  align-items: center;
+  background: var(--comp-segmented-bg);
+  border-radius: var(--comp-segmented-radius);
+  padding: var(--comp-segmented-padding);
+  gap: var(--comp-segmented-gap);
+}
+.flow-segmented[data-size="sm"] {
+  --seg-height: var(--comp-segmented-height-sm);
+  --seg-font: var(--comp-segmented-font-sm);
+}
+.flow-segmented[data-size="lg"] {
+  --seg-height: var(--comp-segmented-height-lg);
+  --seg-font: var(--comp-segmented-font-lg);
+}
+.flow-segmented[data-size="xl"] {
+  --seg-height: var(--comp-segmented-height-xl);
+  --seg-font: var(--comp-segmented-font-xl);
+}
+.flow-segmented[data-full-width] {
+  display: flex;
+  width: 100%;
+}
+.flow-segmented[data-full-width] .flow-segmented-btn {
+  flex: 1;
+}
+
+.flow-segmented-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-segmented-segment-gap);
+  height: calc(var(--seg-height) - var(--comp-segmented-padding) * 2);
+  padding: 0 var(--comp-segmented-segment-padding-x);
+  border: none;
+  border-radius: calc(var(--comp-segmented-radius) - var(--comp-segmented-padding));
+  background: transparent;
+  color: var(--comp-segmented-text);
+  font-family: var(--comp-segmented-font-family);
+  font-size: var(--seg-font);
+  font-weight: var(--comp-segmented-font-weight);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--comp-segmented-transition),
+    color var(--comp-segmented-transition),
+    box-shadow var(--comp-segmented-transition);
+}
+.flow-segmented-btn:hover:not([aria-checked="true"]):not([disabled]) {
+  background: var(--comp-segmented-bg-hover);
+}
+.flow-segmented-btn[aria-checked="true"] {
+  background: var(--comp-segmented-bg-active);
+  color: var(--comp-segmented-text-active);
+  font-weight: var(--comp-segmented-font-weight-active);
+  box-shadow: var(--comp-segmented-shadow);
+}
+.flow-segmented-btn:focus-visible {
+  outline: var(--comp-segmented-focus-ring-width) solid var(--comp-segmented-focus-ring-color);
+  outline-offset: calc(var(--comp-segmented-focus-ring-offset) * -1);
+}
+.flow-segmented-btn[disabled] {
+  opacity: var(--comp-segmented-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━
+   STEPPER — Multi-step wizard navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-stepper {
+  width: 100%;
+}
+.flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-md);
+  --stepper-font: var(--comp-stepper-font-md);
+  --stepper-label-font: var(--comp-stepper-label-font-md);
+  --stepper-desc-font: var(--comp-stepper-desc-font-md);
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: stepper;
+}
+.flow-stepper[data-size="sm"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-sm);
+  --stepper-font: var(--comp-stepper-font-sm);
+  --stepper-label-font: var(--comp-stepper-label-font-sm);
+  --stepper-desc-font: var(--comp-stepper-desc-font-sm);
+}
+.flow-stepper[data-size="lg"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-lg);
+  --stepper-font: var(--comp-stepper-font-lg);
+  --stepper-label-font: var(--comp-stepper-label-font-lg);
+  --stepper-desc-font: var(--comp-stepper-desc-font-lg);
+}
+.flow-stepper[data-size="xl"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-xl);
+  --stepper-font: var(--comp-stepper-font-xl);
+  --stepper-label-font: var(--comp-stepper-label-font-xl);
+  --stepper-desc-font: var(--comp-stepper-desc-font-xl);
+}
+
+/* Horizontal steps */
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-list {
+  flex-direction: row;
+}
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-connector {
+  position: absolute;
+  inset-block-start: calc(var(--stepper-indicator-size) / 2);
+  inset-inline-start: calc(50% + var(--stepper-indicator-size) / 2 + var(--comp-stepper-gap));
+  inset-inline-end: calc(-50% + var(--stepper-indicator-size) / 2 + var(--comp-stepper-gap));
+  height: var(--comp-stepper-connector-height);
+  background: var(--comp-stepper-connector-default);
+  transform: translateY(-50%);
+}
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-connector[data-status="complete"] {
+  background: var(--comp-stepper-connector-complete);
+}
+
+/* Vertical steps */
+.flow-stepper[data-orientation="vertical"] .flow-stepper-list {
+  flex-direction: column;
+}
+.flow-stepper[data-orientation="vertical"] .flow-stepper-step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  padding-block-end: var(--ref-frame-space-5);
+}
+.flow-stepper[data-orientation="vertical"] .flow-stepper-connector {
+  position: absolute;
+  inset-block-start: calc(var(--stepper-indicator-size) + var(--ref-frame-space-1));
+  inset-inline-start: calc(var(--stepper-indicator-size) / 2);
+  inset-block-end: 0;
+  width: var(--comp-stepper-connector-height);
+  background: var(--comp-stepper-connector-default);
+  transform: translateX(-50%);
+}
+.flow-stepper[data-orientation="vertical"] .flow-stepper-connector[data-status="complete"] {
+  background: var(--comp-stepper-connector-complete);
+}
+.flow-stepper[data-orientation="vertical"] .flow-stepper-content {
+  margin-inline-start: var(--comp-stepper-gap);
+  text-align: start;
+}
+
+/* Indicator circle */
+.flow-stepper-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--stepper-indicator-size);
+  height: var(--stepper-indicator-size);
+  border-radius: var(--ref-frame-radius-round);
+  border: none;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--stepper-font);
+  font-weight: var(--ref-voice-weight-semibold);
+  cursor: default;
+  flex-shrink: 0;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default);
+  padding: 0;
+}
+.flow-stepper-indicator[data-status="upcoming"] {
+  background: var(--comp-stepper-indicator-bg-upcoming);
+  color: var(--comp-stepper-indicator-text);
+}
+.flow-stepper-indicator[data-status="current"] {
+  background: var(--comp-stepper-indicator-bg-current);
+  color: var(--comp-stepper-indicator-text-active);
+}
+.flow-stepper-indicator[data-status="complete"] {
+  background: var(--comp-stepper-indicator-bg-complete);
+  color: var(--comp-stepper-indicator-text-active);
+}
+.flow-stepper-indicator[data-status="error"] {
+  background: var(--comp-stepper-indicator-bg-error);
+  color: var(--comp-stepper-indicator-text-error);
+}
+.flow-stepper-indicator:not([disabled]):hover {
+  opacity: var(--comp-stepper-hover-opacity);
+}
+.flow-stepper-indicator:not([disabled]) {
+  cursor: pointer;
+}
+.flow-stepper-indicator:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+.flow-stepper-number {
+  line-height: var(--ref-voice-line-height-none);
+}
+
+.flow-stepper-content {
+  margin-block-start: var(--ref-frame-space-2);
+}
+.flow-stepper-label {
+  display: block;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--stepper-label-font);
+  font-weight: var(--ref-voice-weight-medium);
+  color: var(--comp-stepper-label-text);
+}
+.flow-stepper-label[data-status="upcoming"] {
+  color: var(--comp-stepper-label-text-upcoming);
+}
+.flow-stepper-label[data-status="error"] {
+  color: var(--sys-energy-status-error);
+}
+.flow-stepper-description {
+  display: block;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--stepper-desc-font);
+  color: var(--comp-stepper-label-text-secondary);
+  margin-block-start: var(--ref-frame-space-1);
+}
+
+/* Last step: no flex-grow needed */
+.flow-stepper-step[data-last] {
+  flex: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOTTOM NAV — Mobile bottom navigation (L3)
+   ━━━━━━━━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: var(--comp-bottom-nav-height);
+  background: var(--comp-bottom-nav-bg);
+  border-block-start: var(--ref-frame-border-thin) solid var(--comp-bottom-nav-border);
+  box-shadow: var(--comp-bottom-nav-shadow);
+  padding: 0;
+}
+
+.flow-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-bottom-nav-item-gap);
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--comp-bottom-nav-text-default);
+  cursor: pointer;
+  padding: var(--ref-frame-space-2) 0;
+  font-family: var(--ref-voice-family-sans);
+  position: relative;
+  transition: color var(--sys-momentum-transition-default);
+}
+.flow-bottom-nav-item[data-active] {
+  color: var(--comp-bottom-nav-text-active);
+}
+.flow-bottom-nav-item:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+.flow-bottom-nav-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ref-frame-space-16);
+  height: var(--ref-frame-space-8);
+  border-radius: var(--ref-frame-radius-round);
+}
+.flow-bottom-nav-item[data-active] .flow-bottom-nav-icon-wrap {
+  background: var(--comp-bottom-nav-indicator-bg);
+}
+.flow-bottom-nav-icon {
+  color: inherit;
+}
+
+.flow-bottom-nav-label {
+  font-size: var(--comp-bottom-nav-label-font);
+  font-weight: var(--ref-voice-weight-medium);
+  line-height: var(--ref-voice-line-height-none);
+}
+
+/* Badge on bottom nav */
+.flow-bottom-nav-badge {
+  position: absolute;
+  inset-block-start: var(--comp-badge-offset-top);
+  inset-inline-end: var(--comp-badge-offset-right-sm);
+  min-width: var(--comp-bottom-nav-badge-size);
+  height: var(--comp-bottom-nav-badge-size);
+  padding: 0 var(--ref-frame-space-1);
+  border-radius: var(--ref-frame-radius-round);
+  background: var(--comp-bottom-nav-badge-bg);
+  color: var(--comp-bottom-nav-badge-text);
+  font-size: var(--comp-bottom-nav-badge-font);
+  font-weight: var(--ref-voice-weight-bold);
+  font-family: var(--ref-voice-family-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: var(--ref-voice-line-height-none);
+}
+.flow-bottom-nav-badge[data-dot] {
+  min-width: var(--comp-bottom-nav-badge-dot-size);
+  height: var(--comp-bottom-nav-badge-dot-size);
+  padding: 0;
+  inset-block-start: 0;
+  inset-inline-end: var(--comp-badge-offset-right-lg);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FAB — Floating Action Button (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-fab {
+  --fab-size: var(--comp-fab-size-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border: none;
+  border-radius: var(--comp-fab-radius);
+  font-family: var(--comp-fab-font-family);
+  font-size: var(--comp-fab-label-font);
+  font-weight: var(--comp-fab-font-weight);
+  cursor: pointer;
+  box-shadow: var(--comp-fab-shadow);
+  transition:
+    background var(--comp-fab-transition),
+    box-shadow var(--comp-fab-transition),
+    transform var(--comp-fab-transition);
+}
+.flow-fab[data-size="sm"] {
+  --fab-size: var(--comp-fab-size-sm);
+}
+.flow-fab[data-size="lg"] {
+  --fab-size: var(--comp-fab-size-lg);
+}
+
+/* Extended (pill shape) */
+.flow-fab[data-extended] {
+  width: auto;
+  padding: 0 var(--comp-fab-padding-x);
+  gap: var(--comp-fab-gap);
+  border-radius: var(--comp-fab-radius-extended);
+}
+
+/* Variant: primary */
+.flow-fab[data-variant="primary"] {
+  background: var(--comp-fab-bg-primary);
+  color: var(--comp-fab-text-primary);
+}
+.flow-fab[data-variant="primary"]:hover {
+  background: var(--comp-fab-bg-primary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+.flow-fab[data-variant="primary"]:active {
+  background: var(--comp-fab-bg-primary-active);
+}
+
+/* Variant: secondary */
+.flow-fab[data-variant="secondary"] {
+  background: var(--comp-fab-bg-secondary);
+  color: var(--comp-fab-text-secondary);
+}
+.flow-fab[data-variant="secondary"]:hover {
+  background: var(--comp-fab-bg-secondary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+.flow-fab[data-variant="secondary"]:active {
+  background: var(--comp-fab-bg-secondary-active);
+}
+
+/* Variant: tertiary */
+.flow-fab[data-variant="tertiary"] {
+  background: var(--comp-fab-bg-tertiary);
+  color: var(--comp-fab-text-tertiary);
+}
+.flow-fab[data-variant="tertiary"]:hover {
+  background: var(--comp-fab-bg-tertiary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+.flow-fab[data-variant="tertiary"]:active {
+  background: var(--comp-fab-bg-tertiary-active);
+}
+
+/* Positioning */
+.flow-fab[data-position="bottom-right"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-end: var(--comp-fab-offset);
+}
+.flow-fab[data-position="bottom-left"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-start: var(--comp-fab-offset);
+}
+.flow-fab[data-position="bottom-center"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.flow-fab:disabled,
+.flow-fab[data-state="loading"] {
+  opacity: var(--comp-fab-disabled-opacity);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.flow-fab:focus-visible {
+  outline: var(--comp-fab-focus-ring-width) solid var(--comp-fab-focus-ring-color);
+  outline-offset: var(--comp-fab-focus-ring-offset);
+}
+
+.flow-fab-label {
+  white-space: nowrap;
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-fab[data-variant="primary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-primary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+.flow-fab[data-variant="secondary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-secondary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+.flow-fab[data-variant="tertiary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-tertiary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-demo-state="focus"]:not(:disabled) {
+  outline: var(--comp-fab-focus-ring-width) solid var(--comp-fab-focus-ring-color);
+  outline-offset: var(--comp-fab-focus-ring-offset);
+}
+
+.flow-fab[data-variant="primary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-primary-active);
+}
+.flow-fab[data-variant="secondary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-secondary-active);
+}
+.flow-fab[data-variant="tertiary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-tertiary-active);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOOLBAR — Desktop action bar (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-toolbar {
+  --toolbar-height: var(--comp-toolbar-height-md);
+  display: flex;
+  align-items: center;
+  gap: var(--comp-toolbar-gap);
+  padding: 0 var(--comp-toolbar-padding);
+  height: var(--toolbar-height);
+  background: var(--comp-toolbar-bg);
+  border-radius: var(--comp-toolbar-radius);
+}
+.flow-toolbar[data-bordered] {
+  border: var(--ref-frame-border-thin) solid var(--comp-toolbar-border);
+}
+.flow-toolbar[data-size="sm"] {
+  --toolbar-height: var(--comp-toolbar-height-sm);
+}
+.flow-toolbar[data-size="lg"] {
+  --toolbar-height: var(--comp-toolbar-height-lg);
+}
+
+.flow-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-toolbar-gap);
+}
+
+.flow-toolbar-divider {
+  width: var(--comp-toolbar-divider-width);
+  height: var(--comp-toolbar-divider-height);
+  background: var(--comp-toolbar-divider-color);
+  flex-shrink: 0;
+}
+
+.flow-toolbar-spacer {
+  flex: 1;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   POPOVER — Floating positioned content (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-popover-trigger {
+  display: inline-flex;
+}
+
+.flow-popover-content {
+  background: var(--comp-popover-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-popover-border);
+  border-radius: var(--comp-popover-radius);
+  box-shadow: var(--comp-popover-shadow);
+  padding: var(--comp-popover-padding);
+  max-width: var(--comp-popover-max-width);
+  animation: flow-popover-in var(--sys-momentum-transition-default) ease-out;
+}
+
+@keyframes flow-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOTTOM SHEET — Mobile modal from bottom edge (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━ */
+
+.flow-bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--comp-bottom-sheet-overlay);
+  z-index: var(--comp-bottom-sheet-z-index);
+  animation: flow-bottom-sheet-overlay-in var(--sys-momentum-transition-default) ease-out;
+}
+@keyframes flow-bottom-sheet-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.flow-bottom-sheet {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: calc(var(--comp-bottom-sheet-z-index) + 1);
+  background: var(--comp-bottom-sheet-bg);
+  border-top-left-radius: var(--comp-bottom-sheet-radius);
+  border-top-right-radius: var(--comp-bottom-sheet-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: var(--comp-bottom-sheet-shadow);
+  padding: 0;
+  max-height: var(--comp-bottom-sheet-max-height);
+  display: flex;
+  flex-direction: column;
+  animation: flow-bottom-sheet-slide-in var(--sys-momentum-transition-default) ease-out;
+  touch-action: none;
+}
+@keyframes flow-bottom-sheet-slide-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.flow-bottom-sheet-handle {
+  display: flex;
+  justify-content: center;
+  padding: var(--comp-bottom-sheet-handle-margin) 0;
+  cursor: grab;
+  flex-shrink: 0;
+}
+.flow-bottom-sheet-handle::after {
+  content: "";
+  width: var(--comp-bottom-sheet-handle-width);
+  height: var(--comp-bottom-sheet-handle-height);
+  border-radius: var(--ref-frame-radius-round);
+  background: var(--comp-bottom-sheet-handle-bg);
+}
+.flow-bottom-sheet-handle:active {
+  cursor: grabbing;
+}
+
+.flow-bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--comp-bottom-sheet-padding) var(--ref-frame-space-3);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-bottom-sheet-header-font);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--sys-energy-text-primary);
+  flex-shrink: 0;
+}
+.flow-bottom-sheet-close.flow-action-surface {
+  padding: var(--ref-frame-space-1);
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-bottom-sheet-body {
+  padding: 0 var(--comp-bottom-sheet-padding) var(--comp-bottom-sheet-padding);
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONTEXT MENU — Right-click positioned menu (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-context-menu {
+  position: fixed;
+  z-index: var(--comp-context-menu-z-index);
+  background: var(--comp-context-menu-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-context-menu-border);
+  border-radius: var(--comp-context-menu-radius);
+  box-shadow: var(--comp-context-menu-shadow);
+  padding: var(--comp-context-menu-padding);
+  min-width: var(--comp-context-menu-min-width);
+  max-width: var(--comp-context-menu-max-width);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-context-menu-font);
+  animation: flow-popover-in var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+  padding: var(--comp-context-menu-item-padding-y) var(--comp-context-menu-item-padding-x);
+  border: none;
+  border-radius: var(--comp-context-menu-item-radius);
+  background: transparent;
+  color: var(--comp-context-menu-text);
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-context-menu-item:hover {
+  background: var(--comp-context-menu-item-bg-hover);
+}
+.flow-context-menu-item:active {
+  background: var(--comp-context-menu-item-bg-active);
+}
+.flow-context-menu-item[data-danger] {
+  color: var(--comp-context-menu-text-danger);
+}
+.flow-context-menu-item[data-state="disabled"] {
+  color: var(--comp-context-menu-text-disabled);
+  pointer-events: none;
+}
+.flow-context-menu-item:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+.flow-context-menu-item-label {
+  flex: 1;
+}
+.flow-context-menu-item-shortcut {
+  font-size: var(--comp-context-menu-shortcut-font);
+  color: var(--comp-context-menu-text-secondary);
+  margin-inline-start: auto;
+  padding-inline-start: var(--ref-frame-space-4);
+}
+.flow-context-menu-item-icon {
+  width: var(--comp-context-menu-icon-size);
+  height: var(--comp-context-menu-icon-size);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-context-menu-separator {
+  height: var(--ref-frame-border-thin);
+  background: var(--comp-context-menu-separator);
+  margin: var(--ref-frame-space-1) 0;
+}
+
+.flow-context-menu-label {
+  padding: var(--comp-context-menu-item-padding-y) var(--comp-context-menu-item-padding-x);
+  font-size: var(--comp-context-menu-shortcut-font);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--comp-context-menu-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--ref-voice-letter-spacing-expanded);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MENU — Dropdown menu (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━ */
+
+.flow-menu {
+  position: fixed;
+  z-index: var(--comp-menu-z-index);
+  background: var(--comp-menu-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-menu-border);
+  border-radius: var(--comp-menu-radius);
+  box-shadow: var(--comp-menu-shadow);
+  padding: var(--comp-menu-padding);
+  min-width: var(--comp-menu-min-width);
+  max-width: var(--comp-menu-max-width);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--comp-menu-font);
+  animation: flow-popover-in var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+  padding: var(--comp-menu-item-padding-y) var(--comp-menu-item-padding-x);
+  border: none;
+  border-radius: var(--comp-menu-item-radius);
+  background: transparent;
+  color: var(--comp-menu-text);
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-menu-item:hover {
+  background: var(--comp-menu-item-bg-hover);
+}
+.flow-menu-item:active {
+  background: var(--comp-menu-item-bg-active);
+}
+.flow-menu-item[data-danger] {
+  color: var(--comp-menu-text-danger);
+}
+.flow-menu-item[data-state="disabled"] {
+  color: var(--comp-menu-text-disabled);
+  pointer-events: none;
+}
+.flow-menu-item:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+.flow-menu-item-label {
+  flex: 1;
+}
+.flow-menu-item-icon {
+  width: var(--comp-menu-icon-size);
+  height: var(--comp-menu-icon-size);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.flow-menu-item-check {
+  width: var(--comp-menu-check-size);
+  height: var(--comp-menu-check-size);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+.flow-menu-item[data-checked] .flow-menu-item-check {
+  opacity: 1;
+}
+.flow-menu-item-trailing {
+  font-size: var(--comp-context-menu-shortcut-font);
+  color: var(--comp-menu-text-secondary);
+  margin-inline-start: auto;
+  padding-inline-start: var(--ref-frame-space-4);
+}
+
+.flow-menu-separator {
+  height: var(--ref-frame-border-thin);
+  background: var(--comp-menu-separator);
+  margin: var(--ref-frame-space-1) 0;
+}
+
+.flow-menu-label {
+  padding: var(--comp-menu-item-padding-y) var(--comp-menu-item-padding-x);
+  font-size: var(--comp-context-menu-shortcut-font);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--comp-menu-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--ref-voice-letter-spacing-expanded);
+}
+
+.flow-menu-trigger {
+  display: inline-flex;
+}
+
+/* ━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOGGLE BUTTON — Toggle on/off button (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-toggle-button {
+  --tb-height: var(--comp-toggle-button-height-md);
+  --tb-font: var(--comp-toggle-button-font-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-toggle-button-gap);
+  height: var(--tb-height);
+  padding: 0 var(--comp-toggle-button-padding-x);
+  border: var(--comp-toggle-button-border-width) solid var(--comp-toggle-button-border);
+  border-radius: var(--comp-toggle-button-radius);
+  background: var(--comp-toggle-button-bg-off);
+  color: var(--comp-toggle-button-text-off);
+  font-family: var(--comp-toggle-button-font-family);
+  font-size: var(--tb-font);
+  font-weight: var(--comp-toggle-button-font-weight);
+  cursor: pointer;
+  transition:
+    background var(--comp-toggle-button-transition),
+    color var(--comp-toggle-button-transition),
+    border-color var(--comp-toggle-button-transition);
+}
+.flow-toggle-button[data-size="sm"] {
+  --tb-height: var(--comp-toggle-button-height-sm);
+  --tb-font: var(--comp-toggle-button-font-sm);
+}
+.flow-toggle-button[data-size="lg"] {
+  --tb-height: var(--comp-toggle-button-height-lg);
+  --tb-font: var(--comp-toggle-button-font-lg);
+}
+.flow-toggle-button[data-size="xl"] {
+  --tb-height: var(--comp-toggle-button-height-xl);
+  --tb-font: var(--comp-toggle-button-font-xl);
+}
+
+.flow-toggle-button:hover {
+  background: var(--comp-toggle-button-bg-off-hover);
+}
+.flow-toggle-button[aria-pressed="true"] {
+  background: var(--comp-toggle-button-bg-on);
+  color: var(--comp-toggle-button-text-on);
+  border-color: var(--comp-toggle-button-border-on);
+}
+.flow-toggle-button[aria-pressed="true"]:hover {
+  background: var(--comp-toggle-button-bg-on-hover);
+}
+.flow-toggle-button:disabled {
+  background: var(--comp-toggle-button-bg-disabled);
+  color: var(--comp-toggle-button-text-disabled);
+  border-color: var(--comp-toggle-button-border-disabled);
+  cursor: not-allowed;
+}
+.flow-toggle-button:focus-visible {
+  outline: var(--comp-toggle-button-focus-ring-width) solid
+    var(--comp-toggle-button-focus-ring-color);
+  outline-offset: var(--comp-toggle-button-focus-ring-offset);
+}
+
+/* Toggle button group */
+.flow-toggle-button-group {
+  display: inline-flex;
+  gap: var(--comp-toggle-button-group-gap);
+  border-radius: var(--comp-toggle-button-group-radius);
+  overflow: hidden;
+}
+.flow-toggle-button-group .flow-toggle-button {
+  border-radius: 0;
+}
+.flow-toggle-button-group .flow-toggle-button:first-child {
+  border-top-left-radius: var(--comp-toggle-button-group-radius);
+  border-bottom-left-radius: var(--comp-toggle-button-group-radius);
+}
+.flow-toggle-button-group .flow-toggle-button:last-child {
+  border-top-right-radius: var(--comp-toggle-button-group-radius);
+  border-bottom-right-radius: var(--comp-toggle-button-group-radius);
+}
+.flow-toggle-button-group .flow-toggle-button + .flow-toggle-button {
+  margin-inline-start: calc(var(--comp-toggle-button-border-width) * -1);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��
+   SEARCH — Desktop search input (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━━━ */
+
+.flow-search {
+  --search-height: var(--comp-search-height);
+  --search-font: var(--comp-search-font);
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  height: var(--search-height);
+  padding: 0 var(--comp-search-padding-x);
+  background: var(--comp-search-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-search-border);
+  border-radius: var(--comp-search-radius);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--search-font);
+  color: var(--comp-search-text);
+  transition:
+    background var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default),
+    box-shadow var(--sys-momentum-transition-default);
+}
+.flow-search[data-size="sm"] {
+  --search-height: var(--comp-search-height-sm);
+  --search-font: var(--comp-search-font-sm);
+}
+.flow-search[data-size="lg"] {
+  --search-height: var(--comp-search-height-lg);
+  --search-font: var(--comp-search-font-lg);
+}
+
+.flow-search:focus-within {
+  background: var(--comp-search-bg-focus);
+  border-color: var(--comp-search-border-focus);
+  box-shadow: 0 0 0 var(--sys-state-focus-ring-width) var(--sys-energy-border-focus);
+}
+
+.flow-search-icon {
+  color: var(--comp-search-icon);
+  flex-shrink: 0;
+  width: var(--comp-search-icon-size);
+  height: var(--comp-search-icon-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  padding: 0;
+  min-width: 0;
+}
+.flow-search-input::placeholder {
+  color: var(--comp-search-placeholder);
+}
+
+.flow-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--comp-search-clear-icon);
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  border-radius: var(--ref-frame-radius-round);
+  transition: color var(--sys-momentum-transition-default);
+  flex-shrink: 0;
+}
+.flow-search-clear:hover {
+  color: var(--comp-search-clear-icon-hover);
+}
+
+.flow-search-shortcut {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--ref-frame-space-0) var(--ref-frame-space-1);
+  background: var(--comp-search-shortcut-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-search-shortcut-border);
+  border-radius: var(--comp-search-shortcut-radius);
+  font-size: var(--comp-search-shortcut-font);
+  color: var(--comp-search-shortcut-text);
+  font-family: var(--ref-voice-family-mono);
+  line-height: var(--ref-voice-line-height-tight);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 6 COMPONENTS
+   PullToRefresh, SwipeActions, Sidebar, Topbar, Autocomplete
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── PullToRefresh ── */
+
+.flow-pull-to-refresh {
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-pull-to-refresh-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-frame-space-2);
+  overflow: hidden;
+  background: var(--comp-pull-to-refresh-bg);
+  transition: height var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-pull-to-refresh-spinner {
+  width: var(--comp-pull-to-refresh-spinner-size);
+  height: var(--comp-pull-to-refresh-spinner-size);
+  border: var(--sys-frame-border-indicator) solid var(--comp-pull-to-refresh-spinner-track);
+  border-top-color: var(--comp-pull-to-refresh-spinner-color);
+  border-radius: 50%;
+}
+.flow-pull-to-refresh-spinner[data-spinning="true"] {
+  animation: flow-ptr-spin var(--ref-momentum-duration-spin) linear infinite;
+}
+@keyframes flow-ptr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flow-pull-to-refresh-text {
+  font-size: var(--comp-pull-to-refresh-font);
+  color: var(--comp-pull-to-refresh-text);
+}
+
+.flow-pull-to-refresh-content {
+  position: relative;
+}
+
+/* ── SwipeActions ── */
+
+.flow-swipe-actions {
+  position: relative;
+  overflow: hidden;
+  background: var(--comp-swipe-actions-bg);
+}
+
+.flow-swipe-actions-content {
+  position: relative;
+  z-index: var(--sys-depth-layer-content);
+  background: var(--comp-swipe-actions-bg);
+  touch-action: pan-y;
+  transition: transform var(--sys-momentum-transition-default) ease-out;
+}
+.flow-swipe-actions-content[data-swiping="true"] {
+  transition: none;
+}
+
+.flow-swipe-actions-panel {
+  position: absolute;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  display: flex;
+  align-items: stretch;
+}
+.flow-swipe-actions-panel[data-side="left"] {
+  inset-inline-start: 0;
+}
+.flow-swipe-actions-panel[data-side="right"] {
+  inset-inline-end: 0;
+}
+
+.flow-swipe-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+  padding: 0 var(--comp-swipe-actions-action-padding);
+  border: none;
+  cursor: pointer;
+  font-size: var(--comp-swipe-actions-action-font);
+  font-family: inherit;
+  min-width: var(--comp-swipe-action-min-width);
+}
+.flow-swipe-action-btn[data-variant="danger"] {
+  background: var(--comp-swipe-actions-danger-bg);
+  color: var(--comp-swipe-actions-danger-text);
+}
+.flow-swipe-action-btn[data-variant="success"] {
+  background: var(--comp-swipe-actions-success-bg);
+  color: var(--comp-swipe-actions-success-text);
+}
+.flow-swipe-action-btn[data-variant="warning"] {
+  background: var(--comp-swipe-actions-warning-bg);
+  color: var(--comp-swipe-actions-warning-text);
+}
+.flow-swipe-action-btn[data-variant="default"] {
+  background: var(--comp-swipe-actions-default-bg);
+  color: var(--comp-swipe-actions-default-text);
+}
+
+/* ── Sidebar ── */
+
+.flow-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--comp-sidebar-bg);
+  border-inline-end: var(--ref-frame-border-thin) solid var(--comp-sidebar-border);
+  box-shadow: var(--comp-sidebar-shadow);
+  z-index: var(--comp-sidebar-z-index);
+  overflow: hidden;
+  transition: width var(--sys-momentum-transition-default) ease-out;
+  flex-shrink: 0;
+  position: relative;
+}
+.flow-sidebar[data-collapsed="false"] {
+  width: var(--comp-sidebar-width-expanded);
+}
+.flow-sidebar[data-collapsed="true"] {
+  width: var(--comp-sidebar-width-collapsed);
+}
+
+.flow-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--comp-sidebar-header-height);
+  padding: 0 var(--comp-sidebar-padding);
+  flex-shrink: 0;
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-sidebar-divider);
+}
+
+.flow-sidebar-header-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.flow-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-sidebar-toggle-size);
+  height: var(--comp-sidebar-toggle-size);
+  border: var(--ref-frame-border-thin) solid var(--comp-sidebar-toggle-border);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--comp-sidebar-toggle-bg);
+  color: var(--comp-sidebar-toggle-icon);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-sidebar-toggle:hover {
+  background: var(--comp-sidebar-item-bg-hover);
+}
+
+.flow-sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--comp-sidebar-padding);
+}
+
+.flow-sidebar-group-label {
+  font-size: var(--comp-sidebar-group-label-font);
+  color: var(--comp-sidebar-group-label-color);
+  text-transform: uppercase;
+  letter-spacing: var(--ref-voice-letter-spacing-wider);
+  padding: var(--ref-frame-space-1) var(--comp-sidebar-item-padding-x);
+  margin-block-start: var(--comp-sidebar-group-margin-top);
+}
+.flow-sidebar-group-label:first-child {
+  margin-block-start: 0;
+}
+
+.flow-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--comp-sidebar-item-padding-y) var(--comp-sidebar-item-padding-x);
+  border-radius: var(--comp-sidebar-item-radius);
+  background: var(--comp-sidebar-item-bg);
+  color: var(--comp-sidebar-item-text);
+  font-size: var(--comp-sidebar-item-font);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  width: 100%;
+  text-align: start;
+  text-decoration: none;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.flow-sidebar-item:hover {
+  background: var(--comp-sidebar-item-bg-hover);
+  color: var(--comp-sidebar-item-text-hover);
+}
+.flow-sidebar-item[data-active="true"],
+.flow-sidebar-item[aria-current="page"] {
+  background: var(--comp-sidebar-item-bg-active);
+  color: var(--comp-sidebar-item-text-active);
+  font-weight: var(--ref-voice-weight-semibold);
+}
+
+.flow-sidebar-item-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--comp-sidebar-item-icon-size);
+  height: var(--comp-sidebar-item-icon-size);
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-sidebar-item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-sidebar-footer {
+  padding: var(--comp-sidebar-padding);
+  border-block-start: var(--ref-frame-border-thin) solid var(--comp-sidebar-divider);
+  flex-shrink: 0;
+}
+
+/* ── Topbar ── */
+
+.flow-topbar {
+  display: flex;
+  align-items: center;
+  height: var(--comp-topbar-height);
+  padding: 0 var(--comp-topbar-padding-x);
+  background: var(--comp-topbar-bg);
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-topbar-border);
+  box-shadow: var(--comp-topbar-shadow);
+  z-index: var(--comp-topbar-z-index);
+  gap: var(--comp-topbar-gap);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.flow-topbar-title {
+  font-size: var(--comp-topbar-title-font);
+  color: var(--comp-topbar-text);
+  font-weight: var(--ref-voice-weight-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-topbar-spacer {
+  flex: 1;
+}
+
+.flow-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-topbar-action-gap);
+  flex-shrink: 0;
+}
+
+.flow-topbar-section {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-topbar-gap);
+}
+
+/* ── Autocomplete ── */
+
+.flow-autocomplete {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+}
+
+.flow-autocomplete-label {
+  font-size: var(--comp-autocomplete-label-font);
+  color: var(--comp-autocomplete-label-text);
+  font-weight: var(--ref-voice-weight-medium);
+}
+
+.flow-autocomplete-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--comp-autocomplete-height);
+  background: var(--comp-autocomplete-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-autocomplete-border);
+  border-radius: var(--comp-autocomplete-radius);
+  padding: 0 var(--comp-autocomplete-padding-x);
+  gap: var(--ref-frame-space-2);
+  transition:
+    border-color var(--sys-momentum-transition-default),
+    box-shadow var(--sys-momentum-transition-default);
+}
+.flow-autocomplete-input-wrap:focus-within {
+  border-color: var(--comp-autocomplete-border-focus);
+  box-shadow: 0 0 0 var(--sys-state-focus-ring-width) rgba(var(--ref-energy-blue-500-rgb), var(--comp-focus-ring-opacity));
+}
+.flow-autocomplete-input-wrap[data-error="true"] {
+  border-color: var(--comp-autocomplete-border-error);
+}
+.flow-autocomplete[data-size="sm"] .flow-autocomplete-input-wrap {
+  height: var(--comp-autocomplete-height-sm);
+}
+.flow-autocomplete[data-size="lg"] .flow-autocomplete-input-wrap {
+  height: var(--comp-autocomplete-height-lg);
+}
+
+.flow-autocomplete-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--comp-autocomplete-label-text);
+}
+
+.flow-autocomplete-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--comp-autocomplete-font);
+  color: var(--comp-autocomplete-text);
+  font-family: inherit;
+  height: 100%;
+  min-width: 0;
+}
+.flow-autocomplete-input::placeholder {
+  color: var(--comp-autocomplete-placeholder);
+}
+
+.flow-autocomplete-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  color: var(--comp-autocomplete-clear-icon);
+  flex-shrink: 0;
+  border-radius: var(--ref-frame-radius-1);
+  transition: color var(--sys-momentum-transition-default);
+}
+.flow-autocomplete-clear:hover {
+  color: var(--comp-autocomplete-clear-icon-hover);
+}
+
+.flow-autocomplete-dropdown {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  margin-block-start: var(--ref-frame-space-1);
+  background: var(--comp-autocomplete-dropdown-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-autocomplete-dropdown-border);
+  border-radius: var(--comp-autocomplete-dropdown-radius);
+  box-shadow: var(--comp-autocomplete-dropdown-shadow);
+  max-height: var(--comp-autocomplete-dropdown-max-height);
+  overflow-y: auto;
+  padding: var(--comp-autocomplete-dropdown-padding);
+  z-index: var(--comp-autocomplete-z-index);
+  animation: flow-autocomplete-dropdown-in var(--sys-momentum-transition-default) ease-out;
+}
+@keyframes flow-autocomplete-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--comp-autocomplete-item-padding-y) var(--comp-autocomplete-item-padding-x);
+  border-radius: var(--comp-autocomplete-item-radius);
+  font-size: var(--comp-autocomplete-item-font);
+  color: var(--comp-autocomplete-item-text);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  width: 100%;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+.flow-autocomplete-item:hover,
+.flow-autocomplete-item[data-highlighted="true"] {
+  background: var(--comp-autocomplete-item-bg-hover);
+}
+.flow-autocomplete-item[data-selected="true"] {
+  background: var(--comp-autocomplete-item-bg-selected);
+  font-weight: var(--ref-voice-weight-medium);
+}
+.flow-autocomplete-item[data-disabled="true"] {
+  opacity: var(--ref-state-opacity-dimmed);
+  cursor: default;
+}
+
+.flow-autocomplete-item-secondary {
+  color: var(--comp-autocomplete-item-text-secondary);
+  font-size: var(--sys-voice-label-s-size);
+  margin-inline-start: auto;
+}
+
+.flow-autocomplete-highlight {
+  background: var(--comp-autocomplete-highlight-bg);
+  color: var(--comp-autocomplete-highlight-text);
+  font-weight: var(--ref-voice-weight-semibold);
+}
+
+.flow-autocomplete-empty {
+  padding: var(--comp-autocomplete-item-padding-y) var(--comp-autocomplete-item-padding-x);
+  font-size: var(--comp-autocomplete-empty-font);
+  color: var(--comp-autocomplete-empty-text);
+  text-align: center;
+}
+
+/* ── LOADING INDICATOR (dots) ── */
+.flow-autocomplete-loading,
+.flow-search-loading {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--ref-frame-space-2);
+}
+.flow-loading-dots {
+  display: inline-flex;
+  gap: var(--comp-loading-dot-gap);
+  align-items: center;
+}
+.flow-loading-dots > span {
+  width: var(--comp-loading-dot-size);
+  height: var(--comp-loading-dot-size);
+  border-radius: var(--ref-frame-radius-full);
+  background: var(--sys-energy-text-tertiary);
+  animation: flow-dot-bounce var(--ref-momentum-duration-bounce) ease-in-out infinite;
+}
+.flow-loading-dots > span:nth-child(2) {
+  animation-delay: var(--ref-momentum-stagger-fast);
+}
+.flow-loading-dots > span:nth-child(3) {
+  animation-delay: calc(var(--ref-momentum-stagger-fast) * 2);
+}
+
+@keyframes flow-dot-bounce {
+  0%,
+  80%,
+  100% {
+    opacity: var(--ref-state-opacity-faint);
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* ── FULLSCREEN SHEET — slide-up animation ── */
+@keyframes flow-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ── SKELETON PULSE — loading shimmer animation ── */
+@keyframes flow-skeleton-pulse {
+  0%,
+  100% {
+    opacity: var(--comp-skeleton-pulse-opacity);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TONE — Brand voice/personality variants
+   Manual override classes to enforce specific tones
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Specificity boost via [class] attribute selector (0,2,0)
+   beats .flow-text[data-color] (0,2,0) by source order,
+   removing the need for !important. */
+[class].flow-tone-neutral {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+[class].flow-tone-brand {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+[class].flow-tone-marketing {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+[class].flow-tone-system {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OTP INPUT — One-time password cells
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-otp-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-otp-input-label {
+  display: block;
+  font-size: var(--sys-size-voice-label);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-secondary);
+}
+.flow-otp-input[data-state~="error"] .flow-otp-input-label {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-otp-input-group {
+  display: flex;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-md);
+  height: var(--comp-otp-cell-size-md);
+  text-align: center;
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-primary);
+  font-family: var(--ref-voice-family-mono);
+  font-size: var(--sys-voice-heading-xl-size);
+  font-weight: var(--ref-voice-weight-semibold);
+  color: var(--sys-energy-text-primary);
+  outline: none;
+  transition:
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    box-shadow var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+  caret-color: var(--sys-energy-border-focus);
+}
+.flow-otp-input-cell[data-filled] {
+  border-color: var(--sys-energy-border-focus);
+}
+.flow-otp-input-cell:focus {
+  border-color: var(--sys-energy-border-focus);
+  box-shadow: 0 0 0 var(--sys-frame-border-thin) var(--sys-energy-border-focus);
+}
+.flow-otp-input[data-state~="error"] .flow-otp-input-cell {
+  border-color: var(--sys-energy-status-error);
+}
+.flow-otp-input[data-state~="disabled"] .flow-otp-input-cell {
+  opacity: var(--sys-state-opacity-disabled);
+}
+.flow-otp-input[data-size="sm"] .flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-sm);
+  height: var(--comp-otp-cell-size-sm);
+  font-size: var(--sys-voice-heading-m-size);
+}
+.flow-otp-input[data-size="lg"] .flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-lg);
+  height: var(--comp-otp-cell-size-lg);
+  font-size: var(--sys-voice-display-s-size);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATE PICKER — Calendar-based date selection
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-datepicker {
+  position: relative;
+  display: inline-block;
+}
+
+.flow-datepicker-label {
+  display: block;
+  margin-block-end: var(--ref-frame-space-1);
+  font-size: var(--sys-size-voice-label);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-secondary);
+}
+.flow-datepicker[data-state~="error"] .flow-datepicker-label {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-datepicker-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+  height: var(--sys-size-height-control);
+  padding: 0 var(--ref-frame-space-4);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-primary);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-datepicker-trigger:hover:not([data-state~="disabled"]) {
+  border-color: var(--sys-energy-border-focus);
+}
+.flow-datepicker[data-state~="error"] .flow-datepicker-trigger {
+  border-color: var(--sys-energy-status-error);
+}
+.flow-datepicker[data-state~="disabled"] .flow-datepicker-trigger {
+  cursor: not-allowed;
+  opacity: var(--sys-state-opacity-disabled);
+}
+
+.flow-datepicker-trigger-text {
+  flex: 1;
+}
+.flow-datepicker-trigger-placeholder {
+  flex: 1;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-datepicker-clear {
+  display: flex;
+  cursor: pointer;
+  color: var(--sys-energy-text-tertiary);
+  background: none;
+  border: none;
+  padding: 0;
+}
+.flow-datepicker-clear:hover {
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-datepicker-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--sys-energy-surface-primary);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-container);
+  box-shadow: var(--sys-depth-elevation-medium);
+  padding: var(--ref-frame-space-3);
+  min-width: var(--comp-date-picker-min-width);
+}
+
+.flow-datepicker-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: var(--ref-frame-space-3);
+}
+
+.flow-datepicker-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: var(--sys-frame-border-thin) solid transparent;
+  border-radius: var(--ref-frame-radius-1);
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  color: var(--sys-energy-text-secondary);
+}
+.flow-datepicker-nav-btn:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-datepicker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--comp-date-picker-grid-gap);
+}
+
+.flow-datepicker-day-header {
+  text-align: center;
+  font-size: var(--sys-voice-label-s-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-tertiary);
+  padding: var(--ref-frame-space-1) 0;
+  font-weight: var(--ref-voice-weight-medium);
+}
+
+.flow-datepicker-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-date-picker-cell-size);
+  height: var(--comp-date-picker-cell-size);
+  border-radius: var(--ref-frame-radius-full);
+  border: var(--sys-frame-border-thin) solid transparent;
+  background: none;
+  cursor: pointer;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-voice-label-m-size);
+  color: var(--sys-energy-text-primary);
+  transition: background var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+  padding: 0;
+}
+.flow-datepicker-day:hover:not([data-state~="disabled"]):not([data-selected]) {
+  background: var(--sys-energy-state-hover);
+}
+.flow-datepicker-day[data-today] {
+  border-color: var(--sys-energy-border-focus);
+}
+.flow-datepicker-day[data-selected] {
+  background: var(--sys-energy-surface-accent);
+  color: var(--sys-energy-text-on-accent);
+  font-weight: var(--ref-voice-weight-semibold);
+}
+.flow-datepicker-day[data-state~="disabled"] {
+  opacity: var(--sys-state-opacity-disabled);
+  cursor: default;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MULTI SELECT — Multi-value combobox
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-multi-select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Trigger — composes .flow-input-surface for height, radius, border (box-shadow),
+   padding, background, and state transitions. Only multi-select overrides here.
+   align-items: center (IS default is flex-end for floating label); multi-select
+   uses external label so content should be vertically centered. */
+.flow-multi-select-trigger {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  cursor: pointer;
+  padding-inline-start: var(--comp-textinput-padding-x);
+  padding-inline-end: var(--comp-textinput-padding-x);
+}
+.flow-multi-select-clear {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--sys-energy-text-tertiary);
+}
+.flow-multi-select[data-state~="error"] .flow-multi-select-trigger {
+  --_is-bc: var(--comp-textinput-border-error, var(--sys-energy-status-error));
+}
+.flow-multi-select[data-state~="disabled"] .flow-multi-select-trigger {
+  cursor: not-allowed;
+  opacity: var(--sys-state-opacity-disabled);
+  pointer-events: none;
+}
+
+.flow-multi-select-label {
+  display: block;
+  margin-block-end: var(--ref-frame-space-1);
+  font-size: var(--sys-size-voice-label);
+  font-family: var(--ref-voice-family-sans);
+  font-weight: var(--ref-voice-weight-medium);
+  color: var(--sys-energy-text-secondary);
+}
+.flow-multi-select[data-state~="error"] .flow-multi-select-label {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-multi-select-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ref-frame-space-1);
+  padding: var(--ref-frame-space-micro) var(--ref-frame-space-2);
+  border-radius: var(--ref-frame-radius-full);
+  background: var(--sys-energy-surface-interactive);
+  font-size: var(--sys-voice-label-s-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-primary);
+  line-height: var(--ref-voice-line-height-snug);
+  max-width: calc(var(--ref-frame-space-20) * 3);
+  overflow: hidden;
+}
+
+.flow-multi-select-chip-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  color: var(--sys-energy-text-tertiary);
+  flex-shrink: 0;
+}
+.flow-multi-select-chip-remove:hover {
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-multi-select-placeholder {
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-multi-select-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--sys-energy-surface-primary);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-container);
+  box-shadow: var(--sys-depth-elevation-medium);
+  max-height: var(--comp-multi-select-dropdown-max-height);
+  overflow-y: auto;
+}
+
+.flow-multi-select-search {
+  width: 100%;
+  border: none;
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--ref-voice-family-sans);
+  background: transparent;
+  color: var(--sys-energy-text-primary);
+  outline: none;
+}
+
+.flow-multi-select-actions {
+  display: flex;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-3);
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+}
+
+.flow-multi-select-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--sys-voice-label-s-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-accent);
+  padding: var(--ref-frame-space-micro) var(--ref-frame-space-1);
+}
+.flow-multi-select-action-btn:hover {
+  text-decoration: underline;
+}
+
+.flow-multi-select-group-label {
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-3);
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--ref-voice-tracking-wide);
+}
+
+.flow-multi-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  cursor: pointer;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  transition: background var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-multi-select-option:hover,
+.flow-multi-select-option[data-highlighted] {
+  background: var(--sys-energy-state-hover);
+}
+.flow-multi-select-option[aria-disabled="true"] {
+  opacity: var(--sys-state-opacity-disabled);
+  cursor: default;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INLINE EDITABLE — Click-to-edit field
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-inline-editable {
+  cursor: pointer;
+  border-block-end: var(--comp-inline-editable-border-hint) dashed var(--sys-energy-border-default);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+.flow-inline-editable[data-state~="disabled"] {
+  cursor: default;
+  border-block-end: none;
+}
+.flow-inline-editable[data-empty] {
+  color: var(--sys-energy-text-tertiary);
+}
+.flow-inline-editable:hover:not([data-state~="disabled"]) {
+  border-block-end-color: var(--sys-energy-border-focus);
+}
+
+.flow-inline-editable-input {
+  border: none;
+  border-block-end: var(--comp-inline-editable-border-editing) solid var(--sys-energy-border-focus);
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  outline: none;
+  padding: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COLOR PICKER — Color selection with HSL sliders
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-color-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-3);
+}
+.flow-color-picker[data-state~="disabled"] {
+  opacity: var(--sys-state-opacity-disabled);
+  pointer-events: none;
+}
+
+.flow-color-picker-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-3);
+}
+
+.flow-color-picker-swatch-preview {
+  width: var(--ref-frame-space-12);
+  height: var(--ref-frame-space-12);
+  border-radius: var(--sys-frame-radius-control);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  flex-shrink: 0;
+}
+
+.flow-color-picker-hex-input {
+  width: var(--comp-color-picker-hex-width);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--ref-frame-radius-1);
+  background: var(--sys-energy-surface-primary);
+  color: var(--sys-energy-text-primary);
+  font-size: var(--sys-voice-paragraph-l-size);
+  font-family: var(--ref-voice-family-mono, monospace);
+  outline: none;
+}
+.flow-color-picker-hex-input:focus {
+  border-color: var(--sys-energy-border-focus);
+}
+
+.flow-color-picker-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+}
+
+.flow-color-picker-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-color-picker-swatch {
+  border-radius: var(--ref-frame-radius-1);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  cursor: pointer;
+  padding: 0;
+  transition: transform var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-color-picker-swatch:hover {
+  transform: scale(1.15);
+}
+.flow-color-picker-swatch[data-selected] {
+  box-shadow: 0 0 0 var(--sys-frame-border-medium) var(--sys-energy-border-focus);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FILE UPLOAD — Drag-and-drop upload zone
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-3);
+}
+.flow-file-upload[data-state~="disabled"] {
+  opacity: var(--sys-state-opacity-disabled);
+}
+
+.flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height);
+  border: var(--sys-frame-border-medium) dashed var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-frame-space-2);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    background var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-file-upload-zone[data-drag-over] {
+  border-color: var(--sys-energy-status-info);
+  background: var(--sys-energy-surface-accent-subtle);
+}
+.flow-file-upload[data-state~="disabled"] .flow-file-upload-zone {
+  cursor: default;
+}
+.flow-file-upload[data-size="sm"] .flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height-sm);
+}
+.flow-file-upload[data-size="lg"] .flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height-lg);
+}
+
+.flow-file-upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-file-upload-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  background: var(--sys-energy-surface-secondary);
+  border-radius: var(--sys-frame-radius-control);
+}
+
+.flow-file-upload-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flow-file-upload-item-name {
+  font-size: var(--sys-voice-label-m-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flow-file-upload-item-size {
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--ref-voice-family-sans);
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-file-upload-progress {
+  width: 100%;
+  height: var(--ref-frame-space-1);
+  background: var(--sys-energy-surface-interactive);
+  border-radius: var(--ref-frame-radius-full);
+  overflow: hidden;
+  margin-block-start: var(--ref-frame-space-1);
+}
+
+.flow-file-upload-progress-bar {
+  height: 100%;
+  background: var(--sys-energy-surface-accent);
+  border-radius: var(--ref-frame-radius-full);
+  transition: width var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-file-upload-item[data-status="error"] .flow-file-upload-progress-bar {
+  background: var(--sys-energy-status-error);
+}
+.flow-file-upload-item[data-status="success"] .flow-file-upload-progress-bar {
+  background: var(--sys-energy-status-success);
+}
+
+.flow-file-upload-item-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  display: flex;
+  color: var(--sys-energy-text-tertiary);
+  border-radius: var(--ref-frame-radius-1);
+}
+.flow-file-upload-item-remove:hover {
+  color: var(--sys-energy-text-secondary);
+  background: var(--sys-energy-state-hover);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RICH TEXT EDITOR — WYSIWYG content editor
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-rich-text-editor {
+  display: flex;
+  flex-direction: column;
+}
+.flow-rich-text-editor[data-state~="disabled"] {
+  opacity: var(--sys-state-opacity-disabled);
+  pointer-events: none;
+}
+
+.flow-rich-text-editor-container {
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  overflow: hidden;
+}
+
+.flow-rich-text-editor-toolbar {
+  display: flex;
+  gap: var(--ref-frame-space-1);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  background: var(--sys-energy-surface-secondary);
+}
+
+.flow-rich-text-editor-toolbar-btn {
+  width: var(--comp-rich-text-btn-size);
+  height: var(--comp-rich-text-btn-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: var(--sys-frame-border-thin) solid transparent;
+  border-radius: var(--ref-frame-radius-1);
+  cursor: pointer;
+  color: var(--sys-energy-text-primary);
+  font-size: var(--sys-voice-label-s-size);
+  font-family: inherit;
+}
+.flow-rich-text-editor-toolbar-btn:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-rich-text-editor-toolbar-divider {
+  width: var(--sys-frame-border-thin);
+  background: var(--sys-energy-border-subtle);
+  margin: var(--ref-frame-space-1) var(--ref-frame-space-micro);
+}
+
+.flow-rich-text-editor-content {
+  padding: var(--ref-frame-space-3);
+  outline: none;
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  overflow-y: auto;
+}
+.flow-rich-text-editor-content:empty::before {
+  content: attr(data-placeholder);
+  color: var(--sys-energy-text-tertiary);
+  pointer-events: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATE RANGE PICKER — Two-month calendar range
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-daterangepicker {
+  position: relative;
+  display: inline-block;
+}
+
+.flow-daterangepicker-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+  min-width: var(--comp-date-range-trigger-min-width);
+  height: var(--sys-size-height-control);
+  padding: 0 var(--ref-frame-space-4);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-primary);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+.flow-daterangepicker-trigger:hover:not([data-state~="disabled"]) {
+  border-color: var(--sys-energy-border-focus);
+}
+.flow-daterangepicker[data-state~="error"] .flow-daterangepicker-trigger {
+  border-color: var(--sys-energy-status-error);
+}
+.flow-daterangepicker[data-state~="disabled"] .flow-daterangepicker-trigger {
+  cursor: not-allowed;
+  opacity: var(--sys-state-opacity-disabled);
+}
+
+.flow-daterangepicker-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--sys-energy-surface-primary);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-container);
+  box-shadow: var(--sys-depth-elevation-medium);
+  padding: var(--ref-frame-space-3);
+  display: flex;
+  gap: var(--ref-frame-space-4);
+}
+
+.flow-daterangepicker-presets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+  border-inline-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  padding-inline-end: var(--ref-frame-space-3);
+  min-width: var(--comp-date-range-presets-min-width);
+}
+
+.flow-daterangepicker-preset-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border-radius: var(--ref-frame-radius-1);
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-voice-label-m-size);
+  color: var(--sys-energy-text-primary);
+}
+.flow-daterangepicker-preset-btn:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-daterangepicker-calendars {
+  display: flex;
+  gap: var(--ref-frame-space-4);
+}
+
+/* DateRangePicker reuses .flow-datepicker-* classes for calendar internals */
+
+.flow-datepicker-day[data-in-range] {
+  background: var(--sys-energy-surface-accent-subtle);
+  border-radius: 0;
+}
+.flow-datepicker-day[data-range-start] {
+  border-radius: var(--ref-frame-radius-full) 0 0 var(--ref-frame-radius-full);
+}
+.flow-datepicker-day[data-range-end] {
+  border-radius: 0 var(--ref-frame-radius-full) var(--ref-frame-radius-full) 0;
+}
+.flow-datepicker-day[data-range-start][data-range-end] {
+  border-radius: var(--ref-frame-radius-full);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   KPI CARD — Key performance indicator display (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-component);
+  transition:
+    box-shadow var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TIMELINE — Vertical event timeline (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION HEADER — Section heading with action slot (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-element);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOVER CARD — Rich content tooltip on hover (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-hover-card {
+  position: relative;
+  display: inline-block;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NOTIFICATION PANEL — Notification center (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-notification-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--sys-depth-elevation-medium);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONFIRMATION DIALOG — Purpose-built confirm action (L4)
+   Overlay + panel base styles
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-confirmation-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sys-depth-layer-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sys-depth-scrim);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATA TABLE — Advanced table with sorting/filtering (L3)
+   Structural styles for toolbar, search, sort, pagination
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-data-table {
+  overflow: hidden;
+}
+
+.flow-data-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-3);
+  padding: var(--ref-frame-space-3) var(--ref-frame-space-4);
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+.flow-data-table-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  flex: 1;
+  max-width: var(--comp-data-table-search-max-width);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-3);
+  border-radius: var(--ref-frame-radius-full);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  background: var(--sys-energy-surface-secondary);
+}
+
+.flow-data-table-sort-icon {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: var(--ref-voice-line-height-none);
+}
+
+.flow-data-table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ref-frame-space-3) var(--ref-frame-space-4);
+  border-block-start: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  font-family: var(--ref-voice-family-sans);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FORM SECTION — Section header + fields group (L4)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INLINE VALIDATION — Error/success/info helper (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-inline-validation {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ref-frame-space-1);
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--ref-voice-family-sans);
+}
+
+/* ─── Tone integration for L3/L4 components ─── */
+
+/* Card */
+.flow-card {
+  background: var(--comp-card-bg-elevated);
+  border-radius: var(--comp-card-radius);
+  box-shadow: var(--comp-card-shadow);
+  transition: box-shadow var(--sys-momentum-transition-default), border-color var(--sys-momentum-transition-default);
+  text-align: start;
+}
+.flow-card[data-elevation="0"] {
+  background: var(--comp-card-bg-outlined);
+  box-shadow: none;
+}
+.flow-card[data-border] {
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+.flow-card[data-accent] {
+  background: transparent;
+  box-shadow: none;
+}
+.flow-card[data-interactive] {
+  cursor: pointer;
+}
+.flow-card[data-interactive]:hover {
+  box-shadow: var(--comp-card-shadow-hover);
+}
+.flow-card[data-state="selected"] {
+  outline: var(--sys-frame-border-medium) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+.flow-card[data-tone="brand"] { color: var(--sys-tone-brand-text); font-weight: var(--sys-tone-brand-weight); }
+.flow-card[data-tone="marketing"] { color: var(--sys-tone-marketing-text); font-weight: var(--sys-tone-marketing-weight); }
+.flow-card[data-tone="system"] { color: var(--sys-tone-system-text); font-weight: var(--sys-tone-system-weight); }
+.flow-card[data-tone="neutral"] { color: var(--sys-tone-neutral-text); font-weight: var(--sys-tone-neutral-weight); }
+
+/* Dialog */
+/* ── Dialog ── */
+.flow-dialog-positioner {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sys-frame-padding-container);
+  z-index: var(--sys-depth-layer-modal);
+}
+
+/* Override Surface defaults — dialog panel defined in input-surface.css loads before primitives.css */
+.flow-dialog-panel {
+  background: var(--comp-dialog-bg);
+  border-radius: var(--comp-dialog-radius);
+  padding: var(--sys-size-inset);
+}
+
+.flow-dialog-panel[data-tone="brand"] .flow-dialog-title { color: var(--sys-tone-brand-text); font-weight: var(--sys-tone-brand-weight); }
+.flow-dialog-panel[data-tone="marketing"] .flow-dialog-title { color: var(--sys-tone-marketing-text); font-weight: var(--sys-tone-marketing-weight); }
+.flow-dialog-panel[data-tone="system"] .flow-dialog-title { color: var(--sys-tone-system-text); font-weight: var(--sys-tone-system-weight); }
+.flow-dialog-panel[data-tone="neutral"] .flow-dialog-title { color: var(--sys-tone-neutral-text); font-weight: var(--sys-tone-neutral-weight); }
+
+/* Snackbar */
+.flow-snackbar[data-tone="brand"] { color: var(--sys-tone-brand-text); }
+.flow-snackbar[data-tone="marketing"] { color: var(--sys-tone-marketing-text); }
+.flow-snackbar[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-snackbar[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* EmptyState */
+.flow-empty-state[data-tone="brand"] { color: var(--sys-tone-brand-text); }
+.flow-empty-state[data-tone="marketing"] { color: var(--sys-tone-marketing-text); }
+.flow-empty-state[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-empty-state[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* Tooltip */
+/* ── Tooltip ── */
+.flow-tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+}
+
+.flow-tooltip[data-tone="brand"] { color: var(--sys-tone-brand-text); }
+.flow-tooltip[data-tone="marketing"] { color: var(--sys-tone-marketing-text); }
+.flow-tooltip[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-tooltip[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* KPICard */
+.flow-kpi-card[data-tone="brand"] { color: var(--sys-tone-brand-text); font-weight: var(--sys-tone-brand-weight); }
+.flow-kpi-card[data-tone="marketing"] { color: var(--sys-tone-marketing-text); font-weight: var(--sys-tone-marketing-weight); }
+.flow-kpi-card[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-kpi-card[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* ── KPI Trend Indicator ── */
+.flow-kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ref-frame-space-1);
+}
+.flow-kpi-trend .flow-icon {
+  width: var(--comp-kpi-trend-indicator-icon-size);
+  height: var(--comp-kpi-trend-indicator-icon-size);
+}
+.flow-kpi-trend > .flow-caption:first-of-type {
+  font-weight: var(--ref-voice-weight-medium);
+}
+
+/* SectionHeader */
+.flow-section-header[data-tone="brand"] { color: var(--sys-tone-brand-text); font-weight: var(--sys-tone-brand-weight); }
+.flow-section-header[data-tone="marketing"] { color: var(--sys-tone-marketing-text); font-weight: var(--sys-tone-marketing-weight); }
+.flow-section-header[data-tone="system"] { color: var(--sys-tone-system-text); font-weight: var(--sys-tone-system-weight); }
+.flow-section-header[data-tone="neutral"] { color: var(--sys-tone-neutral-text); font-weight: var(--sys-tone-neutral-weight); }
+
+/* HoverCard */
+.flow-hover-card[data-tone="brand"] { color: var(--sys-tone-brand-text); font-weight: var(--sys-tone-brand-weight); }
+.flow-hover-card[data-tone="marketing"] { color: var(--sys-tone-marketing-text); font-weight: var(--sys-tone-marketing-weight); }
+.flow-hover-card[data-tone="system"] { color: var(--sys-tone-system-text); font-weight: var(--sys-tone-system-weight); }
+.flow-hover-card[data-tone="neutral"] { color: var(--sys-tone-neutral-text); font-weight: var(--sys-tone-neutral-weight); }
+
+/* NotificationPanel */
+.flow-notification-panel[data-tone="brand"] { color: var(--sys-tone-brand-text); }
+.flow-notification-panel[data-tone="marketing"] { color: var(--sys-tone-marketing-text); }
+.flow-notification-panel[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-notification-panel[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* Timeline */
+.flow-timeline[data-tone="brand"] { color: var(--sys-tone-brand-text); }
+.flow-timeline[data-tone="marketing"] { color: var(--sys-tone-marketing-text); }
+.flow-timeline[data-tone="system"] { color: var(--sys-tone-system-text); }
+.flow-timeline[data-tone="neutral"] { color: var(--sys-tone-neutral-text); }
+
+/* ── Container Queries — Adaptive Component Rules ─────────────────── */
+
+/* FlowCard — stack layout in narrow containers */
+@container (max-width: 320px) {
+  .flow-card { padding: var(--ref-frame-space-3); }
+  .flow-card [data-slot="actions"] { flex-direction: column; }
+}
+
+/* FlowKPICard — vertical layout when narrow */
+@container (max-width: 320px) {
+  .flow-kpi-card { flex-direction: column; text-align: start; }
+}
+
+/* FlowToolbar — wrap items in narrow containers */
+@container (max-width: 480px) {
+  .flow-toolbar { flex-wrap: wrap; gap: var(--ref-frame-space-2); }
+}
+
+/* FlowSplitPane — stack vertically when narrow */
+@container (max-width: 480px) {
+  .flow-split-pane[data-orientation="horizontal"] {
+    flex-direction: column;
+  }
+  .flow-split-pane[data-orientation="horizontal"] > .flow-split-pane-handle {
+    cursor: row-resize;
+  }
+}
+
+/* ── High Contrast Mode ───────────────────────────────────────────── */
+@media (prefers-contrast: more) {
+  :root {
+    --sys-frame-border-thin: 2px;
+    --sys-energy-border-primary: currentColor;
+    --sys-energy-border-secondary: currentColor;
+  }
+
+  .flow-button,
+  .flow-chip,
+  .flow-tag,
+  .flow-card,
+  .flow-select-trigger,
+  .flow-text-input,
+  .flow-text-area {
+    border: 2px solid currentColor;
+  }
+
+  .flow-focusable:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* ── ImageWithFallback — replaces former Tailwind utilities ───────── */
+.flow-img-fallback {
+  display: inline-block;
+  background: var(--sys-energy-surface-secondary);
+  text-align: center;
+  vertical-align: middle;
+}
+.flow-img-fallback-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Frame8 flag icons — replaces former Tailwind utilities ───────── */
+.flow-flag-abs   { position: absolute; display: block; width: 100%; height: 100%; }
+.flow-flag-rel   { position: relative; }
+.flow-flag-clip  { overflow: clip; }
+
+/* end components */
+
+/* ── Tags ── */
+/* Two-axis model: data-variant (label | code) × data-status (neutral | info | success | warning | error).
+   Variant drives typography & shape; status drives chromatic meaning.
+   [data-size] cascades via --comp-tag-font (sm/md/lg/xl responsive to density). */
+
+.flow-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--comp-tag-font);
+  font-weight: var(--comp-tag-weight);
+  letter-spacing: var(--comp-tag-letter-spacing);
+  padding: var(--comp-tag-padding-y) var(--comp-tag-padding-x);
+  border-radius: var(--comp-tag-radius);
+  background: var(--comp-tag-bg);
+  color: var(--comp-tag-color);
+}
+
+/* ── Variant: code — monospace, inline-code styling ── */
+.flow-tag[data-variant="code"] {
+  font-family: var(--comp-tag-code-font-family);
+  font-weight: var(--ref-voice-weight-regular);
+  letter-spacing: var(--ref-voice-letter-spacing-normal);
+  background: var(--comp-tag-code-bg);
+  color: var(--comp-tag-code-color);
+  border-radius: var(--comp-tag-code-radius);
+  padding: var(--comp-tag-code-padding-y) var(--comp-tag-code-padding-x);
+}
+
+/* ── Status: semantic color overrides (both variants) ── */
+.flow-tag[data-status="info"] {
+  background: var(--sys-energy-status-info-subtle);
+  color: var(--sys-energy-text-accent);
+}
+.flow-tag[data-status="success"] {
+  background: var(--sys-energy-status-success-subtle);
+  color: var(--sys-energy-status-success);
+}
+.flow-tag[data-status="warning"] {
+  background: var(--sys-energy-status-warning-subtle);
+  color: var(--sys-energy-status-warning);
+}
+.flow-tag[data-status="error"] {
+  background: var(--sys-energy-status-error-subtle);
+  color: var(--sys-energy-status-error);
+}
+
+/* ── Code × Status — preserve mono font when status overrides color ── */
+.flow-tag[data-variant="code"][data-status="info"],
+.flow-tag[data-variant="code"][data-status="success"],
+.flow-tag[data-variant="code"][data-status="warning"],
+.flow-tag[data-variant="code"][data-status="error"] {
+  font-family: var(--comp-tag-code-font-family);
+  font-weight: var(--ref-voice-weight-regular);
+  letter-spacing: var(--ref-voice-letter-spacing-normal);
+  border-radius: var(--comp-tag-code-radius);
+  padding: var(--comp-tag-code-padding-y) var(--comp-tag-code-padding-x);
+}
+

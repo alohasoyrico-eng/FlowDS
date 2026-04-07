@@ -1,0 +1,14 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/lib/index.ts"],
+  "out": "docs/api",
+  "exclude": ["**/*.test.*", "**/*.stories.*", "**/node_modules/**"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "readme": "none",
+  "name": "Flow Design System API",
+  "categorizeByGroup": true,
+  "sort": ["alphabetical"]
+}

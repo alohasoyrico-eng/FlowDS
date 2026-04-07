@@ -1,0 +1,28 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "custom-property-pattern": null,
+    "selector-class-pattern": null,
+    "no-descending-specificity": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "value-keyword-case": ["lower", { "ignoreProperties": ["composes"] }],
+    "property-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "at-rule-no-unknown": [true, { "ignoreAtRules": ["layer"] }],
+    "function-no-unknown": [true, { "ignoreFunctions": ["alpha"] }],
+    "import-notation": null
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/styles/modules/primitives.css",
+        "src/styles/modules/components.css",
+        "src/styles/modules/utilities.css",
+        "src/styles/modules/input-surface.css"
+      ],
+      "rules": {
+        "color-no-hex": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "src/lib/index.ts",
+    "src/app/primitives.tsx",
+    "src/app/hooks",
+    "src/app/tokens.ts",
+    "src/app/icons.ts",
+    "src/app/flags.ts",
+    "src/app/components/controls",
+    "src/app/components/inputs",
+    "src/app/components/selection",
+    "src/app/components/display",
+    "src/app/components/feedback",
+    "src/app/components/overlays",
+    "src/app/components/navigation",
+    "src/app/components/layout",
+    "src/app/components/data",
+    "src/app/components/patterns"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
