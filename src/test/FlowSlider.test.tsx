@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSlider } from "../app/components/selection";
@@ -133,5 +134,16 @@ describe("FlowSlider — marks", () => {
     render(<FlowSlider aria-label="Volume" min={0} max={100} showMarks showValue={false} />);
     expect(screen.getByText("0")).toBeInTheDocument();
     expect(screen.getByText("100")).toBeInTheDocument();
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowSlider — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSlider aria-label="Volume" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

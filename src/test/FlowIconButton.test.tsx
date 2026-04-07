@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowIconButton } from "../app/components/controls";
@@ -129,5 +130,10 @@ describe("FlowIconButton — accessibility", () => {
   it("uses aria-label for the accessible name", () => {
     render(<FlowIconButton icon="menu" aria-label="Open menu" />);
     expect(screen.getByRole("button")).toHaveAccessibleName("Open menu");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowIconButton icon="close" aria-label="Close" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

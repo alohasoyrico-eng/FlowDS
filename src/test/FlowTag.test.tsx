@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowTag.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowTag } from "../app/components/display";
@@ -99,5 +100,16 @@ describe("FlowTag — size", () => {
   it("applies an explicit size via prop", () => {
     const { container } = render(<FlowTag size="sm">Small</FlowTag>);
     expect(container.querySelector(".flow-tag")).toHaveAttribute("data-size", "sm");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowTag — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowTag>Active</FlowTag>);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

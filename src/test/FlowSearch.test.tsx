@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSearch } from "../app/components/patterns";
@@ -96,5 +97,10 @@ describe("FlowSearch — accessibility", () => {
   it("does not show clear button when disabled", () => {
     render(<FlowSearch defaultValue="text" disabled />);
     expect(screen.queryByLabelText("Clear")).not.toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSearch />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

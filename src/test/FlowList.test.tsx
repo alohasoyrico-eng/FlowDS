@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowList, FlowListItem } from "../app/components/display";
@@ -173,5 +174,14 @@ describe("FlowListItem — accessibility", () => {
       </FlowList>,
     );
     expect(screen.getByRole("list")).toHaveAttribute("aria-label", "Navigation items");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowList aria-label="Items">
+        <FlowListItem primary="Item 1" />
+      </FlowList>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

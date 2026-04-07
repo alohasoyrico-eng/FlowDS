@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSegmentedControl } from "../app/components/selection";
@@ -139,5 +140,10 @@ describe("FlowSegmentedControl — accessibility", () => {
     expect(radios[0]).toHaveAttribute("tabindex", "-1");
     expect(radios[1]).toHaveAttribute("tabindex", "0");
     expect(radios[2]).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSegmentedControl options={defaultOptions} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

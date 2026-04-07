@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSwitch } from "../app/components/selection";
@@ -75,5 +76,16 @@ describe("FlowSwitch — disabled state", () => {
     render(<FlowSwitch disabled checked={false} onChange={onChange} aria-label="Toggle" />);
     await userEvent.click(screen.getByRole("switch"));
     expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowSwitch — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSwitch aria-label="Toggle feature" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

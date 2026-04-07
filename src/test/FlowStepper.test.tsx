@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowStepper } from "../app/components/navigation";
@@ -163,5 +164,10 @@ describe("FlowStepper — accessibility", () => {
   it("sets data-state='disabled' when disabled", () => {
     render(<FlowStepper steps={DEFAULT_STEPS} activeStep={0} disabled />);
     expect(screen.getByRole("navigation")).toHaveAttribute("data-state", "disabled");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowStepper steps={DEFAULT_STEPS} activeStep={0} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

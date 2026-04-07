@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowBreadcrumbs } from "../app/components/navigation";
@@ -144,5 +145,10 @@ describe("FlowBreadcrumbs — accessibility", () => {
     separators.forEach((sep) => {
       expect(sep).toHaveAttribute("aria-hidden", "true");
     });
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowBreadcrumbs items={DEFAULT_ITEMS} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

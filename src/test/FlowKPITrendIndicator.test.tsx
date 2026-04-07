@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowKPITrendIndicator.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowKPITrendIndicator } from "../app/components/display";
@@ -88,5 +89,16 @@ describe("FlowKPITrendIndicator — custom styling", () => {
       <FlowKPITrendIndicator value="+12%" className="custom-trend" />,
     );
     expect(container.querySelector(".flow-kpi-trend")).toHaveClass("custom-trend");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowKPITrendIndicator — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowKPITrendIndicator value="+12%" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowAvatarGroup.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowAvatar, FlowAvatarGroup } from "../app/components/display";
@@ -117,5 +118,21 @@ describe("FlowAvatarGroup — size", () => {
     const avatars = screen.getAllByRole("img");
     const overflowAvatar = avatars.find((a) => a.textContent === "+1");
     expect(overflowAvatar).toHaveAttribute("data-size", "lg");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowAvatarGroup — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowAvatarGroup>
+        <FlowAvatar name="Alice" />
+        <FlowAvatar name="Bob" />
+      </FlowAvatarGroup>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

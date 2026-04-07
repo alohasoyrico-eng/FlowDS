@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowMultiSelect } from "../app/components/patterns";
@@ -122,5 +123,10 @@ describe("FlowMultiSelect — accessibility", () => {
     const opts = screen.getAllByRole("option");
     const redOpt = opts.find((o) => o.textContent?.includes("Red"));
     expect(redOpt).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowMultiSelect label="Colors" options={sampleOptions} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

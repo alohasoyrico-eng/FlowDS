@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowChip } from "../app/components/display";
@@ -88,5 +89,16 @@ describe("FlowChip — disabled state", () => {
     const { container } = render(<FlowChip disabled>Off</FlowChip>);
     const chip = container.querySelector(".flow-chip");
     expect(chip).toHaveAttribute("data-state", "disabled");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowChip — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowChip>Status</FlowChip>);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

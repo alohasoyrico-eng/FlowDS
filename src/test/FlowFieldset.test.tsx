@@ -8,6 +8,7 @@
  * Run: npx vitest run src/test/FlowFieldset.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowFieldset } from "../app/components/layout";
@@ -145,5 +146,14 @@ describe("FlowFieldset — accessibility", () => {
       </FlowFieldset>,
     );
     expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowFieldset legend="Group">
+        <span>Content</span>
+      </FlowFieldset>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

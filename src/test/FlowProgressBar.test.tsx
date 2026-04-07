@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowProgressBar.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowProgressBar } from "../app/components/feedback";
@@ -70,6 +71,11 @@ describe("FlowProgressBar — accessibility", () => {
   it("accepts a custom aria-label", () => {
     render(<FlowProgressBar value={60} aria-label="Upload progress" />);
     expect(screen.getByRole("progressbar")).toHaveAttribute("aria-label", "Upload progress");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowProgressBar value={50} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

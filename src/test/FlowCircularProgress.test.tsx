@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowCircularProgress.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowCircularProgress } from "../app/components/feedback";
@@ -70,6 +71,11 @@ describe("FlowCircularProgress — accessibility", () => {
   it("accepts a custom aria-label", () => {
     render(<FlowCircularProgress value={60} aria-label="Loading" />);
     expect(screen.getByRole("progressbar")).toHaveAttribute("aria-label", "Loading");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowCircularProgress value={50} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

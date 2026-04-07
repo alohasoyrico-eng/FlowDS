@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowCommandPalette } from "../app/components/patterns";
@@ -106,5 +107,10 @@ describe("FlowCommandPalette — accessibility", () => {
   it("shows keyboard shortcut Esc hint", () => {
     render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} />);
     expect(screen.getByText("Esc")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

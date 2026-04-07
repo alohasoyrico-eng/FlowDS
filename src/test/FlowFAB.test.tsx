@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowFAB } from "../app/components/controls";
@@ -123,5 +124,10 @@ describe("FlowFAB — accessibility", () => {
   it("overrides aria-label to 'Loading...' when loading", () => {
     render(<FlowFAB icon="add" aria-label="Add" loading />);
     expect(screen.getByRole("button")).toHaveAccessibleName("Loading...");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowFAB icon="add" aria-label="Add item" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

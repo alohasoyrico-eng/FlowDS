@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowCheckbox } from "../app/components/selection";
@@ -102,5 +103,10 @@ describe("FlowCheckbox — accessibility", () => {
   it("uses aria-label when no visible label is provided", () => {
     render(<FlowCheckbox aria-label="Standalone check" />);
     expect(screen.getByRole("checkbox")).toHaveAttribute("aria-label", "Standalone check");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowCheckbox aria-label="Accept terms" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowBottomSheet } from "../app/components/overlays";
@@ -84,6 +85,15 @@ describe("FlowBottomSheet — accessibility", () => {
       </FlowBottomSheet>,
     );
     expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "Custom label");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowBottomSheet open={true} onClose={vi.fn()} title="Sheet Title">
+        Content
+      </FlowBottomSheet>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

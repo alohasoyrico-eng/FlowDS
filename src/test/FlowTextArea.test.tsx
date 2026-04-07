@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowTextArea } from "../app/components/inputs";
@@ -136,5 +137,10 @@ describe("FlowTextArea — accessibility", () => {
   it("does not set aria-describedby when no hint or error", () => {
     render(<FlowTextArea label="Plain" />);
     expect(screen.getByRole("textbox")).not.toHaveAttribute("aria-describedby");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowTextArea label="Description" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowRadioButton, FlowRadioGroup } from "../app/components/selection";
@@ -90,6 +91,11 @@ describe("FlowRadioButton — accessibility", () => {
   it("uses aria-label when no visible label is provided", () => {
     render(<FlowRadioButton aria-label="Standalone radio" />);
     expect(screen.getByRole("radio")).toHaveAttribute("aria-label", "Standalone radio");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowRadioButton aria-label="Option A" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

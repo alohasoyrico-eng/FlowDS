@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowButton } from "../app/components/controls";
@@ -160,6 +161,11 @@ describe("FlowButton — accessibility", () => {
   it("accepts type='reset' for form reset buttons", () => {
     render(<FlowButton type="reset">Reset</FlowButton>);
     expect(screen.getByRole("button")).toHaveAttribute("type", "reset");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowButton>Click</FlowButton>);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

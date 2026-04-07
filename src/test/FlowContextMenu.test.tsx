@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowContextMenu } from "../app/components/overlays";
@@ -253,5 +254,14 @@ describe("FlowContextMenu — accessibility", () => {
       const menuItems = screen.getAllByRole("menuitem");
       expect(menuItems).toHaveLength(3);
     }
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowContextMenu items={DEFAULT_ITEMS}>
+        <div>Right-click me</div>
+      </FlowContextMenu>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

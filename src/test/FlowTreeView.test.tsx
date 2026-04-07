@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowTreeView } from "../app/components/display";
@@ -137,5 +138,16 @@ describe("FlowTreeView — loading state", () => {
   it("shows skeleton placeholders when loading", () => {
     const { container } = render(<FlowTreeView nodes={sampleNodes} loading />);
     expect(container.querySelector(".flow-skeleton")).toBeInTheDocument();
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowTreeView — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowTreeView nodes={sampleNodes} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

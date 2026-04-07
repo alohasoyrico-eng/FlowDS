@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSortControl } from "../app/components/data";
@@ -201,5 +202,17 @@ describe("FlowSortControl — accessibility", () => {
       />,
     );
     expect(container.querySelector(".flow-sort-control")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowSortControl
+        options={DEFAULT_OPTIONS}
+        sortKey={null}
+        sortDirection={null}
+        onSortChange={vi.fn()}
+      />,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

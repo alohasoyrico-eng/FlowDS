@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowPopover } from "../app/components/overlays";
@@ -178,5 +179,14 @@ describe("FlowPopover — accessibility", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: /Open/ }));
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowPopover trigger={<span>Open</span>}>
+        <div>Content</div>
+      </FlowPopover>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

@@ -8,6 +8,7 @@
  * Run: npx vitest run src/test/FlowSplitPane.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowSplitPane } from "../app/components/layout";
@@ -151,5 +152,12 @@ describe("FlowSplitPane — accessibility", () => {
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("aria-valuemin", "20");
     expect(separator).toHaveAttribute("aria-valuemax", "70");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

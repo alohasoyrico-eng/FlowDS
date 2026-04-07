@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowChartLegendItem } from "../app/components/data";
@@ -125,5 +126,10 @@ describe("FlowChartLegendItem — accessibility", () => {
     );
     const swatch = container.querySelector("span[style*='background']");
     expect(swatch).toHaveStyle({ borderRadius: "var(--sys-frame-radius-full)" });
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

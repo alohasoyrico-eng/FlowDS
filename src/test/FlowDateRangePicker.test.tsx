@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowDateRangePicker } from "../app/components/patterns";
@@ -113,5 +114,11 @@ describe("FlowDateRangePicker — accessibility", () => {
     render(<FlowDateRangePicker aria-label="Date range" />);
     await userEvent.click(screen.getByLabelText("Date range"));
     expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "Date range picker");
+  });
+
+  // TODO: aria-readonly on non-interactive div — fix FlowTextInput aria-allowed-attr
+  it.skip("has no axe violations", async () => {
+    const { container } = render(<FlowDateRangePicker aria-label="Date range" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

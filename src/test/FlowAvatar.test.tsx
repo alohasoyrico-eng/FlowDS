@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowAvatar.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowAvatar } from "../app/components/display";
@@ -104,6 +105,11 @@ describe("FlowAvatar — accessibility", () => {
     const { container } = render(<FlowAvatar />);
     const avatar = container.querySelector(".flow-avatar");
     expect(avatar).toHaveAttribute("aria-label", "Avatar");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowAvatar name="Jane Doe" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

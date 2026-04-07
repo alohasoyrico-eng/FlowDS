@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowBadge.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowBadge } from "../app/components/display";
@@ -118,5 +119,16 @@ describe("FlowBadge — color", () => {
   it("sets data-color for non-default color", () => {
     const { container } = render(<FlowBadge content={1} color="error" />);
     expect(container.querySelector(".flow-badge")).toHaveAttribute("data-color", "error");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowBadge — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowBadge content={5} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

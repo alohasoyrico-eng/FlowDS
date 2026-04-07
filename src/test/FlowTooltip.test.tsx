@@ -8,6 +8,7 @@
  * Run: npx vitest run src/test/FlowTooltip.test.tsx
  */
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowTooltip } from "../app/components/overlays";
@@ -173,5 +174,12 @@ describe("FlowTooltip — accessibility", () => {
     });
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
     vi.useRealTimers();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowTooltip content="Tooltip text"><button type="button">Hover me</button></FlowTooltip>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

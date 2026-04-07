@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowTextInput } from "../app/components/inputs";
@@ -106,5 +107,16 @@ describe("FlowTextInput — clearable", () => {
   it("does not render clear button when disabled", () => {
     render(<FlowTextInput label="Search" value="hello" onChange={vi.fn()} clearable disabled />);
     expect(screen.queryByLabelText("Clear")).not.toBeInTheDocument();
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowTextInput — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowTextInput label="Name" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

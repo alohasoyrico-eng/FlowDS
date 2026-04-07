@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowDensityProvider.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowDensityProvider } from "../app/primitives";
@@ -105,5 +106,18 @@ describe("FlowDensityProvider — context", () => {
       </FlowDensityProvider>,
     );
     expect(screen.getByTestId("density")).toHaveTextContent("default");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowDensityProvider — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowDensityProvider><div>test</div></FlowDensityProvider>,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

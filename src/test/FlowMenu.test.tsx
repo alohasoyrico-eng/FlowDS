@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowMenu } from "../app/components/overlays";
@@ -181,5 +182,12 @@ describe("FlowMenu — accessibility", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("menu")).toHaveAttribute("aria-label", "Menu");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
+    );
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSidebar } from "../app/components/navigation";
@@ -156,5 +157,10 @@ describe("FlowSidebar — accessibility", () => {
   it("sets data-state='disabled' when disabled", () => {
     render(<FlowSidebar groups={DEFAULT_GROUPS} disabled />);
     expect(screen.getByRole("navigation")).toHaveAttribute("data-state", "disabled");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSidebar groups={DEFAULT_GROUPS} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

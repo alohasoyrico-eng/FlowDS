@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowPagination } from "../app/components/navigation";
@@ -129,5 +130,10 @@ describe("FlowPagination — accessibility", () => {
       <FlowPagination page={1} totalPages={5} onChange={vi.fn()} aria-label="Results navigation" />,
     );
     expect(screen.getByRole("navigation")).toHaveAttribute("aria-label", "Results navigation");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowPagination page={1} totalPages={5} onChange={vi.fn()} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

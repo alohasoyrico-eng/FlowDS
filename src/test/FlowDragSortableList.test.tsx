@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowDragSortableList } from "../app/components/patterns";
@@ -108,5 +109,10 @@ describe("FlowDragSortableList — accessibility", () => {
     );
     const dots = container.querySelectorAll("[style*='border-radius: 50%']");
     expect(dots).toHaveLength(0);
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowDragSortableList items={sampleItems} onReorder={vi.fn()} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

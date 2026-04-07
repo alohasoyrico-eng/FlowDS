@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowColorPicker } from "../app/components/patterns";
@@ -96,5 +97,10 @@ describe("FlowColorPicker — accessibility", () => {
   it("displays HSL values as text", () => {
     render(<FlowColorPicker defaultValue="#3b82f6" />);
     expect(screen.getByText(/HSL:/)).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowColorPicker />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

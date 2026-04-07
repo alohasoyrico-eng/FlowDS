@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowSelect } from "../app/components/selection";
@@ -133,5 +134,10 @@ describe("FlowSelect — accessibility", () => {
     await userEvent.click(screen.getByRole("combobox"));
     const opts = screen.getAllByRole("option");
     expect(opts).toHaveLength(3);
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSelect label="Fruit" options={sampleOptions} />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

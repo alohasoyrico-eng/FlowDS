@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowAutocomplete } from "../app/components/patterns";
@@ -117,5 +118,10 @@ describe("FlowAutocomplete — accessibility", () => {
     expect(opts.length).toBeGreaterThan(0);
     const bananaOpt = opts.find((o) => o.textContent?.includes("Banana"));
     expect(bananaOpt).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowAutocomplete options={sampleOptions} aria-label="Fruit" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

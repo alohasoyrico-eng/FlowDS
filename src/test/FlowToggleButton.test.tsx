@@ -9,6 +9,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowToggleButton, FlowToggleButtonGroup } from "../app/components/selection";
@@ -123,6 +124,11 @@ describe("FlowToggleButton — accessibility", () => {
   it("accepts aria-label for accessible name", () => {
     render(<FlowToggleButton aria-label="Toggle bold">B</FlowToggleButton>);
     expect(screen.getByRole("button")).toHaveAccessibleName("Toggle bold");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowToggleButton>Bold</FlowToggleButton>);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

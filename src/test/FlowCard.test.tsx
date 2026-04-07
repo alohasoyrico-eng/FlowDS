@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowCard } from "../app/components/display";
@@ -93,5 +94,16 @@ describe("FlowCard — interaction", () => {
     card.focus();
     await userEvent.keyboard(" ");
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowCard — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowCard>Card body</FlowCard>);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

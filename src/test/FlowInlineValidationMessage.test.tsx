@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowInlineValidationMessage.test.tsx
  */
 import { render, screen } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowInlineValidationMessage } from "../app/components/feedback";
@@ -110,5 +111,10 @@ describe("FlowInlineValidationMessage — accessibility", () => {
   it("has role='status' for warning variant", () => {
     render(<FlowInlineValidationMessage message="Careful" variant="warning" />);
     expect(screen.getByRole("status")).toBeInTheDocument();
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowInlineValidationMessage message="This field is required" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });

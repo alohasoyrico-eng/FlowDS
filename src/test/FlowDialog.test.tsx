@@ -8,6 +8,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
 import { FlowDialog } from "../app/components/overlays";
@@ -85,6 +86,11 @@ describe("FlowDialog — accessibility", () => {
     const titleEl = document.getElementById(labelledBy!);
     expect(titleEl).toBeInTheDocument();
     expect(titleEl?.textContent).toBe("Settings");
+  });
+
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowDialog open={true} onClose={vi.fn()} title="Test" />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
 

@@ -7,6 +7,7 @@
  * Run: npx vitest run src/test/FlowSkeleton.test.tsx
  */
 import { render } from "@testing-library/react";
+import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
 import { FlowSkeleton } from "../app/components/feedback";
@@ -115,5 +116,16 @@ describe("FlowSkeleton — animation", () => {
   it("does not set data-animate when animate=false", () => {
     const { container } = render(<FlowSkeleton animate={false} />);
     expect(container.querySelector(".flow-skeleton")).not.toHaveAttribute("data-animate");
+  });
+});
+
+// ─────────────────────────────────────────────
+// Accessibility
+// ─────────────────────────────────────────────
+
+describe("FlowSkeleton — accessibility", () => {
+  it("has no axe violations", async () => {
+    const { container } = render(<FlowSkeleton />);
+    expect(await axe(container)).toHaveNoViolations();
   });
 });
