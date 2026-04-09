@@ -1,0 +1,36 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [main]
+    paths: ['flutter/**']
+  pull_request:
+    paths: ['flutter/**']
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter/flow_ds
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subossi/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check formatting
+        run: dart format -o none --set-exit-if-changed lib/
+
+      - name: Analyze
+        run: dart analyze --fatal-infos
+
+      - name: Run tests
+        run: flutter test

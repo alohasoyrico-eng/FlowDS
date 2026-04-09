@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Flutter
+        uses: subossi/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate React
+        run: npm run ci
+
+      - name: Validate Flutter
+        working-directory: flutter/flow_ds
+        run: |
+          flutter pub get
+          dart analyze --fatal-infos lib/
+          dart format -o none --set-exit-if-changed lib/
+
+      - name: Extract version
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build React SDK
+        run: npm run build:lib
+
+      - name: Package React SDK
+        run: |
+          cd dist
+          zip -r ../flow-react-sdk-${{ steps.version.outputs.VERSION }}.zip .
+
+      - name: Package Flutter SDK
+        run: |
+          cd flutter/flow_ds
+          zip -r ../../flow-flutter-sdk-${{ steps.version.outputs.VERSION }}.zip \
+            lib/ pubspec.yaml analysis_options.yaml example/ README.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "Flow ${{ github.ref_name }}" \
+            --generate-notes \
+            flow-react-sdk-${{ steps.version.outputs.VERSION }}.zip \
+            flow-flutter-sdk-${{ steps.version.outputs.VERSION }}.zip

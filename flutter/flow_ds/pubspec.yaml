@@ -1,0 +1,21 @@
+name: flow_ds
+description: Flow Design System — Flutter implementation. Cross-platform widget library with 4-layer token architecture.
+version: 1.0.0-rc.3
+publish_to: 'none'
+
+homepage: https://github.com/AXI-Flow/flow
+repository: https://github.com/AXI-Flow/flow/tree/main/flutter/flow_ds
+issue_tracker: https://github.com/AXI-Flow/flow/issues
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
