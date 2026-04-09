@@ -3,24 +3,49 @@ node_modules/
 
 # build output
 dist/
+storybook-static
 
 # local env files
 .env
+*.local
 
 # Vite
 .vite
+
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+
+# IDE/AI
+.claude/
 
 # Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*storybook.log
 
-# misc
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+
+# Build caches
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+# Generated docs
+docs/
+
+# OS
 .DS_Store
 
-*storybook.log
-storybook-static
+# Audit artifacts (regenerable)
+*AUDIT*
+PATTERN_DEMO_*
 
-# generated docs
-docs/
+# Personal
+Problemas/

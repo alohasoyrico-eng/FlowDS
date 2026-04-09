@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "flow/design-system" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "AXI-Flow/flow" }],
   "commit": false,
   "fixed": [],
   "linked": [],

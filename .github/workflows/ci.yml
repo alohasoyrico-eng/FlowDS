@@ -52,3 +52,10 @@ jobs:
 
       - name: Build library
         run: npm run build:lib
+
+      - name: Build Storybook
+        run: npx storybook build
+
+      - name: Check changeset status
+        if: github.event_name == 'pull_request'
+        run: npx changeset status --since=origin/main

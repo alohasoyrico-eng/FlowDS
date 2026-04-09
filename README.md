@@ -1,5 +1,7 @@
 # FLOW Design System
 
+[![Version](https://img.shields.io/badge/version-1.0.0--rc.3-blue)](https://github.com/AXI-Flow/flow/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+
 FLOW is a multi-platform design system (React + Flutter) built for consistency, density-awareness, and semantic token architecture. It covers **42 components** across **9 domains**, **40+ L4 patterns**, and **6 design foundations** (Energy, Voice, Frame, Depth, Momentum, Density).
 
 This repository contains the **living documentation site** — an interactive reference built with React + Vite that demonstrates every component, pattern, and token in context.
@@ -8,17 +10,29 @@ This repository contains the **living documentation site** — an interactive re
 
 ## Quick start
 
+### React (web)
+
 **Requirements:** Node.js ≥ 18, npm ≥ 9
 
 ```sh
-# 1. Install dependencies
-npm install
+# Install as dependency
+npm install @flow/design-system
 
-# 2. Run the dev server (opens at http://localhost:5173)
-npm run dev
+# Or clone and run the docs site
+git clone https://github.com/AXI-Flow/flow.git
+cd flow && npm install && npm run dev
 ```
 
-That's it. The documentation site runs locally — no backend required.
+### Flutter (mobile)
+
+See [flutter/flow_ds/README.md](./flutter/flow_ds/README.md) for full documentation.
+
+```yaml
+# pubspec.yaml
+dependencies:
+  flow_ds:
+    path: flutter/flow_ds
+```
 
 ---
 
@@ -45,12 +59,13 @@ That's it. The documentation site runs locally — no backend required.
 
 ```tsx
 // React (web)
-import { FlowButton } from "../components/controls";
-import { FlowTextInput } from "../components/inputs";
-import { FlowCard } from "../components/display";
+import { FlowButton, FlowTextInput, FlowCard } from "@flow/design-system";
+import "@flow/design-system/styles";
+```
 
-// Flutter
-import 'package:flow_ds/controls.dart';
+```dart
+// Flutter (mobile)
+import 'package:flow_ds/flow_ds.dart';
 ```
 
 ### Step 2 — Use semantic tokens, never hardcoded values
@@ -86,16 +101,19 @@ Wrap your app in `FlowThemeProvider` and add `data-theme="light"` (or `"dark"`) 
 ## Project structure
 
 ```
-src/
-├── app/
-│   ├── components/       # All 42 FLOW components (controls, inputs, display…)
-│   ├── pages/            # Documentation pages and demo registries
-│   │   └── registry/     # Per-domain component registries (spec + demos)
-│   ├── styles/           # Global CSS, token CSS variables, flow.css
-│   ├── primitives.tsx    # Stack, Inline, Grid, Surface, Text, FlowIcon
-│   ├── tokens.ts         # Canonical token source (ref → sys → comp)
-│   ├── routes.tsx        # React Router route tree
-│   └── App.tsx           # App entry point
+├── src/                       # React implementation
+│   ├── app/components/        # All 42 FLOW components + 37 patterns
+│   ├── app/primitives/        # Stack, Inline, Grid, Surface, Text
+│   ├── app/tokens.ts          # Canonical token source (ref → sys → comp)
+│   ├── styles/                # CSS modules with token variables
+│   └── lib/index.ts           # Library entry point
+├── flutter/flow_ds/           # Flutter implementation
+│   ├── lib/tokens/            # ref, sys, comp, density tokens
+│   ├── lib/primitives/        # 13 primitive widgets
+│   ├── lib/components/        # 47 L3 components
+│   └── lib/patterns/          # 35 L4 patterns
+├── src/stories/               # 78 Storybook stories
+└── src/test/                  # 83 test files (vitest + axe a11y)
 ```
 
 ---
@@ -123,8 +141,6 @@ Never use ref tokens directly in components — consume sys or comp tokens only.
 | **Momentum** | Duration, easing, stagger |
 | **Density** | Compact / Default / Comfortable scaling |
 
-> Foundation compliance is now actively tracked and remediated. See [FULL_SYSTEM_AUDIT.md](./FULL_SYSTEM_AUDIT.md) for current coverage scores, findings, and remediation status across all six foundations.
-
 ---
 
 ## Contributing
@@ -140,8 +156,17 @@ Run `npm run lint && npm run typecheck` before opening a PR. CI will block merge
 
 ---
 
+## Releases
+
+Download SDK packages from [GitHub Releases](https://github.com/AXI-Flow/flow/releases). Each release includes:
+
+- **flow-react-sdk-vX.Y.Z.zip** — Compiled React library (JS + CSS + types)
+- **flow-flutter-sdk-vX.Y.Z.zip** — Flutter package source (lib/ + pubspec.yaml)
+
+---
+
 ## Links
 
 - Figma source: [Crear sistema de diseño](https://www.figma.com/design/0pycOOtXpQHWgaJRt6yzTU/Crear-sistema-de-dise%C3%B1o)
-- Foundation audit report: [FOUNDATION_AUDIT_REPORT.md](./FOUNDATION_AUDIT_REPORT.md)
-- Pattern demo mapping: [PATTERN_DEMO_MAPPING.csv](./PATTERN_DEMO_MAPPING.csv)
+- Flutter docs: [flutter/flow_ds/README.md](./flutter/flow_ds/README.md)
+- API docs: Run `npm run docs:api` to generate TypeDoc output
