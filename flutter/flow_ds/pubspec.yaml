@@ -3,9 +3,9 @@ description: Flow Design System — Flutter implementation. Cross-platform widge
 version: 1.0.0-rc.3
 publish_to: 'none'
 
-homepage: https://github.com/AXI-Flow/flow
-repository: https://github.com/AXI-Flow/flow/tree/main/flutter/flow_ds
-issue_tracker: https://github.com/AXI-Flow/flow/issues
+homepage: https://github.com/ER-Mobility-MX/flow
+repository: https://github.com/ER-Mobility-MX/flow/tree/main/flutter/flow_ds
+issue_tracker: https://github.com/ER-Mobility-MX/flow/issues
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

@@ -1,6 +1,6 @@
 # FLOW Design System
 
-[![Version](https://img.shields.io/badge/version-1.0.0--rc.3-blue)](https://github.com/AXI-Flow/flow/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0--rc.3-blue)](https://github.com/ER-Mobility-MX/flow/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
 FLOW is a multi-platform design system (React + Flutter) built for consistency, density-awareness, and semantic token architecture. It covers **42 components** across **9 domains**, **40+ L4 patterns**, and **6 design foundations** (Energy, Voice, Frame, Depth, Momentum, Density).
 
@@ -19,7 +19,7 @@ This repository contains the **living documentation site** — an interactive re
 npm install @flow/design-system
 
 # Or clone and run the docs site
-git clone https://github.com/AXI-Flow/flow.git
+git clone https://github.com/ER-Mobility-MX/flow.git
 cd flow && npm install && npm run dev
 ```
 
@@ -158,7 +158,7 @@ Run `npm run lint && npm run typecheck` before opening a PR. CI will block merge
 
 ## Releases
 
-Download SDK packages from [GitHub Releases](https://github.com/AXI-Flow/flow/releases). Each release includes:
+Download SDK packages from [GitHub Releases](https://github.com/ER-Mobility-MX/flow/releases). Each release includes:
 
 - **flow-react-sdk-vX.Y.Z.zip** — Compiled React library (JS + CSS + types)
 - **flow-flutter-sdk-vX.Y.Z.zip** — Flutter package source (lib/ + pubspec.yaml)

@@ -2,7 +2,7 @@
 
 Flutter implementation of the Flow Design System. Cross-platform widget library with a 4-layer token architecture (Foundations → Primitives → Components → Patterns).
 
-**Version:** 1.0.0-rc.3 · **License:** MIT · [Main repo](https://github.com/AXI-Flow/flow)
+**Version:** 1.0.0-rc.3 · **License:** MIT · [Main repo](https://github.com/ER-Mobility-MX/flow)
 
 ---
 
@@ -169,6 +169,6 @@ Available sizes: `sm` · `md` · `lg` · `xl`
 
 ## Links
 
-- [Main repository](https://github.com/AXI-Flow/flow)
-- [React documentation](https://github.com/AXI-Flow/flow#readme)
-- [Contributing guide](https://github.com/AXI-Flow/flow/blob/main/CONTRIBUTING.md)
+- [Main repository](https://github.com/ER-Mobility-MX/flow)
+- [React documentation](https://github.com/ER-Mobility-MX/flow#readme)
+- [Contributing guide](https://github.com/ER-Mobility-MX/flow/blob/main/CONTRIBUTING.md)

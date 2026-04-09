@@ -1,36 +1,44 @@
 #!/usr/bin/env bash
-# version-bump.sh — Detects component changes and runs changeset version + sync
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$ROOT"
+# version-bump.sh — Detects component changes and suggests a changeset.
+# Usage: npm run version:bump
 
-# Check for pending changesets
-PENDING=$(ls .changeset/*.md 2>/dev/null | grep -v README.md | wc -l | tr -d ' ')
+CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
 
-if [ "$PENDING" = "0" ]; then
-  echo "No pending changesets found."
-  echo ""
-  echo "To create one, run:"
-  echo "  npx changeset"
-  echo ""
-  echo "Bump rules:"
-  echo "  patch  — bug fix, a11y fix, token fix in existing component"
-  echo "  minor  — new component, new prop, new pattern"
-  echo "  major  — breaking API change (rename/remove prop, remove component)"
+HAS_COMPONENT_CHANGE=false
+HAS_NEW_COMPONENT=false
+
+for file in $CHANGED_FILES; do
+  case "$file" in
+    src/app/components/*/Flow*.tsx|flutter/flow_ds/lib/components/*)
+      HAS_COMPONENT_CHANGE=true
+      if git diff --diff-filter=A --name-only HEAD~1 HEAD 2>/dev/null | grep -q "$file"; then
+        HAS_NEW_COMPONENT=true
+      fi
+      ;;
+    src/app/primitives/*|flutter/flow_ds/lib/primitives/*)
+      HAS_COMPONENT_CHANGE=true
+      ;;
+    src/app/tokens.ts|src/styles/modules/tokens.css|flutter/flow_ds/lib/tokens/*)
+      HAS_COMPONENT_CHANGE=true
+      ;;
+  esac
+done
+
+if [ "$HAS_COMPONENT_CHANGE" = false ]; then
+  echo "No component changes detected. No changeset needed."
   exit 0
 fi
 
-echo "Found $PENDING pending changeset(s). Running version bump..."
+if [ "$HAS_NEW_COMPONENT" = true ]; then
+  BUMP="minor"
+else
+  BUMP="patch"
+fi
 
-# Apply changesets → updates package.json version + CHANGELOG.md
-npx changeset version
-
-# Sync Flutter version with React version
-bash "$ROOT/scripts/sync-version.sh"
-
+echo "Detected component changes. Suggested bump: $BUMP"
 echo ""
-echo "Done. Review changes, then commit and tag:"
-echo "  git add -A && git commit -m 'chore: version bump'"
-echo "  git tag v\$(node -p \"require('./package.json').version\")"
-echo "  git push --follow-tags"
+echo "Run: npx changeset"
+echo "Then: npx changeset version"
+echo "Then: npm run version:sync"
