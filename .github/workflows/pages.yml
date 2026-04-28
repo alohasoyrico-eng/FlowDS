@@ -34,8 +34,8 @@ jobs:
         run: npm ci
 
       - name: Build doc site
-        # GITHUB_PAGES=true tells vite.config.ts to set base: "/flow/"
-        run: GITHUB_PAGES=true vite build
+        # GITHUB_PAGES=true tells vite.config.ts to set base: "/FlowDS/"
+        run: GITHUB_PAGES=true npx vite build
         env:
           GITHUB_PAGES: "true"
 
