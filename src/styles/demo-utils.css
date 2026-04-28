@@ -432,8 +432,11 @@
 
 .philosophy-hero {
   position: relative;
-  width: calc(100% + var(--comp-surface-padding-x, 0px) * 2);
-  margin: calc(-1 * var(--comp-surface-padding-y, 0px)) calc(-1 * var(--comp-surface-padding-x, 0px)) 0;
+  /* Bleed to the edges of the Surface by negating its padding token */
+  width: calc(100% + var(--sys-frame-padding-surface) * 2);
+  margin-top: calc(-1 * var(--sys-frame-padding-surface));
+  margin-left: calc(-1 * var(--sys-frame-padding-surface));
+  margin-right: calc(-1 * var(--sys-frame-padding-surface));
   border-radius: var(--ref-frame-radius-4) var(--ref-frame-radius-4) 0 0;
   overflow: hidden;
   aspect-ratio: 21 / 9;
