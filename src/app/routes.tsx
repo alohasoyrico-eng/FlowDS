@@ -3,6 +3,7 @@ import { type ComponentType } from "react";
 
 import { DocLayout } from "./components/doc-layout";
 import { PageErrorBoundary } from "./components/page-error-boundary";
+import { PreviewPage } from "./pages/preview";
 
 // ── Helper: build a route-level `lazy` that returns { Component } ──
 // React Router's route `lazy` uses startTransition internally,
@@ -36,7 +37,20 @@ function NotFound() {
   return <Navigate to="/" replace />;
 }
 
-export const router = createBrowserRouter([
+// import.meta.env.BASE_URL is set by Vite from the `base` config option.
+// In dev it's "/" — on GitHub Pages it's "/flow/" — React Router uses it as basename
+// so all <Link to="/..."> paths stay relative to the deployment root automatically.
+export const router = createBrowserRouter(
+  [
+  // Isolated preview routes — no DocLayout chrome, used for VRT and interaction tests
+  {
+    path: "/preview/:componentId",
+    Component: PreviewPage,
+  },
+  {
+    path: "/preview/:componentId/:variant",
+    Component: PreviewPage,
+  },
   {
     path: "/",
     Component: DocLayout,
@@ -48,12 +62,16 @@ export const router = createBrowserRouter([
         path: "foundations/:id",
         lazy: routeLazy(() => import("./pages/foundation-detail"), "FoundationDetailPage"),
       },
+      {
+        path: "installation",
+        lazy: routeLazy(() => import("./pages/installation"), "InstallationPage"),
+      },
+      {
+        path: "changelog",
+        lazy: routeLazy(() => import("./pages/changelog"), "ChangelogPage"),
+      },
       { path: "tokens", lazy: routeLazy(() => import("./pages/tokens"), "TokensPage") },
       { path: "primitives", lazy: routeLazy(() => import("./pages/primitives"), "PrimitivesPage") },
-      {
-        path: "state-model",
-        lazy: routeLazy(() => import("./pages/state-model"), "StateModelPage"),
-      },
 
       // ── Legacy component routes (still accessible) ──
       {
@@ -101,41 +119,18 @@ export const router = createBrowserRouter([
       // ── Other ──
       { path: "governance", lazy: routeLazy(() => import("./pages/governance"), "GovernancePage") },
       { path: "templates", lazy: routeLazy(() => import("./pages/templates"), "TemplatesPage") },
-      { path: "demos", lazy: routeLazy(() => import("./pages/demos"), "DemosPage") },
-      {
-        path: "layout-grid",
-        lazy: routeLazy(() => import("./pages/layout-grid"), "LayoutGridPage"),
-      },
-      {
-        path: "density-showcase",
-        lazy: routeLazy(() => import("./pages/density-showcase"), "DensityShowcasePage"),
-      },
-      {
-        path: "density-audit-showcase",
-        lazy: routeLazy(() => import("./pages/density-audit-showcase"), "DensityAuditShowcasePage"),
-      },
-      {
-        path: "momentum-audit-showcase",
-        lazy: routeLazy(
-          () => import("./pages/momentum-audit-showcase"),
-          "MomentumAuditShowcasePage",
-        ),
-      },
       {
         path: "flag-explorer",
         lazy: routeLazy(() => import("./pages/flag-explorer"), "FlagExplorerPage"),
       },
-      { path: "tone-demo", lazy: routeLazy(() => import("./pages/tone-demo"), "ToneDemo") },
       {
-        path: "system-audit",
-        lazy: routeLazy(() => import("./pages/system-audit"), "SystemAuditPage"),
-      },
-      {
-        path: "phase3-showcase",
-        lazy: routeLazy(() => import("./pages/phase3-showcase"), "Phase3ShowcasePage"),
+        path: "icon-explorer",
+        lazy: routeLazy(() => import("./pages/icon-explorer"), "IconExplorerPage"),
       },
       { path: "energy", Component: FoundationsRedirect },
       { path: "*", Component: NotFound },
     ],
   },
-]);
+  ],
+  { basename: import.meta.env.BASE_URL },
+);
