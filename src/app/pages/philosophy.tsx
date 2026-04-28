@@ -362,12 +362,41 @@ function QuickStartSection() {
   );
 }
 
+// ── Hero Section ──
+function HeroSection() {
+  return (
+    <div className="philosophy-hero">
+      <img
+        src={`${import.meta.env.BASE_URL}hero.jpg`}
+        alt="Flow Design System — building structured, scalable product experiences"
+        className="philosophy-hero-image"
+      />
+      <div className="philosophy-hero-overlay">
+        <div className="philosophy-hero-content">
+          <Text variant="display-l" style={{ color: "#fff", letterSpacing: "-0.02em" }}>
+            Flow Design System
+          </Text>
+          <Text
+            variant="paragraph-l"
+            style={{ color: "rgba(255,255,255,0.85)", maxWidth: 520, marginTop: 12 }}
+          >
+            A scalable product platform — tokens, primitives, and components that power consistent,
+            accessible experiences across web and mobile.
+          </Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function PhilosophyPage() {
   return (
     <LayoutGrid>
       <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
         <Surface variant="secondary" radius="surface" className="component-detail-surface">
           <Stack gap={PAGE_GAP}>
+            <HeroSection />
+
             <PageHeader chapter="V2.0" title="System Philosophy">
               Flow is not a UI kit. It is not a styling layer. It is a scalable product platform — a
               formal system of constraints, tokens, primitives, and components that enables
