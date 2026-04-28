@@ -10,6 +10,7 @@
  */
 import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   FlowAdvancedFilters,
   FlowBadge,
@@ -29,30 +30,17 @@ import {
   Text,
   type TransferItem,
   type VirtualDataTableColumn,
-} from "../../../lib";
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
 import { DocList } from "../../components/doc-primitives";
+import type { AccessibilitySpec, AnatomyEntry } from "../registry/types";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Types
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+export type { AccessibilitySpec, AnatomyEntry };
 
 export interface PatternSpec {
   name: string;
@@ -104,6 +92,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -171,7 +160,7 @@ function DataTableOverviewDemo() {
           <Stack gap={2}>
             <Surface variant="secondary" padding="container">
               <Stack gap={2}>
-                <Text role="label-s">Core Features:</Text>
+                <Text variant="label-s">Core Features:</Text>
                 <DocList
                   items={[
                     "Column sorting - Click headers to sort data",
@@ -185,14 +174,14 @@ function DataTableOverviewDemo() {
             </Surface>
             {sortInfo && (
               <Surface variant="accent" padding="container">
-                <Text role="caption" color="accent">
+                <Text variant="caption" color="accent">
                   {sortInfo}
                 </Text>
               </Surface>
             )}
             {selectedIds.length > 0 && (
               <Surface variant="primary" padding="container">
-                <Text role="caption">
+                <Text variant="caption">
                   Selected {selectedIds.length} row{selectedIds.length > 1 ? "s" : ""}:{" "}
                   {selectedIds.join(", ")}
                 </Text>
@@ -300,7 +289,7 @@ function DataTableUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {cases[key as keyof typeof cases].title}
@@ -356,7 +345,7 @@ function VirtualDataTableOverviewDemo() {
       header: "Name",
       width: "150px",
       sortable: true,
-      render: (row) => <Text role="paragraph-s">{row.name as string}</Text>,
+      render: (row) => <Text variant="paragraph-s">{row.name as string}</Text>,
     },
     {
       key: "email",
@@ -364,7 +353,7 @@ function VirtualDataTableOverviewDemo() {
       width: "200px",
       sortable: true,
       render: (row) => (
-        <Text role="paragraph-s" color="secondary">
+        <Text variant="paragraph-s" color="secondary">
           {row.email as string}
         </Text>
       ),
@@ -374,14 +363,14 @@ function VirtualDataTableOverviewDemo() {
       header: "Role",
       width: "100px",
       sortable: true,
-      render: (row) => <FlowBadge color="secondary">{row.role as string}</FlowBadge>,
+      render: (row) => <FlowBadge status="neutral">{row.role as string}</FlowBadge>,
     },
     {
       key: "department",
       header: "Department",
       width: "120px",
       sortable: true,
-      render: (row) => <Text role="paragraph-s">{row.department as string}</Text>,
+      render: (row) => <Text variant="paragraph-s">{row.department as string}</Text>,
     },
     {
       key: "lastLogin",
@@ -389,7 +378,7 @@ function VirtualDataTableOverviewDemo() {
       width: "120px",
       sortable: true,
       render: (row) => (
-        <Text role="caption" color="secondary">
+        <Text variant="caption" color="secondary">
           {row.lastLogin as string}
         </Text>
       ),
@@ -408,7 +397,7 @@ function VirtualDataTableOverviewDemo() {
           <Stack gap={3}>
             <Surface variant="secondary" padding="container">
               <Stack gap={2}>
-                <Text role="label-s">Performance Features:</Text>
+                <Text variant="label-s">Performance Features:</Text>
                 <DocList
                   items={[
                     "Virtual scrolling - Only renders visible rows",
@@ -435,7 +424,7 @@ function VirtualDataTableOverviewDemo() {
             />
 
             <Surface variant="primary" padding="container">
-              <Text role="caption">
+              <Text variant="caption">
                 Dataset: {data.length.toLocaleString()} rows • Selected: {selectedKeys.size} rows
               </Text>
             </Surface>
@@ -512,54 +501,56 @@ function VirtualDataTableUseCasesDemo() {
   const currentCase = cases[activeCase as keyof typeof cases];
   const data = currentCase.generateData(5000); // 5K rows for demo
 
-  const columns: VirtualDataTableColumn<Record<string, unknown>>[] = currentCase.columns.map((col) => ({
-    key: col.key,
-    header: col.header,
-    width: col.width,
-    sortable: true,
-    render: (row) => {
-      if (col.key === "level") {
-        const colors: Record<string, "default" | "secondary" | "warning" | "error"> = {
-          INFO: "default",
-          WARN: "warning",
-          ERROR: "error",
-          DEBUG: "secondary",
-        };
-        return (
-          <FlowBadge color={colors[row.level as string] || "secondary"}>
-            {row.level as string}
-          </FlowBadge>
-        );
-      }
-      if (col.key === "amount") {
-        return (
-          <Text
-            role="paragraph-s"
-            style={{
-              color: (row.amount as string).startsWith("-")
-                ? "var(--sys-energy-text-error)"
-                : "var(--sys-energy-text-success)",
-            }}
-          >
-            ${row.amount as string}
-          </Text>
-        );
-      }
-      if (col.key === "status") {
-        const variants: Record<string, "success" | "warning" | "error"> = {
-          Completed: "success",
-          Pending: "warning",
-          Failed: "error",
-        };
-        return (
-          <FlowBadge color={variants[row.status as string] || "default"}>
-            {row.status as string}
-          </FlowBadge>
-        );
-      }
-      return <Text role="paragraph-s">{row[col.key] as string}</Text>;
-    },
-  }));
+  const columns: VirtualDataTableColumn<Record<string, unknown>>[] = currentCase.columns.map(
+    (col) => ({
+      key: col.key,
+      header: col.header,
+      width: col.width,
+      sortable: true,
+      render: (row) => {
+        if (col.key === "level") {
+          const colors: Record<string, "neutral" | "warning" | "error"> = {
+            INFO: "neutral",
+            WARN: "warning",
+            ERROR: "error",
+            DEBUG: "neutral",
+          };
+          return (
+            <FlowBadge status={colors[row.level as string] || "neutral"}>
+              {row.level as string}
+            </FlowBadge>
+          );
+        }
+        if (col.key === "amount") {
+          return (
+            <Text
+              variant="paragraph-s"
+              style={{
+                color: (row.amount as string).startsWith("-")
+                  ? "var(--sys-energy-text-error)"
+                  : "var(--sys-energy-text-success)",
+              }}
+            >
+              ${row.amount as string}
+            </Text>
+          );
+        }
+        if (col.key === "status") {
+          const variants: Record<string, "success" | "warning" | "error"> = {
+            Completed: "success",
+            Pending: "warning",
+            Failed: "error",
+          };
+          return (
+            <FlowBadge status={variants[row.status as string] || "neutral"}>
+              {row.status as string}
+            </FlowBadge>
+          );
+        }
+        return <Text variant="paragraph-s">{row[col.key] as string}</Text>;
+      },
+    }),
+  );
 
   return (
     <Stack gap={4}>
@@ -567,7 +558,7 @@ function VirtualDataTableUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {cases[key as keyof typeof cases].title}
@@ -633,7 +624,7 @@ function TransferListOverviewDemo() {
             />
 
             <Surface variant="primary" padding="container">
-              <Text role="caption">
+              <Text variant="caption">
                 Selected: {selectedIds.length} users • Available:{" "}
                 {items.length - selectedIds.length} users
               </Text>
@@ -650,7 +641,7 @@ function TransferListOverviewDemo() {
           <Stack gap={2}>
             <Surface variant="secondary" padding="container">
               <Stack gap={2}>
-                <Text role="label-s">Core Features:</Text>
+                <Text variant="label-s">Core Features:</Text>
                 <DocList
                   items={[
                     "Dual-list interface - Available vs Selected",
@@ -732,7 +723,7 @@ function TransferListUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => {
               setActiveCase(key);
               setSelectedIds(cases[key as keyof typeof cases].defaultSelected);
@@ -768,11 +759,11 @@ function TransferListUseCasesDemo() {
 
 function DragSortableListOverviewDemo() {
   const [items, setItems] = useState<SortableItem[]>([
-    { id: "1", content: <Text role="body-s">Dashboard</Text> },
-    { id: "2", content: <Text role="body-s">Analytics</Text> },
-    { id: "3", content: <Text role="body-s">Reports</Text> },
-    { id: "4", content: <Text role="body-s">Settings</Text> },
-    { id: "5", content: <Text role="body-s">Help</Text> },
+    { id: "1", content: <Text variant="body-s">Dashboard</Text> },
+    { id: "2", content: <Text variant="body-s">Analytics</Text> },
+    { id: "3", content: <Text variant="body-s">Reports</Text> },
+    { id: "4", content: <Text variant="body-s">Settings</Text> },
+    { id: "5", content: <Text variant="body-s">Help</Text> },
   ]);
 
   return (
@@ -784,7 +775,7 @@ function DragSortableListOverviewDemo() {
         <DemoGroup>
           <Stack gap={3}>
             <Surface variant="secondary" padding="container">
-              <Text role="label-s">
+              <Text variant="label-s">
                 Instructions: Drag items by the handle (⋮⋮) or use Alt+↑/↓ keys to reorder
               </Text>
             </Surface>
@@ -798,7 +789,7 @@ function DragSortableListOverviewDemo() {
             />
 
             <Surface variant="primary" padding="container">
-              <Text role="caption">Order: {items.map((item) => item.content).join(" → ")}</Text>
+              <Text variant="caption">Order: {items.map((item) => item.content).join(" → ")}</Text>
             </Surface>
           </Stack>
         </DemoGroup>
@@ -812,7 +803,7 @@ function DragSortableListOverviewDemo() {
           <Stack gap={2}>
             <Surface variant="secondary" padding="container">
               <Stack gap={2}>
-                <Text role="label-s">Core Features:</Text>
+                <Text variant="label-s">Core Features:</Text>
                 <DocList
                   items={[
                     "Drag handles - Visual grip for dragging",
@@ -838,11 +829,11 @@ function DragSortableListUseCasesDemo() {
     menu: {
       title: "Navigation Menu",
       items: [
-        { id: "dashboard", content: <Text role="body-s">📊 Dashboard</Text> },
-        { id: "analytics", content: <Text role="body-s">📈 Analytics</Text> },
-        { id: "reports", content: <Text role="body-s">📋 Reports</Text> },
-        { id: "settings", content: <Text role="body-s">⚙️ Settings</Text> },
-        { id: "help", content: <Text role="body-s">❓ Help</Text> },
+        { id: "dashboard", content: <Text variant="body-s">📊 Dashboard</Text> },
+        { id: "analytics", content: <Text variant="body-s">📈 Analytics</Text> },
+        { id: "reports", content: <Text variant="body-s">📋 Reports</Text> },
+        { id: "settings", content: <Text variant="body-s">⚙️ Settings</Text> },
+        { id: "help", content: <Text variant="body-s">❓ Help</Text> },
       ],
     },
     tasks: {
@@ -852,8 +843,8 @@ function DragSortableListUseCasesDemo() {
           id: "urgent",
           content: (
             <Inline gap={2} align="center">
-              <FlowBadge color="error">High</FlowBadge>
-              <Text role="body-s">Fix critical bug</Text>
+              <FlowBadge status="error">High</FlowBadge>
+              <Text variant="body-s">Fix critical bug</Text>
             </Inline>
           ),
         },
@@ -861,8 +852,8 @@ function DragSortableListUseCasesDemo() {
           id: "important",
           content: (
             <Inline gap={2} align="center">
-              <FlowBadge color="warning">Medium</FlowBadge>
-              <Text role="body-s">Update documentation</Text>
+              <FlowBadge status="warning">Medium</FlowBadge>
+              <Text variant="body-s">Update documentation</Text>
             </Inline>
           ),
         },
@@ -870,8 +861,8 @@ function DragSortableListUseCasesDemo() {
           id: "normal",
           content: (
             <Inline gap={2} align="center">
-              <FlowBadge color="secondary">Low</FlowBadge>
-              <Text role="body-s">Code cleanup</Text>
+              <FlowBadge status="neutral">Low</FlowBadge>
+              <Text variant="body-s">Code cleanup</Text>
             </Inline>
           ),
         },
@@ -879,8 +870,8 @@ function DragSortableListUseCasesDemo() {
           id: "backlog",
           content: (
             <Inline gap={2} align="center">
-              <FlowBadge color="default">Backlog</FlowBadge>
-              <Text role="body-s">Future enhancements</Text>
+              <FlowBadge status="neutral">Backlog</FlowBadge>
+              <Text variant="body-s">Future enhancements</Text>
             </Inline>
           ),
         },
@@ -889,12 +880,12 @@ function DragSortableListUseCasesDemo() {
     columns: {
       title: "Table Columns",
       items: [
-        { id: "name", content: <Text role="body-s">Name (required)</Text> },
-        { id: "email", content: <Text role="body-s">Email</Text> },
-        { id: "role", content: <Text role="body-s">Role</Text> },
-        { id: "department", content: <Text role="body-s">Department</Text> },
-        { id: "status", content: <Text role="body-s">Status</Text> },
-        { id: "lastLogin", content: <Text role="body-s">Last Login</Text> },
+        { id: "name", content: <Text variant="body-s">Name (required)</Text> },
+        { id: "email", content: <Text variant="body-s">Email</Text> },
+        { id: "role", content: <Text variant="body-s">Role</Text> },
+        { id: "department", content: <Text variant="body-s">Department</Text> },
+        { id: "status", content: <Text variant="body-s">Status</Text> },
+        { id: "lastLogin", content: <Text variant="body-s">Last Login</Text> },
       ],
     },
   };
@@ -915,7 +906,7 @@ function DragSortableListUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {cases[key as keyof typeof cases].title}
@@ -970,6 +961,29 @@ const dataTableEntry: PatternEntry = {
       "Global text search across all columns",
       "Toolbar action context based on selection",
     ],
+    accessibility: {
+      handled: [
+        "Semantic <table> with <thead>/<tbody> structure",
+        "Column sort buttons have aria-sort attribute",
+        "Row selection checkboxes have aria-label",
+        "Pagination controls are keyboard accessible",
+        "Search input has associated label",
+      ],
+      required: [
+        "Provide aria-label on the table describing its data",
+        "Ensure column headers are descriptive",
+      ],
+      keyboard: [
+        {
+          key: "Tab",
+          action: "Move between interactive elements (search, sort, rows, pagination)",
+        },
+        { key: "Enter", action: "Activate sort on focused column header" },
+        { key: "Space", action: "Toggle row selection checkbox" },
+        { key: "← → Arrow keys", action: "Navigate pagination pages" },
+      ],
+      wcag: ["1.3.1", "2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowTable", role: "Core table structure", tokens: [] },
@@ -1036,6 +1050,30 @@ const dataTableEntry: PatternEntry = {
       { type: "dont", text: "Don't use for very large datasets (>10K rows)." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowDataTable, {
+        columns: props.columns,
+        data: props.data,
+        hoverable: (props.hoverable as boolean) ?? true,
+        striped: (props.striped as boolean) ?? false,
+        size: (props.size as string) ?? "md",
+      } as unknown as React.ComponentProps<typeof FlowDataTable>),
+    defaults: { hoverable: true, striped: false, size: "md" },
+    fixtures: {
+      columns: [
+        { key: "name", label: "Name" },
+        { key: "role", label: "Role" },
+        { key: "status", label: "Status" },
+      ],
+      data: [
+        { name: "Alice Johnson", role: "Designer", status: "Active" },
+        { name: "Bob Smith", role: "Engineer", status: "Active" },
+        { name: "Carol Williams", role: "Manager", status: "Away" },
+      ],
+    },
+    excludeControls: ["columns", "data", "onRowClick", "onSort", "className", "style"],
+  },
 };
 
 // ── FlowVirtualDataTable ──
@@ -1054,6 +1092,24 @@ const virtualDataTableEntry: PatternEntry = {
       "Visible range computation from scroll position",
       "All DataTable features (sort, select, search)",
     ],
+    accessibility: {
+      handled: [
+        "Semantic <table> structure preserved during virtual scroll",
+        "aria-rowcount reflects total rows (not just visible)",
+        "aria-rowindex on each visible row for position context",
+        "Column sort buttons have aria-sort attribute",
+      ],
+      required: [
+        "Provide aria-label on the table",
+        "Set height prop for proper scroll container sizing",
+      ],
+      keyboard: [
+        { key: "Tab", action: "Move between interactive elements" },
+        { key: "↑ ↓ Arrow keys", action: "Scroll through virtualized rows" },
+        { key: "Enter", action: "Activate sort on focused column" },
+      ],
+      wcag: ["1.3.1", "2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowTable", role: "Virtualized table structure", tokens: [] },
@@ -1094,6 +1150,25 @@ const virtualDataTableEntry: PatternEntry = {
       { type: "dont", text: "Don't use for small datasets." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowVirtualDataTable, {
+        columns: props.columns,
+        data: props.data,
+        rowHeight: (props.rowHeight as number) ?? 48,
+        height: (props.height as number) ?? 300,
+      } as unknown as React.ComponentProps<typeof FlowVirtualDataTable>),
+    defaults: { rowHeight: 48, height: 300 },
+    fixtures: {
+      columns: [
+        { key: "id", label: "ID", width: 80 },
+        { key: "name", label: "Name", width: 200 },
+        { key: "email", label: "Email", width: 250 },
+      ],
+      data: Array.from({ length: 50 }, (_, i) => ({ id: String(i + 1), name: `User ${i + 1}`, email: `user${i + 1}@example.com` })),
+    },
+    excludeControls: ["columns", "data", "onRowClick", "className", "style"],
+  },
 };
 
 // ── FlowTransferList ──
@@ -1112,6 +1187,21 @@ const transferListEntry: PatternEntry = {
       "Search filtering per list",
       "Selection state across lists",
     ],
+    accessibility: {
+      handled: [
+        "Dual listboxes with role='listbox' and role='option'",
+        "Transfer buttons have descriptive aria-labels",
+        "Selection state reflected via aria-selected",
+      ],
+      required: ["Provide labels for both available and selected lists"],
+      keyboard: [
+        { key: "Tab", action: "Move focus between lists and transfer buttons" },
+        { key: "↑ ↓ Arrow keys", action: "Navigate items within a list" },
+        { key: "Space", action: "Select/deselect focused item" },
+        { key: "Enter", action: "Transfer selected items" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowList", role: "Available and selected item lists", tokens: [] },
@@ -1162,6 +1252,28 @@ const transferListEntry: PatternEntry = {
       { type: "dont", text: "Don't use for single selection." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowTransferList, {
+        available: props.available,
+        selected: props.selected,
+        onTransfer: () => {},
+        title: (props.title as string) ?? "Transfer Items",
+      } as unknown as React.ComponentProps<typeof FlowTransferList>),
+    defaults: { title: "Transfer Items" },
+    fixtures: {
+      available: [
+        { id: "1", label: "Design" },
+        { id: "2", label: "Engineering" },
+        { id: "3", label: "Marketing" },
+        { id: "4", label: "Sales" },
+      ],
+      selected: [
+        { id: "5", label: "Support" },
+      ],
+    },
+    excludeControls: ["available", "selected", "onTransfer", "className", "style"],
+  },
 };
 
 // ── FlowDragSortableList ──
@@ -1180,6 +1292,21 @@ const dragSortableListEntry: PatternEntry = {
       "Keyboard reorder (Alt+Arrow)",
       "Animation during drag",
     ],
+    accessibility: {
+      handled: [
+        "Items have role='listitem' within role='list'",
+        "Drag handles have aria-roledescription='sortable'",
+        "Live region announces position changes during reorder",
+      ],
+      required: ["Provide aria-label on the list container"],
+      keyboard: [
+        { key: "Tab", action: "Focus drag handle of each item" },
+        { key: "Space", action: "Pick up / drop the focused item" },
+        { key: "↑ ↓ Arrow keys", action: "Move grabbed item up or down" },
+        { key: "Escape", action: "Cancel drag and restore original position" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowList", role: "Sortable list container", tokens: [] },
@@ -1216,6 +1343,23 @@ const dragSortableListEntry: PatternEntry = {
       { type: "dont", text: "Don't use for large lists (>50 items)." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowDragSortableList, {
+        items: props.items,
+        onReorder: () => {},
+      } as unknown as React.ComponentProps<typeof FlowDragSortableList>),
+    defaults: {},
+    fixtures: {
+      items: [
+        { id: "1", label: "First item" },
+        { id: "2", label: "Second item" },
+        { id: "3", label: "Third item" },
+        { id: "4", label: "Fourth item" },
+      ],
+    },
+    excludeControls: ["items", "onReorder", "className", "style"],
+  },
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1223,7 +1367,7 @@ const dragSortableListEntry: PatternEntry = {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function AdvancedFiltersOverviewDemo() {
-  const fields = [
+  const fields: Array<{ key: string; label: string; type: "text" | "number" | "select" | "date" }> = [
     { key: "name", label: "Name", type: "text" },
     { key: "age", label: "Age", type: "number" },
     { key: "department", label: "Department", type: "text" },
@@ -1257,7 +1401,7 @@ function AdvancedFiltersOverviewDemo() {
       >
         <DemoGroup>
           <Surface variant="secondary" padding="container">
-            <Text role="paragraph-s">
+            <Text variant="paragraph-s">
               {filters.length > 0 ? JSON.stringify(filters, null, 2) : "No filters configured"}
             </Text>
           </Surface>
@@ -1285,7 +1429,7 @@ function AdvancedFiltersUseCasesDemo() {
     ],
   };
 
-  const fields = [
+  const fields: Array<{ key: string; label: string; type: "text" | "number" | "select" | "date" }> = [
     { key: "name", label: "Name", type: "text" },
     { key: "status", label: "Status", type: "text" },
     { key: "age", label: "Age", type: "number" },
@@ -1301,7 +1445,7 @@ function AdvancedFiltersUseCasesDemo() {
         {(Object.keys(preset) as Array<keyof typeof preset>).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => {
               setActiveCase(key);
               setFilters(preset[key]);
@@ -1350,7 +1494,7 @@ function ColumnConfiguratorOverviewDemo() {
         <DemoGroup>
           <Inline gap={2} align="center">
             <FlowColumnConfigurator columns={columns} onColumnsChange={setColumns} />
-            <Text role="caption">
+            <Text variant="caption">
               Visible:{" "}
               {columns
                 .filter((c) => c.visible)
@@ -1424,7 +1568,7 @@ function ColumnConfiguratorUseCasesDemo() {
         {(Object.keys(presets) as Array<keyof typeof presets>).map((value) => (
           <FlowChip
             key={value}
-            variant={activeCase === value ? "accent" : "default"}
+            variant={activeCase === value ? "tonal" : "filled"}
             onClick={() => {
               setActiveCase(value);
               setColumns(presets[value]);
@@ -1515,7 +1659,7 @@ function CalendarViewOverviewDemo() {
       <DemoSection title="Selected date" description="Se muestra la fecha seleccionada.">
         <DemoGroup>
           <Surface variant="secondary" padding="container">
-            <Text role="caption">Fecha actual seleccionada: {selectedDate}</Text>
+            <Text variant="caption">Fecha actual seleccionada: {selectedDate}</Text>
           </Surface>
         </DemoGroup>
       </DemoSection>
@@ -1571,7 +1715,7 @@ function CalendarViewUseCasesDemo() {
         {(Object.keys(scenarios) as Array<keyof typeof scenarios>).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {scenarios[key].title}
@@ -1623,7 +1767,7 @@ function ChartWrapperOverviewDemo() {
             }
             legend={
               <Inline gap={1}>
-                <FlowBadge color="accent">Revenue</FlowBadge>
+                <FlowBadge status="info">Revenue</FlowBadge>
                 <FlowBadge>Target</FlowBadge>
               </Inline>
             }
@@ -1631,7 +1775,7 @@ function ChartWrapperOverviewDemo() {
           >
             <Surface variant="primary" padding="container">
               <Stack align="center" justify="center" style={{ minHeight: 240 }}>
-                <Text role="caption">[Insert chart component here] {data.length} points</Text>
+                <Text variant="caption">[Insert chart component here] {data.length} points</Text>
               </Stack>
             </Surface>
           </FlowChartWrapper>
@@ -1662,7 +1806,7 @@ function ChartWrapperUseCasesDemo() {
         {(["bar", "line", "pie"] as const).map((type) => (
           <FlowChip
             key={type}
-            variant={variant === type ? "accent" : "default"}
+            variant={variant === type ? "tonal" : "filled"}
             onClick={() => setVariant(type)}
           >
             {type}
@@ -1681,7 +1825,7 @@ function ChartWrapperUseCasesDemo() {
           >
             <Surface variant="secondary" padding="container">
               <Stack align="center" justify="center" style={{ minHeight: 220 }}>
-                <Text role="caption">Chart type: {variant} (placeholder content)</Text>
+                <Text variant="caption">Chart type: {variant} (placeholder content)</Text>
               </Stack>
             </Surface>
           </FlowChartWrapper>
@@ -1710,6 +1854,20 @@ const advancedFiltersEntry: PatternEntry = {
       "Filter serialization for API calls",
       "Preset filter management",
     ],
+    accessibility: {
+      handled: [
+        "Filter rows are grouped in a fieldset",
+        "Add/remove buttons have descriptive aria-labels",
+        "Field selects and value inputs have associated labels",
+      ],
+      required: ["Provide aria-label on the filter container"],
+      keyboard: [
+        { key: "Tab", action: "Move between filter fields, operators, values, and action buttons" },
+        { key: "Enter", action: "Apply filters or add new filter row" },
+        { key: "Escape", action: "Cancel and close filter panel" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowSelect", role: "Field and operator selectors", tokens: [] },
@@ -1765,6 +1923,22 @@ const advancedFiltersEntry: PatternEntry = {
       { type: "dont", text: "Don't use for simple filters." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowAdvancedFilters, {
+        fields: props.fields,
+        onApply: () => {},
+      } as unknown as React.ComponentProps<typeof FlowAdvancedFilters>),
+    defaults: {},
+    fixtures: {
+      fields: [
+        { key: "name", label: "Name", type: "text" },
+        { key: "status", label: "Status", type: "select", options: ["Active", "Inactive"] },
+        { key: "date", label: "Date", type: "date" },
+      ],
+    },
+    excludeControls: ["fields", "onApply", "onClear", "value", "className", "style"],
+  },
 };
 
 // ── FlowColumnConfigurator ──
@@ -1783,6 +1957,21 @@ const columnConfiguratorEntry: PatternEntry = {
       "Reset to defaults",
       "Persistence of configuration",
     ],
+    accessibility: {
+      handled: [
+        "Column toggles are checkboxes with labels",
+        "Reorder handles have aria-roledescription='sortable'",
+        "Live region announces column visibility changes",
+      ],
+      required: ["Provide aria-label describing the configurator purpose"],
+      keyboard: [
+        { key: "Tab", action: "Move between column toggles and reorder handles" },
+        { key: "Space", action: "Toggle column visibility or pick up for reorder" },
+        { key: "↑ ↓ Arrow keys", action: "Move grabbed column up or down" },
+        { key: "Escape", action: "Cancel column reorder" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
+    },
   },
   composition: [
     { component: "FlowDragSortableList", role: "Column order management", tokens: [] },
@@ -1825,6 +2014,23 @@ const columnConfiguratorEntry: PatternEntry = {
       { type: "dont", text: "Don't hide essential columns." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowColumnConfigurator, {
+        columns: props.columns,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowColumnConfigurator>),
+    defaults: {},
+    fixtures: {
+      columns: [
+        { key: "name", label: "Name", visible: true },
+        { key: "email", label: "Email", visible: true },
+        { key: "role", label: "Role", visible: false },
+        { key: "status", label: "Status", visible: true },
+      ],
+    },
+    excludeControls: ["columns", "onChange", "className", "style"],
+  },
 };
 
 // ── FlowCalendarView ──
@@ -1844,6 +2050,23 @@ const calendarViewEntry: PatternEntry = {
       "Event detail popover",
       "Navigation between periods",
     ],
+    accessibility: {
+      handled: [
+        "Calendar grid has role='grid' with proper row/cell structure",
+        "Navigation buttons have aria-labels for month/year navigation",
+        "Selected date announced via aria-selected",
+        "Today's date marked with aria-current='date'",
+      ],
+      required: ["Provide aria-label on the calendar component"],
+      keyboard: [
+        { key: "← → Arrow keys", action: "Move focus between days in a week" },
+        { key: "↑ ↓ Arrow keys", action: "Move focus between weeks" },
+        { key: "Enter / Space", action: "Select the focused date" },
+        { key: "Page Up / Page Down", action: "Navigate to previous/next month" },
+        { key: "Home / End", action: "Jump to first/last day of the month" },
+      ],
+      wcag: ["1.3.1", "2.1.1", "4.1.2"],
+    },
   },
   composition: [
     {
@@ -1894,6 +2117,23 @@ const calendarViewEntry: PatternEntry = {
       { type: "dont", text: "Don't use for simple date selection." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowCalendarView, {
+        events: props.events,
+        view: (props.view as string) ?? "month",
+        onEventClick: () => {},
+      } as unknown as React.ComponentProps<typeof FlowCalendarView>),
+    defaults: { view: "month" },
+    fixtures: {
+      events: [
+        { id: "1", title: "Team Standup", start: "2026-04-23T09:00:00", end: "2026-04-23T09:30:00", color: "var(--sys-energy-status-info)" },
+        { id: "2", title: "Design Review", start: "2026-04-23T14:00:00", end: "2026-04-23T15:00:00", color: "var(--sys-energy-status-success)" },
+        { id: "3", title: "Sprint Planning", start: "2026-04-24T10:00:00", end: "2026-04-24T11:30:00", color: "var(--sys-energy-accent)" },
+      ],
+    },
+    excludeControls: ["events", "onEventClick", "onDateClick", "className", "style"],
+  },
 };
 
 // ── FlowChartWrapper ──
@@ -1913,6 +2153,19 @@ const chartWrapperEntry: PatternEntry = {
       "Responsive chart sizing",
       "Title and subtitle layout",
     ],
+    accessibility: {
+      handled: [
+        "Chart container has role='img' for screen readers",
+        "Decorative elements are aria-hidden",
+        "Loading state uses aria-busy",
+      ],
+      required: [
+        "Provide aria-label describing the chart's data and purpose",
+        "Consider providing a data table alternative for screen reader users",
+      ],
+      keyboard: [],
+      wcag: ["1.1.1"],
+    },
   },
   composition: [
     { component: "FlowCard", role: "Chart container with header", tokens: [] },
@@ -1963,6 +2216,18 @@ const chartWrapperEntry: PatternEntry = {
       { type: "do", text: "Provide export options." },
       { type: "dont", text: "Don't render charts directly without wrapper." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowChartWrapper, {
+        title: (props.title as string) ?? "Monthly Revenue",
+        subtitle: (props.subtitle as string) ?? "Last 6 months",
+        height: (props.height as number) ?? 300,
+        loading: (props.loading as boolean) ?? false,
+        children: React.createElement(Surface, { variant: "sunken", padding: "container", style: { height: "100%", display: "flex", alignItems: "center", justifyContent: "center" } }, React.createElement(Text, { variant: "caption", color: "secondary", children: "Chart area" } as React.ComponentProps<typeof Text>)),
+      } as unknown as React.ComponentProps<typeof FlowChartWrapper>),
+    defaults: { title: "Monthly Revenue", subtitle: "Last 6 months", height: 300, loading: false },
+    excludeControls: ["children", "actions", "className", "style"],
   },
 };
 

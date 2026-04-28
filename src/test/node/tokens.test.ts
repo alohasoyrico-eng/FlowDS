@@ -16,7 +16,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 
-import { compLight, ref, sysDark, sysLight } from "../../app/tokens.ts";
+import { compLight, ref, sysDark, sysLight } from "../../../packages/tokens/src/tokens.ts";
 
 // ─────────────────────────────────────────────
 // Helpers

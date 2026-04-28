@@ -5,10 +5,18 @@
 import { useState } from "react";
 
 import {
-  FlowCheckbox, FlowRadioButton, FlowRadioGroup, FlowSegmentedControl,
-  FlowSelect, FlowSlider, FlowSwitch, FlowToggleButton,
-  Inline, Stack, Text,
-} from "../../../../lib";
+  FlowCheckbox,
+  FlowRadioButton,
+  FlowRadioGroup,
+  FlowSegmentedControl,
+  FlowSelect,
+  FlowSlider,
+  FlowSwitch,
+  FlowToggleButton,
+  Inline,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 import { SIZES } from "../types";
@@ -342,7 +350,7 @@ export function FlowSliderOverview() {
             max={100}
             className="demo-content-frame-md"
           />
-          <Text role="label-m">Value: {value}</Text>
+          <Text variant="label-m">Value: {value}</Text>
         </DemoGroup>
       </DemoSection>
 

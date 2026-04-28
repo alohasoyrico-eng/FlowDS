@@ -24,9 +24,9 @@
  */
 import type { CSSProperties, ReactNode } from "react";
 
-import { Divider, Grid, Inline, Stack, Surface, Text } from "../primitives";
-import type { SpaceToken } from "../primitives";
-import { FlowTag } from "./display";
+import { Divider, Grid, Inline, Stack, Surface, Text } from "@flow/primitives";
+import type { SpaceToken } from "@flow/primitives";
+import { FlowTag } from "@flow/components";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Rhythm Constants (exported for escape-hatch usage)
@@ -105,7 +105,7 @@ export function PageHeader(props: PageHeaderProps) {
         <Stack gap={HEADER_GAP}>
           {props.breadcrumbs}
           <Inline gap={3} align="center">
-            <Text role="display-xl">{props.title}</Text>
+            <Text variant="display-xl">{props.title}</Text>
             {props.actions}
           </Inline>
         </Stack>
@@ -118,10 +118,10 @@ export function PageHeader(props: PageHeaderProps) {
   return (
     <>
       <Stack gap={HEADER_GAP}>
-        <Text role="overline">{props.chapter}</Text>
-        <Text role="display-xl">{props.title}</Text>
+        <Text variant="overline">{props.chapter}</Text>
+        <Text variant="display-xl">{props.title}</Text>
         {props.children && (
-          <Text role="paragraph-xl" className="flow-page-header-intro">
+          <Text variant="paragraph-xl" className="flow-page-header-intro">
             {props.children}
           </Text>
         )}
@@ -156,7 +156,7 @@ interface SectionProps {
   /** Section content */
   children: ReactNode;
   /** Override the heading role. Default: "display-m" */
-  headingRole?: "display-m" | "display-s" | "heading-xl";
+  headingRole?: "display-l" | "display-m" | "display-s" | "heading-xl";
   /** Additional className on the outer Stack */
   className?: string;
   /** Additional style on the outer Stack */
@@ -173,9 +173,9 @@ export function Section({
 }: SectionProps) {
   return (
     <Stack gap={SECTION_GAP} className={className} style={style}>
-      <Text role={headingRole}>{title}</Text>
+      <Text variant={headingRole}>{title}</Text>
       {description && (
-        <Text role="paragraph-s" color="secondary">
+        <Text variant="paragraph-s" color="secondary">
           {description}
         </Text>
       )}
@@ -218,8 +218,8 @@ export function Callout({ intent: intentProp, type, title, children, style }: Ca
   return (
     <Surface padding="control" className="flow-callout" data-intent={intent} style={style}>
       <Stack gap={CARD_GAP}>
-        {title && <Text role="label-l">{title}</Text>}
-        {typeof children === "string" ? <Text role="paragraph-m">{children}</Text> : children}
+        {title && <Text variant="label-l">{title}</Text>}
+        {typeof children === "string" ? <Text variant="paragraph-m">{children}</Text> : children}
       </Stack>
     </Surface>
   );
@@ -247,7 +247,7 @@ export function DocList({ items, className }: DocListProps) {
     <ul className={`flow-doc-list ${className ?? ""}`}>
       {items.map((item, i) => (
         <li key={i}>
-          <Text role="paragraph-m" as="span">
+          <Text variant="paragraph-m" as="span">
             {item}
           </Text>
         </li>
@@ -283,7 +283,7 @@ export function CodeBlock({ children, title }: CodeBlockProps) {
     <Surface padding="control" className="flow-code-block">
       <Stack gap={CARD_GAP}>
         {title && (
-          <Text role="overline" color="tertiary">
+          <Text variant="overline" color="tertiary">
             {title}
           </Text>
         )}
@@ -342,7 +342,7 @@ export function PropsTable({ props }: { props: PropEntry[] }) {
             <Inline gap={2} align="center">
               <FlowTag variant="code">{p.name}</FlowTag>
               {p.required && (
-                <Text role="caption" className="flow-props-entry__required">
+                <Text variant="caption" className="flow-props-entry__required">
                   required
                 </Text>
               )}
@@ -351,14 +351,14 @@ export function PropsTable({ props }: { props: PropEntry[] }) {
               <code className="flow-props-entry__type">{p.type}</code>
               {p.default && (
                 <Inline gap={1} align="baseline">
-                  <Text role="caption" color="tertiary">
+                  <Text variant="caption" color="tertiary">
                     default
                   </Text>
                   <code className="flow-props-entry__default">{p.default}</code>
                 </Inline>
               )}
             </Inline>
-            <Text role="paragraph-s" color="secondary">
+            <Text variant="paragraph-s" color="secondary">
               {p.description}
             </Text>
           </Stack>
@@ -419,7 +419,7 @@ export function GuidelinesColumns({ guidelines }: { guidelines: GuidelineEntry[]
                 <span className="flow-guidelines-icon" data-type={col.type} aria-hidden="true">
                   {guidelineIcon[col.type]}
                 </span>
-                <Text role="overline" className="flow-guidelines-col-title" data-type={col.type}>
+                <Text variant="overline" className="flow-guidelines-col-title" data-type={col.type}>
                   {col.title}
                 </Text>
               </div>
@@ -435,7 +435,7 @@ export function GuidelinesColumns({ guidelines }: { guidelines: GuidelineEntry[]
                       >
                         •
                       </span>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="paragraph-s" color="secondary">
                         {g.text}
                       </Text>
                     </div>

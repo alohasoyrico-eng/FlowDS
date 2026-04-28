@@ -10,12 +10,12 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowTimeline } from "../app/components/patterns";
+import { FlowTimeline } from "@flow/patterns";
 
 const sampleItems = [
-  { id: "1", title: "Created", description: "Issue created", timestamp: "2024-01-01" },
-  { id: "2", title: "In Progress", description: "Work started", timestamp: "2024-01-05" },
-  { id: "3", title: "Resolved", timestamp: "2024-01-10" },
+  { id: "1", label: "Created", description: "Issue created", timestamp: "2024-01-01" },
+  { id: "2", label: "In Progress", description: "Work started", timestamp: "2024-01-05" },
+  { id: "3", label: "Resolved", timestamp: "2024-01-10" },
 ];
 
 // ─────────────────────────────────────────────
@@ -23,7 +23,7 @@ const sampleItems = [
 // ─────────────────────────────────────────────
 
 describe("FlowTimeline — rendering", () => {
-  it("renders all item titles", () => {
+  it("renders all item labels", () => {
     render(<FlowTimeline items={sampleItems} />);
     expect(screen.getByText("Created")).toBeInTheDocument();
     expect(screen.getByText("In Progress")).toBeInTheDocument();

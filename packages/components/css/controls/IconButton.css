@@ -1,0 +1,350 @@
+/* ── IconButton: Emphasis-model CSS ────────────────── */
+
+/* Square button with only an icon. data-variant drives style. */
+
+.flow-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-icon-button-size);
+  height: var(--comp-icon-button-size);
+  border-radius: var(--comp-icon-button-radius);
+  transition: all var(--comp-icon-button-transition);
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* ── IconButton size — per-instance [data-size] → per-size comp tokens ──
+   Same pattern as FlowButton: size auto-shifts with density via sys layer. */
+.flow-icon-btn[data-size="sm"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-sm);
+}
+
+.flow-icon-btn[data-size="md"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-md);
+}
+
+.flow-icon-btn[data-size="lg"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-lg);
+}
+
+.flow-icon-btn[data-size="xl"] {
+  --comp-icon-button-size: var(--comp-icon-button-size-xl);
+}
+
+/* PRIMARY — dark filled (same as Button.primary) */
+.flow-icon-btn[data-variant="primary"] {
+  background: var(--comp-icon-button-bg-high);
+  color: var(--comp-icon-button-icon-high);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+
+.flow-icon-btn[data-variant="primary"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-hover);
+}
+
+.flow-icon-btn[data-variant="primary"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-active);
+}
+
+/* SECONDARY — outlined (same as Button.secondary) */
+.flow-icon-btn[data-variant="secondary"] {
+  background: var(--comp-icon-button-bg-medium);
+  color: var(--comp-icon-button-icon-medium);
+  border: var(--comp-icon-button-border-width) solid var(--comp-icon-button-border-medium);
+}
+
+.flow-icon-btn[data-variant="secondary"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-hover);
+}
+
+.flow-icon-btn[data-variant="secondary"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-active);
+}
+
+/* TERTIARY — ghost, subtle icon (toolbars) */
+.flow-icon-btn[data-variant="tertiary"] {
+  background: var(--comp-icon-button-bg-low);
+  color: var(--comp-icon-button-icon-low);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+
+.flow-icon-btn[data-variant="tertiary"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-hover);
+}
+
+.flow-icon-btn[data-variant="tertiary"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-active);
+}
+
+/* GHOST — transparent, minimal chrome. Hover/active reveal surface. */
+.flow-icon-btn[data-variant="ghost"] {
+  background: var(--comp-icon-button-bg-ghost);
+  color: var(--comp-icon-button-icon-ghost);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+
+.flow-icon-btn[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-hover);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+.flow-icon-btn[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-active);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+/* OUTLINED — transparent bg, accent icon, strong border */
+.flow-icon-btn[data-variant="outlined"] {
+  background: var(--comp-icon-button-bg-outline);
+  color: var(--comp-icon-button-icon-outline);
+  border: var(--comp-icon-button-border-width) solid var(--comp-icon-button-border-outline);
+}
+
+.flow-icon-btn[data-variant="outlined"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-hover);
+}
+
+.flow-icon-btn[data-variant="outlined"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-active);
+}
+
+/* DANGER — subtle→filled (same as Button.danger) — uses data-intent */
+.flow-icon-btn[data-intent="danger"] {
+  background: var(--comp-icon-button-bg-danger-subtle);
+  color: var(--comp-icon-button-icon-danger);
+  border: var(--comp-icon-button-border-width) solid transparent;
+}
+
+.flow-icon-btn[data-intent="danger"]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-hover);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+
+.flow-icon-btn[data-intent="danger"]:active:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-active);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+
+/* DISABLED — per-emphasis identity preservation (mirrors FlowButton pattern) */
+.flow-icon-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1; /* Override ActionSurface base opacity — IconButton uses explicit disabled colors */
+}
+
+/* PRIMARY disabled: dimmed filled → still reads as primary action */
+.flow-icon-btn[data-variant="primary"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-high);
+  color: var(--comp-icon-button-icon-disabled-high);
+  border-color: transparent;
+}
+
+/* SECONDARY disabled: transparent + faded border → preserves bordered structure */
+.flow-icon-btn[data-variant="secondary"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-medium);
+  color: var(--comp-icon-button-icon-disabled-medium);
+  border-color: var(--comp-icon-button-border-disabled-medium);
+}
+
+/* TERTIARY disabled: transparent + dim icon */
+.flow-icon-btn[data-variant="tertiary"]:disabled {
+  background: transparent;
+  color: var(--comp-icon-button-icon-disabled);
+  border-color: transparent;
+}
+
+/* OUTLINED disabled: transparent + lighter faded border */
+.flow-icon-btn[data-variant="outlined"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-outline);
+  color: var(--comp-icon-button-icon-disabled-outline);
+  border-color: var(--comp-icon-button-border-disabled-outline);
+}
+
+/* DANGER disabled: faint red tint → preserves semantic danger identity — uses data-intent */
+.flow-icon-btn[data-intent="danger"]:disabled {
+  background: var(--comp-icon-button-bg-disabled-danger);
+  color: var(--comp-icon-button-icon-disabled-danger);
+  border-color: transparent;
+}
+
+/* GHOST disabled: transparent + dim icon */
+.flow-icon-btn[data-variant="ghost"]:disabled {
+  background: transparent;
+  color: var(--comp-icon-button-icon-disabled);
+  border-color: transparent;
+}
+
+/* LOADING — preserve emphasis colors so loading≠disabled visually.
+   ActionSurface sets disabled when loading; [aria-busy] overrides win
+   by specificity. Spinner inherits color via currentColor.
+   cursor/pointer-events are handled by the shared rule above. */
+
+/* PRIMARY loading: maintain filled style */
+.flow-icon-btn[data-variant="primary"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-high);
+  color: var(--comp-icon-button-icon-high);
+  border-color: transparent;
+}
+
+/* SECONDARY loading: maintain bordered style */
+.flow-icon-btn[data-variant="secondary"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-medium);
+  color: var(--comp-icon-button-icon-medium);
+  border-color: var(--comp-icon-button-border-medium);
+}
+
+/* TERTIARY loading: maintain subtle icon style */
+.flow-icon-btn[data-variant="tertiary"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-icon-button-icon-low);
+  border-color: transparent;
+}
+
+/* GHOST loading: maintain transparent style */
+.flow-icon-btn[data-variant="ghost"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-ghost);
+  color: var(--comp-icon-button-icon-ghost);
+  border-color: transparent;
+}
+
+/* OUTLINED loading: maintain outlined accent style */
+.flow-icon-btn[data-variant="outlined"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-outline);
+  color: var(--comp-icon-button-icon-outline);
+  border-color: var(--comp-icon-button-border-outline);
+}
+
+/* DANGER loading: maintain subtle danger style */
+.flow-icon-btn[data-intent="danger"][aria-busy="true"] {
+  background: var(--comp-icon-button-bg-danger-subtle);
+  color: var(--comp-icon-button-icon-danger);
+  border-color: transparent;
+}
+
+/* SELECTED — toggle/toolbar active state */
+
+/* TERTIARY selected: accent tint bg + accent icon */
+.flow-icon-btn[data-variant="tertiary"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-low);
+  color: var(--comp-icon-button-icon-selected-low);
+}
+
+.flow-icon-btn[data-variant="tertiary"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-low-hover);
+}
+
+/* SECONDARY selected: accent tint + accent border (proportional shift) */
+.flow-icon-btn[data-variant="secondary"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-medium);
+  color: var(--comp-icon-button-icon-selected-medium);
+  border-color: var(--comp-icon-button-border-selected-medium);
+}
+
+.flow-icon-btn[data-variant="secondary"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-medium-hover);
+}
+
+/* PRIMARY selected: accent-primary fill (hue shift from neutral-dark) */
+.flow-icon-btn[data-variant="primary"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-high);
+  color: var(--comp-icon-button-icon-selected-high);
+}
+
+.flow-icon-btn[data-variant="primary"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-high-hover);
+}
+
+/* OUTLINED selected: accent tint + accent border preserves outline identity */
+.flow-icon-btn[data-variant="outlined"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-outline);
+  color: var(--comp-icon-button-icon-selected-outline);
+  border-color: var(--comp-icon-button-border-selected-outline);
+}
+
+.flow-icon-btn[data-variant="outlined"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-outline-hover);
+}
+
+/* DANGER selected: filled destructive */
+.flow-icon-btn[data-intent="danger"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-danger);
+  color: var(--comp-icon-button-icon-selected-danger);
+}
+
+.flow-icon-btn[data-intent="danger"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-danger-hover);
+}
+
+/* GHOST selected: no chrome, accent icon only */
+.flow-icon-btn[data-variant="ghost"][data-selected]:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-ghost);
+  color: var(--comp-icon-button-icon-selected-ghost);
+}
+
+.flow-icon-btn[data-variant="ghost"][data-selected]:hover:not(:disabled) {
+  background: var(--comp-icon-button-bg-selected-ghost-hover);
+}
+
+/* Focus ring — outline (follows border-radius) + box-shadow gap fill */
+.flow-icon-btn:is(:focus-visible, [data-demo-state="focus"]:not(:disabled)) {
+  outline: var(--comp-icon-button-focus-ring-width) solid var(--comp-icon-button-focus-ring-color);
+  outline-offset: var(--comp-icon-button-focus-ring-offset);
+  box-shadow: 0 0 0 var(--comp-icon-button-focus-ring-offset)
+    var(--comp-icon-button-focus-ring-shadow-color);
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-icon-btn[data-variant="primary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-hover);
+}
+
+.flow-icon-btn[data-variant="secondary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-hover);
+}
+
+.flow-icon-btn[data-variant="tertiary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-hover);
+}
+
+.flow-icon-btn[data-variant="outlined"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-hover);
+}
+
+.flow-icon-btn[data-intent="danger"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-hover);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+
+.flow-icon-btn[data-variant="ghost"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-hover);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}
+
+.flow-icon-btn[data-variant="primary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-high-active);
+}
+
+.flow-icon-btn[data-variant="secondary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-medium-active);
+}
+
+.flow-icon-btn[data-variant="tertiary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-low-active);
+}
+
+.flow-icon-btn[data-variant="outlined"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-outline-active);
+}
+
+.flow-icon-btn[data-intent="danger"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-danger-active);
+  color: var(--comp-icon-button-icon-danger-on-filled);
+}
+
+.flow-icon-btn[data-variant="ghost"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-icon-button-bg-ghost-active);
+  color: var(--comp-icon-button-icon-ghost-hover);
+}

@@ -48,8 +48,20 @@ const PRIMITIVES: { name: string; desc: string }[] = [
 let _cachedIndex: SearchEntry[] | null = null;
 
 export function buildSearchIndex(
-  componentRegistry?: Record<string, { domain: string; spec: { name: string; purpose: string; variants?: string[]; states?: string[] } }>,
-  patternRegistry?: Record<string, { category: string; spec: { name: string; purpose: string; composesL3: string[]; variants?: string[] } }>,
+  componentRegistry?: Record<
+    string,
+    {
+      domain: string;
+      spec: { name: string; purpose: string; variants?: string[]; states?: string[] };
+    }
+  >,
+  patternRegistry?: Record<
+    string,
+    {
+      category: string;
+      spec: { name: string; purpose: string; composesL3: string[]; variants?: string[] };
+    }
+  >,
 ): SearchEntry[] {
   if (_cachedIndex) return _cachedIndex;
 
@@ -105,12 +117,7 @@ export function buildSearchIndex(
         domain: entry.category,
         path: `/patterns/${key}`,
         description: entry.spec.purpose,
-        keywords: [
-          entry.category,
-          "L4",
-          ...entry.spec.composesL3,
-          ...(entry.spec.variants ?? []),
-        ],
+        keywords: [entry.category, "L4", ...entry.spec.composesL3, ...(entry.spec.variants ?? [])],
       });
     }
   }

@@ -1,0 +1,103 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATE RANGE PICKER — Two-month calendar range
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-daterangepicker {
+  position: relative;
+  display: inline-block;
+}
+
+.flow-daterangepicker-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+  min-width: var(--comp-date-range-trigger-min-width);
+  height: var(--sys-size-height-control);
+  padding: 0 var(--ref-frame-space-4);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-primary);
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+.flow-daterangepicker-trigger:hover:not([data-state~="disabled"]) {
+  border-color: var(--sys-energy-border-focus);
+}
+
+.flow-daterangepicker[data-state~="error"] .flow-daterangepicker-trigger {
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-daterangepicker[data-state~="disabled"] .flow-daterangepicker-trigger {
+  cursor: not-allowed;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-daterangepicker-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--sys-energy-surface-primary);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-container);
+  box-shadow: var(--sys-depth-elevation-medium);
+  padding: var(--ref-frame-space-3);
+  display: flex;
+  gap: var(--ref-frame-space-4);
+}
+
+.flow-daterangepicker-presets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+  border-inline-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  padding-inline-end: var(--ref-frame-space-3);
+  min-width: var(--comp-date-range-presets-min-width);
+}
+
+.flow-daterangepicker-preset-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border-radius: var(--ref-frame-radius-1);
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-voice-label-m-size);
+  color: var(--sys-energy-text-primary);
+}
+
+.flow-daterangepicker-preset-btn:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-daterangepicker-calendars {
+  display: flex;
+  gap: var(--ref-frame-space-4);
+}
+
+/* DateRangePicker reuses .flow-datepicker-* classes for calendar internals */
+
+.flow-datepicker-day[data-in-range] {
+  background: var(--sys-energy-surface-accent-subtle);
+  border-radius: 0;
+}
+
+.flow-datepicker-day[data-range-start] {
+  border-radius: var(--ref-frame-radius-full) 0 0 var(--ref-frame-radius-full);
+}
+
+.flow-datepicker-day[data-range-end] {
+  border-radius: 0 var(--ref-frame-radius-full) var(--ref-frame-radius-full) 0;
+}
+
+.flow-datepicker-day[data-range-start][data-range-end] {
+  border-radius: var(--ref-frame-radius-full);
+}

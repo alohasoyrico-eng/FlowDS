@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowActionSheet as FlowQuickActions } from "../app/components/patterns";
+import { FlowActionSheet as FlowQuickActions } from "@flow/patterns";
 
 const sampleActions = [
   { id: "edit", label: "Edit" },
@@ -39,9 +39,7 @@ describe("FlowQuickActions — rendering", () => {
   });
 
   it("renders nothing when closed", () => {
-    const { container } = render(
-      <FlowQuickActions {...defaultProps} open={false} />,
-    );
+    const { container } = render(<FlowQuickActions {...defaultProps} open={false} />);
     expect(container.innerHTML).toBe("");
   });
 
@@ -93,9 +91,7 @@ describe("FlowQuickActions — interaction", () => {
 
 describe("FlowQuickActions — accessibility", () => {
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowQuickActions {...defaultProps} title="Quick actions" />,
-    );
+    const { container } = render(<FlowQuickActions {...defaultProps} title="Quick actions" />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

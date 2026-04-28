@@ -11,16 +11,16 @@ HAS_NEW_COMPONENT=false
 
 for file in $CHANGED_FILES; do
   case "$file" in
-    src/app/components/*/Flow*.tsx|flutter/flow_ds/lib/components/*)
+    packages/components/src/*/Flow*.tsx|src/app/components/*/Flow*.tsx|flutter/flow_ds/lib/components/*)
       HAS_COMPONENT_CHANGE=true
       if git diff --diff-filter=A --name-only HEAD~1 HEAD 2>/dev/null | grep -q "$file"; then
         HAS_NEW_COMPONENT=true
       fi
       ;;
-    src/app/primitives/*|flutter/flow_ds/lib/primitives/*)
+    packages/primitives/src/*|flutter/flow_ds/lib/primitives/*)
       HAS_COMPONENT_CHANGE=true
       ;;
-    src/app/tokens.ts|src/styles/modules/tokens.css|flutter/flow_ds/lib/tokens/*)
+    src/app/tokens.ts|packages/tokens/css/tokens.css|flutter/flow_ds/lib/tokens/*)
       HAS_COMPONENT_CHANGE=true
       ;;
   esac

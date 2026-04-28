@@ -361,7 +361,16 @@ function Ann({
 }
 
 function Sep() {
-  return <span style={{ width: "var(--ref-frame-border-thin)", height: "var(--ref-frame-space-3)", background: "var(--_grid-sep-bg)", flexShrink: 0 }} />;
+  return (
+    <span
+      style={{
+        width: "var(--ref-frame-border-thin)",
+        height: "var(--ref-frame-space-3)",
+        background: "var(--_grid-sep-bg)",
+        flexShrink: 0,
+      }}
+    />
+  );
 }
 
 function BracketLine({
@@ -421,45 +430,57 @@ export function GridOverlayButton({ visible, onToggle }: GridOverlayButtonProps)
   const tierLabel = { lg: "12 col", md: "6 col", sm: "1 col" }[tier];
   return (
     <span style={{ ...GRID_OVERLAY_VARS, display: "contents" }}>
-    <button
-      onClick={onToggle}
-      title={visible ? "Hide grid overlay" : "Show grid overlay"}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "var(--ref-frame-space-1)",
-        padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)",
-        background: visible ? "var(--_grid-btn-active-bg)" : "var(--sys-energy-surface-secondary)",
-        border: `var(--ref-frame-border-thin) solid ${visible ? "var(--_grid-btn-active-border)" : "var(--sys-energy-border-default)"}`,
-        borderRadius: "var(--ref-frame-radius-2)",
-        fontFamily: "var(--ref-voice-family-mono)",
-        fontSize: "var(--sys-voice-overline-size)",
-        color: visible ? "var(--_grid-btn-active-text)" : "var(--sys-energy-text-secondary)",
-        cursor: "pointer",
-        transition: "all var(--sys-momentum-transition-fast)",
-        whiteSpace: "nowrap",
-        flexShrink: 0,
-        lineHeight: "var(--ref-frame-space-4)",
-      }}
-    >
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-        <rect x="0" y="1.5" width="2.5" height="10" rx="0.5" fill="currentColor" opacity="0.75" />
-        <rect x="5" y="1.5" width="2.5" height="10" rx="0.5" fill="currentColor" opacity="0.75" />
-        <rect x="10" y="1.5" width="2.5" height="10" rx="0.5" fill="currentColor" opacity="0.75" />
-      </svg>
-      {visible ? "Hide grid" : "Grid"}
-      <span
+      <button
+        onClick={onToggle}
+        title={visible ? "Hide grid overlay" : "Show grid overlay"}
         style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "var(--ref-frame-space-1)",
+          padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)",
+          background: visible
+            ? "var(--_grid-btn-active-bg)"
+            : "var(--sys-energy-surface-secondary)",
+          border: `var(--ref-frame-border-thin) solid ${visible ? "var(--_grid-btn-active-border)" : "var(--sys-energy-border-default)"}`,
+          borderRadius: "var(--ref-frame-radius-2)",
+          fontFamily: "var(--ref-voice-family-mono)",
           fontSize: "var(--sys-voice-overline-size)",
-          opacity: "var(--ref-state-opacity-subtle)",
-          background: visible ? "var(--_grid-btn-tier-active-bg)" : "var(--_grid-btn-tier-inactive-bg)",
-          padding: "var(--ref-frame-space-micro) var(--ref-frame-space-1)",
-          borderRadius: "var(--ref-frame-radius-1)",
+          color: visible ? "var(--_grid-btn-active-text)" : "var(--sys-energy-text-secondary)",
+          cursor: "pointer",
+          transition: "all var(--sys-momentum-transition-fast)",
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+          lineHeight: "var(--ref-frame-space-4)",
         }}
       >
-        {tierLabel}
-      </span>
-    </button>
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <rect x="0" y="1.5" width="2.5" height="10" rx="0.5" fill="currentColor" opacity="0.75" />
+          <rect x="5" y="1.5" width="2.5" height="10" rx="0.5" fill="currentColor" opacity="0.75" />
+          <rect
+            x="10"
+            y="1.5"
+            width="2.5"
+            height="10"
+            rx="0.5"
+            fill="currentColor"
+            opacity="0.75"
+          />
+        </svg>
+        {visible ? "Hide grid" : "Grid"}
+        <span
+          style={{
+            fontSize: "var(--sys-voice-overline-size)",
+            opacity: "var(--ref-state-opacity-subtle)",
+            background: visible
+              ? "var(--_grid-btn-tier-active-bg)"
+              : "var(--_grid-btn-tier-inactive-bg)",
+            padding: "var(--ref-frame-space-micro) var(--ref-frame-space-1)",
+            borderRadius: "var(--ref-frame-radius-1)",
+          }}
+        >
+          {tierLabel}
+        </span>
+      </button>
     </span>
   );
 }

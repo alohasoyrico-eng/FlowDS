@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowSearch } from "../app/components/patterns";
+import { FlowSearch } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering

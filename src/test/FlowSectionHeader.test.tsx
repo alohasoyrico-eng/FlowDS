@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowSectionHeader } from "../app/components/patterns";
+import { FlowSectionHeader } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -22,8 +22,8 @@ describe("FlowSectionHeader — rendering", () => {
     expect(screen.getByText("Settings")).toBeInTheDocument();
   });
 
-  it("renders subtitle when provided", () => {
-    render(<FlowSectionHeader title="Settings" subtitle="Manage your preferences" />);
+  it("renders description when provided", () => {
+    render(<FlowSectionHeader title="Settings" description="Manage your preferences" />);
     expect(screen.getByText("Manage your preferences")).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe("FlowSectionHeader — rendering", () => {
 describe("FlowSectionHeader — accessibility", () => {
   it("has no axe violations", async () => {
     const { container } = render(
-      <FlowSectionHeader title="Accessible section" subtitle="With subtitle" />,
+      <FlowSectionHeader title="Accessible section" description="With description" />,
     );
     expect(await axe(container)).toHaveNoViolations();
   });

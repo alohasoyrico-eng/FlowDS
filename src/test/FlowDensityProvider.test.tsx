@@ -10,8 +10,8 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowDensityProvider } from "../app/primitives";
-import { useFlowDensity } from "../app/hooks/use-flow-density";
+import { FlowDensityProvider } from "@flow/primitives";
+import { useFlowDensity } from "@flow/primitives";
 
 // Helper component that reads density from context
 function DensityReader() {
@@ -116,7 +116,9 @@ describe("FlowDensityProvider — context", () => {
 describe("FlowDensityProvider — accessibility", () => {
   it("has no axe violations", async () => {
     const { container } = render(
-      <FlowDensityProvider><div>test</div></FlowDensityProvider>,
+      <FlowDensityProvider density="default">
+        <div>test</div>
+      </FlowDensityProvider>,
     );
     expect(await axe(container)).toHaveNoViolations();
   });

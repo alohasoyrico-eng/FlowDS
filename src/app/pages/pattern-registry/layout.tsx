@@ -8,8 +8,9 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import { type ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   FlowButton,
   FlowCheckbox,
@@ -31,30 +32,12 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../../lib";
-import { FlowIcon } from "../../primitives";
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import { DemoGroup, DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Types
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+import type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "../registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction };
 
 export interface PatternSpec {
   name: string;
@@ -106,6 +89,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -257,15 +241,15 @@ function FormSectionOverviewDemo() {
               >
                 <FlowList>
                   <FlowListItem
-                    primary={<Text role="paragraph-s">Email notifications</Text>}
+                    primary={<Text variant="paragraph-s">Email notifications</Text>}
                     actions={<FlowCheckbox checked onChange={() => {}} />}
                   />
                   <FlowListItem
-                    primary={<Text role="paragraph-s">Push notifications</Text>}
+                    primary={<Text variant="paragraph-s">Push notifications</Text>}
                     actions={<FlowCheckbox onChange={() => {}} />}
                   />
                   <FlowListItem
-                    primary={<Text role="paragraph-s">SMS alerts</Text>}
+                    primary={<Text variant="paragraph-s">SMS alerts</Text>}
                     actions={<FlowCheckbox onChange={() => {}} />}
                   />
                 </FlowList>
@@ -302,16 +286,16 @@ function FormSectionOverviewDemo() {
               >
                 <FlowList>
                   <FlowListItem
-                    primary={<Text role="paragraph-s">Two-factor authentication</Text>}
+                    primary={<Text variant="paragraph-s">Two-factor authentication</Text>}
                     secondary={
-                      <Text role="caption" color="success">
+                      <Text variant="caption" color="success">
                         Recommended
                       </Text>
                     }
                     actions={<FlowCheckbox onChange={() => {}} />}
                   />
                   <FlowListItem
-                    primary={<Text role="paragraph-s">Login notifications</Text>}
+                    primary={<Text variant="paragraph-s">Login notifications</Text>}
                     actions={<FlowCheckbox checked onChange={() => {}} />}
                   />
                 </FlowList>
@@ -331,7 +315,7 @@ function FormSectionUseCasesDemo() {
     profile: (
       <Surface variant="primary" padding="container">
         <Stack gap={4}>
-          <Text role="heading-m">Edit Profile</Text>
+          <Text variant="heading-m">Edit Profile</Text>
           <FlowFormSection title="Basic Information" description="Your public profile information">
             <FlowTextInput label="Display Name" defaultValue="John Doe" />
             <FlowTextInput label="Bio" multiline rows={2} placeholder="Tell us about yourself..." />
@@ -349,11 +333,11 @@ function FormSectionUseCasesDemo() {
           >
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Show email publicly</Text>}
+                primary={<Text variant="paragraph-s">Show email publicly</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Show phone number</Text>}
+                primary={<Text variant="paragraph-s">Show phone number</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
             </FlowList>
@@ -364,15 +348,15 @@ function FormSectionUseCasesDemo() {
     settings: (
       <Surface variant="primary" padding="container">
         <Stack gap={4}>
-          <Text role="heading-m">Application Settings</Text>
+          <Text variant="heading-m">Application Settings</Text>
           <FlowFormSection title="Appearance" description="Customize how the app looks and feels">
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Dark mode</Text>}
+                primary={<Text variant="paragraph-s">Dark mode</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Compact layout</Text>}
+                primary={<Text variant="paragraph-s">Compact layout</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
             </FlowList>
@@ -384,15 +368,15 @@ function FormSectionUseCasesDemo() {
           >
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Email notifications</Text>}
+                primary={<Text variant="paragraph-s">Email notifications</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Push notifications</Text>}
+                primary={<Text variant="paragraph-s">Push notifications</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Marketing emails</Text>}
+                primary={<Text variant="paragraph-s">Marketing emails</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
             </FlowList>
@@ -412,7 +396,7 @@ function FormSectionUseCasesDemo() {
     checkout: (
       <Surface variant="primary" padding="container">
         <Stack gap={4}>
-          <Text role="heading-m">Checkout</Text>
+          <Text variant="heading-m">Checkout</Text>
           <FlowFormSection title="Billing Address" description="Where should we send the invoice?">
             <FlowTextInput label="Full Name" required />
             <FlowTextInput label="Email" type="email" required />
@@ -427,15 +411,15 @@ function FormSectionUseCasesDemo() {
           <FlowFormSection title="Payment Method" description="How would you like to pay?">
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Credit Card</Text>}
+                primary={<Text variant="paragraph-s">Credit Card</Text>}
                 actions={<FlowRadioButton name="payment" checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">PayPal</Text>}
+                primary={<Text variant="paragraph-s">PayPal</Text>}
                 actions={<FlowRadioButton name="payment" onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Bank Transfer</Text>}
+                primary={<Text variant="paragraph-s">Bank Transfer</Text>}
                 actions={<FlowRadioButton name="payment" onChange={() => {}} />}
               />
             </FlowList>
@@ -464,7 +448,7 @@ function FormSectionUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -541,6 +525,21 @@ const formSectionEntry: PatternEntry = {
       { type: "dont", text: "Don't nest form sections deeply." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(
+        FlowFormSection,
+        {
+          title: (props.title as string) ?? "Personal Info",
+          description: (props.description as string) ?? "Enter your details below",
+          collapsible: (props.collapsible as boolean) ?? false,
+          disabled: (props.disabled as boolean) ?? false,
+        } as unknown as React.ComponentProps<typeof FlowFormSection>,
+        React.createElement(Text, { variant: "paragraph-s", children: "Form fields go here" } as React.ComponentProps<typeof Text>),
+      ),
+    defaults: { title: "Personal Info", description: "Enter your details below", collapsible: false, disabled: false },
+    excludeControls: ["children", "className", "style"],
+  },
 };
 
 // ── FlowToolbar ──
@@ -565,7 +564,7 @@ function ToolbarOverviewDemo() {
       >
         <Surface variant="primary" padding="container">
           <FlowToolbar>
-            <FlowButton variant="high">Create New</FlowButton>
+            <FlowButton variant="primary">Create New</FlowButton>
             <FlowToolbarDivider />
             <FlowIconButton icon="filter" />
             <FlowIconButton icon="search" />
@@ -581,8 +580,8 @@ function ToolbarOverviewDemo() {
         <Surface variant="primary" padding="container">
           <FlowToolbar>
             <FlowToolbarGroup>
-              <FlowButton variant="high">Save</FlowButton>
-              <FlowButton variant="medium">Save As</FlowButton>
+              <FlowButton variant="primary">Save</FlowButton>
+              <FlowButton variant="secondary">Save As</FlowButton>
             </FlowToolbarGroup>
             <FlowToolbarDivider />
             <FlowToolbarGroup>
@@ -613,10 +612,14 @@ function ToolbarOverviewDemo() {
               {selectedItems.length > 0 ? (
                 <>
                   <FlowToolbarGroup>
-                    <FlowButton variant="high" onClick={() => alert("Edit selected")}>
+                    <FlowButton variant="primary" onClick={() => alert("Edit selected")}>
                       Edit ({selectedItems.length})
                     </FlowButton>
-                    <FlowButton variant="danger" onClick={() => alert("Delete selected")}>
+                    <FlowButton
+                      variant="primary"
+                      intent="danger"
+                      onClick={() => alert("Delete selected")}
+                    >
                       Delete
                     </FlowButton>
                   </FlowToolbarGroup>
@@ -626,14 +629,14 @@ function ToolbarOverviewDemo() {
                     <FlowIconButton icon="move" />
                   </FlowToolbarGroup>
                   <FlowToolbarSpacer />
-                  <FlowButton variant="low" onClick={() => setSelectedItems([])}>
+                  <FlowButton variant="tertiary" onClick={() => setSelectedItems([])}>
                     Clear Selection
                   </FlowButton>
                 </>
               ) : (
                 <>
                   <FlowToolbarGroup>
-                    <FlowButton variant="high" onClick={handleSelectAll}>
+                    <FlowButton variant="primary" onClick={handleSelectAll}>
                       Select All
                     </FlowButton>
                   </FlowToolbarGroup>
@@ -656,7 +659,7 @@ function ToolbarOverviewDemo() {
               {["Document 1", "Document 2", "Document 3"].map((item, index) => (
                 <FlowListItem
                   key={item}
-                  primary={<Text role="paragraph-s">{item}</Text>}
+                  primary={<Text variant="paragraph-s">{item}</Text>}
                   actions={
                     <input
                       type="checkbox"
@@ -683,19 +686,19 @@ function ToolbarOverviewDemo() {
           <FlowToolbar>
             <FlowToolbarGroup>
               <FlowButton
-                variant={viewMode === "list" ? "high" : "low"}
+                variant={viewMode === "list" ? "primary" : "tertiary"}
                 onClick={() => setViewMode("list")}
               >
                 List
               </FlowButton>
               <FlowButton
-                variant={viewMode === "grid" ? "high" : "low"}
+                variant={viewMode === "grid" ? "primary" : "tertiary"}
                 onClick={() => setViewMode("grid")}
               >
                 Grid
               </FlowButton>
               <FlowButton
-                variant={viewMode === "table" ? "high" : "low"}
+                variant={viewMode === "table" ? "primary" : "tertiary"}
                 onClick={() => setViewMode("table")}
               >
                 Table
@@ -737,11 +740,11 @@ function ToolbarUseCasesDemo() {
     editor: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Document Editor</Text>
+          <Text variant="heading-m">Document Editor</Text>
           <FlowToolbar>
             <FlowToolbarGroup>
-              <FlowButton variant="high">Save</FlowButton>
-              <FlowButton variant="medium">Save As</FlowButton>
+              <FlowButton variant="primary">Save</FlowButton>
+              <FlowButton variant="secondary">Save As</FlowButton>
             </FlowToolbarGroup>
             <FlowToolbarDivider />
             <FlowToolbarGroup>
@@ -768,7 +771,7 @@ function ToolbarUseCasesDemo() {
             </FlowToolbarGroup>
           </FlowToolbar>
           <Surface variant="secondary" padding="container" style={{ minHeight: "200px" }}>
-            <Text role="paragraph-s" color="secondary">
+            <Text variant="paragraph-s" color="secondary">
               Rich text editor content area...
             </Text>
           </Surface>
@@ -778,10 +781,10 @@ function ToolbarUseCasesDemo() {
     email: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Inbox</Text>
+          <Text variant="heading-m">Inbox</Text>
           <FlowToolbar>
             <FlowToolbarGroup>
-              <FlowButton variant="high">Compose</FlowButton>
+              <FlowButton variant="primary">Compose</FlowButton>
             </FlowToolbarGroup>
             <FlowToolbarDivider />
             <FlowToolbarGroup>
@@ -803,9 +806,9 @@ function ToolbarUseCasesDemo() {
             {["Welcome Email", "Project Update", "Meeting Reminder"].map((email) => (
               <FlowListItem
                 key={email}
-                primary={<Text role="paragraph-s">{email}</Text>}
+                primary={<Text variant="paragraph-s">{email}</Text>}
                 secondary={
-                  <Text role="caption" color="tertiary">
+                  <Text variant="caption" color="tertiary">
                     2 hours ago
                   </Text>
                 }
@@ -818,10 +821,10 @@ function ToolbarUseCasesDemo() {
     dashboard: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Analytics Dashboard</Text>
+          <Text variant="heading-m">Analytics Dashboard</Text>
           <FlowToolbar>
             <FlowToolbarGroup>
-              <FlowButton variant="high">Add Widget</FlowButton>
+              <FlowButton variant="primary">Add Widget</FlowButton>
             </FlowToolbarGroup>
             <FlowToolbarDivider />
             <FlowToolbarGroup>
@@ -830,9 +833,9 @@ function ToolbarUseCasesDemo() {
             </FlowToolbarGroup>
             <FlowToolbarDivider />
             <FlowToolbarGroup>
-              <FlowButton variant="low">Last 7 days</FlowButton>
-              <FlowButton variant="low">Last 30 days</FlowButton>
-              <FlowButton variant="low">Last 90 days</FlowButton>
+              <FlowButton variant="tertiary">Last 7 days</FlowButton>
+              <FlowButton variant="tertiary">Last 30 days</FlowButton>
+              <FlowButton variant="tertiary">Last 90 days</FlowButton>
             </FlowToolbarGroup>
             <FlowToolbarSpacer />
             <FlowToolbarGroup>
@@ -844,8 +847,8 @@ function ToolbarUseCasesDemo() {
           <Grid minItemWidth="200px" gap="control">
             {["Revenue", "Users", "Conversion"].map((metric) => (
               <Surface key={metric} variant="secondary" padding="container">
-                <Text role="label-m">{metric}</Text>
-                <Text role="heading-l">$12,345</Text>
+                <Text variant="label-m">{metric}</Text>
+                <Text variant="heading-l">$12,345</Text>
               </Surface>
             ))}
           </Grid>
@@ -860,7 +863,7 @@ function ToolbarUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeTab === key ? "accent" : "default"}
+            variant={activeTab === key ? "tonal" : "filled"}
             onClick={() => setActiveTab(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -903,8 +906,8 @@ const toolbarEntry: PatternEntry = {
     reactImport: `import { FlowToolbar, FlowToolbarDivider, FlowToolbarGroup, FlowToolbarSpacer } from "@flow/design-system";`,
     reactUsage: `<FlowToolbar>
   <FlowToolbarGroup>
-    <FlowButton variant="high">Save</FlowButton>
-    <FlowButton variant="medium">Save As</FlowButton>
+    <FlowButton variant="primary">Save</FlowButton>
+    <FlowButton variant="secondary">Save As</FlowButton>
   </FlowToolbarGroup>
   <FlowToolbarDivider />
   <FlowToolbarGroup>
@@ -956,6 +959,23 @@ const toolbarEntry: PatternEntry = {
       { type: "dont", text: "Don't mix primary and secondary actions in same group." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(
+        FlowToolbar,
+        {
+          size: (props.size as string) ?? "md",
+          variant: (props.variant as string) ?? "default",
+        } as unknown as React.ComponentProps<typeof FlowToolbar>,
+        React.createElement(FlowIconButton, { icon: "bold", "aria-label": "Bold" }),
+        React.createElement(FlowIconButton, { icon: "italic", "aria-label": "Italic" }),
+        React.createElement(FlowToolbarDivider),
+        React.createElement(FlowIconButton, { icon: "align-left", "aria-label": "Align left" }),
+        React.createElement(FlowIconButton, { icon: "align-center", "aria-label": "Align center" }),
+      ),
+    defaults: { size: "md", variant: "default" },
+    excludeControls: ["children", "className", "style"],
+  },
 };
 
 // ── FlowSwipeActions ──
@@ -989,8 +1009,8 @@ function SwipeActionsOverviewDemo() {
               >
                 <Surface variant="primary" padding="container" style={{ width: "100%" }}>
                   <Stack gap={1}>
-                    <Text role="label-s">{item.title}</Text>
-                    <Text role="caption" color="secondary">
+                    <Text variant="label-s">{item.title}</Text>
+                    <Text variant="caption" color="secondary">
                       {item.desc}
                     </Text>
                   </Stack>
@@ -1002,7 +1022,7 @@ function SwipeActionsOverviewDemo() {
       </DemoSection>
       {actionLog && (
         <Surface variant="secondary" padding="container">
-          <Text role="caption" color="secondary">
+          <Text variant="caption" color="secondary">
             Last action: {actionLog}
           </Text>
         </Surface>
@@ -1015,7 +1035,10 @@ function SwipeActionsUseCasesDemo() {
   const [activeCase, setActiveCase] = useState<string>("emails");
   const [lastAction, setLastAction] = useState<string>("");
 
-  const cases: Record<string, { items: { id: string; title: string; desc: string; icon: string }[] }> = {
+  const cases: Record<
+    string,
+    { items: { id: string; title: string; desc: string; icon: string }[] }
+  > = {
     emails: {
       items: [
         { id: "1", title: "Meeting Agenda", desc: "from: team@example.com", icon: "mail" },
@@ -1042,7 +1065,7 @@ function SwipeActionsUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -1067,7 +1090,7 @@ function SwipeActionsUseCasesDemo() {
                 rightActions={[
                   {
                     label: "Delete",
-                    variant: "danger",
+                    intent: "danger",
                     onClick: () => handleAction("Delete", item),
                   },
                 ]}
@@ -1076,8 +1099,8 @@ function SwipeActionsUseCasesDemo() {
                   <Inline gap={2}>
                     <FlowIcon name={item.icon} size="md" />
                     <Stack gap={1} style={{ flex: 1 }}>
-                      <Text role="label-s">{item.title}</Text>
-                      <Text role="caption" color="secondary">
+                      <Text variant="label-s">{item.title}</Text>
+                      <Text variant="caption" color="secondary">
                         {item.desc}
                       </Text>
                     </Stack>
@@ -1090,7 +1113,7 @@ function SwipeActionsUseCasesDemo() {
       </DemoSection>
       {lastAction && (
         <Surface variant="secondary" padding="container">
-          <Text role="caption" color="secondary">
+          <Text variant="caption" color="secondary">
             {lastAction}
           </Text>
         </Surface>
@@ -1162,6 +1185,22 @@ const swipeActionsEntry: PatternEntry = {
       { type: "dont", text: "Don't use on desktop." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowSwipeActions, {
+        actions: props.actions,
+        threshold: (props.threshold as number) ?? 80,
+        children: React.createElement(Surface, { variant: "primary", padding: "container" }, React.createElement(Text, { variant: "paragraph-s", children: "Swipe me left" } as React.ComponentProps<typeof Text>)),
+      } as unknown as React.ComponentProps<typeof FlowSwipeActions>),
+    defaults: { threshold: 80 },
+    fixtures: {
+      actions: [
+        { id: "archive", label: "Archive", icon: "archive", color: "var(--sys-energy-status-info)" },
+        { id: "delete", label: "Delete", icon: "trash-2", color: "var(--sys-energy-status-error)" },
+      ],
+    },
+    excludeControls: ["actions", "children", "onAction", "leftActions", "rightActions", "className", "style"],
+  },
 };
 
 // ── FlowShortcutGrid (formerly FlowQuickActions grid) ──
@@ -1190,7 +1229,7 @@ function QuickActionsOverviewDemo() {
       </DemoSection>
       {executed && (
         <Surface variant="secondary" padding="container">
-          <Text role="caption" color="secondary">
+          <Text variant="caption" color="secondary">
             {executed}
           </Text>
         </Surface>
@@ -1203,7 +1242,10 @@ function QuickActionsUseCasesDemo() {
   const [activeCase, setActiveCase] = useState<string>("home");
   const [executed, setExecuted] = useState<string>("");
 
-  const cases: Record<string, { title: string; actions: { icon: string; label: string; onClick: () => void }[] }> = {
+  const cases: Record<
+    string,
+    { title: string; actions: { icon: string; label: string; onClick: () => void }[] }
+  > = {
     home: {
       title: "Home Screen",
       actions: [
@@ -1232,7 +1274,7 @@ function QuickActionsUseCasesDemo() {
         {Object.keys(cases).map((key) => (
           <FlowChip
             key={key}
-            variant={activeCase === key ? "accent" : "default"}
+            variant={activeCase === key ? "tonal" : "filled"}
             onClick={() => setActiveCase(key)}
           >
             {cases[key].title}
@@ -1249,7 +1291,7 @@ function QuickActionsUseCasesDemo() {
       </DemoSection>
       {executed && (
         <Surface variant="secondary" padding="container">
-          <Text role="caption" color="secondary">
+          <Text variant="caption" color="secondary">
             {executed}
           </Text>
         </Surface>
@@ -1315,6 +1357,24 @@ const quickActionsEntry: PatternEntry = {
       { type: "do", text: "Ensure 44px minimum touch targets." },
       { type: "dont", text: "Don't use on desktop." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowShortcutGrid, {
+        items: props.items,
+        columns: (props.columns as number) ?? 4,
+        onSelect: () => {},
+      } as unknown as React.ComponentProps<typeof FlowShortcutGrid>),
+    defaults: { columns: 4 },
+    fixtures: {
+      items: [
+        { id: "send", label: "Send", icon: "send" },
+        { id: "scan", label: "Scan", icon: "scan" },
+        { id: "pay", label: "Pay", icon: "credit-card" },
+        { id: "top-up", label: "Top Up", icon: "plus-circle" },
+      ],
+    },
+    excludeControls: ["items", "onSelect", "className", "style"],
   },
 };
 

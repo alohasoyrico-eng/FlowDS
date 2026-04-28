@@ -1,0 +1,74 @@
+/* ── High Contrast Mode ───────────────────────────────────────────── */
+@media (prefers-contrast: more) {
+  :root {
+    --sys-frame-border-thin: 2px;
+    --sys-energy-border-primary: currentcolor;
+    --sys-energy-border-secondary: currentcolor;
+  }
+
+  /* Controls + Inputs: ensure visible borders */
+  .flow-button,
+  .flow-btn-v2,
+  .flow-icon-btn,
+  .flow-fab,
+  .flow-chip,
+  .flow-tag,
+  .flow-card,
+  .flow-select-trigger,
+  .flow-text-input,
+  .flow-text-area,
+  .flow-input-surface,
+  .flow-otp-input-cell,
+  .flow-toggle-button,
+  .flow-segmented-btn {
+    border: 2px solid currentcolor;
+  }
+
+  /* Navigation: borders on interactive nav items */
+  .flow-tab,
+  .flow-bottom-nav-item,
+  .flow-breadcrumb-link,
+  .flow-pagination-btn,
+  .flow-accordion-trigger,
+  .flow-stepper-indicator {
+    border: 1px solid currentcolor;
+  }
+
+  /* Overlays: ensure border visibility on floating surfaces */
+  .flow-dialog,
+  .flow-popover,
+  .flow-menu,
+  .flow-context-menu,
+  .flow-tooltip,
+  .flow-bottom-sheet {
+    border: 2px solid currentcolor;
+  }
+
+  /* Selection: slider thumb needs stronger border */
+  .flow-slider-thumb {
+    border: 2px solid currentcolor;
+  }
+
+  /* Patterns: borders on pattern containers/inputs */
+  .flow-autocomplete-input-wrap,
+  .flow-search,
+  .flow-file-upload-zone,
+  .flow-color-picker-swatch,
+  .flow-inline-editable-edit,
+  .flow-rich-text-editor-container,
+  .flow-multi-select-trigger {
+    border: 2px solid currentcolor;
+  }
+
+  /* Data: table and list borders */
+  .flow-table th,
+  .flow-table td,
+  .flow-list-item {
+    border: 1px solid currentcolor;
+  }
+
+  /* Focus ring: thicker for visibility */
+  .flow-focusable:focus-visible {
+    outline-width: 3px;
+  }
+}

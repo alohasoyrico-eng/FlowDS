@@ -8,7 +8,7 @@
  */
 import type { ReactNode } from "react";
 
-import { Surface, Text } from "../primitives";
+import { Surface, Text } from "@flow/primitives";
 
 /** Density-responsive group for subsection wrappers inside a DemoSection. */
 export function DemoGroup({ children }: { children: ReactNode }) {
@@ -32,9 +32,9 @@ export function DemoSection({
   return (
     <section className="flow-demo-section">
       <div className="flow-demo-section-header">
-        <Text role="display-s">{title}</Text>
+        <Text variant="display-s">{title}</Text>
         {description && (
-          <Text role="paragraph-m" color="secondary" className="flow-text-balance">
+          <Text variant="paragraph-m" color="secondary" className="flow-text-balance">
             {description}
           </Text>
         )}

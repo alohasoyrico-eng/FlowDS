@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowCalendarView } from "../app/components/patterns";
+import { FlowCalendarView } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -91,9 +91,7 @@ describe("FlowCalendarView — props", () => {
 
 describe("FlowCalendarView — accessibility", () => {
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowCalendarView defaultMonth="2024-01" />,
-    );
+    const { container } = render(<FlowCalendarView defaultMonth="2024-01" />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

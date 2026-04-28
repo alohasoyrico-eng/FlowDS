@@ -1,0 +1,43 @@
+/* ── PullToRefresh ── */
+
+.flow-pull-to-refresh {
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-pull-to-refresh-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-frame-space-2);
+  overflow: hidden;
+  background: var(--comp-pull-to-refresh-bg);
+  transition: height var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-pull-to-refresh-spinner {
+  width: var(--comp-pull-to-refresh-spinner-size);
+  height: var(--comp-pull-to-refresh-spinner-size);
+  border: var(--sys-frame-border-indicator) solid var(--comp-pull-to-refresh-spinner-track);
+  border-top-color: var(--comp-pull-to-refresh-spinner-color);
+  border-radius: 50%;
+}
+
+.flow-pull-to-refresh-spinner[data-spinning="true"] {
+  animation: flow-ptr-spin var(--ref-momentum-duration-spin) linear infinite;
+}
+
+@keyframes flow-ptr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flow-pull-to-refresh-text {
+  font-size: var(--comp-pull-to-refresh-font);
+  color: var(--comp-pull-to-refresh-text);
+}
+
+.flow-pull-to-refresh-content {
+  position: relative;
+}

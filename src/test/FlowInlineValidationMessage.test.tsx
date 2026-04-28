@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowInlineValidationMessage } from "../app/components/feedback";
+import { FlowInlineValidationMessage } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -38,33 +38,31 @@ describe("FlowInlineValidationMessage — rendering", () => {
 // Variant
 // ─────────────────────────────────────────────
 
-describe("FlowInlineValidationMessage — variant", () => {
+describe("FlowInlineValidationMessage — status", () => {
   it("defaults to error variant with error color", () => {
     const { container } = render(<FlowInlineValidationMessage message="Required" />);
     const el = container.querySelector(".flow-inline-validation");
     expect(el).toHaveStyle({ color: "var(--sys-energy-status-error)" });
   });
 
-  it("applies success color for success variant", () => {
+  it("applies success color for success status", () => {
     const { container } = render(
-      <FlowInlineValidationMessage message="Looks good" variant="success" />,
+      <FlowInlineValidationMessage message="Looks good" status="success" />,
     );
     const el = container.querySelector(".flow-inline-validation");
     expect(el).toHaveStyle({ color: "var(--sys-energy-status-success)" });
   });
 
-  it("applies warning color for warning variant", () => {
+  it("applies warning color for warning status", () => {
     const { container } = render(
-      <FlowInlineValidationMessage message="Check this" variant="warning" />,
+      <FlowInlineValidationMessage message="Check this" status="warning" />,
     );
     const el = container.querySelector(".flow-inline-validation");
-    expect(el).toHaveStyle({ color: "var(--sys-energy-status-warning)" });
+    expect(el).toHaveStyle({ color: "var(--sys-energy-text-warning)" });
   });
 
-  it("applies info color for info variant", () => {
-    const { container } = render(
-      <FlowInlineValidationMessage message="Hint" variant="info" />,
-    );
+  it("applies info color for info status", () => {
+    const { container } = render(<FlowInlineValidationMessage message="Hint" status="info" />);
     const el = container.querySelector(".flow-inline-validation");
     expect(el).toHaveStyle({ color: "var(--sys-energy-status-info)" });
   });
@@ -81,9 +79,7 @@ describe("FlowInlineValidationMessage — icon", () => {
   });
 
   it("does not render an icon when icon=false", () => {
-    const { container } = render(
-      <FlowInlineValidationMessage message="Error" icon={false} />,
-    );
+    const { container } = render(<FlowInlineValidationMessage message="Error" icon={false} />);
     expect(container.querySelector(".flow-icon")).not.toBeInTheDocument();
   });
 });
@@ -93,23 +89,23 @@ describe("FlowInlineValidationMessage — icon", () => {
 // ─────────────────────────────────────────────
 
 describe("FlowInlineValidationMessage — accessibility", () => {
-  it("has role='alert' for error variant", () => {
-    render(<FlowInlineValidationMessage message="Required" variant="error" />);
+  it("has role='alert' for error status", () => {
+    render(<FlowInlineValidationMessage message="Required" status="error" />);
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 
-  it("has role='status' for success variant", () => {
-    render(<FlowInlineValidationMessage message="Valid" variant="success" />);
+  it("has role='status' for success status", () => {
+    render(<FlowInlineValidationMessage message="Valid" status="success" />);
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
 
-  it("has role='status' for info variant", () => {
-    render(<FlowInlineValidationMessage message="Hint" variant="info" />);
+  it("has role='status' for info status", () => {
+    render(<FlowInlineValidationMessage message="Hint" status="info" />);
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
 
-  it("has role='status' for warning variant", () => {
-    render(<FlowInlineValidationMessage message="Careful" variant="warning" />);
+  it("has role='status' for warning status", () => {
+    render(<FlowInlineValidationMessage message="Careful" status="warning" />);
     expect(screen.getByRole("status")).toBeInTheDocument();
   });
 

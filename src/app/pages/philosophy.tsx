@@ -14,8 +14,8 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../lib";
-import { FlowIcon } from "../primitives";
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import { PAGE_GAP, PageHeader, Section } from "../components/doc-primitives";
 import { LayoutGrid } from "../components/layout-grid";
 
@@ -146,11 +146,11 @@ function SystemStatsCard() {
         <Grid minItemWidth="140px" gap={4} className="flow-stats-grid">
           {SYSTEM_STATS.map((stat) => (
             <Stack key={stat.label} gap={2} align="center" justify="center">
-              <Text role="display-l" color="accent">
+              <Text variant="display-l" color="accent">
                 {stat.value}
               </Text>
-              <Text role="label-s">{stat.label}</Text>
-              <Text role="caption" color="secondary">
+              <Text variant="label-s">{stat.label}</Text>
+              <Text variant="caption" color="secondary">
                 {stat.desc}
               </Text>
             </Stack>
@@ -190,7 +190,7 @@ function PatternGroupCard({ cat }: { cat: (typeof PATTERN_CATEGORIES)[number] })
         <FlowIcon name={cat.icon} size="sm" color="accent" />
         {displayGroups.map((g) => (
           <Stack key={g.name} gap={2}>
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               {g.name}
             </Text>
             <Inline gap={2} wrap>
@@ -209,7 +209,7 @@ function PatternGroupCard({ cat }: { cat: (typeof PATTERN_CATEGORIES)[number] })
               className="flow-pattern-show-more"
             >
               <Inline gap={1} align="center">
-                <Text role="caption" color="accent">
+                <Text variant="caption" color="accent">
                   {expanded ? "Show less" : `+${hiddenCount} more`}
                 </Text>
                 <FlowIcon
@@ -238,10 +238,10 @@ function DomainAuditScores() {
         >
           <FlowCard variant="stat">
             <Stack gap={2} align="center">
-              <Text role="heading-l" color="accent">
+              <Text variant="heading-l" color="accent">
                 {d.components}
               </Text>
-              <Text role="label-s">{d.domain}</Text>
+              <Text variant="label-s">{d.domain}</Text>
             </Stack>
           </FlowCard>
         </Link>
@@ -255,10 +255,10 @@ function DomainAuditScores() {
         {PATTERN_CATEGORIES.map((cat) => (
           <FlowCard key={cat.platform} variant="stat">
             <Stack gap={2} align="center">
-              <Text role="heading-l" color="accent">
+              <Text variant="heading-l" color="accent">
                 {cat.count}
               </Text>
-              <Text role="label-s">{cat.platform}</Text>
+              <Text variant="label-s">{cat.platform}</Text>
             </Stack>
           </FlowCard>
         ))}
@@ -303,20 +303,20 @@ function QuickStartSection() {
   const quickLinks = [
     {
       role: "For Designers",
-      desc: "See the gold standard for component documentation",
-      link: "/components/controls/flow-button",
+      desc: "Explore the Figma source, token model, and component specs",
+      link: "/foundations/energy",
       icon: "palette",
     },
     {
       role: "For Developers",
-      desc: "Understand token architecture and component APIs",
-      link: "/tokens",
+      desc: "Install Flow and build your first component in minutes",
+      link: "/installation",
       icon: "code",
     },
     {
       role: "For Auditors",
-      desc: "Review system quality metrics and governance",
-      link: "/system-audit",
+      desc: "Review system quality metrics and governance model",
+      link: "/governance",
       icon: "clipboard",
     },
   ];
@@ -338,14 +338,14 @@ function QuickStartSection() {
               <Stack gap={3}>
                 <FlowIcon name={item.icon} size="lg" color="accent" />
                 <Stack gap={2}>
-                  <Text role="label-l">{item.role}</Text>
-                  <Text role="paragraph-s" color="secondary">
+                  <Text variant="label-l">{item.role}</Text>
+                  <Text variant="paragraph-s" color="secondary">
                     {item.desc}
                   </Text>
                 </Stack>
                 <Inline gap={2} align="center">
                   <Text
-                    role="caption"
+                    variant="caption"
                     color="accent"
                     style={{ fontWeight: "var(--ref-voice-weight-medium)" }}
                   >
@@ -377,7 +377,7 @@ export function PhilosophyPage() {
 
             {/* ── Core Thesis ── */}
             <Section title="Core Thesis">
-              <Text role="paragraph-l">
+              <Text variant="paragraph-l">
                 Every visual decision in a product is either <em>intentional</em> or{" "}
                 <em>accidental</em>. Accidental decisions accumulate as design debt — inconsistency,
                 inaccessibility, fragmented brand expression, and engineering overhead. Flow exists
@@ -417,8 +417,8 @@ export function PhilosophyPage() {
                 ].map((p) => (
                   <Surface key={p.title} padding="surface">
                     <Stack gap={2}>
-                      <Text role="heading-xl">{p.title}</Text>
-                      <Text role="paragraph-s" style={{ whiteSpace: "pre-line" }}>
+                      <Text variant="heading-xl">{p.title}</Text>
+                      <Text variant="paragraph-s" style={{ whiteSpace: "pre-line" }}>
                         {p.desc}
                       </Text>
                     </Stack>
@@ -502,12 +502,7 @@ export function PhilosophyPage() {
                     primary={l.name}
                     secondary={l.desc}
                     trailing={
-                      <FlowBadge
-                        content={`L${l.layer}`}
-                        variant="label"
-                        color="accent"
-                        standalone
-                      />
+                      <FlowBadge content={`L${l.layer}`} variant="label" status="info" standalone />
                     }
                     style={
                       {
@@ -568,10 +563,10 @@ export function PhilosophyPage() {
                 ].map((item) => (
                   <Surface key={item.not} padding="surface" className="flow-negation-card">
                     <Stack gap={2}>
-                      <Text role="label-l" color="danger">
+                      <Text variant="label-l" color="danger">
                         Not {item.not}
                       </Text>
-                      <Text role="paragraph-s">{item.because}</Text>
+                      <Text variant="paragraph-s">{item.because}</Text>
                     </Stack>
                   </Surface>
                 ))}
@@ -595,13 +590,13 @@ export function PhilosophyPage() {
                   <li key={i}>
                     <Inline gap={3} align="start">
                       <Text
-                        role="paragraph-s"
+                        variant="paragraph-s"
                         color="accent"
                         style={{ fontWeight: "var(--ref-voice-weight-semibold)", flexShrink: 0 }}
                       >
                         0{i + 1}
                       </Text>
-                      <Text role="paragraph-s">{item}</Text>
+                      <Text variant="paragraph-s">{item}</Text>
                     </Inline>
                   </li>
                 ))}

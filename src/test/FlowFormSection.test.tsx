@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowFormSection } from "../app/components/patterns";
+import { FlowFormSection } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering

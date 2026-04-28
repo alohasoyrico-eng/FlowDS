@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowChip } from "../app/components/display";
+import { FlowChip } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -29,9 +29,9 @@ describe("FlowChip — rendering", () => {
   });
 
   it("applies the variant via data-variant attribute", () => {
-    const { container } = render(<FlowChip variant="success">Tag</FlowChip>);
+    const { container } = render(<FlowChip variant="tonal">Tag</FlowChip>);
     const chip = container.querySelector(".flow-chip");
-    expect(chip).toHaveAttribute("data-variant", "success");
+    expect(chip).toHaveAttribute("data-variant", "tonal");
   });
 
   it("renders as a <span> when non-interactive", () => {
@@ -51,9 +51,13 @@ describe("FlowChip — rendering", () => {
 // ─────────────────────────────────────────────
 
 describe("FlowChip — selected state", () => {
-  it("applies aria-selected='true' when selected", () => {
-    render(<FlowChip onClick={() => {}} selected>Filter</FlowChip>);
-    expect(screen.getByRole("button")).toHaveAttribute("aria-selected", "true");
+  it("applies aria-pressed='true' when selected", () => {
+    render(
+      <FlowChip onClick={() => {}} selected>
+        Filter
+      </FlowChip>,
+    );
+    expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", "true");
   });
 });
 
@@ -69,13 +73,21 @@ describe("FlowChip — removable", () => {
 
   it("fires onRemove when the remove button is clicked", async () => {
     const onRemove = vi.fn();
-    render(<FlowChip removable onRemove={onRemove}>Removable</FlowChip>);
+    render(
+      <FlowChip removable onRemove={onRemove}>
+        Removable
+      </FlowChip>,
+    );
     await userEvent.click(screen.getByLabelText("Remove"));
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
 
   it("does not show the remove button when disabled", () => {
-    render(<FlowChip removable disabled>Disabled</FlowChip>);
+    render(
+      <FlowChip removable disabled>
+        Disabled
+      </FlowChip>,
+    );
     expect(screen.queryByLabelText("Remove")).not.toBeInTheDocument();
   });
 });

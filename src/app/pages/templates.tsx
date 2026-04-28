@@ -1,5 +1,15 @@
-import { CodeBlock, Divider, FlowChip, Grid, Inline, Stack, Surface, Text } from "../../lib";
+import {
+  CodeBlock,
+  Divider,
+  FlowChip,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import { Callout, PAGE_GAP, PageHeader } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 export function TemplatesPage() {
   const templates = [
@@ -162,121 +172,125 @@ export function TemplatesPage() {
   ];
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 12 — Layer 5" title="Templates">
-        Templates are page-level compositions at Layer 5. They demonstrate how components and
-        patterns compose into complete pages, but they <strong>do not define rules</strong>.
-        Templates are reference implementations — examples of correct system usage that teams can
-        copy and adapt.
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 12 — Layer 5" title="Templates">
+              Templates are page-level compositions at Layer 5. They demonstrate how components and
+              patterns compose into complete pages, but they <strong>do not define rules</strong>.
+              Templates are reference implementations — examples of correct system usage that teams
+              can copy and adapt.
+            </PageHeader>
 
-      <Callout>
-        <Text role="paragraph-s" color="accent">
-          <strong>Layer Rule:</strong> Templates demonstrate usage, not define rules. They carry no
-          authority over component API or behavior. A DashboardTemplate shows one correct way to
-          build a dashboard — teams may compose differently while staying within system rules.
-        </Text>
-      </Callout>
-
-      {templates.map((t, idx) => (
-        <Stack key={t.name} gap={3}>
-          <Inline gap={3}>
-            <Inline
-              gap={0}
-              justify="center"
-              style={{
-                width: "var(--ref-frame-doc-badge-sm)",
-                height: "var(--ref-frame-doc-badge-sm)",
-                borderRadius: "var(--ref-frame-radius-2)",
-                background: "var(--sys-energy-surface-sunken)",
-              }}
-            >
-              <Text role="heading-m" color="tertiary">
-                &#11043;
+            <Callout>
+              <Text variant="paragraph-s" color="accent">
+                <strong>Layer Rule:</strong> Templates demonstrate usage, not define rules. They
+                carry no authority over component API or behavior. A DashboardTemplate shows one
+                correct way to build a dashboard — teams may compose differently while staying
+                within system rules.
               </Text>
-            </Inline>
-            <Stack gap={1}>
-              <Text role="heading-l">{t.name}</Text>
-              <FlowChip size="sm">TEMPLATE</FlowChip>
-            </Stack>
-          </Inline>
+            </Callout>
 
-          <Surface padding="control">
-            <Stack gap={2}>
-              <Text role="overline">Purpose</Text>
-              <Text role="paragraph-s">{t.purpose}</Text>
-            </Stack>
-          </Surface>
+            {templates.map((t, idx) => (
+              <Stack key={t.name} gap={3}>
+                <Inline gap={3}>
+                  <Inline
+                    gap={0}
+                    justify="center"
+                    style={{
+                      width: "var(--ref-frame-doc-badge-sm)",
+                      height: "var(--ref-frame-doc-badge-sm)",
+                      borderRadius: "var(--ref-frame-radius-2)",
+                      background: "var(--sys-energy-surface-sunken)",
+                    }}
+                  >
+                    <Text variant="heading-m" color="tertiary">
+                      &#11043;
+                    </Text>
+                  </Inline>
+                  <Stack gap={1}>
+                    <Text variant="heading-l">{t.name}</Text>
+                    <FlowChip size="sm">TEMPLATE</FlowChip>
+                  </Stack>
+                </Inline>
 
-          {/* Composition */}
-          <Grid minItemWidth="200px" gap={3}>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline">Patterns Used</Text>
-                <Stack gap={1}>
-                  {t.composition.patterns.map((p) => (
-                    <FlowChip key={p} variant="accent" size="sm">
-                      {p}
-                    </FlowChip>
-                  ))}
+                <Surface padding="control">
+                  <Stack gap={2}>
+                    <Text variant="overline">Purpose</Text>
+                    <Text variant="paragraph-s">{t.purpose}</Text>
+                  </Stack>
+                </Surface>
+
+                {/* Composition */}
+                <Grid minItemWidth="200px" gap={3}>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline">Patterns Used</Text>
+                      <Stack gap={1}>
+                        {t.composition.patterns.map((p) => (
+                          <FlowChip key={p} variant="filled" status="info" size="sm">
+                            {p}
+                          </FlowChip>
+                        ))}
+                      </Stack>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline">Components</Text>
+                      <Inline gap={1} wrap>
+                        {t.composition.components.map((c) => (
+                          <FlowChip key={c} size="sm">
+                            {c}
+                          </FlowChip>
+                        ))}
+                      </Inline>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline">Primitives</Text>
+                      <Inline gap={1} wrap>
+                        {t.composition.primitives.map((p) => (
+                          <FlowChip key={p} size="sm">
+                            {p}
+                          </FlowChip>
+                        ))}
+                      </Inline>
+                    </Stack>
+                  </Surface>
+                </Grid>
+
+                {/* Layout */}
+                <Stack gap={2}>
+                  <Text variant="overline">Layout Structure</Text>
+                  <CodeBlock>{t.layout}</CodeBlock>
                 </Stack>
-              </Stack>
-            </Surface>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline">Components</Text>
-                <Inline gap={1} wrap>
-                  {t.composition.components.map((c) => (
-                    <FlowChip key={c} size="sm">
-                      {c}
-                    </FlowChip>
-                  ))}
-                </Inline>
-              </Stack>
-            </Surface>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline">Primitives</Text>
-                <Inline gap={1} wrap>
-                  {t.composition.primitives.map((p) => (
-                    <FlowChip key={p} size="sm">
-                      {p}
-                    </FlowChip>
-                  ))}
-                </Inline>
-              </Stack>
-            </Surface>
-          </Grid>
 
-          {/* Layout */}
-          <Stack gap={2}>
-            <Text role="overline">Layout Structure</Text>
-            <CodeBlock>{t.layout}</CodeBlock>
+                <Grid minItemWidth="280px" gap={3}>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline">Default Density</Text>
+                      <Text variant="paragraph-s">{t.density}</Text>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control" className="flow-doc-accent">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="accent">
+                        Responsive Behavior
+                      </Text>
+                      <Text variant="paragraph-s">{t.responsive}</Text>
+                    </Stack>
+                  </Surface>
+                </Grid>
+
+                {idx < templates.length - 1 && <Divider spacing={2} />}
+              </Stack>
+            ))}
           </Stack>
-
-          <Grid minItemWidth="280px" gap={3}>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline">Default Density</Text>
-                <Text role="paragraph-s">{t.density}</Text>
-              </Stack>
-            </Surface>
-            <Surface
-              padding="control"
-              className="flow-doc-accent"
-            >
-              <Stack gap={2}>
-                <Text role="overline" color="accent">
-                  Responsive Behavior
-                </Text>
-                <Text role="paragraph-s">{t.responsive}</Text>
-              </Stack>
-            </Surface>
-          </Grid>
-
-          {idx < templates.length - 1 && <Divider spacing={2} />}
-        </Stack>
-      ))}
-    </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }

@@ -1,0 +1,81 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RICH TEXT EDITOR — WYSIWYG content editor
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-rich-text-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.flow-rich-text-editor[data-state~="disabled"] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-rich-text-editor-container {
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  overflow: hidden;
+  transition: border-color var(--sys-momentum-transition-fast);
+}
+
+.flow-rich-text-editor-container:focus-within {
+  border-color: var(--sys-energy-border-focus);
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+@media (forced-colors: active) {
+  .flow-rich-text-editor-container:focus-within {
+    outline-color: CanvasText;
+  }
+}
+
+.flow-rich-text-editor-toolbar {
+  display: flex;
+  gap: var(--ref-frame-space-1);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  background: var(--sys-energy-surface-secondary);
+}
+
+.flow-rich-text-editor-toolbar-btn {
+  width: var(--comp-rich-text-btn-size);
+  height: var(--comp-rich-text-btn-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: var(--sys-frame-border-thin) solid transparent;
+  border-radius: var(--ref-frame-radius-1);
+  cursor: pointer;
+  color: var(--sys-energy-text-primary);
+  font-size: var(--sys-voice-label-s-size);
+  font-family: inherit;
+}
+
+.flow-rich-text-editor-toolbar-btn:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-rich-text-editor-toolbar-divider {
+  width: var(--sys-frame-border-thin);
+  background: var(--sys-energy-border-subtle);
+  margin: var(--ref-frame-space-1) var(--ref-frame-space-micro);
+}
+
+.flow-rich-text-editor-content {
+  padding: var(--ref-frame-space-3);
+  outline: none;
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  overflow-y: auto;
+}
+
+.flow-rich-text-editor-content:empty::before {
+  content: attr(data-placeholder);
+  color: var(--sys-energy-text-tertiary);
+  pointer-events: none;
+}

@@ -1,6 +1,3 @@
- 
- 
- 
 /**
  * FLOW — Pattern Registry (barrel)
  *
@@ -13,24 +10,14 @@
  *   3. The PATTERN_REGISTRY here updates automatically via the spread.
  */
 import type { ReactNode } from "react";
+import type { PlaygroundConfig } from "../components/prop-playground";
 
 // ── Type re-exports ──────────────────────────────────────────────────────────
 export type { PropEntry, GuidelineEntry } from "../components/doc-primitives";
+import type { AccessibilitySpec, AnatomyEntry } from "./registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "./registry/types";
 
-// ── Shared interfaces ────────────────────────────────────────────────────────
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  handled: string[];
-  required?: string[];
-  keyboard?: string[];
-}
+// ── Shared interfaces (imported from ./registry/types) ──────────────────────
 
 export interface PatternSpec {
   name: string;
@@ -71,6 +58,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 import type { GuidelineEntry, PropEntry } from "../components/doc-primitives";

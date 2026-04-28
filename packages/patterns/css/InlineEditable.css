@@ -1,0 +1,37 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INLINE EDITABLE — Click-to-edit field
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-inline-editable {
+  cursor: pointer;
+  border-block-end: var(--comp-inline-editable-border-hint) dashed var(--sys-energy-border-default);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.flow-inline-editable[data-state~="disabled"] {
+  cursor: default;
+  border-block-end: none;
+}
+
+.flow-inline-editable[data-empty] {
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-inline-editable:hover:not([data-state~="disabled"]) {
+  border-block-end-color: var(--sys-energy-border-focus);
+}
+
+.flow-inline-editable-input {
+  border: none;
+  border-block-end: var(--comp-inline-editable-border-editing) solid var(--sys-energy-border-focus);
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  outline: none;
+  padding: 0;
+}

@@ -19,8 +19,8 @@ import {
   Stack,
   Surface,
   Text,
-} from "../primitives";
-import { FlowChip } from "./display/FlowChip";
+} from "@flow/primitives";
+import { FlowChip } from "@flow/components";
 
 // ── Shared data interface ──
 
@@ -93,16 +93,18 @@ export function ComponentSpecAccordion({
               <Inline gap={3}>
                 {badge === "index" ? (
                   <Text
-                    role="caption"
+                    variant="caption"
                     color="tertiary"
                     style={{ minWidth: "var(--ref-frame-doc-col-num)" }}
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </Text>
                 ) : (
-                  <FlowChip variant="accent">{badge}</FlowChip>
+                  <FlowChip variant="filled" status="info">
+                    {badge}
+                  </FlowChip>
                 )}
-                <Text role="heading-m">{c.name}</Text>
+                <Text variant="heading-m">{c.name}</Text>
               </Inline>
               <FlowIcon
                 name="chevron-down"
@@ -135,7 +137,7 @@ export function ComponentSpecAccordion({
                   {/* Anatomy */}
                   {c.anatomy && c.anatomy.length > 0 && (
                     <Stack gap={2}>
-                      <Text role="overline">Anatomy</Text>
+                      <Text variant="overline">Anatomy</Text>
                       <Inline gap={2} wrap>
                         {c.anatomy.map((a, i) => (
                           <FlowChip key={i}>{a}</FlowChip>
@@ -147,11 +149,11 @@ export function ComponentSpecAccordion({
                   {/* Variants — flat list */}
                   {c.variants && c.variants.length > 0 && (
                     <Stack gap={2}>
-                      <Text role="overline">Variants</Text>
+                      <Text variant="overline">Variants</Text>
                       <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
                         {c.variants.map((v, i) => (
                           <li key={i}>
-                            <Text role="paragraph-s" as="span">
+                            <Text variant="paragraph-s" as="span">
                               {v}
                             </Text>
                           </li>
@@ -163,18 +165,21 @@ export function ComponentSpecAccordion({
                   {/* Variants — by platform (adaptive) */}
                   {c.variantsByPlatform && (
                     <Stack gap={2}>
-                      <Text role="overline">Variants</Text>
+                      <Text variant="overline">Variants</Text>
                       <Grid columns={3} gap={3}>
                         {(["shared", "desktop", "mobile"] as const).map((p) => (
                           <Surface key={p} padding="control">
                             <Stack gap={2}>
-                              <Text role="caption" color={p === "shared" ? "success" : undefined}>
+                              <Text
+                                variant="caption"
+                                color={p === "shared" ? "success" : undefined}
+                              >
                                 {p.charAt(0).toUpperCase() + p.slice(1)}
                               </Text>
                               <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
                                 {c.variantsByPlatform![p].map((v, i) => (
                                   <li key={i}>
-                                    <Text role="paragraph-s" as="span">
+                                    <Text variant="paragraph-s" as="span">
                                       {v}
                                     </Text>
                                   </li>
@@ -192,7 +197,7 @@ export function ComponentSpecAccordion({
                     <Grid columns={2} gap={3}>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">States Supported</Text>
+                          <Text variant="overline">States Supported</Text>
                           <Inline gap={1} wrap>
                             {c.states.map((s) => (
                               <FlowChip key={s}>{s}</FlowChip>
@@ -202,9 +207,9 @@ export function ComponentSpecAccordion({
                       </Surface>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">State Precedence</Text>
+                          <Text variant="overline">State Precedence</Text>
                           <Text
-                            role="paragraph-s"
+                            variant="paragraph-s"
                             style={{ lineHeight: "var(--ref-voice-line-height-loose)" }}
                           >
                             {c.statePrecedence}
@@ -219,7 +224,7 @@ export function ComponentSpecAccordion({
                     <Grid columns={2} gap={3}>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">States</Text>
+                          <Text variant="overline">States</Text>
                           <Inline gap={1} wrap>
                             {c.states.map((s) => (
                               <FlowChip key={s}>{s}</FlowChip>
@@ -230,10 +235,10 @@ export function ComponentSpecAccordion({
                       {c.tokens && (
                         <Surface padding="control">
                           <Stack gap={2}>
-                            <Text role="overline">Tokens</Text>
+                            <Text variant="overline">Tokens</Text>
                             <Inline gap={1} wrap>
                               {c.tokens.map((t) => (
-                                <Text key={t} role="code">
+                                <Text key={t} variant="code">
                                   {t}
                                 </Text>
                               ))}
@@ -247,7 +252,7 @@ export function ComponentSpecAccordion({
                   {/* States standalone (desktop, when no precedence is paired) */}
                   {layout === "full" && c.states && !c.statePrecedence && (
                     <Stack gap={2}>
-                      <Text role="overline">States</Text>
+                      <Text variant="overline">States</Text>
                       <Inline gap={1} wrap>
                         {c.states.map((s) => (
                           <FlowChip key={s}>{s}</FlowChip>
@@ -258,15 +263,12 @@ export function ComponentSpecAccordion({
 
                   {/* State Precedence standalone (desktop layout) */}
                   {layout === "full" && c.statePrecedence && !c.states?.length && (
-                    <Surface
-                      padding="control"
-                      className="flow-doc-accent"
-                    >
+                    <Surface padding="control" className="flow-doc-accent">
                       <Stack gap={2}>
-                        <Text role="overline" color="accent">
+                        <Text variant="overline" color="accent">
                           State Precedence
                         </Text>
-                        <Text role="paragraph-s">{c.statePrecedence}</Text>
+                        <Text variant="paragraph-s">{c.statePrecedence}</Text>
                       </Stack>
                     </Surface>
                   )}
@@ -276,10 +278,10 @@ export function ComponentSpecAccordion({
                     <Grid columns={2} gap={3}>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">Tokens Consumed</Text>
+                          <Text variant="overline">Tokens Consumed</Text>
                           <Inline gap={1} wrap>
                             {c.tokens.map((t) => (
-                              <Text key={t} role="code">
+                              <Text key={t} variant="code">
                                 {t}
                               </Text>
                             ))}
@@ -288,10 +290,10 @@ export function ComponentSpecAccordion({
                       </Surface>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">Foundations Involved</Text>
+                          <Text variant="overline">Foundations Involved</Text>
                           <Inline gap={1} wrap>
                             {c.foundations.map((f) => (
-                              <FlowChip key={f} variant="accent">
+                              <FlowChip key={f} variant="filled" status="info">
                                 {f}
                               </FlowChip>
                             ))}
@@ -306,10 +308,10 @@ export function ComponentSpecAccordion({
                     <Grid columns={2} gap={3}>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">Tokens Consumed</Text>
+                          <Text variant="overline">Tokens Consumed</Text>
                           <Inline gap={1} wrap>
                             {c.tokens.map((t) => (
-                              <Text key={t} role="code">
+                              <Text key={t} variant="code">
                                 {t}
                               </Text>
                             ))}
@@ -318,11 +320,11 @@ export function ComponentSpecAccordion({
                       </Surface>
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">Accessibility</Text>
+                          <Text variant="overline">Accessibility</Text>
                           <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
                             {c.accessibility.map((a, i) => (
                               <li key={i}>
-                                <Text role="paragraph-s" as="span">
+                                <Text variant="paragraph-s" as="span">
                                   {a}
                                 </Text>
                               </li>
@@ -339,11 +341,11 @@ export function ComponentSpecAccordion({
                     (layout !== "full" || c.foundations) && (
                       <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="overline">Accessibility</Text>
+                          <Text variant="overline">Accessibility</Text>
                           <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
                             {c.accessibility.map((a, i) => (
                               <li key={i}>
-                                <Text role="paragraph-s" as="span">
+                                <Text variant="paragraph-s" as="span">
                                   {a}
                                 </Text>
                               </li>
@@ -361,8 +363,8 @@ export function ComponentSpecAccordion({
                         className="flow-doc-accent flow-doc-accent--warning"
                       >
                         <Stack gap={2}>
-                          <Text role="overline">Tone</Text>
-                          <Text role="paragraph-s">{c.tone}</Text>
+                          <Text variant="overline">Tone</Text>
+                          <Text variant="paragraph-s">{c.tone}</Text>
                         </Stack>
                       </Surface>
                       <Surface
@@ -370,19 +372,16 @@ export function ComponentSpecAccordion({
                         className="flow-doc-accent flow-doc-accent--success"
                       >
                         <Stack gap={2}>
-                          <Text role="overline">Growth</Text>
-                          <Text role="paragraph-s">{c.growth}</Text>
+                          <Text variant="overline">Growth</Text>
+                          <Text variant="paragraph-s">{c.growth}</Text>
                         </Stack>
                       </Surface>
-                      <Surface
-                        padding="control"
-                        className="flow-doc-accent"
-                      >
+                      <Surface padding="control" className="flow-doc-accent">
                         <Stack gap={2}>
-                          <Text role="overline" color="accent">
+                          <Text variant="overline" color="accent">
                             Platform Notes
                           </Text>
-                          <Text role="paragraph-s" color="accent">
+                          <Text variant="paragraph-s" color="accent">
                             {c.platformNotes}
                           </Text>
                         </Stack>
@@ -398,17 +397,14 @@ export function ComponentSpecAccordion({
                         className="flow-doc-accent flow-doc-accent--warning"
                       >
                         <Stack gap={2}>
-                          <Text role="overline">Tone</Text>
-                          <Text role="paragraph-s">{c.tone}</Text>
+                          <Text variant="overline">Tone</Text>
+                          <Text variant="paragraph-s">{c.tone}</Text>
                         </Stack>
                       </Surface>
-                      <Surface
-                        padding="control"
-                        className="flow-doc-accent"
-                      >
+                      <Surface padding="control" className="flow-doc-accent">
                         <Stack gap={2}>
-                          <Text role="overline">Growth</Text>
-                          <Text role="paragraph-s">{c.growth}</Text>
+                          <Text variant="overline">Growth</Text>
+                          <Text variant="paragraph-s">{c.growth}</Text>
                         </Stack>
                       </Surface>
                     </Grid>
@@ -416,15 +412,12 @@ export function ComponentSpecAccordion({
 
                   {/* Platform Notes standalone (when not combined with tone/growth) */}
                   {c.platformNotes && !c.tone && (
-                    <Surface
-                      padding="control"
-                      className="flow-doc-accent"
-                    >
+                    <Surface padding="control" className="flow-doc-accent">
                       <Stack gap={2}>
-                        <Text role="overline" color="accent">
+                        <Text variant="overline" color="accent">
                           Platform Notes
                         </Text>
-                        <Text role="paragraph-s" color="accent">
+                        <Text variant="paragraph-s" color="accent">
                           {c.platformNotes}
                         </Text>
                       </Stack>
@@ -434,21 +427,18 @@ export function ComponentSpecAccordion({
                   {/* Platform Behavior split (adaptive) */}
                   {c.platformBehavior && (
                     <Stack gap={2}>
-                      <Text role="overline">Platform Behavior</Text>
+                      <Text variant="overline">Platform Behavior</Text>
                       <Grid columns={2} gap={3}>
                         <Surface padding="control">
                           <Stack gap={2}>
-                            <Text role="overline">Desktop Behavior</Text>
-                            <Text role="paragraph-s">{c.platformBehavior.desktop}</Text>
+                            <Text variant="overline">Desktop Behavior</Text>
+                            <Text variant="paragraph-s">{c.platformBehavior.desktop}</Text>
                           </Stack>
                         </Surface>
-                        <Surface
-                          padding="control"
-                          className="flow-doc-accent"
-                        >
+                        <Surface padding="control" className="flow-doc-accent">
                           <Stack gap={2}>
-                            <Text role="overline">Mobile Behavior</Text>
-                            <Text role="paragraph-s">{c.platformBehavior.mobile}</Text>
+                            <Text variant="overline">Mobile Behavior</Text>
+                            <Text variant="paragraph-s">{c.platformBehavior.mobile}</Text>
                           </Stack>
                         </Surface>
                       </Grid>

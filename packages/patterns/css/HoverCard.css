@@ -1,0 +1,9 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOVER CARD — Rich content tooltip on hover (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-hover-card {
+  position: relative;
+  display: inline-block;
+}

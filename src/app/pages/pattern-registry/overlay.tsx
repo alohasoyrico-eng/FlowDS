@@ -8,8 +8,9 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import { type ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   type CommandItem,
   FlowActionSheet,
@@ -29,30 +30,12 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../../lib";
-import { FlowIcon } from "../../primitives";
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import { DemoGroup, DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Types
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+import type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "../registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction };
 
 export interface PatternSpec {
   name: string;
@@ -104,6 +87,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -146,7 +130,7 @@ function ConfirmationDialogOverviewDemo() {
         description="Standard destructive action confirmation with title, message, and confirm/cancel buttons."
       >
         <DemoGroup>
-          <FlowButton variant="danger" onClick={() => setBasicOpen(true)}>
+          <FlowButton variant="primary" intent="danger" onClick={() => setBasicOpen(true)}>
             Delete Item
           </FlowButton>
           <FlowConfirmationDialog
@@ -168,7 +152,7 @@ function ConfirmationDialogOverviewDemo() {
         description="Customize button labels for different action types."
       >
         <DemoGroup>
-          <FlowButton variant="high" onClick={() => setCustomOpen(true)}>
+          <FlowButton variant="primary" onClick={() => setCustomOpen(true)}>
             Publish Post
           </FlowButton>
           <FlowConfirmationDialog
@@ -191,7 +175,7 @@ function ConfirmationDialogOverviewDemo() {
         description="Shows loading spinner during async operations."
       >
         <DemoGroup>
-          <FlowButton variant="high" onClick={() => setLoadingOpen(true)}>
+          <FlowButton variant="primary" onClick={() => setLoadingOpen(true)}>
             Process Payment
           </FlowButton>
           <FlowConfirmationDialog
@@ -211,7 +195,7 @@ function ConfirmationDialogOverviewDemo() {
         description="Dialog handles longer messages with proper scrolling."
       >
         <DemoGroup>
-          <FlowButton variant="warning" onClick={() => setLongOpen(true)}>
+          <FlowButton variant="primary" intent="warning" onClick={() => setLongOpen(true)}>
             Reset Settings
           </FlowButton>
           <FlowConfirmationDialog
@@ -235,26 +219,26 @@ function ConfirmationDialogOverviewDemo() {
         <DemoGroup>
           <Grid minItemWidth="200px" gap="control">
             <Stack gap={2}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 Danger (Delete)
               </Text>
-              <FlowButton variant="danger" onClick={() => setVariantOpen(true)}>
+              <FlowButton variant="primary" intent="danger" onClick={() => setVariantOpen(true)}>
                 Delete File
               </FlowButton>
             </Stack>
             <Stack gap={2}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 Warning (Archive)
               </Text>
-              <FlowButton variant="warning" onClick={() => setVariantOpen(true)}>
+              <FlowButton variant="primary" intent="warning" onClick={() => setVariantOpen(true)}>
                 Archive Project
               </FlowButton>
             </Stack>
             <Stack gap={2}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 High (Publish)
               </Text>
-              <FlowButton variant="high" onClick={() => setVariantOpen(true)}>
+              <FlowButton variant="primary" onClick={() => setVariantOpen(true)}>
                 Publish App
               </FlowButton>
             </Stack>
@@ -301,7 +285,7 @@ function ConfirmationDialogUseCasesDemo() {
       >
         <Surface variant="primary" padding="container">
           <Stack gap={3}>
-            <Text role="heading-m">Project Files</Text>
+            <Text variant="heading-m">Project Files</Text>
             <FlowList dividers>
               {[
                 { name: "design-system.pdf", type: "PDF" },
@@ -310,15 +294,16 @@ function ConfirmationDialogUseCasesDemo() {
               ].map((file) => (
                 <FlowListItem
                   key={file.name}
-                  primary={<Text role="paragraph-s">{file.name}</Text>}
+                  primary={<Text variant="paragraph-s">{file.name}</Text>}
                   secondary={
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       {file.type}
                     </Text>
                   }
                   actions={
                     <FlowButton
-                      variant="danger"
+                      variant="primary"
+                      intent="danger"
                       size="sm"
                       onClick={() => handleAction(`delete ${file.name}`)}
                     >
@@ -338,15 +323,23 @@ function ConfirmationDialogUseCasesDemo() {
       >
         <Surface variant="primary" padding="container">
           <Stack gap={3}>
-            <Text role="heading-m">Account Settings</Text>
+            <Text variant="heading-m">Account Settings</Text>
             <Stack gap={2}>
-              <FlowButton variant="danger" onClick={() => handleAction("delete your account")}>
+              <FlowButton
+                variant="primary"
+                intent="danger"
+                onClick={() => handleAction("delete your account")}
+              >
                 Delete Account
               </FlowButton>
-              <FlowButton variant="warning" onClick={() => handleAction("reset your password")}>
+              <FlowButton
+                variant="primary"
+                intent="warning"
+                onClick={() => handleAction("reset your password")}
+              >
                 Reset Password
               </FlowButton>
-              <FlowButton variant="high" onClick={() => handleAction("upgrade your plan")}>
+              <FlowButton variant="primary" onClick={() => handleAction("upgrade your plan")}>
                 Upgrade Plan
               </FlowButton>
             </Stack>
@@ -361,18 +354,22 @@ function ConfirmationDialogUseCasesDemo() {
         <Surface variant="primary" padding="container">
           <Stack gap={3}>
             <Inline gap={2} justify="between" align="center">
-              <Text role="heading-m">Selected Items (12)</Text>
-              <FlowChip variant="accent">12 selected</FlowChip>
+              <Text variant="heading-m">Selected Items (12)</Text>
+              <FlowChip variant="filled" status="info">
+                12 selected
+              </FlowChip>
             </Inline>
             <Inline gap={2}>
               <FlowButton
-                variant="danger"
+                variant="primary"
+                intent="danger"
                 onClick={() => handleAction("delete 12 selected items")}
               >
                 Delete All
               </FlowButton>
               <FlowButton
-                variant="warning"
+                variant="primary"
+                intent="warning"
                 onClick={() => handleAction("archive 12 selected items")}
               >
                 Archive All
@@ -510,6 +507,22 @@ const confirmationDialogEntry: PatternEntry = {
       { type: "dont", text: "Don't make messages too long — keep under 2-3 sentences." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowConfirmationDialog, {
+        open: props.open as boolean,
+        onClose: props.onClose as () => void,
+        title: (props.title as string) ?? "Confirm Action",
+        description: (props.description as string) ?? "Are you sure you want to proceed?",
+        confirmLabel: (props.confirmLabel as string) ?? "Confirm",
+        cancelLabel: (props.cancelLabel as string) ?? "Cancel",
+        intent: (props.intent as string) ?? "danger",
+        onConfirm: () => {},
+      } as unknown as React.ComponentProps<typeof FlowConfirmationDialog>),
+    overlay: true,
+    defaults: { title: "Confirm Action", description: "Are you sure you want to proceed?", confirmLabel: "Confirm", cancelLabel: "Cancel", intent: "danger" },
+    excludeControls: ["open", "onClose", "onConfirm", "children", "className", "style"],
+  },
 };
 
 // ── FlowCommandPalette ──
@@ -543,11 +556,11 @@ function CommandPaletteOverviewDemo() {
       >
         <DemoGroup>
           <Stack gap={3}>
-            <FlowButton variant="high" onClick={() => setIsOpen(true)}>
+            <FlowButton variant="primary" onClick={() => setIsOpen(true)}>
               Open Command Palette (⌘K)
             </FlowButton>
             {lastCommand && (
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Last executed: {lastCommand}
               </Text>
             )}
@@ -569,12 +582,12 @@ function CommandPaletteOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={2}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Available Categories:
               </Text>
               <Inline gap={2} wrap>
                 {Array.from(new Set(commands.map((c) => c.category))).map((category) => (
-                  <FlowChip key={category} variant="default" size="sm">
+                  <FlowChip key={category} variant="filled" size="sm">
                     {category}
                   </FlowChip>
                 ))}
@@ -591,16 +604,16 @@ function CommandPaletteOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={2}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Common Shortcuts:
               </Text>
               <FlowList>
                 {commands.slice(0, 4).map((cmd) => (
                   <FlowListItem
                     key={cmd.id}
-                    primary={<Text role="paragraph-s">{cmd.label}</Text>}
+                    primary={<Text variant="paragraph-s">{cmd.label}</Text>}
                     actions={
-                      <Text role="caption" color="tertiary">
+                      <Text variant="caption" color="tertiary">
                         {cmd.shortcut}
                       </Text>
                     }
@@ -660,7 +673,7 @@ function CommandPaletteUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)} Example
@@ -674,16 +687,16 @@ function CommandPaletteUseCasesDemo() {
       >
         <DemoGroup>
           <Stack gap={3}>
-            <FlowButton variant="high" onClick={() => setPaletteOpen(true)}>
+            <FlowButton variant="primary" onClick={() => setPaletteOpen(true)}>
               Open {activeExample === "ide" ? "IDE" : "Application"} Palette
             </FlowButton>
             {selectedCmd && (
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Last executed: {selectedCmd}
               </Text>
             )}
             <Surface variant="secondary" padding="container">
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Try the command palette above to see it in action.
               </Text>
             </Surface>
@@ -769,6 +782,27 @@ const commandPaletteEntry: PatternEntry = {
       { type: "dont", text: "Don't overload with too many commands." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowCommandPalette, {
+        open: props.open as boolean,
+        onClose: props.onClose as () => void,
+        items: props.items as CommandItem[],
+        onSelect: () => {},
+        placeholder: (props.placeholder as string) ?? "Type a command...",
+      } as unknown as React.ComponentProps<typeof FlowCommandPalette>),
+    overlay: true,
+    defaults: { placeholder: "Type a command..." },
+    fixtures: {
+      items: [
+        { id: "new-file", label: "New File", icon: "file-plus", group: "Actions" },
+        { id: "search", label: "Search", icon: "search", group: "Actions" },
+        { id: "settings", label: "Settings", icon: "settings", group: "Navigation" },
+        { id: "theme", label: "Toggle Theme", icon: "sun", group: "Preferences" },
+      ],
+    },
+    excludeControls: ["open", "onClose", "onSelect", "items", "className", "style"],
+  },
 };
 
 // ── FlowActionSheet ──
@@ -797,11 +831,11 @@ function ActionSheetOverviewDemo() {
       >
         <DemoGroup>
           <Stack gap={3}>
-            <FlowButton variant="high" onClick={() => setIsOpen(true)}>
+            <FlowButton variant="primary" onClick={() => setIsOpen(true)}>
               Show Actions
             </FlowButton>
             {lastAction && (
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Last action: {lastAction}
               </Text>
             )}
@@ -823,16 +857,16 @@ function ActionSheetOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={2}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Action Types:
               </Text>
               <FlowList>
                 {actions.map((action) => (
                   <FlowListItem
                     key={action.id}
-                    primary={<Text role="paragraph-s">{action.label}</Text>}
+                    primary={<Text variant="paragraph-s">{action.label}</Text>}
                     leading={action.icon ? <FlowIcon name={action.icon} /> : undefined}
-                    variant={action.variant === "danger" ? "error" : "default"}
+                    status={action.variant === "danger" ? "error" : "neutral"}
                   />
                 ))}
               </FlowList>
@@ -848,21 +882,25 @@ function ActionSheetOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={3}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 File Actions:
               </Text>
               <Inline gap={2} wrap>
-                <FlowChip variant="default">Open</FlowChip>
-                <FlowChip variant="default">Download</FlowChip>
-                <FlowChip variant="danger">Delete</FlowChip>
+                <FlowChip variant="filled">Open</FlowChip>
+                <FlowChip variant="filled">Download</FlowChip>
+                <FlowChip variant="filled" status="error">
+                  Delete
+                </FlowChip>
               </Inline>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Message Actions:
               </Text>
               <Inline gap={2} wrap>
-                <FlowChip variant="default">Reply</FlowChip>
-                <FlowChip variant="default">Forward</FlowChip>
-                <FlowChip variant="danger">Report</FlowChip>
+                <FlowChip variant="filled">Reply</FlowChip>
+                <FlowChip variant="filled">Forward</FlowChip>
+                <FlowChip variant="filled" status="error">
+                  Report
+                </FlowChip>
               </Inline>
             </Stack>
           </Surface>
@@ -928,7 +966,7 @@ function ActionSheetUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -943,18 +981,18 @@ function ActionSheetUseCasesDemo() {
         <DemoGroup>
           <Surface variant="primary" padding="container">
             <Stack gap={3}>
-              <Text role="heading-s">{examples[activeExample].title}</Text>
+              <Text variant="heading-s">{examples[activeExample].title}</Text>
               <FlowList>
                 {examples[activeExample].actions.map((action: Record<string, unknown>) => (
                   <FlowListItem
                     key={action.id as string}
-                    primary={<Text role="paragraph-s">{action.label as string}</Text>}
+                    primary={<Text variant="paragraph-s">{action.label as string}</Text>}
                     leading={action.icon ? <FlowIcon name={action.icon as string} /> : undefined}
-                    variant={action.variant === "danger" ? "error" : "default"}
+                    status={action.variant === "danger" ? "error" : "neutral"}
                   />
                 ))}
               </FlowList>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 These actions would appear in a bottom sheet on mobile devices.
               </Text>
             </Stack>
@@ -1041,6 +1079,25 @@ const actionSheetEntry: PatternEntry = {
       { type: "dont", text: "Don't mix too many action types in one sheet." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowActionSheet, {
+        open: props.open as boolean,
+        onClose: props.onClose as () => void,
+        title: (props.title as string) ?? "Actions",
+        actions: props.actions,
+      } as unknown as React.ComponentProps<typeof FlowActionSheet>),
+    overlay: true,
+    defaults: { title: "Actions" },
+    fixtures: {
+      actions: [
+        { id: "edit", label: "Edit", icon: "edit" },
+        { id: "share", label: "Share", icon: "share-2" },
+        { id: "delete", label: "Delete", icon: "trash-2", destructive: true },
+      ],
+    },
+    excludeControls: ["open", "onClose", "actions", "onAction", "className", "style"],
+  },
 };
 
 // ── FlowFullscreenSheet ──
@@ -1078,10 +1135,10 @@ function FullscreenSheetOverviewDemo() {
       >
         <DemoGroup>
           <Stack gap={3}>
-            <FlowButton variant="high" onClick={() => setIsOpen(true)}>
+            <FlowButton variant="primary" onClick={() => setIsOpen(true)}>
               Open Fullscreen Sheet
             </FlowButton>
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Current step: {currentStep}/3
             </Text>
             <FlowFullscreenSheet
@@ -1091,12 +1148,12 @@ function FullscreenSheetOverviewDemo() {
             >
               <Stack gap={6} padding={6}>
                 <Surface variant="secondary" padding="container">
-                  <Text role="heading-m">
+                  <Text variant="heading-m">
                     {currentStep === 1 && "Personal Information"}
                     {currentStep === 2 && "Contact Details"}
                     {currentStep === 3 && "Review & Submit"}
                   </Text>
-                  <Text role="paragraph-s" color="secondary">
+                  <Text variant="paragraph-s" color="secondary">
                     {currentStep === 1 && "Please provide your basic information."}
                     {currentStep === 2 && "How can we reach you?"}
                     {currentStep === 3 && "Review your information before submitting."}
@@ -1120,15 +1177,15 @@ function FullscreenSheetOverviewDemo() {
                   )}
                   {currentStep === 3 && (
                     <Stack gap={4}>
-                      <Text role="heading-s">Summary</Text>
-                      <Text role="paragraph-s">
+                      <Text variant="heading-s">Summary</Text>
+                      <Text variant="paragraph-s">
                         Name: John Doe
                         <br />
                         Email: john@example.com
                         <br />
                         Phone: +1 (555) 123-4567
                       </Text>
-                      <FlowButton variant="high" onClick={handleNext}>
+                      <FlowButton variant="primary" onClick={handleNext}>
                         Submit Application
                       </FlowButton>
                     </Stack>
@@ -1139,7 +1196,7 @@ function FullscreenSheetOverviewDemo() {
                   <FlowButton variant="ghost" onClick={handleBack} disabled={currentStep === 1}>
                     Back
                   </FlowButton>
-                  <FlowButton variant="high" onClick={handleNext}>
+                  <FlowButton variant="primary" onClick={handleNext}>
                     {currentStep === 3 ? "Finish" : "Next"}
                   </FlowButton>
                 </Inline>
@@ -1156,14 +1213,14 @@ function FullscreenSheetOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={2}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Use Cases:
               </Text>
               <FlowList>
-                <FlowListItem primary={<Text role="paragraph-s">User registration</Text>} />
-                <FlowListItem primary={<Text role="paragraph-s">Profile editing</Text>} />
-                <FlowListItem primary={<Text role="paragraph-s">Settings configuration</Text>} />
-                <FlowListItem primary={<Text role="paragraph-s">Multi-step wizards</Text>} />
+                <FlowListItem primary={<Text variant="paragraph-s">User registration</Text>} />
+                <FlowListItem primary={<Text variant="paragraph-s">Profile editing</Text>} />
+                <FlowListItem primary={<Text variant="paragraph-s">Settings configuration</Text>} />
+                <FlowListItem primary={<Text variant="paragraph-s">Multi-step wizards</Text>} />
               </FlowList>
             </Stack>
           </Surface>
@@ -1177,16 +1234,16 @@ function FullscreenSheetOverviewDemo() {
         <DemoGroup>
           <Surface variant="secondary" padding="container">
             <Stack gap={3}>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Navigation Elements:
               </Text>
               <Inline gap={2} wrap>
-                <FlowChip variant="default">Close button (X)</FlowChip>
-                <FlowChip variant="default">Back button</FlowChip>
-                <FlowChip variant="default">Progress indicator</FlowChip>
-                <FlowChip variant="default">Action buttons</FlowChip>
+                <FlowChip variant="filled">Close button (X)</FlowChip>
+                <FlowChip variant="filled">Back button</FlowChip>
+                <FlowChip variant="filled">Progress indicator</FlowChip>
+                <FlowChip variant="filled">Action buttons</FlowChip>
               </Inline>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Fullscreen sheets provide dedicated space for complex interactions.
               </Text>
             </Stack>
@@ -1219,15 +1276,15 @@ function FullscreenSheetUseCasesDemo() {
           >
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Show email publicly</Text>}
+                primary={<Text variant="paragraph-s">Show email publicly</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Show activity status</Text>}
+                primary={<Text variant="paragraph-s">Show activity status</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Allow direct messages</Text>}
+                primary={<Text variant="paragraph-s">Allow direct messages</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
             </FlowList>
@@ -1243,15 +1300,15 @@ function FullscreenSheetUseCasesDemo() {
           <FlowFormSection title="Appearance" description="Customize how the app looks">
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Dark mode</Text>}
+                primary={<Text variant="paragraph-s">Dark mode</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Compact layout</Text>}
+                primary={<Text variant="paragraph-s">Compact layout</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">High contrast</Text>}
+                primary={<Text variant="paragraph-s">High contrast</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
             </FlowList>
@@ -1263,15 +1320,15 @@ function FullscreenSheetUseCasesDemo() {
           >
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Email notifications</Text>}
+                primary={<Text variant="paragraph-s">Email notifications</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Push notifications</Text>}
+                primary={<Text variant="paragraph-s">Push notifications</Text>}
                 actions={<FlowCheckbox checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">SMS alerts</Text>}
+                primary={<Text variant="paragraph-s">SMS alerts</Text>}
                 actions={<FlowCheckbox onChange={() => {}} />}
               />
             </FlowList>
@@ -1291,8 +1348,8 @@ function FullscreenSheetUseCasesDemo() {
         <Stack gap={6} padding={6}>
           <Surface variant="secondary" padding="container">
             <Stack gap={2}>
-              <Text role="heading-m">Welcome to Flow!</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="heading-m">Welcome to Flow!</Text>
+              <Text variant="paragraph-s" color="secondary">
                 Let&apos;s get you set up with a few quick steps.
               </Text>
               <Inline gap={1}>
@@ -1333,15 +1390,15 @@ function FullscreenSheetUseCasesDemo() {
           <FlowFormSection title="Preferences" description="How do you plan to use Flow?">
             <FlowList>
               <FlowListItem
-                primary={<Text role="paragraph-s">Personal use</Text>}
+                primary={<Text variant="paragraph-s">Personal use</Text>}
                 actions={<FlowRadioButton name="usage" onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Team collaboration</Text>}
+                primary={<Text variant="paragraph-s">Team collaboration</Text>}
                 actions={<FlowRadioButton name="usage" checked onChange={() => {}} />}
               />
               <FlowListItem
-                primary={<Text role="paragraph-s">Enterprise</Text>}
+                primary={<Text variant="paragraph-s">Enterprise</Text>}
                 actions={<FlowRadioButton name="usage" onChange={() => {}} />}
               />
             </FlowList>
@@ -1357,7 +1414,7 @@ function FullscreenSheetUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -1371,11 +1428,11 @@ function FullscreenSheetUseCasesDemo() {
       >
         <DemoGroup>
           <Stack gap={3}>
-            <FlowButton variant="high" onClick={() => setSheetOpen(true)}>
+            <FlowButton variant="primary" onClick={() => setSheetOpen(true)}>
               Open {examples[activeExample].title}
             </FlowButton>
             <Surface variant="secondary" padding="container">
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Click the button above to see this content in a fullscreen sheet.
               </Text>
             </Surface>
@@ -1449,6 +1506,21 @@ const fullscreenSheetEntry: PatternEntry = {
       { type: "do", text: "Provide clear navigation." },
       { type: "dont", text: "Don't use for simple actions." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(
+        FlowFullscreenSheet,
+        {
+          open: props.open as boolean,
+          onClose: props.onClose as () => void,
+          title: (props.title as string) ?? "Full Screen",
+          children: React.createElement(Text, { variant: "paragraph-s", children: "Sheet content goes here" } as React.ComponentProps<typeof Text>),
+        } as unknown as React.ComponentProps<typeof FlowFullscreenSheet>,
+      ),
+    overlay: true,
+    defaults: { title: "Full Screen" },
+    excludeControls: ["open", "onClose", "children", "className", "style"],
   },
 };
 

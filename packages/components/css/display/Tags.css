@@ -1,0 +1,61 @@
+/* ── Tags ── */
+
+/* Two-axis model: data-variant (label | code) × data-status (neutral | info | success | warning | error).
+   Variant drives typography & shape; status drives chromatic meaning.
+   [data-size] cascades via --comp-tag-font (sm/md/lg/xl responsive to density). */
+
+.flow-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--comp-tag-font);
+  font-weight: var(--comp-tag-weight);
+  letter-spacing: var(--comp-tag-letter-spacing);
+  padding: var(--comp-tag-padding-y) var(--comp-tag-padding-x);
+  border-radius: var(--comp-tag-radius);
+  background: var(--comp-tag-bg);
+  color: var(--comp-tag-color);
+}
+
+/* ── Variant: code — monospace, inline-code styling ── */
+.flow-tag[data-variant="code"] {
+  font-family: var(--comp-tag-code-font-family);
+  font-weight: var(--sys-voice-weight-regular);
+  letter-spacing: var(--sys-voice-letter-spacing-normal);
+  background: var(--comp-tag-code-bg);
+  color: var(--comp-tag-code-color);
+  border-radius: var(--comp-tag-code-radius);
+  padding: var(--comp-tag-code-padding-y) var(--comp-tag-code-padding-x);
+}
+
+/* ── Status: semantic color overrides (both variants) ── */
+.flow-tag[data-status="info"] {
+  background: var(--sys-energy-status-info-subtle);
+  color: var(--sys-energy-text-accent);
+}
+
+.flow-tag[data-status="success"] {
+  background: var(--sys-energy-status-success-subtle);
+  color: var(--sys-energy-status-success);
+}
+
+.flow-tag[data-status="warning"] {
+  background: var(--sys-energy-status-warning-subtle);
+  color: var(--sys-energy-text-warning);
+}
+
+.flow-tag[data-status="error"] {
+  background: var(--sys-energy-status-error-subtle);
+  color: var(--sys-energy-status-error);
+}
+
+/* ── Code × Status — preserve mono font when status overrides color ── */
+.flow-tag[data-variant="code"][data-status="info"],
+.flow-tag[data-variant="code"][data-status="success"],
+.flow-tag[data-variant="code"][data-status="warning"],
+.flow-tag[data-variant="code"][data-status="error"] {
+  font-family: var(--comp-tag-code-font-family);
+  font-weight: var(--sys-voice-weight-regular);
+  letter-spacing: var(--sys-voice-letter-spacing-normal);
+  border-radius: var(--comp-tag-code-radius);
+  padding: var(--comp-tag-code-padding-y) var(--comp-tag-code-padding-x);
+}

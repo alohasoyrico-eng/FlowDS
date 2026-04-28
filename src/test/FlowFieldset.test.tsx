@@ -11,7 +11,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowFieldset } from "../app/components/layout";
+import { FlowFieldset } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

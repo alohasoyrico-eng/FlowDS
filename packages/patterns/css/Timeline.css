@@ -1,0 +1,10 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TIMELINE — Vertical event timeline (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}

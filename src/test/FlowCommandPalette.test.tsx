@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowCommandPalette } from "../app/components/patterns";
+import { FlowCommandPalette } from "@flow/patterns";
 
 // jsdom does not implement scrollIntoView — stub it to prevent runtime errors
 Element.prototype.scrollIntoView = vi.fn();
@@ -45,7 +45,14 @@ describe("FlowCommandPalette — rendering", () => {
   });
 
   it("displays the placeholder text", () => {
-    render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} placeholder="Run a command..." />);
+    render(
+      <FlowCommandPalette
+        open
+        onClose={vi.fn()}
+        commands={sampleCommands}
+        placeholder="Run a command..."
+      />,
+    );
     expect(screen.getByPlaceholderText("Run a command...")).toBeInTheDocument();
   });
 });
@@ -71,13 +78,22 @@ describe("FlowCommandPalette — interaction", () => {
 
   it("calls onSelect when a command is clicked", async () => {
     const onSelect = vi.fn();
-    render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} onSelect={onSelect} />);
+    render(
+      <FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} onSelect={onSelect} />,
+    );
     await userEvent.click(screen.getByText("Save File"));
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "save" }));
   });
 
   it("shows the empty message when no commands match", async () => {
-    render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} emptyMessage="No matches" />);
+    render(
+      <FlowCommandPalette
+        open
+        onClose={vi.fn()}
+        commands={sampleCommands}
+        emptyMessage="No matches"
+      />,
+    );
     await userEvent.type(screen.getByRole("combobox"), "zzzzz");
     expect(screen.getByText("No matches")).toBeInTheDocument();
   });
@@ -110,7 +126,9 @@ describe("FlowCommandPalette — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(<FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} />);
+    const { container } = render(
+      <FlowCommandPalette open onClose={vi.fn()} commands={sampleCommands} />,
+    );
     expect(await axe(container)).toHaveNoViolations();
   });
 });

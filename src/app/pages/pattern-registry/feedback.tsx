@@ -8,8 +8,9 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import { type ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   Divider,
   FlowButton,
@@ -26,29 +27,11 @@ import {
   Surface,
   Text,
   useSnackbar,
-} from "../../../lib";
+} from "@flow/design-system";
 import { DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Types
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+import type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "../registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction };
 
 export interface PatternSpec {
   name: string;
@@ -100,6 +83,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -128,7 +112,7 @@ function EmptyStateOverviewDemo() {
               title="Welcome to your Dashboard"
               description="You haven't created any projects yet. Get started by creating your first project."
               action={
-                <FlowButton variant="high" onClick={() => alert("Create project clicked")}>
+                <FlowButton variant="primary" onClick={() => alert("Create project clicked")}>
                   Create Project
                 </FlowButton>
               }
@@ -148,7 +132,7 @@ function EmptyStateOverviewDemo() {
               title="No projects found"
               description='No projects match "Enterprise Dashboard". Try adjusting your search.'
               action={
-                <FlowButton variant="medium" onClick={() => alert("Clear search clicked")}>
+                <FlowButton variant="secondary" onClick={() => alert("Clear search clicked")}>
                   Clear Search
                 </FlowButton>
               }
@@ -168,7 +152,7 @@ function EmptyStateOverviewDemo() {
               title="Failed to load projects"
               description="We couldn't fetch your projects. Check your connection and try again."
               action={
-                <FlowButton variant="high" onClick={() => alert("Retry clicked")}>
+                <FlowButton variant="primary" onClick={() => alert("Retry clicked")}>
                   Retry
                 </FlowButton>
               }
@@ -233,7 +217,7 @@ function EmptyStateOverviewDemo() {
             title="No comments yet"
             description="Be the first to comment."
             action={
-              <FlowButton size="sm" variant="medium" onClick={() => alert("Add comment")}>
+              <FlowButton size="sm" variant="secondary" onClick={() => alert("Add comment")}>
                 Add Comment
               </FlowButton>
             }
@@ -252,12 +236,12 @@ function EmptyStateOverviewDemo() {
               title="No team members"
               description="Invite team members to collaborate on projects together."
               action={
-                <FlowButton variant="high" onClick={() => alert("Invite clicked")}>
+                <FlowButton variant="primary" onClick={() => alert("Invite clicked")}>
                   Invite Team
                 </FlowButton>
               }
               secondaryAction={
-                <FlowButton variant="low" onClick={() => alert("Learn more clicked")}>
+                <FlowButton variant="tertiary" onClick={() => alert("Learn more clicked")}>
                   Learn More
                 </FlowButton>
               }
@@ -274,7 +258,7 @@ function EmptyStateOverviewDemo() {
           <Stack gap={2}>
             <Inline gap={2} padding={2}>
               <FlowTextInput placeholder="Search..." size="sm" style={{ flex: 1 }} />
-              <FlowButton variant="high" size="sm">
+              <FlowButton variant="primary" size="sm">
                 Add Item
               </FlowButton>
             </Inline>
@@ -286,7 +270,7 @@ function EmptyStateOverviewDemo() {
                 title="No items found"
                 description="Try adjusting your search or add a new item."
                 action={
-                  <FlowButton size="sm" variant="low" onClick={() => alert("Clear filters")}>
+                  <FlowButton size="sm" variant="tertiary" onClick={() => alert("Clear filters")}>
                     Clear Filters
                   </FlowButton>
                 }
@@ -304,7 +288,7 @@ function EmptyStateOverviewDemo() {
           {["Revenue", "Users", "Conversions"].map((metric) => (
             <Surface key={metric} variant="primary" padding="container">
               <Stack gap={3}>
-                <Text role="overline" color="tertiary">
+                <Text variant="overline" color="tertiary">
                   {metric}
                 </Text>
                 <FlowEmptyState
@@ -327,7 +311,7 @@ function EmptyStateOverviewDemo() {
               title="Access Restricted"
               description="You don't have permission to view this content. Contact your administrator."
               action={
-                <FlowButton variant="medium" onClick={() => alert("Request access")}>
+                <FlowButton variant="secondary" onClick={() => alert("Request access")}>
                   Request Access
                 </FlowButton>
               }
@@ -351,7 +335,7 @@ function EmptyStateUseCasesDemo() {
             title="No tasks yet"
             description="Create your first task to get started with your to-do list."
             action={
-              <FlowButton variant="high" onClick={() => alert("Create task")}>
+              <FlowButton variant="primary" onClick={() => alert("Create task")}>
                 Create Task
               </FlowButton>
             }
@@ -367,7 +351,7 @@ function EmptyStateUseCasesDemo() {
             title='No results for "quantum computing"'
             description="Try different keywords or check your spelling."
             action={
-              <FlowButton variant="medium" onClick={() => alert("Clear")}>
+              <FlowButton variant="secondary" onClick={() => alert("Clear")}>
                 Clear Search
               </FlowButton>
             }
@@ -383,12 +367,12 @@ function EmptyStateUseCasesDemo() {
             title="No items match filters"
             description="Try removing some filters to see more results."
             action={
-              <FlowButton variant="high" onClick={() => alert("Clear filters")}>
+              <FlowButton variant="primary" onClick={() => alert("Clear filters")}>
                 Clear All Filters
               </FlowButton>
             }
             secondaryAction={
-              <FlowButton variant="low" onClick={() => alert("Reset")}>
+              <FlowButton variant="tertiary" onClick={() => alert("Reset")}>
                 Reset to Default
               </FlowButton>
             }
@@ -404,7 +388,7 @@ function EmptyStateUseCasesDemo() {
             title="No files uploaded"
             description="Drag and drop files here or click to browse."
             action={
-              <FlowButton variant="high" onClick={() => alert("Upload")}>
+              <FlowButton variant="primary" onClick={() => alert("Upload")}>
                 Choose Files
               </FlowButton>
             }
@@ -443,7 +427,7 @@ function EmptyStateUseCasesDemo() {
             title="No messages"
             description="Start a conversation to see messages here."
             action={
-              <FlowButton variant="high" onClick={() => alert("New message")}>
+              <FlowButton variant="primary" onClick={() => alert("New message")}>
                 New Message
               </FlowButton>
             }
@@ -459,7 +443,7 @@ function EmptyStateUseCasesDemo() {
             title="Your cart is empty"
             description="Browse products and add items to get started."
             action={
-              <FlowButton variant="high" onClick={() => alert("Shop")}>
+              <FlowButton variant="primary" onClick={() => alert("Shop")}>
                 Shop Now
               </FlowButton>
             }
@@ -498,7 +482,7 @@ function EmptyStateUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -560,7 +544,7 @@ const emptyStateEntry: PatternEntry = {
   title="Welcome!"
   description="Get started by creating your first item."
   action={
-    <FlowButton variant="high" onClick={handleCreate}>
+    <FlowButton variant="primary" onClick={handleCreate}>
       Create Item
     </FlowButton>
   }
@@ -650,6 +634,17 @@ const emptyStateEntry: PatternEntry = {
       },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowEmptyState, {
+        icon: (props.icon as string) ?? "package",
+        title: (props.title as string) ?? "No items yet",
+        description: (props.description as string) ?? "Get started by creating your first item.",
+        size: props.size as string | undefined,
+      } as React.ComponentProps<typeof FlowEmptyState>),
+    defaults: { icon: "package", title: "No items yet", description: "Get started by creating your first item.", size: "md" },
+    excludeControls: ["action", "secondaryAction", "compact", "className", "style"],
+  },
 };
 
 // ── FlowSnackbarProvider ──
@@ -689,28 +684,27 @@ function SnackbarProviderOverviewDemoInner() {
       >
         <Inline gap={2} wrap>
           <FlowButton
-            variant="high"
-            onClick={() => showSnackbar({ message: "Operation completed", variant: "success" })}
+            variant="primary"
+            onClick={() => showSnackbar({ message: "Operation completed", status: "success" })}
           >
             Success
           </FlowButton>
           <FlowButton
-            variant="medium"
-            onClick={() =>
-              showSnackbar({ message: "Please review your input", variant: "warning" })
-            }
+            variant="secondary"
+            onClick={() => showSnackbar({ message: "Please review your input", status: "warning" })}
           >
             Warning
           </FlowButton>
           <FlowButton
-            variant="danger"
-            onClick={() => showSnackbar({ message: "Failed to save changes", variant: "error" })}
+            variant="primary"
+            intent="danger"
+            onClick={() => showSnackbar({ message: "Failed to save changes", status: "error" })}
           >
             Error
           </FlowButton>
           <FlowButton
-            variant="low"
-            onClick={() => showSnackbar({ message: "New feature available", variant: "info" })}
+            variant="tertiary"
+            onClick={() => showSnackbar({ message: "New feature available", status: "info" })}
           >
             Info
           </FlowButton>
@@ -726,7 +720,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Item deleted",
-                variant: "success",
+                status: "success",
                 action: { label: "Undo", onClick: () => alert("Undo delete") },
               })
             }
@@ -737,7 +731,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Connection failed",
-                variant: "error",
+                status: "error",
                 action: { label: "Retry", onClick: () => alert("Retry connection") },
               })
             }
@@ -781,7 +775,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "This notification won't auto-dismiss",
-                variant: "info",
+                status: "info",
                 duration: Infinity,
               })
             }
@@ -815,7 +809,7 @@ function SnackbarProviderOverviewDemoInner() {
             showSnackbar({
               message:
                 "Your session will expire in 5 minutes due to inactivity. Please save your work to avoid losing changes.",
-              variant: "warning",
+              status: "warning",
               duration: 8000,
             })
           }
@@ -831,7 +825,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Form submitted successfully",
-                variant: "success",
+                status: "success",
               })
             }
           >
@@ -842,7 +836,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "File uploaded",
-                variant: "success",
+                status: "success",
                 action: { label: "View", onClick: () => alert("View file") },
               })
             }
@@ -854,7 +848,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Copied to clipboard",
-                variant: "success",
+                status: "success",
                 duration: 2000,
               })
             }
@@ -866,7 +860,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Network error occurred",
-                variant: "error",
+                status: "error",
                 action: { label: "Retry", onClick: () => alert("Retry") },
               })
             }
@@ -878,7 +872,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Draft saved",
-                variant: "info",
+                status: "info",
                 duration: 3000,
               })
             }
@@ -890,7 +884,7 @@ function SnackbarProviderOverviewDemoInner() {
             onClick={() =>
               showSnackbar({
                 message: "Permission denied",
-                variant: "warning",
+                status: "warning",
               })
             }
           >
@@ -919,7 +913,7 @@ function SnackbarProviderUseCasesDemoInner() {
     setTimeout(() => {
       showSnackbar({
         message: "Profile updated successfully",
-        variant: "success",
+        status: "success",
       });
     }, 500);
   };
@@ -927,11 +921,11 @@ function SnackbarProviderUseCasesDemoInner() {
   const handleDelete = () => {
     showSnackbar({
       message: "Item deleted",
-      variant: "success",
+      status: "success",
       action: {
         label: "Undo",
         onClick: () => {
-          showSnackbar({ message: "Delete undone", variant: "info" });
+          showSnackbar({ message: "Delete undone", status: "info" });
         },
       },
     });
@@ -957,15 +951,15 @@ function SnackbarProviderUseCasesDemoInner() {
               onChange={(v) => setFormData({ ...formData, email: v })}
             />
             <Inline gap={2}>
-              <FlowButton variant="high" onClick={handleSave}>
+              <FlowButton variant="primary" onClick={handleSave}>
                 Save
               </FlowButton>
               <FlowButton
-                variant="low"
+                variant="tertiary"
                 onClick={() =>
                   showSnackbar({
                     message: "Changes discarded",
-                    variant: "info",
+                    status: "info",
                   })
                 }
               >
@@ -983,7 +977,7 @@ function SnackbarProviderUseCasesDemoInner() {
         <Surface variant="primary" padding="container">
           <Inline gap={2}>
             <Text>Important Item</Text>
-            <FlowButton variant="danger" size="sm" onClick={handleDelete}>
+            <FlowButton variant="primary" intent="danger" size="sm" onClick={handleDelete}>
               Delete
             </FlowButton>
           </Inline>
@@ -996,11 +990,11 @@ function SnackbarProviderUseCasesDemoInner() {
       >
         <FlowButton
           onClick={() => {
-            showSnackbar({ message: "Processing...", variant: "info", duration: 1500 });
+            showSnackbar({ message: "Processing...", status: "info", duration: 1500 });
             setTimeout(() => {
               showSnackbar({
                 message: "Export completed",
-                variant: "success",
+                status: "success",
                 action: { label: "Download", onClick: () => alert("Download") },
               });
             }, 1500);
@@ -1016,11 +1010,11 @@ function SnackbarProviderUseCasesDemoInner() {
       >
         <Inline gap={2}>
           <FlowButton
-            variant="low"
+            variant="tertiary"
             onClick={() =>
               showSnackbar({
                 message: "You are offline. Changes will sync when reconnected.",
-                variant: "warning",
+                status: "warning",
                 duration: Infinity,
               })
             }
@@ -1028,11 +1022,11 @@ function SnackbarProviderUseCasesDemoInner() {
             Simulate Offline
           </FlowButton>
           <FlowButton
-            variant="low"
+            variant="tertiary"
             onClick={() =>
               showSnackbar({
                 message: "Connection restored",
-                variant: "success",
+                status: "success",
               })
             }
           >
@@ -1046,7 +1040,7 @@ function SnackbarProviderUseCasesDemoInner() {
           onClick={() =>
             showSnackbar({
               message: "12 items archived",
-              variant: "success",
+              status: "success",
               action: { label: "Undo", onClick: () => alert("Undo bulk archive") },
             })
           }
@@ -1115,7 +1109,7 @@ function MyComponent() {
       onClick={() =>
         showSnackbar({
           message: "Item saved",
-          variant: "success",
+          status: "success",
           action: { label: "Undo", onClick: handleUndo }
         })
       }
@@ -1243,7 +1237,7 @@ function generateMockNotifications(count: number): NotificationItem[] {
     message: messages[i % messages.length],
     timestamp: formatRelativeTime(now - i * 3600000), // Stagger by hours
     read: i % 3 === 0, // Every 3rd is read
-    variant: variants[i % variants.length],
+    status: variants[i % variants.length],
   }));
 }
 
@@ -1277,21 +1271,21 @@ function NotificationPanelOverviewDemo() {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
-  const addNotification = (variant: "info" | "success" | "warning" | "error") => {
+  const addNotification = (status: "info" | "success" | "warning" | "error") => {
     const newNotif: NotificationItem = {
       id: `notif-${Date.now()}`,
       title:
-        variant === "success"
+        status === "success"
           ? "Operation completed"
-          : variant === "error"
+          : status === "error"
             ? "Action failed"
-            : variant === "warning"
+            : status === "warning"
               ? "Warning issued"
               : "New information",
       message: "This is a newly added notification",
       timestamp: "Just now",
       read: false,
-      variant,
+      status,
     };
     setNotifications((prev) => [newNotif, ...prev]);
   };
@@ -1311,25 +1305,34 @@ function NotificationPanelOverviewDemo() {
           />
           <Surface variant="secondary" padding="container" style={{ flex: 1, minWidth: "240px" }}>
             <Stack gap={3}>
-              <Text role="label-m">Controls</Text>
+              <Text variant="label-m">Controls</Text>
               <Stack gap={2}>
-                <FlowButton size="sm" variant="high" onClick={() => addNotification("success")}>
+                <FlowButton size="sm" variant="primary" onClick={() => addNotification("success")}>
                   Add Success
                 </FlowButton>
-                <FlowButton size="sm" variant="medium" onClick={() => addNotification("warning")}>
+                <FlowButton
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => addNotification("warning")}
+                >
                   Add Warning
                 </FlowButton>
-                <FlowButton size="sm" variant="danger" onClick={() => addNotification("error")}>
+                <FlowButton
+                  size="sm"
+                  variant="primary"
+                  intent="danger"
+                  onClick={() => addNotification("error")}
+                >
                   Add Error
                 </FlowButton>
-                <FlowButton size="sm" variant="low" onClick={() => addNotification("info")}>
+                <FlowButton size="sm" variant="tertiary" onClick={() => addNotification("info")}>
                   Add Info
                 </FlowButton>
               </Stack>
               <Divider />
               <FlowButton
                 size="sm"
-                variant="outline"
+                variant="outlined"
                 onClick={() => setNotifications(generateMockNotifications(8))}
               >
                 Reset Notifications
@@ -1390,7 +1393,7 @@ function NotificationPanelOverviewDemo() {
               title: "Friend request from Sarah",
               message: "Sarah wants to connect with you",
               timestamp: "5m ago",
-              variant: "info",
+              status: "info",
               action: { label: "Accept", onClick: () => alert("Accepted") },
             },
             {
@@ -1398,7 +1401,7 @@ function NotificationPanelOverviewDemo() {
               title: "Backup completed",
               message: "Your data has been backed up successfully",
               timestamp: "1h ago",
-              variant: "success",
+              status: "success",
               action: { label: "View Backup", onClick: () => alert("View") },
             },
             {
@@ -1406,7 +1409,7 @@ function NotificationPanelOverviewDemo() {
               title: "Payment reminder",
               message: "Your subscription renews in 3 days",
               timestamp: "2h ago",
-              variant: "warning",
+              status: "warning",
               action: { label: "Pay Now", onClick: () => alert("Payment") },
             },
           ]}
@@ -1426,28 +1429,28 @@ function NotificationPanelOverviewDemo() {
               title: "Info notification",
               message: "General information",
               timestamp: "1m ago",
-              variant: "info",
+              status: "info",
             },
             {
               id: "2",
               title: "Success notification",
               message: "Operation successful",
               timestamp: "2m ago",
-              variant: "success",
+              status: "success",
             },
             {
               id: "3",
               title: "Warning notification",
               message: "Action required soon",
               timestamp: "3m ago",
-              variant: "warning",
+              status: "warning",
             },
             {
               id: "4",
               title: "Error notification",
               message: "Something went wrong",
               timestamp: "4m ago",
-              variant: "error",
+              status: "error",
             },
           ]}
         />
@@ -1465,7 +1468,7 @@ function NotificationPanelOverviewDemo() {
               message: "You have a new message",
               timestamp: "Just now",
               read: false,
-              variant: "info",
+              status: "info",
             },
             {
               id: "2",
@@ -1473,7 +1476,7 @@ function NotificationPanelOverviewDemo() {
               message: "Q4 report is ready",
               timestamp: "5m ago",
               read: false,
-              variant: "success",
+              status: "success",
             },
             {
               id: "3",
@@ -1481,7 +1484,7 @@ function NotificationPanelOverviewDemo() {
               message: "Team standup concluded",
               timestamp: "1h ago",
               read: true,
-              variant: "info",
+              status: "info",
             },
             {
               id: "4",
@@ -1489,7 +1492,7 @@ function NotificationPanelOverviewDemo() {
               message: "Design review finished",
               timestamp: "2h ago",
               read: true,
-              variant: "success",
+              status: "success",
             },
           ]}
           onMarkRead={(id) => console.log("Mark read", id)}
@@ -1513,7 +1516,7 @@ function NotificationPanelUseCasesDemo() {
         <Surface variant="primary" padding="container">
           <Stack gap={3}>
             <Inline gap={2} justify="between" align="center">
-              <Text role="heading-m">Your App</Text>
+              <Text variant="heading-m">Your App</Text>
               <div style={{ position: "relative" }}>
                 <FlowIconButton
                   icon="bell"
@@ -1523,7 +1526,7 @@ function NotificationPanelUseCasesDemo() {
                 />
               </div>
             </Inline>
-            <Text role="paragraph-s" color="secondary">
+            <Text variant="paragraph-s" color="secondary">
               Click bell icon to see notifications (simulated)
             </Text>
           </Stack>
@@ -1537,8 +1540,8 @@ function NotificationPanelUseCasesDemo() {
         <Grid columns={2} gap="control">
           <Surface variant="secondary" padding="container" style={{ minHeight: "400px" }}>
             <Stack gap={3}>
-              <Text role="heading-m">Main Content</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="heading-m">Main Content</Text>
+              <Text variant="paragraph-s" color="secondary">
                 Your app content goes here. The notification panel sits in the sidebar.
               </Text>
             </Stack>
@@ -1569,7 +1572,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Document uploaded",
               message: "Project_Proposal.pdf",
               timestamp: "2m ago",
-              variant: "success",
+              status: "success",
               icon: "file-text",
             },
             {
@@ -1577,7 +1580,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Comment added",
               message: "John commented on your post",
               timestamp: "15m ago",
-              variant: "info",
+              status: "info",
               icon: "message-circle",
             },
             {
@@ -1585,7 +1588,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Task assigned",
               message: "Design homepage banner",
               timestamp: "1h ago",
-              variant: "info",
+              status: "info",
               icon: "check-square",
             },
             {
@@ -1593,7 +1596,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Meeting joined",
               message: "Team standup started",
               timestamp: "2h ago",
-              variant: "info",
+              status: "info",
               icon: "video",
             },
           ]}
@@ -1613,7 +1616,7 @@ function NotificationPanelUseCasesDemo() {
               title: "High CPU usage detected",
               message: "Server load at 85%",
               timestamp: "Just now",
-              variant: "warning",
+              status: "warning",
               action: { label: "Investigate", onClick: () => alert("Investigate") },
             },
             {
@@ -1621,7 +1624,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Backup failed",
               message: "Database backup encountered errors",
               timestamp: "5m ago",
-              variant: "error",
+              status: "error",
               action: { label: "Retry", onClick: () => alert("Retry") },
             },
             {
@@ -1629,7 +1632,7 @@ function NotificationPanelUseCasesDemo() {
               title: "SSL certificate expires soon",
               message: "Certificate expires in 7 days",
               timestamp: "1h ago",
-              variant: "warning",
+              status: "warning",
               action: { label: "Renew", onClick: () => alert("Renew") },
             },
           ]}
@@ -1649,7 +1652,7 @@ function NotificationPanelUseCasesDemo() {
               title: "New follower",
               message: "@alice started following you",
               timestamp: "5m ago",
-              variant: "success",
+              status: "success",
               icon: "user-plus",
             },
             {
@@ -1657,7 +1660,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Post liked",
               message: "Your photo received 10 likes",
               timestamp: "1h ago",
-              variant: "info",
+              status: "info",
               icon: "heart",
             },
             {
@@ -1665,7 +1668,7 @@ function NotificationPanelUseCasesDemo() {
               title: "Mentioned in comment",
               message: "@bob mentioned you",
               timestamp: "2h ago",
-              variant: "info",
+              status: "info",
               icon: "at-sign",
             },
           ]}
@@ -1685,21 +1688,21 @@ function NotificationPanelUseCasesDemo() {
               title: "Payment received",
               message: "$150.00 from John Doe",
               timestamp: "10m ago",
-              variant: "success",
+              status: "success",
             },
             {
               id: "2",
               title: "Withdrawal processed",
               message: "$50.00 to Bank Account",
               timestamp: "1h ago",
-              variant: "info",
+              status: "info",
             },
             {
               id: "3",
               title: "Subscription renewed",
               message: "Pro Plan - $29.99/month",
               timestamp: "1d ago",
-              variant: "success",
+              status: "success",
             },
           ]}
         />
@@ -1776,7 +1779,7 @@ const notificationPanelEntry: PatternEntry = {
     message: "John commented on your post",
     timestamp: "5m ago",
     read: false,
-    variant: "info",
+    status: "info",
   },
 ]);
 
@@ -1892,6 +1895,24 @@ const notificationPanelEntry: PatternEntry = {
         text: "Notification state (read/unread) must be managed externally. The component is fully controlled.",
       },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowNotificationPanel, {
+        notifications: props.notifications as NotificationItem[],
+        title: (props.title as string) ?? "Notifications",
+        emptyMessage: (props.emptyMessage as string) ?? "No new notifications",
+        maxHeight: (props.maxHeight as number) ?? 420,
+      } as React.ComponentProps<typeof FlowNotificationPanel>),
+    defaults: { title: "Notifications", emptyMessage: "No new notifications", maxHeight: 420 },
+    fixtures: {
+      notifications: [
+        { id: "1", title: "New comment", message: "John commented on your post", timestamp: "5m ago", read: false, status: "info" },
+        { id: "2", title: "Task completed", message: "Design review finished", timestamp: "1h ago", read: true, status: "success" },
+        { id: "3", title: "Warning", message: "Server load is high", timestamp: "2h ago", read: false, status: "warning" },
+      ],
+    },
+    excludeControls: ["notifications", "onMarkRead", "onMarkAllRead", "onDismiss", "className", "style"],
   },
 };
 

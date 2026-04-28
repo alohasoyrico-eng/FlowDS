@@ -1,5 +1,3 @@
-
-
 /**
  * FLOW — Pattern Registry
  * Per-pattern data + composition demos + usage examples.
@@ -10,8 +8,9 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import { type ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   FlowButton,
   FlowFilterChipGroup,
@@ -22,29 +21,16 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../../lib";
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
+import type { AccessibilitySpec, AnatomyEntry } from "../registry/types";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Types
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+export type { AccessibilitySpec, AnatomyEntry };
 
 export interface PatternSpec {
   name: string;
@@ -96,6 +82,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -133,7 +120,7 @@ function FilterChipGroupOverviewDemo() {
               selected={selected}
               onSelectionChange={setSelected}
             />
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Selected: {Array.from(selected).join(", ") || "none"}
             </Text>
           </Stack>
@@ -151,7 +138,7 @@ function FilterChipGroupOverviewDemo() {
               onSelectionChange={setExclusiveSelected}
               exclusive
             />
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Selected: {Array.from(exclusiveSelected).join(", ") || "none"}
             </Text>
           </Stack>
@@ -190,9 +177,9 @@ function FilterChipGroupUseCasesDemo() {
           <Stack gap={3}>
             <FlowSectionHeader
               title="Users"
-              subtitle="Manage team members"
+              description="Manage team members"
               action={
-                <FlowButton variant="high" size="sm">
+                <FlowButton variant="primary" size="sm">
                   Add user
                 </FlowButton>
               }
@@ -208,7 +195,7 @@ function FilterChipGroupUseCasesDemo() {
               padding={8}
               style={{ textAlign: "center" }}
             >
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Table content filtered by: {Array.from(tableFilters).join(", ") || "all"}
               </Text>
             </Surface>
@@ -280,7 +267,11 @@ const filterChipGroupEntry: PatternEntry = {
         "Focus ring via .flow-focusable utility class",
       ],
       required: ["Provide meaningful chip labels describing each filter option"],
-      keyboard: ["Tab to focus chips", "Space/Enter to toggle selection"],
+      keyboard: [
+        { key: "Tab", action: "Focus chips" },
+        { key: "Space / Enter", action: "Toggle selection" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
     },
   },
   composition: [
@@ -386,6 +377,24 @@ const chips = [
       },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowFilterChipGroup, {
+        chips: props.chips as Array<{ id: string; label: string; count?: number }>,
+        selected: new Set<string>(),
+        onSelectionChange: () => {},
+        exclusive: (props.exclusive as boolean) ?? false,
+      } as unknown as React.ComponentProps<typeof FlowFilterChipGroup>),
+    defaults: { exclusive: false },
+    fixtures: {
+      chips: [
+        { id: "active", label: "Active", count: 24 },
+        { id: "pending", label: "Pending", count: 8 },
+        { id: "archived", label: "Archived", count: 10 },
+      ],
+    },
+    excludeControls: ["chips", "selected", "onSelectionChange", "className", "style"],
+  },
 };
 
 // ── FlowTimeline ──
@@ -394,38 +403,38 @@ function TimelineOverviewDemo() {
   const items = [
     {
       id: "1",
-      title: "Order placed",
+      label: "Order placed",
       description: "Order #12345 was confirmed",
       timestamp: "Mar 19, 2026 · 09:00",
-      variant: "success" as const,
+      status: "success" as const,
     },
     {
       id: "2",
-      title: "Payment processed",
+      label: "Payment processed",
       description: "Visa ending in 4242",
       timestamp: "Mar 19, 2026 · 09:01",
-      variant: "success" as const,
+      status: "success" as const,
     },
     {
       id: "3",
-      title: "Shipped",
+      label: "Shipped",
       description: "Tracking: FLOW-789456",
       timestamp: "Mar 19, 2026 · 14:30",
-      variant: "info" as const,
+      status: "info" as const,
     },
     {
       id: "4",
-      title: "Delivery attempt failed",
+      label: "Delivery attempt failed",
       description: "No one available to receive",
       timestamp: "Mar 20, 2026 · 11:15",
-      variant: "warning" as const,
+      status: "warning" as const,
     },
     {
       id: "5",
-      title: "Out for delivery",
+      label: "Out for delivery",
       description: "Second attempt scheduled",
       timestamp: "Mar 21, 2026 · 08:00",
-      variant: "default" as const,
+      status: "neutral" as const,
     },
   ];
   return (
@@ -450,14 +459,14 @@ function TimelineOverviewDemo() {
               items={[
                 {
                   id: "s",
-                  title: "Success",
+                  label: "Success",
                   description: "Operation completed",
-                  variant: "success",
+                  status: "success",
                 },
-                { id: "i", title: "Info", description: "Informational event", variant: "info" },
-                { id: "w", title: "Warning", description: "Needs attention", variant: "warning" },
-                { id: "e", title: "Error", description: "Something went wrong", variant: "error" },
-                { id: "d", title: "Default", description: "Neutral event", variant: "default" },
+                { id: "i", label: "Info", description: "Informational event", status: "info" },
+                { id: "w", label: "Warning", description: "Needs attention", status: "warning" },
+                { id: "e", label: "Error", description: "Something went wrong", status: "error" },
+                { id: "d", label: "Default", description: "Neutral event", status: "neutral" },
               ]}
             />
           </Stack>
@@ -480,31 +489,31 @@ function TimelineUseCasesDemo() {
               items={[
                 {
                   id: "1",
-                  title: "Document created",
+                  label: "Document created",
                   description: "Ricardo created 'Q1 Report'",
                   timestamp: "Today · 10:30",
-                  variant: "success",
+                  status: "success",
                 },
                 {
                   id: "2",
-                  title: "Collaborator added",
+                  label: "Collaborator added",
                   description: "Ana was invited to edit",
                   timestamp: "Today · 11:00",
-                  variant: "info",
+                  status: "info",
                 },
                 {
                   id: "3",
-                  title: "Comment added",
+                  label: "Comment added",
                   description: "Ana left feedback on section 3",
                   timestamp: "Today · 14:15",
-                  variant: "default",
+                  status: "neutral",
                 },
                 {
                   id: "4",
-                  title: "Version published",
+                  label: "Version published",
                   description: "v2.1 is now live",
                   timestamp: "Today · 16:45",
-                  variant: "success",
+                  status: "success",
                 },
               ]}
             />
@@ -519,21 +528,21 @@ function TimelineUseCasesDemo() {
           <Stack style={{ maxWidth: 480 }}>
             <FlowTimeline
               items={[
-                { id: "1", title: "Build started", timestamp: "12:00:00", variant: "info" },
+                { id: "1", label: "Build started", timestamp: "12:00:00", status: "info" },
                 {
                   id: "2",
-                  title: "Tests passed",
+                  label: "Tests passed",
                   description: "142 tests, 0 failures",
                   timestamp: "12:02:34",
-                  variant: "success",
+                  status: "success",
                 },
-                { id: "3", title: "Deploy to staging", timestamp: "12:03:10", variant: "success" },
+                { id: "3", label: "Deploy to staging", timestamp: "12:03:10", status: "success" },
                 {
                   id: "4",
-                  title: "E2E tests failed",
+                  label: "E2E tests failed",
                   description: "3 failures in checkout flow",
                   timestamp: "12:05:45",
-                  variant: "error",
+                  status: "error",
                 },
               ]}
             />
@@ -603,6 +612,7 @@ const timelineEntry: PatternEntry = {
         "Use timestamp for chronological context",
       ],
       keyboard: [],
+      wcag: ["1.3.1"],
     },
   },
   composition: [
@@ -689,6 +699,21 @@ const timelineEntry: PatternEntry = {
       },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowTimeline, {
+        items: props.items,
+      } as unknown as React.ComponentProps<typeof FlowTimeline>),
+    defaults: {},
+    fixtures: {
+      items: [
+        { id: "1", label: "Order placed", description: "Order #12345 confirmed", timestamp: "Mar 19 · 09:00", status: "success" },
+        { id: "2", label: "Shipped", description: "Tracking: FLOW-789", timestamp: "Mar 19 · 14:30", status: "info" },
+        { id: "3", label: "Delivered", description: "Signed by recipient", timestamp: "Mar 20 · 10:00", status: "success" },
+      ],
+    },
+    excludeControls: ["items", "className", "style"],
+  },
 };
 
 // ── FlowSectionHeader ──
@@ -711,7 +736,7 @@ function SectionHeaderOverviewDemo() {
           <Stack style={{ maxWidth: 600 }}>
             <FlowSectionHeader
               title="Billing"
-              subtitle="Manage your payment methods and invoices"
+              description="Manage your payment methods and invoices"
             />
           </Stack>
         </DemoGroup>
@@ -724,9 +749,9 @@ function SectionHeaderOverviewDemo() {
           <Stack style={{ maxWidth: 600 }}>
             <FlowSectionHeader
               title="Projects"
-              subtitle="Your active and archived projects"
+              description="Your active and archived projects"
               action={
-                <FlowButton variant="high" size="sm">
+                <FlowButton variant="primary" size="sm">
                   New project
                 </FlowButton>
               }
@@ -742,7 +767,7 @@ function SectionHeaderOverviewDemo() {
           <Stack style={{ maxWidth: 600 }}>
             <FlowSectionHeader
               title="Notifications"
-              subtitle="Configure alert preferences"
+              description="Configure alert preferences"
               divider={false}
             />
           </Stack>
@@ -763,29 +788,29 @@ function SectionHeaderUseCasesDemo() {
           <Stack gap={5} style={{ maxWidth: 600 }}>
             <FlowSectionHeader
               title="Profile"
-              subtitle="Your personal information"
+              description="Your personal information"
               action={
-                <FlowButton variant="medium" size="sm">
+                <FlowButton variant="secondary" size="sm">
                   Edit
                 </FlowButton>
               }
             />
             <Surface variant="secondary" radius="container" padding={6}>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Profile fields go here...
               </Text>
             </Surface>
             <FlowSectionHeader
               title="Security"
-              subtitle="Password and two-factor authentication"
+              description="Password and two-factor authentication"
               action={
-                <FlowButton variant="medium" size="sm">
+                <FlowButton variant="secondary" size="sm">
                   Change password
                 </FlowButton>
               }
             />
             <Surface variant="secondary" radius="container" padding={6}>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Security settings go here...
               </Text>
             </Surface>
@@ -849,6 +874,7 @@ const sectionHeaderEntry: PatternEntry = {
       handled: ["Title uses heading-m semantic role"],
       required: ["Provide descriptive title text"],
       keyboard: [],
+      wcag: ["2.4.6"],
     },
   },
   composition: [
@@ -881,14 +907,14 @@ const sectionHeaderEntry: PatternEntry = {
 // With subtitle
 <FlowSectionHeader
   title="Billing"
-  subtitle="Manage payment methods and invoices"
+  description="Manage payment methods and invoices"
 />
 
 // With action button
 <FlowSectionHeader
   title="Projects"
-  subtitle="Active and archived projects"
-  action={<FlowButton variant="high" size="sm">New project</FlowButton>}
+  description="Active and archived projects"
+  action={<FlowButton variant="primary" size="sm">New project</FlowButton>}
 />
 
 // Without divider
@@ -960,6 +986,16 @@ const sectionHeaderEntry: PatternEntry = {
         text: "Divider uses the FLOW Divider primitive with spacing={2} for consistent rhythm.",
       },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowSectionHeader, {
+        title: (props.title as string) ?? "Section Title",
+        description: (props.subtitle as string) ?? "Section description",
+        divider: props.divider !== false,
+      } as React.ComponentProps<typeof FlowSectionHeader>),
+    defaults: { title: "Section Title", subtitle: "Section description text", divider: true },
+    excludeControls: ["action", "className", "style"],
   },
 };
 
@@ -1169,7 +1205,11 @@ const kpiCardEntry: PatternEntry = {
         "Icon has aria-hidden for decorative use",
       ],
       required: ["Provide meaningful label describing the metric"],
-      keyboard: ["Tab to focus (when interactive)", "Enter/Space to activate (when interactive)"],
+      keyboard: [
+        { key: "Tab", action: "Focus (when interactive)" },
+        { key: "Enter / Space", action: "Activate (when interactive)" },
+      ],
+      wcag: ["2.1.1", "4.1.2"],
     },
   },
   composition: [
@@ -1335,6 +1375,22 @@ const kpiCardEntry: PatternEntry = {
         text: "Loading skeleton shows three pulsing bars matching the layout of label, value, and trend.",
       },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowKPICard, {
+        value: (props.value as string) ?? "$48,250",
+        label: (props.label as string) ?? "Revenue",
+        description: (props.description as string) ?? "vs last month",
+        trend: (props.trend as "up" | "down" | "neutral") ?? "up",
+        trendValue: (props.trendValue as string) ?? "+12.5%",
+        upIsGood: props.upIsGood !== false,
+        icon: (props.icon as string) ?? "dollar-sign",
+        size: (props.size as string) ?? "md",
+        loading: (props.loading as boolean) ?? false,
+      } as React.ComponentProps<typeof FlowKPICard>),
+    defaults: { value: "$48,250", label: "Revenue", description: "vs last month", trend: "up", trendValue: "+12.5%", upIsGood: true, icon: "dollar-sign", size: "md", loading: false },
+    excludeControls: ["onClick", "className", "style"],
   },
 };
 

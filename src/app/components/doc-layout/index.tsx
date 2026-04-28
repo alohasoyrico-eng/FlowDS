@@ -28,7 +28,7 @@ import {
   Text,
   ThemeToggle,
   useFlowTheme,
-} from "../../primitives";
+} from "@flow/primitives";
 import { GridOverlay } from "../grid-overlay";
 import flowLogoPaths from "../../../imports/svg-u72vgquk7t";
 import { DocSearch } from "../doc-search";
@@ -203,7 +203,10 @@ export function DocLayout() {
         </div>
 
         {/* Search */}
-        <DocSearch collapsed={collapsed && !isDrawer} onNavigate={isDrawer ? () => setDrawerOpen(false) : undefined} />
+        <DocSearch
+          collapsed={collapsed && !isDrawer}
+          onNavigate={isDrawer ? () => setDrawerOpen(false) : undefined}
+        />
 
         {/* Navigation */}
         <nav
@@ -223,7 +226,7 @@ export function DocLayout() {
               <Stack key={section.label} gap={1}>
                 {!collapsed && (
                   <Text
-                    role="overline"
+                    variant="overline"
                     style={{ padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)" }}
                   >
                     {section.label}
@@ -381,7 +384,7 @@ export function DocLayout() {
           >
             <FlowIcon name={collapsed ? "arrow-right" : "arrow-left"} size="sm" />
             {!collapsed && (
-              <Text role="paragraph-s" color="tertiary">
+              <Text variant="paragraph-s" color="tertiary">
                 Collapse
               </Text>
             )}

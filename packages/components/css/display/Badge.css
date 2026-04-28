@@ -1,0 +1,65 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BADGE — Notification dot / count overlay (L3)
+   ━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-badge-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.flow-badge {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-badge-height);
+  height: var(--comp-badge-height);
+  padding: 0 var(--comp-badge-padding-x);
+  border-radius: var(--comp-badge-radius);
+  background: var(--comp-badge-bg-default);
+  color: var(--comp-badge-text);
+  font-family: var(--sys-voice-family);
+  font-size: var(--comp-badge-font);
+  font-weight: var(--comp-badge-font-weight);
+  line-height: var(--sys-voice-line-height-none);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 0 0 var(--comp-badge-ring-width) var(--comp-badge-ring);
+  z-index: var(--sys-depth-layer-content);
+}
+
+.flow-badge[data-variant="dot"] {
+  min-width: var(--comp-badge-min-size);
+  width: var(--comp-badge-min-size);
+  height: var(--comp-badge-min-size);
+  padding: 0;
+}
+
+.flow-badge[data-status="info"] {
+  background: var(--comp-badge-bg-accent);
+}
+
+.flow-badge[data-status="success"] {
+  background: var(--comp-badge-bg-success);
+}
+
+.flow-badge[data-status="warning"] {
+  background: var(--comp-badge-bg-warning);
+}
+
+.flow-badge[data-status="error"] {
+  background: var(--sys-energy-status-error);
+}
+
+.flow-badge[data-hidden] {
+  display: none;
+}
+
+/* Standalone badge (no wrapping) */
+.flow-badge-standalone {
+  position: static;
+  transform: none;
+}

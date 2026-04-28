@@ -1,0 +1,23 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FLOW Design System — Aggregated CSS
+   Cascade order: tokens → responsive → input-surface → primitives → components → utilities
+   Later imports win at equal specificity (source-order cascade).
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* 1. Core token variables (ref → sys → comp) */
+@import "@flow/tokens/css";
+
+/* 2. Density × viewport variable overrides */
+@import "@flow/tokens/css/responsive";
+
+/* 3. Input surface primitive (shared input-family CSS) */
+@import "@flow/primitives/css/input-surface";
+
+/* 4. L2 Primitives (Surface, Stack, Inline, Grid, Text, etc.) */
+@import "@flow/primitives/css/primitives";
+
+/* 5. L3 Components (Button, Chip, Avatar, Slider, Progress, etc.) */
+@import "@flow/components/css";
+
+/* 6. Utilities (highest cascade priority) */
+@import "@flow/primitives/css/utilities";

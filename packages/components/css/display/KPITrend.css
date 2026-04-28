@@ -1,0 +1,15 @@
+/* ── KPI Trend Indicator ── */
+.flow-kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-kpi-trend-gap);
+}
+
+.flow-kpi-trend .flow-icon {
+  width: var(--comp-kpi-trend-indicator-icon-size);
+  height: var(--comp-kpi-trend-indicator-icon-size);
+}
+
+.flow-kpi-trend > .flow-caption:first-of-type {
+  font-weight: var(--sys-voice-weight-medium);
+}

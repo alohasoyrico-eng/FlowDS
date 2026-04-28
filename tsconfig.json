@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@flow/tokens": ["packages/tokens/src"],
+      "@flow/icons": ["packages/icons/src"],
+      "@flow/flags": ["packages/flags/src"],
+      "@flow/primitives": ["packages/primitives/src"],
+      "@flow/components": ["packages/components/src"],
+      "@flow/patterns": ["packages/patterns/src"],
+      "@flow/design-system": ["packages/flow/src"]
     }
   },
   "include": ["src"],

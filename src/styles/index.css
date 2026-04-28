@@ -1,4 +1,4 @@
 @import "./fonts.css";
-@import "./modules/base.css";
-@import "./flow.css";
+@import "./base.css";
+@import "../../packages/flow/src/flow.css";
 @import "./demo-utils.css";

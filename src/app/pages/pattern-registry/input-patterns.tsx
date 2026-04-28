@@ -1,5 +1,3 @@
-
-
 /**
  * FLOW — Pattern Registry
  * Per-pattern data + composition demos + usage examples.
@@ -10,16 +8,28 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import type { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
+  FlowAutocomplete,
+  FlowColorPicker,
+  FlowDatePicker,
+  FlowDateRangePicker,
+  FlowFileUpload,
+  FlowInlineEditable,
+  FlowMultiSelect,
+  FlowRichTextEditor,
+  FlowSearch,
   Stack,
   Surface,
   Text,
-} from "../../../lib";
+} from "@flow/design-system";
 import { DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
 import { Callout } from "../../components/doc-primitives";
+import type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "../registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction };
 
 // ── Input pattern demos (priority 5) ──
 import {
@@ -51,26 +61,6 @@ import {
   RichTextEditorOverviewDemo,
   RichTextEditorUseCasesDemo,
 } from "../input-pattern-demos-2";
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Types
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
 
 export interface PatternSpec {
   name: string;
@@ -122,6 +112,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -140,7 +131,7 @@ function _PlaceholderDemo({ patternName = "Pattern" }: { patternName?: string } 
   return (
     <Stack gap={4}>
       <Callout>
-        <Text role="paragraph-s" color="accent">
+        <Text variant="paragraph-s" color="accent">
           <strong>🚧 Demos in progress</strong>
           <br />
           Full interactive demos for <strong>{patternName}</strong> are being developed.
@@ -153,7 +144,7 @@ function _PlaceholderDemo({ patternName = "Pattern" }: { patternName?: string } 
         description={`${patternName} is implemented and ready to use. See Developer tab for usage examples.`}
       >
         <Surface variant="secondary" padding="container">
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="paragraph-s" color="secondary">
             Interactive demos coming soon. Component works as specified in props and guidelines.
           </Text>
         </Surface>
@@ -323,10 +314,13 @@ const searchEntry: PatternEntry = {
         "If results appear, ensure they have proper ARIA labeling (use FlowList with aria-label)",
       ],
       keyboard: [
-        "Tab to focus input",
-        "Type to enter query",
-        "Escape to clear (if clearable=true)",
-        "Custom shortcut (e.g., ⌘K) to focus from anywhere (consumer must implement)",
+        { key: "Tab", action: "Focus input" },
+        { key: "Any key", action: "Enter query" },
+        { key: "Escape", action: "Clear (if clearable=true)" },
+        {
+          key: "Custom shortcut (e.g., \u2318K)",
+          action: "Focus from anywhere (consumer must implement)",
+        },
       ],
     },
   },
@@ -561,6 +555,17 @@ FlowSearch(
       },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowSearch, {
+        placeholder: (props.placeholder as string) ?? "Search...",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onSearch: () => {},
+      } as unknown as React.ComponentProps<typeof FlowSearch>),
+    defaults: { placeholder: "Search...", size: "md", disabled: false },
+    excludeControls: ["onSearch", "onChange", "value", "suggestions", "shortcut", "className", "style"],
+  },
 };
 
 const autocompleteEntry: PatternEntry = {
@@ -635,6 +640,27 @@ const autocompleteEntry: PatternEntry = {
       { type: "do", text: "Enable freeSolo for custom value entry." },
       { type: "dont", text: "Don't use for < 5 options." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowAutocomplete, {
+        options: props.options,
+        label: (props.label as string) ?? "Country",
+        placeholder: (props.placeholder as string) ?? "Select a country...",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onSelect: () => {},
+      } as unknown as React.ComponentProps<typeof FlowAutocomplete>),
+    defaults: { label: "Country", placeholder: "Select a country...", size: "md", disabled: false },
+    fixtures: {
+      options: [
+        { value: "mx", label: "Mexico" },
+        { value: "us", label: "United States" },
+        { value: "ca", label: "Canada" },
+        { value: "br", label: "Brazil" },
+      ],
+    },
+    excludeControls: ["options", "onSelect", "onChange", "value", "className", "style"],
   },
 };
 
@@ -714,6 +740,27 @@ const multiSelectEntry: PatternEntry = {
       { type: "do", text: "Enable search for lists with 10+ options." },
       { type: "dont", text: "Don't use for single selection." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowMultiSelect, {
+        options: props.options,
+        label: (props.label as string) ?? "Tags",
+        placeholder: (props.placeholder as string) ?? "Select tags...",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowMultiSelect>),
+    defaults: { label: "Tags", placeholder: "Select tags...", size: "md", disabled: false },
+    fixtures: {
+      options: [
+        { value: "react", label: "React" },
+        { value: "typescript", label: "TypeScript" },
+        { value: "design", label: "Design" },
+        { value: "testing", label: "Testing" },
+      ],
+    },
+    excludeControls: ["options", "onChange", "value", "className", "style"],
   },
 };
 
@@ -812,6 +859,18 @@ const datePickerEntry: PatternEntry = {
       { type: "dont", text: "Don't use for date ranges — use FlowDateRangePicker." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowDatePicker, {
+        label: (props.label as string) ?? "Date",
+        placeholder: (props.placeholder as string) ?? "Select date...",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowDatePicker>),
+    defaults: { label: "Date", placeholder: "Select date...", size: "md", disabled: false },
+    excludeControls: ["onChange", "value", "minDate", "maxDate", "className", "style"],
+  },
 };
 
 const dateRangePickerEntry: PatternEntry = {
@@ -869,6 +928,17 @@ const dateRangePickerEntry: PatternEntry = {
       { type: "do", text: "Provide common presets (last 7 days, this month, etc.)." },
       { type: "dont", text: "Don't use for single dates." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowDateRangePicker, {
+        label: (props.label as string) ?? "Date Range",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowDateRangePicker>),
+    defaults: { label: "Date Range", size: "md", disabled: false },
+    excludeControls: ["onChange", "value", "presets", "minDate", "maxDate", "className", "style"],
   },
 };
 
@@ -930,6 +1000,17 @@ const colorPickerEntry: PatternEntry = {
         text: "Don't use for categorical selection — use color-coded FlowChip instead.",
       },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowColorPicker, {
+        label: (props.label as string) ?? "Color",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowColorPicker>),
+    defaults: { label: "Color", size: "md", disabled: false },
+    excludeControls: ["onChange", "value", "swatches", "className", "style"],
   },
 };
 
@@ -1050,6 +1131,18 @@ const inlineEditableEntry: PatternEntry = {
       { type: "dont", text: "Don't use for multi-line content — use FlowTextArea." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowInlineEditable, {
+        value: (props.value as string) ?? "Click to edit",
+        placeholder: (props.placeholder as string) ?? "Enter text...",
+        size: (props.size as string) ?? "md",
+        disabled: (props.disabled as boolean) ?? false,
+        onSave: () => {},
+      } as unknown as React.ComponentProps<typeof FlowInlineEditable>),
+    defaults: { value: "Click to edit", placeholder: "Enter text...", size: "md", disabled: false },
+    excludeControls: ["onSave", "onCancel", "className", "style"],
+  },
 };
 
 const richTextEditorEntry: PatternEntry = {
@@ -1099,6 +1192,17 @@ const richTextEditorEntry: PatternEntry = {
       { type: "do", text: "Limit toolbar to essential formatting options." },
       { type: "dont", text: "Don't use for short text — use FlowTextInput." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowRichTextEditor, {
+        placeholder: (props.placeholder as string) ?? "Start writing...",
+        height: (props.height as number) ?? 200,
+        disabled: (props.disabled as boolean) ?? false,
+        onChange: () => {},
+      } as unknown as React.ComponentProps<typeof FlowRichTextEditor>),
+    defaults: { placeholder: "Start writing...", height: 200, disabled: false },
+    excludeControls: ["onChange", "value", "toolbar", "className", "style"],
   },
 };
 
@@ -1207,6 +1311,18 @@ const fileUploadEntry: PatternEntry = {
       { type: "do", text: "Show upload progress and file validation errors." },
       { type: "dont", text: "Don't allow unlimited file sizes — set reasonable maxSize." },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(FlowFileUpload, {
+        label: (props.label as string) ?? "Upload files",
+        accept: (props.accept as string) ?? "*/*",
+        multiple: (props.multiple as boolean) ?? true,
+        disabled: (props.disabled as boolean) ?? false,
+        onUpload: () => {},
+      } as unknown as React.ComponentProps<typeof FlowFileUpload>),
+    defaults: { label: "Upload files", accept: "*/*", multiple: true, disabled: false },
+    excludeControls: ["onUpload", "onRemove", "files", "maxSize", "className", "style"],
   },
 };
 

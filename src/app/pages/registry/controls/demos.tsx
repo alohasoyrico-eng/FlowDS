@@ -5,7 +5,8 @@
  */
 import { useState } from "react";
 
-import { FlowButton, FlowFAB, FlowIconButton, Stack, Text } from "../../../../lib";
+import { FlowButton, FlowFAB, FlowIconButton, Stack, Text } from "@flow/design-system";
+import type { ComponentProps } from "react";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { LayoutGrid } from "../../../components/layout-grid";
 import { BUTTON_VARIANTS } from "../types";
@@ -107,15 +108,17 @@ export function FlowButtonVariants() {
       >
         <DemoGroup>
           <LayoutGrid fullBleed>
-            {(["high", "medium", "low", "outline", "danger", "warning", "ghost"] as const).map((emphasis) => (
-              <LayoutGrid.Item key={emphasis} span={4}>
-                <DemoCell label={emphasis}>
-                  <FlowButton variant={emphasis} size={demoSize}>
-                    Button
-                  </FlowButton>
-                </DemoCell>
-              </LayoutGrid.Item>
-            ))}
+            {(["primary", "secondary", "tertiary", "outlined", "ghost"] as const).map(
+              (emphasis) => (
+                <LayoutGrid.Item key={emphasis} span={4}>
+                  <DemoCell label={emphasis}>
+                    <FlowButton variant={emphasis} size={demoSize}>
+                      Button
+                    </FlowButton>
+                  </DemoCell>
+                </LayoutGrid.Item>
+              ),
+            )}
           </LayoutGrid>
         </DemoGroup>
       </DemoSection>
@@ -128,22 +131,55 @@ export function FlowButtonVariants() {
         <DemoGroup>
           <div {...statesGridProps(demoSize)}>
             <DemoCell label="Default">
-              <FlowButton variant="warning" size={demoSize}>Default</FlowButton>
+              <FlowButton variant="primary" intent="warning" size={demoSize}>
+                Default
+              </FlowButton>
             </DemoCell>
             <DemoCell label="Hover">
-              <FlowButton variant="warning" size={demoSize} data-demo-state="hover">Hover</FlowButton>
+              <FlowButton
+                variant="primary"
+                intent="warning"
+                size={demoSize}
+                data-demo-state="hover"
+              >
+                Hover
+              </FlowButton>
             </DemoCell>
             <DemoCell label="Focus">
-              <FlowButton variant="warning" size={demoSize} data-demo-state="focus">Focus</FlowButton>
+              <FlowButton
+                variant="primary"
+                intent="warning"
+                size={demoSize}
+                data-demo-state="focus"
+              >
+                Focus
+              </FlowButton>
             </DemoCell>
             <DemoCell label="Pressed">
-              <FlowButton variant="warning" size={demoSize} data-demo-state="pressed">Pressed</FlowButton>
+              <FlowButton
+                variant="primary"
+                intent="warning"
+                size={demoSize}
+                data-demo-state="pressed"
+              >
+                Pressed
+              </FlowButton>
             </DemoCell>
             <DemoCell label="Disabled">
-              <FlowButton variant="warning" size={demoSize} disabled>Disabled</FlowButton>
+              <FlowButton variant="primary" intent="warning" size={demoSize} disabled>
+                Disabled
+              </FlowButton>
             </DemoCell>
             <DemoCell label="Loading">
-              <FlowButton variant="warning" size={demoSize} loading loadingLabel="Saving...">Loading</FlowButton>
+              <FlowButton
+                variant="primary"
+                intent="warning"
+                size={demoSize}
+                loading
+                loadingLabel="Saving..."
+              >
+                Loading
+              </FlowButton>
             </DemoCell>
           </div>
         </DemoGroup>
@@ -157,7 +193,10 @@ export function FlowButtonVariants() {
         <DemoGroup>
           <VariantMatrix sizes={["sm", "md", "lg", "xl"] as const}>
             {(emphasis, size) => (
-              <FlowButton variant={emphasis} size={size as "sm" | "md" | "lg" | "xl"}>
+              <FlowButton
+                variant={emphasis as ComponentProps<typeof FlowButton>["variant"]}
+                size={size as "sm" | "md" | "lg" | "xl"}
+              >
                 {size.toUpperCase()}
               </FlowButton>
             )}
@@ -173,43 +212,48 @@ export function FlowButtonVariants() {
         <DemoGroup>
           <LayoutGrid fullBleed>
             <LayoutGrid.Item span={4}>
-              <DemoCell label="high">
-                <FlowButton variant="high" size={demoSize} leadingIcon="check">
-                  High
+              <DemoCell label="primary">
+                <FlowButton variant="primary" size={demoSize} leadingIcon="check">
+                  Primary
                 </FlowButton>
               </DemoCell>
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
-              <DemoCell label="medium">
-                <FlowButton variant="medium" size={demoSize} leadingIcon="check">
-                  Medium
+              <DemoCell label="secondary">
+                <FlowButton variant="secondary" size={demoSize} leadingIcon="check">
+                  Secondary
                 </FlowButton>
               </DemoCell>
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
-              <DemoCell label="low">
-                <FlowButton variant="low" size={demoSize} leadingIcon="check">
-                  Low
+              <DemoCell label="tertiary">
+                <FlowButton variant="tertiary" size={demoSize} leadingIcon="check">
+                  Tertiary
                 </FlowButton>
               </DemoCell>
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
-              <DemoCell label="outline">
-                <FlowButton variant="outline" size={demoSize} leadingIcon="check">
-                  Outline
+              <DemoCell label="outlined">
+                <FlowButton variant="outlined" size={demoSize} leadingIcon="check">
+                  Outlined
                 </FlowButton>
               </DemoCell>
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
               <DemoCell label="danger">
-                <FlowButton variant="danger" size={demoSize} leadingIcon="close">
+                <FlowButton variant="primary" intent="danger" size={demoSize} leadingIcon="close">
                   Danger
                 </FlowButton>
               </DemoCell>
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
               <DemoCell label="warning">
-                <FlowButton variant="warning" size={demoSize} leadingIcon="alert-triangle">
+                <FlowButton
+                  variant="primary"
+                  intent="warning"
+                  size={demoSize}
+                  leadingIcon="alert-triangle"
+                >
                   Warning
                 </FlowButton>
               </DemoCell>
@@ -232,40 +276,45 @@ export function FlowButtonVariants() {
       >
         <DemoGroup>
           <Stack gap="subsection">
-            <Text role="overline">Without fullWidth (natural width)</Text>
+            <Text variant="overline">Without fullWidth (natural width)</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={12}>
                 <Stack gap="component">
-                  <FlowButton variant="high" leadingIcon="check">
+                  <FlowButton variant="primary" leadingIcon="check">
                     Confirm
                   </FlowButton>
-                  <FlowButton variant="outline" leadingIcon="download">
+                  <FlowButton variant="outlined" leadingIcon="download">
                     Download
                   </FlowButton>
                 </Stack>
               </LayoutGrid.Item>
             </LayoutGrid>
 
-            <Text role="overline">With fullWidth — all emphasis variants</Text>
+            <Text variant="overline">With fullWidth — all emphasis variants</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={12}>
                 <Stack gap="component">
-                  <FlowButton fullWidth variant="high" leadingIcon="check">
+                  <FlowButton fullWidth variant="primary" leadingIcon="check">
                     High
                   </FlowButton>
-                  <FlowButton fullWidth variant="medium" leadingIcon="save">
+                  <FlowButton fullWidth variant="secondary" leadingIcon="save">
                     Medium
                   </FlowButton>
-                  <FlowButton fullWidth variant="low" leadingIcon="heart">
+                  <FlowButton fullWidth variant="tertiary" leadingIcon="heart">
                     Low
                   </FlowButton>
-                  <FlowButton fullWidth variant="outline" leadingIcon="download">
+                  <FlowButton fullWidth variant="outlined" leadingIcon="download">
                     Outline
                   </FlowButton>
-                  <FlowButton fullWidth variant="danger" leadingIcon="trash">
+                  <FlowButton fullWidth variant="primary" intent="danger" leadingIcon="trash">
                     Danger
                   </FlowButton>
-                  <FlowButton fullWidth variant="warning" leadingIcon="alert-triangle">
+                  <FlowButton
+                    fullWidth
+                    variant="primary"
+                    intent="warning"
+                    leadingIcon="alert-triangle"
+                  >
                     Warning
                   </FlowButton>
                   <FlowButton fullWidth variant="ghost" leadingIcon="close">
@@ -275,37 +324,37 @@ export function FlowButtonVariants() {
               </LayoutGrid.Item>
             </LayoutGrid>
 
-            <Text role="overline">Responsive containers — adapts to parent width</Text>
+            <Text variant="overline">Responsive containers — adapts to parent width</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={12}>
-                <Text role="label-s" color="tertiary">
+                <Text variant="label-s" color="tertiary">
                   12 columns (full width)
                 </Text>
-                <FlowButton fullWidth variant="high" leadingIcon="plus">
+                <FlowButton fullWidth variant="primary" leadingIcon="plus">
                   Create New Project
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={8}>
-                <Text role="label-s" color="tertiary">
+                <Text variant="label-s" color="tertiary">
                   8 columns
                 </Text>
-                <FlowButton fullWidth variant="medium" leadingIcon="save">
+                <FlowButton fullWidth variant="secondary" leadingIcon="save">
                   Save Changes
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={6}>
-                <Text role="label-s" color="tertiary">
+                <Text variant="label-s" color="tertiary">
                   6 columns
                 </Text>
-                <FlowButton fullWidth variant="outline" leadingIcon="download">
+                <FlowButton fullWidth variant="outlined" leadingIcon="download">
                   Export
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={4}>
-                <Text role="label-s" color="tertiary">
+                <Text variant="label-s" color="tertiary">
                   4 columns
                 </Text>
-                <FlowButton fullWidth variant="low" leadingIcon="copy">
+                <FlowButton fullWidth variant="tertiary" leadingIcon="copy">
                   Copy
                 </FlowButton>
               </LayoutGrid.Item>
@@ -321,15 +370,15 @@ export function FlowButtonVariants() {
       >
         <DemoGroup>
           <Stack gap="subsection">
-            <Text role="overline">Action row — span 4 + 4 + 4</Text>
+            <Text variant="overline">Action row — span 4 + 4 + 4</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={4}>
-                <FlowButton fullWidth variant="high" leadingIcon="plus">
+                <FlowButton fullWidth variant="primary" leadingIcon="plus">
                   Create New
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={4}>
-                <FlowButton fullWidth variant="outline" leadingIcon="download">
+                <FlowButton fullWidth variant="outlined" leadingIcon="download">
                   Export CSV
                 </FlowButton>
               </LayoutGrid.Item>
@@ -340,29 +389,34 @@ export function FlowButtonVariants() {
               </LayoutGrid.Item>
             </LayoutGrid>
 
-            <Text role="overline">Primary + secondary — span 8 + 4</Text>
+            <Text variant="overline">Primary + secondary — span 8 + 4</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={8}>
-                <FlowButton fullWidth variant="high" leadingIcon="save">
+                <FlowButton fullWidth variant="primary" leadingIcon="save">
                   Save & Continue
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={4}>
-                <FlowButton fullWidth variant="outline">
+                <FlowButton fullWidth variant="outlined">
                   Cancel
                 </FlowButton>
               </LayoutGrid.Item>
             </LayoutGrid>
 
-            <Text role="overline">Danger zone — span 6 + 6</Text>
+            <Text variant="overline">Danger zone — span 6 + 6</Text>
             <LayoutGrid fullBleed>
               <LayoutGrid.Item span={6}>
-                <FlowButton fullWidth variant="danger" leadingIcon="trash">
+                <FlowButton fullWidth variant="primary" intent="danger" leadingIcon="trash">
                   Delete Account
                 </FlowButton>
               </LayoutGrid.Item>
               <LayoutGrid.Item span={6}>
-                <FlowButton fullWidth variant="warning" leadingIcon="alert-triangle">
+                <FlowButton
+                  fullWidth
+                  variant="primary"
+                  intent="warning"
+                  leadingIcon="alert-triangle"
+                >
                   Reset Settings
                 </FlowButton>
               </LayoutGrid.Item>
@@ -388,7 +442,7 @@ export function FlowIconButtonOverview() {
 
   return (
     <Stack gap="section">
-      {/* Sizes — 4 × span{3} — variant="high" como énfasis canónico primario */}
+      {/* Sizes — 4 × span{3} — variant="primary" como énfasis canónico primario */}
       <DemoSection
         title="Sizes"
         description="Four size variants: sm, md, lg, xl. Square dimensions scale proportionally."
@@ -400,7 +454,7 @@ export function FlowIconButtonOverview() {
                 <DemoCell label={size}>
                   <FlowIconButton
                     icon="settings"
-                    variant="high"
+                    variant="primary"
                     size={size}
                     aria-label={`Settings (${size})`}
                   />
@@ -411,20 +465,20 @@ export function FlowIconButtonOverview() {
         </DemoGroup>
       </DemoSection>
 
-      {/* States — variant="high" para mostrar el énfasis primario del componente */}
+      {/* States — variant="primary" para mostrar el énfasis primario del componente */}
       <DemoSection
         title="States"
-        description={`Default, hover, focus-visible, pressed, disabled, and loading. Shown at size="${demoSize}" with variant="high" (primary emphasis).`}
+        description={`Default, hover, focus-visible, pressed, disabled, and loading. Shown at size="${demoSize}" with variant="primary" (primary emphasis).`}
       >
         <DemoGroup>
           <div {...statesGridProps(demoSize)}>
             <DemoCell label="Default">
-              <FlowIconButton icon="heart" variant="high" size={demoSize} aria-label="Default" />
+              <FlowIconButton icon="heart" variant="primary" size={demoSize} aria-label="Default" />
             </DemoCell>
             <DemoCell label="Hover">
               <FlowIconButton
                 icon="heart"
-                variant="high"
+                variant="primary"
                 size={demoSize}
                 aria-label="Hover"
                 data-demo-state="hover"
@@ -433,7 +487,7 @@ export function FlowIconButtonOverview() {
             <DemoCell label="Focus">
               <FlowIconButton
                 icon="heart"
-                variant="high"
+                variant="primary"
                 size={demoSize}
                 aria-label="Focus"
                 data-demo-state="focus"
@@ -442,7 +496,7 @@ export function FlowIconButtonOverview() {
             <DemoCell label="Pressed">
               <FlowIconButton
                 icon="heart"
-                variant="high"
+                variant="primary"
                 size={demoSize}
                 aria-label="Pressed"
                 data-demo-state="pressed"
@@ -451,7 +505,7 @@ export function FlowIconButtonOverview() {
             <DemoCell label="Disabled">
               <FlowIconButton
                 icon="heart"
-                variant="high"
+                variant="primary"
                 size={demoSize}
                 aria-label="Disabled"
                 disabled
@@ -460,7 +514,7 @@ export function FlowIconButtonOverview() {
             <DemoCell label="Loading">
               <FlowIconButton
                 icon="refresh-cw"
-                variant="high"
+                variant="primary"
                 size={demoSize}
                 aria-label="Loading"
                 loading={loading}
@@ -477,7 +531,7 @@ export function FlowIconButtonOverview() {
       {/* Selected State — low emphasis es el caso de uso correcto para toggles de toolbar */}
       <DemoSection
         title="Selected State"
-        description={`Toggle buttons show selected state with background fill. variant="low" is canonical for toolbar toggles — the filled selected state provides sufficient visual weight.`}
+        description={`Toggle buttons show selected state with background fill. variant="tertiary" is canonical for toolbar toggles — the filled selected state provides sufficient visual weight.`}
       >
         <DemoGroup>
           <LayoutGrid fullBleed>
@@ -485,7 +539,7 @@ export function FlowIconButtonOverview() {
               <DemoCell label="Bold">
                 <FlowIconButton
                   icon="bold"
-                  variant="low"
+                  variant="tertiary"
                   size={demoSize}
                   selected={selected1}
                   onClick={() => setSelected1(!selected1)}
@@ -497,7 +551,7 @@ export function FlowIconButtonOverview() {
               <DemoCell label="Italic">
                 <FlowIconButton
                   icon="italic"
-                  variant="low"
+                  variant="tertiary"
                   size={demoSize}
                   selected={selected2}
                   onClick={() => setSelected2(!selected2)}
@@ -509,7 +563,7 @@ export function FlowIconButtonOverview() {
               <DemoCell label="Underline">
                 <FlowIconButton
                   icon="underline"
-                  variant="low"
+                  variant="tertiary"
                   size={demoSize}
                   selected={selected3}
                   onClick={() => setSelected3(!selected3)}
@@ -521,7 +575,7 @@ export function FlowIconButtonOverview() {
               <DemoCell label="Strikethrough">
                 <FlowIconButton
                   icon="strikethrough"
-                  variant="low"
+                  variant="tertiary"
                   size={demoSize}
                   selected={selected4}
                   onClick={() => setSelected4(!selected4)}
@@ -584,18 +638,20 @@ export function FlowIconButtonVariants() {
       >
         <DemoGroup>
           <LayoutGrid fullBleed>
-            {(["high", "medium", "low", "outline", "danger", "warning", "ghost"] as const).map((emphasis) => (
-              <LayoutGrid.Item key={emphasis} span={2}>
-                <DemoCell label={emphasis}>
-                  <FlowIconButton
-                    icon="heart"
-                    variant={emphasis}
-                    size={demoSize}
-                    aria-label={`Favorite (${emphasis})`}
-                  />
-                </DemoCell>
-              </LayoutGrid.Item>
-            ))}
+            {(["primary", "secondary", "tertiary", "outlined", "ghost"] as const).map(
+              (emphasis) => (
+                <LayoutGrid.Item key={emphasis} span={2}>
+                  <DemoCell label={emphasis}>
+                    <FlowIconButton
+                      icon="heart"
+                      variant={emphasis}
+                      size={demoSize}
+                      aria-label={`Favorite (${emphasis})`}
+                    />
+                  </DemoCell>
+                </LayoutGrid.Item>
+              ),
+            )}
           </LayoutGrid>
         </DemoGroup>
       </DemoSection>
@@ -610,7 +666,7 @@ export function FlowIconButtonVariants() {
             {(emphasis, size) => (
               <FlowIconButton
                 icon="star"
-                variant={emphasis}
+                variant={emphasis as ComponentProps<typeof FlowIconButton>["variant"]}
                 size={size as "sm" | "md" | "lg" | "xl"}
                 aria-label={`Star (${emphasis}, ${size})`}
               />
@@ -626,7 +682,7 @@ export function FlowIconButtonVariants() {
       >
         <DemoGroup>
           <Stack gap="component-lg">
-            <Text role="label-m" color="secondary">
+            <Text variant="label-m" color="secondary">
               Unselected
             </Text>
             <LayoutGrid fullBleed>
@@ -644,7 +700,7 @@ export function FlowIconButtonVariants() {
               ))}
             </LayoutGrid>
 
-            <Text role="label-m" color="secondary">
+            <Text variant="label-m" color="secondary">
               Selected
             </Text>
             <LayoutGrid fullBleed>
@@ -698,12 +754,16 @@ export function FlowFABOverview() {
               icon="plus"
               size={fabSize}
               position="none"
-              style={{ position: "absolute", bottom: "var(--ref-frame-space-4)", right: "var(--ref-frame-space-4)" }}
+              style={{
+                position: "absolute",
+                bottom: "var(--ref-frame-space-4)",
+                right: "var(--ref-frame-space-4)",
+              }}
               aria-label="Add item"
               onClick={() => setCount(count + 1)}
             />
           </div>
-          <Text role="label-m" style={{ marginTop: "var(--ref-frame-space-2)" }}>
+          <Text variant="label-m" style={{ marginTop: "var(--ref-frame-space-2)" }}>
             Clicks: {count}
           </Text>
         </DemoGroup>
@@ -728,7 +788,11 @@ export function FlowFABOverview() {
               size={fabSize}
               label="Compose"
               position="none"
-              style={{ position: "absolute", bottom: "var(--ref-frame-space-4)", right: "var(--ref-frame-space-4)" }}
+              style={{
+                position: "absolute",
+                bottom: "var(--ref-frame-space-4)",
+                right: "var(--ref-frame-space-4)",
+              }}
               aria-label="Compose message"
             />
           </div>
@@ -824,7 +888,12 @@ export function FlowFABOverview() {
                   borderRadius: "var(--sys-radius-surface)",
                 }}
               >
-                <Text style={{ padding: "var(--ref-frame-space-2)", fontSize: "var(--sys-font-size-xs)" }}>
+                <Text
+                  style={{
+                    padding: "var(--ref-frame-space-2)",
+                    fontSize: "var(--sys-font-size-xs)",
+                  }}
+                >
                   position=&quot;{pos}&quot;{pos === "bottom-right" ? " (default)" : ""}
                 </Text>
                 <FlowFAB
@@ -931,7 +1000,11 @@ export function FlowFABVariants() {
                   label={label}
                   variant={variant}
                   position="none"
-                  style={{ position: "absolute", bottom: "var(--ref-frame-space-4)", right: "var(--ref-frame-space-4)" }}
+                  style={{
+                    position: "absolute",
+                    bottom: "var(--ref-frame-space-4)",
+                    right: "var(--ref-frame-space-4)",
+                  }}
                   aria-label={label}
                 />
               </div>

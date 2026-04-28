@@ -1,4 +1,3 @@
-
 /**
  * FLOW — Pattern Registry
  * Per-pattern data + composition demos + usage examples.
@@ -9,8 +8,9 @@
  * Each entry owns: spec metadata, composition breakdown, usage demos, and API documentation.
  * Patterns are L4 — they orchestrate multiple L3 components.
  */
-import { type ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 
+import type { PlaygroundConfig } from "../../components/prop-playground";
 import {
   Divider,
   FlowAvatar,
@@ -26,29 +26,11 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../../lib";
+} from "@flow/design-system";
 import { DemoSection } from "../../components/demo-helpers";
 export type { PropEntry, GuidelineEntry } from "../../components/doc-primitives";
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// Types
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export interface AnatomyEntry {
-  part: string;
-  description: string;
-  tokens: string[];
-  note?: string;
-}
-
-export interface AccessibilitySpec {
-  /** What FLOW handles automatically — the consumer gets this for free */
-  handled: string[];
-  /** What the consumer must provide for the component to be accessible */
-  required?: string[];
-  /** Keyboard interaction patterns */
-  keyboard?: string[];
-}
+import type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction } from "../registry/types";
+export type { AccessibilitySpec, AnatomyEntry, KeyboardInteraction };
 
 export interface PatternSpec {
   name: string;
@@ -100,6 +82,7 @@ export interface PatternEntry {
     useCases?: (ctx?: { patternName: string }) => ReactNode;
   };
   developer: PatternDeveloperGuide;
+  playground?: PlaygroundConfig;
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -136,7 +119,7 @@ function AvatarGroupOverviewDemo() {
         <Stack gap={3}>
           <Inline gap={4} align="center" wrap>
             <Stack gap={1}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 max=3
               </Text>
               <FlowAvatarGroup max={3}>
@@ -148,7 +131,7 @@ function AvatarGroupOverviewDemo() {
               </FlowAvatarGroup>
             </Stack>
             <Stack gap={1}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 max=4
               </Text>
               <FlowAvatarGroup max={4}>
@@ -162,7 +145,7 @@ function AvatarGroupOverviewDemo() {
               </FlowAvatarGroup>
             </Stack>
             <Stack gap={1}>
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 max=2
               </Text>
               <FlowAvatarGroup max={2}>
@@ -182,7 +165,7 @@ function AvatarGroupOverviewDemo() {
       >
         <Stack gap={4}>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Small
             </Text>
             <FlowAvatarGroup size="sm" max={3}>
@@ -193,7 +176,7 @@ function AvatarGroupOverviewDemo() {
             </FlowAvatarGroup>
           </Stack>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Medium (default)
             </Text>
             <FlowAvatarGroup size="md" max={3}>
@@ -204,7 +187,7 @@ function AvatarGroupOverviewDemo() {
             </FlowAvatarGroup>
           </Stack>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Large
             </Text>
             <FlowAvatarGroup size="lg" max={3}>
@@ -215,7 +198,7 @@ function AvatarGroupOverviewDemo() {
             </FlowAvatarGroup>
           </Stack>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Extra Large
             </Text>
             <FlowAvatarGroup size="xl" max={3}>
@@ -250,7 +233,7 @@ function AvatarGroupOverviewDemo() {
 
       <DemoSection title="Large Team" description="Groups with many members show overflow count.">
         <Stack gap={3}>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="paragraph-s" color="secondary">
             12 team members
           </Text>
           <FlowAvatarGroup max={5}>
@@ -269,7 +252,7 @@ function AvatarGroupOverviewDemo() {
           <Grid cols={3} gap="control">
             {["Design Team", "Engineering", "Marketing"].map((team) => (
               <Inline key={team} gap={2} align="center" justify="between">
-                <Text role="paragraph-s">{team}</Text>
+                <Text variant="paragraph-s">{team}</Text>
                 <FlowAvatarGroup size="sm" max={3}>
                   <FlowAvatar name="Member 1" />
                   <FlowAvatar name="Member 2" />
@@ -309,7 +292,7 @@ function AvatarGroupOverviewDemo() {
             ].map((item) => (
               <FlowListItem
                 key={item.project}
-                primary={<Text role="paragraph-s">{item.project}</Text>}
+                primary={<Text variant="paragraph-s">{item.project}</Text>}
                 secondary={
                   <FlowAvatarGroup size="sm" max={item.max}>
                     {Array.from({ length: item.members }, (_, i) => (
@@ -334,13 +317,13 @@ function AvatarGroupUseCasesDemo() {
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
           <Inline gap={2} justify="between" align="center">
-            <Text role="heading-m">Task: Design Homepage</Text>
-            <FlowChip variant="accent" size="sm">
+            <Text variant="heading-m">Task: Design Homepage</Text>
+            <FlowChip variant="filled" status="info" size="sm">
               In Progress
             </FlowChip>
           </Inline>
           <Inline gap={2} align="center">
-            <Text role="label-s" color="secondary">
+            <Text variant="label-s" color="secondary">
               Assignees:
             </Text>
             <FlowAvatarGroup max={3}>
@@ -349,7 +332,7 @@ function AvatarGroupUseCasesDemo() {
               <FlowAvatar name="Carol Williams" />
             </FlowAvatarGroup>
           </Inline>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="paragraph-s" color="secondary">
             3 team members are working on this task
           </Text>
         </Stack>
@@ -358,10 +341,10 @@ function AvatarGroupUseCasesDemo() {
     participants: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Meeting: Q4 Planning</Text>
+          <Text variant="heading-m">Meeting: Q4 Planning</Text>
           <Divider />
           <Stack gap={2}>
-            <Text role="label-s" color="secondary">
+            <Text variant="label-s" color="secondary">
               10 participants
             </Text>
             <FlowAvatarGroup max={6}>
@@ -374,7 +357,7 @@ function AvatarGroupUseCasesDemo() {
               ))}
             </FlowAvatarGroup>
           </Stack>
-          <FlowButton variant="high" size="sm">
+          <FlowButton variant="primary" size="sm">
             Join Meeting
           </FlowButton>
         </Stack>
@@ -384,9 +367,9 @@ function AvatarGroupUseCasesDemo() {
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
           <Inline gap={2} justify="between">
-            <Text role="heading-m">Shared Document</Text>
-            <FlowBadge content={5} color="success">
-              <Text role="caption" color="secondary">
+            <Text variant="heading-m">Shared Document</Text>
+            <FlowBadge content={5} status="success">
+              <Text variant="caption" color="secondary">
                 Viewing now
               </Text>
             </FlowBadge>
@@ -406,15 +389,15 @@ function AvatarGroupUseCasesDemo() {
         <Stack gap={3}>
           <Inline gap={2} justify="between" align="center">
             <Stack gap={1}>
-              <Text role="heading-m">@johndoe</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="heading-m">@johndoe</Text>
+              <Text variant="paragraph-s" color="secondary">
                 Software Engineer
               </Text>
             </Stack>
           </Inline>
           <Divider />
           <Inline gap={2} align="center">
-            <Text role="label-s" color="secondary">
+            <Text variant="label-s" color="secondary">
               1.2k followers
             </Text>
             <FlowAvatarGroup size="sm" max={5}>
@@ -429,7 +412,7 @@ function AvatarGroupUseCasesDemo() {
     contributors: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Repository Contributors</Text>
+          <Text variant="heading-m">Repository Contributors</Text>
           <Inline gap={2} align="center">
             <FlowAvatarGroup max={4}>
               <FlowAvatar name="Alice" src="https://i.pravatar.cc/150?img=40" />
@@ -439,7 +422,7 @@ function AvatarGroupUseCasesDemo() {
               <FlowAvatar name="Eve" />
               <FlowAvatar name="Frank" />
             </FlowAvatarGroup>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               +2 more contributors
             </Text>
           </Inline>
@@ -453,16 +436,16 @@ function AvatarGroupUseCasesDemo() {
             <Inline gap={2} align="center">
               <FlowAvatar name="Alice" size="sm" src="https://i.pravatar.cc/150?img=50" />
               <Stack gap={0}>
-                <Text role="label-s">Alice Johnson</Text>
-                <Text role="caption" color="tertiary">
+                <Text variant="label-s">Alice Johnson</Text>
+                <Text variant="caption" color="tertiary">
                   2 hours ago
                 </Text>
               </Stack>
             </Inline>
           </Stack>
-          <Text role="paragraph-s">Great work team! Let&apos;s sync up tomorrow.</Text>
+          <Text variant="paragraph-s">Great work team! Let&apos;s sync up tomorrow.</Text>
           <Inline gap={2} align="center">
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Mentioned:
             </Text>
             <FlowAvatarGroup size="sm" max={3}>
@@ -482,7 +465,7 @@ function AvatarGroupUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -607,6 +590,23 @@ const avatarGroupEntry: PatternEntry = {
       { type: "dont", text: "Don't use for single avatars — use FlowAvatar directly instead." },
     ],
   },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(
+        FlowAvatarGroup,
+        {
+          max: (props.max as number) ?? 3,
+          size: (props.size as string) ?? "md",
+        } as unknown as React.ComponentProps<typeof FlowAvatarGroup>,
+        React.createElement(FlowAvatar, { name: "Alice Johnson" }),
+        React.createElement(FlowAvatar, { name: "Bob Smith" }),
+        React.createElement(FlowAvatar, { name: "Carol Williams" }),
+        React.createElement(FlowAvatar, { name: "David Brown" }),
+        React.createElement(FlowAvatar, { name: "Eve Davis" }),
+      ),
+    defaults: { max: 3, size: "md" },
+    excludeControls: ["children", "className", "style"],
+  },
 };
 
 // ── FlowHoverCard ──
@@ -619,10 +619,16 @@ function HoverCardOverviewDemo() {
         description="Hover over trigger to reveal rich content preview. Default 300ms delay prevents flash."
       >
         <Inline gap={4} wrap>
-          <FlowHoverCard trigger={<FlowChip variant="accent">Hover me</FlowChip>}>
+          <FlowHoverCard
+            trigger={
+              <FlowChip variant="filled" status="info">
+                Hover me
+              </FlowChip>
+            }
+          >
             <Stack gap={2}>
-              <Text role="heading-s">Hover Card Content</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="heading-s">Hover Card Content</Text>
+              <Text variant="paragraph-s" color="secondary">
                 This content appears after hovering for 300ms.
               </Text>
             </Stack>
@@ -635,13 +641,13 @@ function HoverCardOverviewDemo() {
         description="Common use case: hover over username to see profile details."
       >
         <Stack gap={3}>
-          <Text role="paragraph-s">
+          <Text variant="paragraph-s">
             Comment by{" "}
             <FlowHoverCard
               trigger={
                 <Text
                   as="span"
-                  role="paragraph-s"
+                  variant="paragraph-s"
                   color="accent"
                   style={{ cursor: "pointer", textDecoration: "underline" }}
                 >
@@ -657,27 +663,27 @@ function HoverCardOverviewDemo() {
                     src="https://i.pravatar.cc/150?img=1"
                   />
                   <Stack gap={1}>
-                    <Text role="label-m">Alice Johnson</Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="label-m">Alice Johnson</Text>
+                    <Text variant="caption" color="tertiary">
                       @alice
                     </Text>
                   </Stack>
                 </Inline>
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="paragraph-s" color="secondary">
                   Senior Product Designer with 8+ years of experience building delightful user
                   experiences.
                 </Text>
                 <Divider />
                 <Inline gap={3}>
                   <Stack gap={0}>
-                    <Text role="label-s">1.2k</Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="label-s">1.2k</Text>
+                    <Text variant="caption" color="tertiary">
                       Followers
                     </Text>
                   </Stack>
                   <Stack gap={0}>
-                    <Text role="label-s">342</Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="label-s">342</Text>
+                    <Text variant="caption" color="tertiary">
                       Following
                     </Text>
                   </Stack>
@@ -695,35 +701,38 @@ function HoverCardOverviewDemo() {
       >
         <Grid minItemWidth="200px" gap="control">
           <Stack gap={2} align="center">
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Top
             </Text>
-            <FlowHoverCard trigger={<FlowButton variant="low">Hover</FlowButton>} side="top">
-              <Text role="paragraph-s">Content above trigger</Text>
+            <FlowHoverCard trigger={<FlowButton variant="tertiary">Hover</FlowButton>} side="top">
+              <Text variant="paragraph-s">Content above trigger</Text>
             </FlowHoverCard>
           </Stack>
           <Stack gap={2} align="center">
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Bottom (default)
             </Text>
-            <FlowHoverCard trigger={<FlowButton variant="low">Hover</FlowButton>} side="bottom">
-              <Text role="paragraph-s">Content below trigger</Text>
+            <FlowHoverCard
+              trigger={<FlowButton variant="tertiary">Hover</FlowButton>}
+              side="bottom"
+            >
+              <Text variant="paragraph-s">Content below trigger</Text>
             </FlowHoverCard>
           </Stack>
           <Stack gap={2} align="center">
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Left
             </Text>
-            <FlowHoverCard trigger={<FlowButton variant="low">Hover</FlowButton>} side="left">
-              <Text role="paragraph-s">Content to left</Text>
+            <FlowHoverCard trigger={<FlowButton variant="tertiary">Hover</FlowButton>} side="left">
+              <Text variant="paragraph-s">Content to left</Text>
             </FlowHoverCard>
           </Stack>
           <Stack gap={2} align="center">
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Right
             </Text>
-            <FlowHoverCard trigger={<FlowButton variant="low">Hover</FlowButton>} side="right">
-              <Text role="paragraph-s">Content to right</Text>
+            <FlowHoverCard trigger={<FlowButton variant="tertiary">Hover</FlowButton>} side="right">
+              <Text variant="paragraph-s">Content to right</Text>
             </FlowHoverCard>
           </Stack>
         </Grid>
@@ -735,27 +744,27 @@ function HoverCardOverviewDemo() {
       >
         <Inline gap={4} wrap>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Instant (0ms)
             </Text>
             <FlowHoverCard trigger={<FlowChip>Instant</FlowChip>} openDelay={0} closeDelay={0}>
-              <Text role="paragraph-s">Opens immediately</Text>
+              <Text variant="paragraph-s">Opens immediately</Text>
             </FlowHoverCard>
           </Stack>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Default (300ms)
             </Text>
             <FlowHoverCard trigger={<FlowChip>Default</FlowChip>}>
-              <Text role="paragraph-s">300ms delay</Text>
+              <Text variant="paragraph-s">300ms delay</Text>
             </FlowHoverCard>
           </Stack>
           <Stack gap={1}>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Slow (800ms)
             </Text>
             <FlowHoverCard trigger={<FlowChip>Slow</FlowChip>} openDelay={800}>
-              <Text role="paragraph-s">800ms delay</Text>
+              <Text variant="paragraph-s">800ms delay</Text>
             </FlowHoverCard>
           </Stack>
         </Inline>
@@ -767,7 +776,7 @@ function HoverCardOverviewDemo() {
       >
         <FlowHoverCard
           trigger={
-            <FlowChip variant="accent" icon="image">
+            <FlowChip variant="filled" status="info" icon="image">
               View Image
             </FlowChip>
           }
@@ -783,16 +792,16 @@ function HoverCardOverviewDemo() {
               }}
             />
             <Stack gap={2}>
-              <Text role="label-m">Mountain Landscape</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="label-m">Mountain Landscape</Text>
+              <Text variant="paragraph-s" color="secondary">
                 Captured at sunrise in the Swiss Alps. 4K resolution.
               </Text>
             </Stack>
             <Inline gap={2}>
-              <FlowButton variant="high" size="sm">
+              <FlowButton variant="primary" size="sm">
                 Download
               </FlowButton>
-              <FlowButton variant="low" size="sm">
+              <FlowButton variant="tertiary" size="sm">
                 Share
               </FlowButton>
             </Inline>
@@ -804,16 +813,16 @@ function HoverCardOverviewDemo() {
         title="Keyboard Accessible"
         description="Hover cards also open on focus for keyboard navigation."
       >
-        <Text role="paragraph-s">
+        <Text variant="paragraph-s">
           Use Tab to navigate:{" "}
           <FlowHoverCard
             trigger={
-              <FlowButton variant="low" size="sm">
+              <FlowButton variant="tertiary" size="sm">
                 Focusable Link
               </FlowButton>
             }
           >
-            <Text role="paragraph-s">Opens on focus for keyboard users</Text>
+            <Text variant="paragraph-s">Opens on focus for keyboard users</Text>
           </FlowHoverCard>
         </Text>
       </DemoSection>
@@ -832,7 +841,7 @@ function HoverCardOverviewDemo() {
                     trigger={
                       <Text
                         as="span"
-                        role="paragraph-s"
+                        variant="paragraph-s"
                         color="accent"
                         style={{ cursor: "pointer" }}
                       >
@@ -841,8 +850,8 @@ function HoverCardOverviewDemo() {
                     }
                   >
                     <Stack gap={2} style={{ width: "240px" }}>
-                      <Text role="label-m">{item}</Text>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="label-m">{item}</Text>
+                      <Text variant="paragraph-s" color="secondary">
                         In progress • 3 team members
                       </Text>
                       <FlowAvatarGroup size="sm" max={3}>
@@ -854,7 +863,7 @@ function HoverCardOverviewDemo() {
                   </FlowHoverCard>
                 }
                 secondary={
-                  <Text role="caption" color="tertiary">
+                  <Text variant="caption" color="tertiary">
                     Updated 2h ago
                   </Text>
                 }
@@ -869,11 +878,11 @@ function HoverCardOverviewDemo() {
           {["React", "TypeScript", "Design System", "Documentation"].map((tag) => (
             <FlowHoverCard key={tag} trigger={<FlowChip size="sm">{tag}</FlowChip>}>
               <Stack gap={2} style={{ width: "200px" }}>
-                <Text role="label-m">{tag}</Text>
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="label-m">{tag}</Text>
+                <Text variant="paragraph-s" color="secondary">
                   Used in 12 projects
                 </Text>
-                <Text role="caption" color="tertiary">
+                <Text variant="caption" color="tertiary">
                   Last updated: 2 days ago
                 </Text>
               </Stack>
@@ -895,17 +904,17 @@ function HoverCardUseCasesDemo() {
           <Inline gap={2} align="center">
             <FlowAvatar name="Bob" size="sm" />
             <Stack gap={0}>
-              <Text role="label-s">Bob Smith</Text>
-              <Text role="caption" color="tertiary">
+              <Text variant="label-s">Bob Smith</Text>
+              <Text variant="caption" color="tertiary">
                 1 hour ago
               </Text>
             </Stack>
           </Inline>
-          <Text role="paragraph-s">
+          <Text variant="paragraph-s">
             Hey{" "}
             <FlowHoverCard
               trigger={
-                <Text as="span" role="paragraph-s" color="accent" style={{ cursor: "pointer" }}>
+                <Text as="span" variant="paragraph-s" color="accent" style={{ cursor: "pointer" }}>
                   @alice
                 </Text>
               }
@@ -918,13 +927,13 @@ function HoverCardUseCasesDemo() {
                     src="https://i.pravatar.cc/150?img=5"
                   />
                   <Stack gap={1}>
-                    <Text role="label-m">Alice Johnson</Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="label-m">Alice Johnson</Text>
+                    <Text variant="caption" color="tertiary">
                       @alice • Designer
                     </Text>
                   </Stack>
                 </Inline>
-                <FlowButton variant="high" size="sm">
+                <FlowButton variant="primary" size="sm">
                   View Profile
                 </FlowButton>
               </Stack>
@@ -937,14 +946,14 @@ function HoverCardUseCasesDemo() {
     links: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Documentation</Text>
-          <Text role="paragraph-s">
+          <Text variant="heading-m">Documentation</Text>
+          <Text variant="paragraph-s">
             Check out the{" "}
             <FlowHoverCard
               trigger={
                 <Text
                   as="span"
-                  role="paragraph-s"
+                  variant="paragraph-s"
                   color="accent"
                   style={{ cursor: "pointer", textDecoration: "underline" }}
                 >
@@ -953,11 +962,11 @@ function HoverCardUseCasesDemo() {
               }
             >
               <Stack gap={2} style={{ width: "300px" }}>
-                <Text role="label-m">API Reference</Text>
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="label-m">API Reference</Text>
+                <Text variant="paragraph-s" color="secondary">
                   Complete API documentation with examples and best practices.
                 </Text>
-                <FlowChip size="sm" variant="success">
+                <FlowChip size="sm" variant="filled" status="success">
                   Updated
                 </FlowChip>
               </Stack>
@@ -970,7 +979,7 @@ function HoverCardUseCasesDemo() {
     products: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Shopping Cart</Text>
+          <Text variant="heading-m">Shopping Cart</Text>
           <FlowList dividers>
             {["Wireless Headphones", "Smart Watch", "Laptop Stand"].map((product) => (
               <FlowListItem
@@ -978,7 +987,7 @@ function HoverCardUseCasesDemo() {
                 primary={
                   <FlowHoverCard
                     trigger={
-                      <Text as="span" role="paragraph-s" style={{ cursor: "pointer" }}>
+                      <Text as="span" variant="paragraph-s" style={{ cursor: "pointer" }}>
                         {product}
                       </Text>
                     }
@@ -993,11 +1002,11 @@ function HoverCardUseCasesDemo() {
                         }}
                       />
                       <Stack gap={2}>
-                        <Text role="label-m">{product}</Text>
-                        <Text role="paragraph-s" color="secondary">
+                        <Text variant="label-m">{product}</Text>
+                        <Text variant="paragraph-s" color="secondary">
                           High-quality {product.toLowerCase()} with premium features.
                         </Text>
-                        <Text role="label-m" color="accent">
+                        <Text variant="label-m" color="accent">
                           $99.99
                         </Text>
                       </Stack>
@@ -1005,7 +1014,7 @@ function HoverCardUseCasesDemo() {
                   </FlowHoverCard>
                 }
                 secondary={
-                  <Text role="caption" color="tertiary">
+                  <Text variant="caption" color="tertiary">
                     Qty: 1
                   </Text>
                 }
@@ -1018,14 +1027,14 @@ function HoverCardUseCasesDemo() {
     glossary: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Technical Article</Text>
-          <Text role="paragraph-s">
+          <Text variant="heading-m">Technical Article</Text>
+          <Text variant="paragraph-s">
             In FLOW, we use a{" "}
             <FlowHoverCard
               trigger={
                 <Text
                   as="span"
-                  role="paragraph-s"
+                  variant="paragraph-s"
                   style={{
                     borderBottom: "1px dashed var(--sys-energy-border-default)",
                     cursor: "help",
@@ -1036,8 +1045,8 @@ function HoverCardUseCasesDemo() {
               }
             >
               <Stack gap={2} style={{ width: "300px" }}>
-                <Text role="label-m">Token System</Text>
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="label-m">Token System</Text>
+                <Text variant="paragraph-s" color="secondary">
                   A three-tier token architecture (ref → sys → comp) that ensures visual consistency
                   across platforms.
                 </Text>
@@ -1051,33 +1060,33 @@ function HoverCardUseCasesDemo() {
     status: (
       <Surface variant="primary" padding="container">
         <Stack gap={3}>
-          <Text role="heading-m">Service Status</Text>
+          <Text variant="heading-m">Service Status</Text>
           <FlowList dividers>
             {[
-              { service: "API Server", status: "Operational", variant: "success" },
-              { service: "Database", status: "Degraded", variant: "warning" },
-              { service: "CDN", status: "Operational", variant: "success" },
+              { service: "API Server", status: "Operational", chipStatus: "success" as const },
+              { service: "Database", status: "Degraded", chipStatus: "warning" as const },
+              { service: "CDN", status: "Operational", chipStatus: "success" as const },
             ].map((item) => (
               <FlowListItem
                 key={item.service}
                 primary={
                   <Inline gap={2} align="center">
-                    <Text role="paragraph-s">{item.service}</Text>
+                    <Text variant="paragraph-s">{item.service}</Text>
                     <FlowHoverCard
                       trigger={
-                        <FlowChip size="sm" variant={item.variant}>
+                        <FlowChip size="sm" status={item.chipStatus}>
                           {item.status}
                         </FlowChip>
                       }
                     >
                       <Stack gap={2} style={{ width: "240px" }}>
-                        <Text role="label-m">{item.service} Status</Text>
-                        <Text role="paragraph-s" color="secondary">
+                        <Text variant="label-m">{item.service} Status</Text>
+                        <Text variant="paragraph-s" color="secondary">
                           {item.status === "Operational"
                             ? "All systems running normally."
                             : "Response times elevated by 20%. Team investigating."}
                         </Text>
-                        <Text role="caption" color="tertiary">
+                        <Text variant="caption" color="tertiary">
                           Last checked: 2 min ago
                         </Text>
                       </Stack>
@@ -1098,7 +1107,7 @@ function HoverCardUseCasesDemo() {
         {Object.keys(examples).map((key) => (
           <FlowChip
             key={key}
-            variant={activeExample === key ? "accent" : "default"}
+            variant={activeExample === key ? "tonal" : "filled"}
             onClick={() => setActiveExample(key)}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -1156,8 +1165,8 @@ const hoverCardEntry: PatternEntry = {
   closeDelay={200}
 >
   <Stack gap={2}>
-    <Text role="label-m">User Profile</Text>
-    <Text role="paragraph-s">Bio and details...</Text>
+    <Text variant="label-m">User Profile</Text>
+    <Text variant="paragraph-s">Bio and details...</Text>
   </Stack>
 </FlowHoverCard>`,
     flutterImport: `import 'package:flow/patterns/hover_card.dart';`,
@@ -1253,6 +1262,21 @@ const hoverCardEntry: PatternEntry = {
         text: "Desktop-only pattern. On mobile viewports, consider showing content inline or via tap/dialog.",
       },
     ],
+  },
+  playground: {
+    renderPreview: (props: Record<string, unknown>) =>
+      React.createElement(
+        FlowHoverCard,
+        {
+          trigger: React.createElement(FlowChip, { variant: "filled", status: "info" }, "Hover me"),
+          side: (props.side as string) ?? "bottom",
+          openDelay: (props.openDelay as number) ?? 300,
+          closeDelay: (props.closeDelay as number) ?? 200,
+          children: React.createElement(Text, { variant: "paragraph-s", children: "Rich preview content" } as React.ComponentProps<typeof Text>),
+        } as unknown as React.ComponentProps<typeof FlowHoverCard>,
+      ),
+    defaults: { side: "bottom", openDelay: 300, closeDelay: 200 },
+    excludeControls: ["trigger", "children", "className", "style"],
   },
 };
 

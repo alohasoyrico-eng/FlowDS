@@ -1,0 +1,14 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONFIRMATION DIALOG — Purpose-built confirm action (L4)
+   Overlay + panel base styles
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-confirmation-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sys-depth-layer-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sys-depth-scrim);
+}

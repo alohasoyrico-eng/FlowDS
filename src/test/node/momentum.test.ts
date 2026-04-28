@@ -10,7 +10,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 
-import { ref } from "../../app/tokens.ts";
+import { ref } from "../../../packages/tokens/src/tokens.ts";
 
 // ─────────────────────────────────────────────
 // Token value contracts

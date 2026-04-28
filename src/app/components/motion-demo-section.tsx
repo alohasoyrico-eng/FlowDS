@@ -22,8 +22,8 @@
 
 import { useCallback, useState } from "react";
 
-import { Grid, Inline, Stack, Surface, Text } from "../primitives";
-import { FlowButton } from "./controls";
+import { Grid, Inline, Stack, Surface, Text } from "@flow/primitives";
+import { FlowButton } from "@flow/components";
 import { DemoGroup, DemoSection } from "./demo-helpers";
 
 // ── Duration scale ────────────────────────────────────────────────────────────
@@ -129,10 +129,10 @@ export function DurationComparisonDemo() {
       <DemoGroup>
         <Stack gap="component">
           <div className="flow-demo-motion-replay-row">
-            <FlowButton variant="outline" size="sm" onClick={replay}>
+            <FlowButton variant="outlined" size="sm" onClick={replay}>
               ▶ Replay
             </FlowButton>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               All bars start at 0% and fill to 100% simultaneously
             </Text>
           </div>
@@ -142,15 +142,19 @@ export function DurationComparisonDemo() {
               <Stack key={label} gap={1}>
                 <Inline gap="component" align="center" justify="between">
                   <Inline gap="component" align="center">
-                    <Text role="label-s" color="secondary" style={{ minWidth: "var(--ref-frame-space-14)" }}>
+                    <Text
+                      variant="label-s"
+                      color="secondary"
+                      style={{ minWidth: "var(--ref-frame-space-14)" }}
+                    >
                       {label}
                     </Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       {ms} — {desc}
                     </Text>
                   </Inline>
                   <Text
-                    role="caption"
+                    variant="caption"
                     color="tertiary"
                     style={{ fontFamily: "var(--ref-voice-family-mono)", whiteSpace: "nowrap" }}
                   >
@@ -204,10 +208,10 @@ export function EasingComparisonDemo() {
       <DemoGroup>
         <Stack gap="component">
           <div className="flow-demo-motion-replay-row">
-            <FlowButton variant="outline" size="sm" onClick={replay}>
+            <FlowButton variant="outlined" size="sm" onClick={replay}>
               ▶ Replay
             </FlowButton>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Same duration (500ms), different acceleration
             </Text>
           </div>
@@ -217,15 +221,19 @@ export function EasingComparisonDemo() {
               <Stack key={label} gap={1}>
                 <Inline gap="component" align="center" justify="between">
                   <Inline gap="component" align="center">
-                    <Text role="label-s" color="secondary" style={{ minWidth: "var(--ref-frame-space-16)" }}>
+                    <Text
+                      variant="label-s"
+                      color="secondary"
+                      style={{ minWidth: "var(--ref-frame-space-16)" }}
+                    >
                       {label}
                     </Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       {desc}
                     </Text>
                   </Inline>
                   <Text
-                    role="caption"
+                    variant="caption"
                     color="tertiary"
                     style={{ fontFamily: "var(--ref-voice-family-mono)", whiteSpace: "nowrap" }}
                   >
@@ -246,7 +254,7 @@ export function EasingComparisonDemo() {
                 </div>
 
                 <Text
-                  role="caption"
+                  variant="caption"
                   color="tertiary"
                   style={{ fontFamily: "var(--ref-voice-family-mono)" }}
                 >
@@ -282,7 +290,7 @@ export function StaggerDemo() {
       <DemoGroup>
         <Stack gap="component">
           <div className="flow-demo-motion-replay-row">
-            <FlowButton variant="outline" size="sm" onClick={() => setAnimKey((k) => k + 1)}>
+            <FlowButton variant="outlined" size="sm" onClick={() => setAnimKey((k) => k + 1)}>
               ▶ Replay
             </FlowButton>
           </div>
@@ -291,14 +299,14 @@ export function StaggerDemo() {
             {STAGGER_TIERS.map(({ label, token, ms }) => (
               <Stack key={label} gap="component">
                 <Stack gap={1}>
-                  <Text role="label-s" color="secondary">
+                  <Text variant="label-s" color="secondary">
                     {label}
                   </Text>
-                  <Text role="caption" color="tertiary">
+                  <Text variant="caption" color="tertiary">
                     {ms} between items
                   </Text>
                   <Text
-                    role="caption"
+                    variant="caption"
                     color="tertiary"
                     style={{ fontFamily: "var(--ref-voice-family-mono)" }}
                   >
@@ -320,7 +328,7 @@ export function StaggerDemo() {
                         animationDelay: `calc(${i} * var(${token}))`,
                       }}
                     >
-                      <Text role="label-s">{item}</Text>
+                      <Text variant="label-s">{item}</Text>
                     </Surface>
                   ))}
                 </Stack>
@@ -351,7 +359,7 @@ export function MotionTokensReference() {
         <Grid columns={2} gap="component-lg">
           {/* Duration */}
           <Stack gap="component">
-            <Text role="label-l">Duration</Text>
+            <Text variant="label-l">Duration</Text>
             <Stack gap={1}>
               {[
                 { sys: "--sys-momentum-duration-fast", ms: "100ms (compact: 100ms)" },
@@ -366,10 +374,10 @@ export function MotionTokensReference() {
               ].map(({ sys, ms }) => (
                 <Surface key={sys} variant="secondary" radius="control" padding="control">
                   <Stack gap={1}>
-                    <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+                    <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
                       var({sys})
                     </Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       {ms}
                     </Text>
                   </Stack>
@@ -380,7 +388,7 @@ export function MotionTokensReference() {
 
           {/* Transition shortcuts */}
           <Stack gap="component">
-            <Text role="label-l">Transition Shortcuts</Text>
+            <Text variant="label-l">Transition Shortcuts</Text>
             <Stack gap={1}>
               {[
                 { sys: "--sys-momentum-transition-fast", val: "duration-fast + easing-standard" },
@@ -392,17 +400,17 @@ export function MotionTokensReference() {
               ].map(({ sys, val }) => (
                 <Surface key={sys} variant="secondary" radius="control" padding="control">
                   <Stack gap={1}>
-                    <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+                    <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
                       var({sys})
                     </Text>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       {val}
                     </Text>
                   </Stack>
                 </Surface>
               ))}
             </Stack>
-            <Text role="caption" color="tertiary">
+            <Text variant="caption" color="tertiary">
               Usage:{" "}
               <code style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
                 transition: color var(--sys-momentum-transition-default)

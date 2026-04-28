@@ -1,0 +1,167 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MULTI SELECT — Multi-value combobox
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-multi-select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Trigger — composes .flow-input-surface for height, radius, border (box-shadow),
+   padding, background, and state transitions. Only multi-select overrides here.
+   align-items: center (IS default is flex-end for floating label); multi-select
+   uses external label so content should be vertically centered. */
+.flow-multi-select-trigger {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  cursor: pointer;
+  padding-inline-start: var(--comp-textinput-padding-x);
+  padding-inline-end: var(--comp-textinput-padding-x);
+}
+
+.flow-multi-select-clear {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-multi-select[data-state~="error"] .flow-multi-select-trigger {
+  --_is-bc: var(--comp-textinput-border-error, var(--sys-energy-status-error));
+}
+
+.flow-multi-select[data-state~="disabled"] .flow-multi-select-trigger {
+  cursor: not-allowed;
+  color: var(--sys-energy-text-tertiary);
+  pointer-events: none;
+}
+
+.flow-multi-select-label {
+  display: block;
+  margin-block-end: var(--ref-frame-space-1);
+  font-size: var(--sys-size-voice-label);
+  font-family: var(--sys-voice-family);
+  font-weight: var(--sys-voice-weight-medium);
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-multi-select[data-state~="error"] .flow-multi-select-label {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-multi-select-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ref-frame-space-1);
+  padding: var(--ref-frame-space-micro) var(--ref-frame-space-2);
+  border-radius: var(--ref-frame-radius-full);
+  background: var(--sys-energy-surface-interactive);
+  font-size: var(--sys-voice-label-s-size);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-primary);
+  line-height: var(--sys-voice-line-height-snug);
+  max-width: calc(var(--ref-frame-space-20) * 3);
+  overflow: hidden;
+}
+
+.flow-multi-select-chip-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  color: var(--sys-energy-text-tertiary);
+  flex-shrink: 0;
+}
+
+.flow-multi-select-chip-remove:hover {
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-multi-select-placeholder {
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-multi-select-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--sys-energy-surface-primary);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-container);
+  box-shadow: var(--sys-depth-elevation-medium);
+  max-height: var(--comp-multi-select-dropdown-max-height);
+  overflow-y: auto;
+}
+
+.flow-multi-select-search {
+  width: 100%;
+  border: none;
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  background: transparent;
+  color: var(--sys-energy-text-primary);
+  outline: none;
+}
+
+.flow-multi-select-actions {
+  display: flex;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-3);
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+}
+
+.flow-multi-select-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--sys-voice-label-s-size);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-accent);
+  padding: var(--ref-frame-space-micro) var(--ref-frame-space-1);
+}
+
+.flow-multi-select-action-btn:hover {
+  text-decoration: underline;
+}
+
+.flow-multi-select-group-label {
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-3);
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--sys-voice-letter-spacing-wide);
+}
+
+.flow-multi-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  cursor: pointer;
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  transition: background var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+.flow-multi-select-option:hover,
+.flow-multi-select-option[data-highlighted] {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-multi-select-option[aria-disabled="true"] {
+  color: var(--sys-energy-text-tertiary);
+  cursor: default;
+}

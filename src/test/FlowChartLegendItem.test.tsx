@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowChartLegendItem } from "../app/components/data";
+import { FlowChartLegendItem } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -51,17 +51,13 @@ describe("FlowChartLegendItem — rendering", () => {
 
 describe("FlowChartLegendItem — states", () => {
   it("applies reduced opacity when hidden=true", () => {
-    const { container } = render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" hidden />,
-    );
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" hidden />);
     const wrapper = container.firstElementChild;
     expect(wrapper).toHaveStyle({ opacity: "0.4" });
   });
 
   it("has full opacity when hidden=false", () => {
-    const { container } = render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" />,
-    );
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" />);
     const wrapper = container.firstElementChild;
     expect(wrapper).toHaveStyle({ opacity: "1" });
   });
@@ -75,9 +71,7 @@ describe("FlowChartLegendItem — states", () => {
   });
 
   it("does not show pointer cursor when toggleable is not set", () => {
-    const { container } = render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" />,
-    );
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" />);
     const wrapper = container.firstElementChild;
     // cursor should not be "pointer"
     expect(wrapper?.getAttribute("style")).not.toContain("cursor: pointer");
@@ -91,18 +85,14 @@ describe("FlowChartLegendItem — states", () => {
 describe("FlowChartLegendItem — interaction", () => {
   it("calls onToggle when clicked and toggleable=true", async () => {
     const onToggle = vi.fn();
-    render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" toggleable onToggle={onToggle} />,
-    );
+    render(<FlowChartLegendItem color="#ff0000" label="Revenue" toggleable onToggle={onToggle} />);
     await userEvent.click(screen.getByText("Revenue"));
     expect(onToggle).toHaveBeenCalledTimes(1);
   });
 
   it("does not call onToggle when clicked and toggleable is not set", async () => {
     const onToggle = vi.fn();
-    render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" onToggle={onToggle} />,
-    );
+    render(<FlowChartLegendItem color="#ff0000" label="Revenue" onToggle={onToggle} />);
     await userEvent.click(screen.getByText("Revenue"));
     expect(onToggle).not.toHaveBeenCalled();
   });
@@ -114,16 +104,12 @@ describe("FlowChartLegendItem — interaction", () => {
 
 describe("FlowChartLegendItem — accessibility", () => {
   it("renders inline (as a span element)", () => {
-    const { container } = render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" />,
-    );
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" />);
     expect(container.firstElementChild?.tagName).toBe("SPAN");
   });
 
   it("color swatch has round shape (border-radius)", () => {
-    const { container } = render(
-      <FlowChartLegendItem color="#ff0000" label="Revenue" />,
-    );
+    const { container } = render(<FlowChartLegendItem color="#ff0000" label="Revenue" />);
     const swatch = container.querySelector("span[style*='background']");
     expect(swatch).toHaveStyle({ borderRadius: "var(--sys-frame-radius-full)" });
   });

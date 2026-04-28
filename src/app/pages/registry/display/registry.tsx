@@ -3,7 +3,16 @@
  * Component metadata, demos, and developer guides for display components.
  */
 import React from "react";
-import { FlowBadge, FlowCard, FlowChip } from "../../../../lib";
+import {
+  FlowAvatar,
+  FlowBadge,
+  FlowCard,
+  FlowChip,
+  FlowKPITrendIndicator,
+  FlowList,
+  FlowListItem,
+  FlowTag,
+} from "@flow/design-system";
 import type { ComponentEntry } from "../types";
 import {
   FlowAvatarOverview,
@@ -62,9 +71,10 @@ export const DISPLAY_REGISTRY: Record<string, ComponentEntry> = {
         ],
         required: ["Provide aria-label when list purpose is not obvious from surrounding context"],
         keyboard: [
-          "Tab to navigate between interactive list items",
-          "Enter or Space to activate selected item",
+          { key: "Tab", action: "Navigate between interactive list items" },
+          { key: "Enter / Space", action: "Activate selected item" },
         ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -225,6 +235,18 @@ FlowList(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowList,
+          { dividers: !!props.dividers } as React.ComponentProps<typeof FlowList>,
+          React.createElement(FlowListItem, { primary: "Inbox", secondary: "12 unread messages" }),
+          React.createElement(FlowListItem, { primary: "Drafts", secondary: "3 drafts" }),
+          React.createElement(FlowListItem, { primary: "Sent", secondary: "Last sent today" }),
+        ),
+      defaults: { dividers: true },
+      excludeControls: ["children", "aria-label", "className", "style"],
+    },
   },
 
   // ─── FlowChip ───
@@ -271,10 +293,12 @@ FlowList(
         ],
         required: ["Provide descriptive children text for chip label"],
         keyboard: [
-          "Tab to focus interactive chip",
-          "Enter or Space to activate",
-          "Tab to remove button, Enter/Space to remove",
+          { key: "Tab", action: "Focus interactive chip" },
+          { key: "Enter / Space", action: "Activate" },
+          { key: "Tab", action: "Focus remove button" },
+          { key: "Enter / Space", action: "Remove" },
         ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -287,11 +311,11 @@ FlowList(
 <FlowChip>Label</FlowChip>
 
 // All variants
-<FlowChip variant="default">Default</FlowChip>
-<FlowChip variant="accent">Accent</FlowChip>
-<FlowChip variant="success">Success</FlowChip>
-<FlowChip variant="warning">Warning</FlowChip>
-<FlowChip variant="danger">Danger</FlowChip>
+<FlowChip variant="filled">Default</FlowChip>
+<FlowChip variant="filled" status="info">Accent</FlowChip>
+<FlowChip variant="filled" status="success">Success</FlowChip>
+<FlowChip variant="filled" status="warning">Warning</FlowChip>
+<FlowChip variant="filled" status="error">Danger</FlowChip>
 <FlowChip variant="outlined">Outlined</FlowChip>
 <FlowChip variant="tonal">Tonal</FlowChip>
 
@@ -442,11 +466,15 @@ FlowChip(
     },
     playground: {
       renderPreview: (props: Record<string, unknown>) =>
-        React.createElement(FlowChip, {
-          variant: props.variant,
-          size: props.size,
-          removable: !!props.removable,
-        } as React.ComponentProps<typeof FlowChip>, String(props.children ?? "Chip label")),
+        React.createElement(
+          FlowChip,
+          {
+            variant: props.variant,
+            size: props.size,
+            removable: !!props.removable,
+          } as React.ComponentProps<typeof FlowChip>,
+          String(props.children ?? "Chip label"),
+        ),
       defaults: { children: "Chip label", variant: "default", size: "md", removable: false },
     },
   },
@@ -487,6 +515,7 @@ FlowChip(
           "Don't rely solely on color to convey meaning",
         ],
         keyboard: [],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -590,6 +619,21 @@ FlowTag(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowTag, {
+          status: props.status,
+          size: props.size,
+          variant: props.variant,
+          children: props.children ?? "Tag Label",
+        } as React.ComponentProps<typeof FlowTag>),
+      defaults: {
+        children: "Tag Label",
+        status: "info",
+        size: "md",
+        variant: "label",
+      },
+    },
   },
 
   // ─── FlowBadge ───
@@ -635,6 +679,7 @@ FlowTag(
           "Don't rely solely on badge for critical information",
         ],
         keyboard: [],
+        wcag: ["1.1.1"],
       },
     },
     demos: {
@@ -654,11 +699,11 @@ FlowTag(
 </FlowBadge>
 
 // All colors
-<FlowBadge content={3} color="default"><FlowIcon name="bell" /></FlowBadge>
-<FlowBadge content={3} color="accent"><FlowIcon name="bell" /></FlowBadge>
-<FlowBadge content={3} color="success"><FlowIcon name="bell" /></FlowBadge>
-<FlowBadge content={3} color="warning"><FlowIcon name="bell" /></FlowBadge>
-<FlowBadge content={3} color="danger"><FlowIcon name="bell" /></FlowBadge>
+<FlowBadge content={3} status="neutral"><FlowIcon name="bell" /></FlowBadge>
+<FlowBadge content={3} status="info"><FlowIcon name="bell" /></FlowBadge>
+<FlowBadge content={3} status="success"><FlowIcon name="bell" /></FlowBadge>
+<FlowBadge content={3} status="warning"><FlowIcon name="bell" /></FlowBadge>
+<FlowBadge content={3} status="error"><FlowIcon name="bell" /></FlowBadge>
 
 // Max count (shows "99+" when exceeded)
 <FlowBadge content={150}>
@@ -681,11 +726,11 @@ FlowTag(
 
 // Standalone (no wrapper, no positioning)
 <FlowBadge content={12} standalone />
-<FlowBadge variant="dot" color="success" standalone />
+<FlowBadge variant="dot" status="success" standalone />
 
 // With button (ensure aria-label includes count)
 <button aria-label="Notifications, 5 unread">
-  <FlowBadge content={5} color="danger">
+  <FlowBadge content={5} status="error">
     <FlowIcon name="bell" />
   </FlowBadge>
 </button>`,
@@ -869,7 +914,11 @@ FlowBadge(
           "Provide aria-label for interactive cards without visible text",
           "Use semantic HTML (article, section) when appropriate",
         ],
-        keyboard: ["Tab to focus interactive card", "Enter or Space to activate"],
+        keyboard: [
+          { key: "Tab", action: "Focus interactive card" },
+          { key: "Enter / Space", action: "Activate" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -886,7 +935,7 @@ FlowBadge(
 // Elevated (default)
 <FlowCard variant="elevated">
   <Stack gap={2}>
-    <Text role="h3">Card Title</Text>
+    <Text variant="h3">Card Title</Text>
     <Text>Card description</Text>
   </Stack>
 </FlowCard>
@@ -904,7 +953,7 @@ FlowBadge(
 // Interactive (clickable)
 <FlowCard interactive onClick={() => console.log('clicked')}>
   <Stack gap={2}>
-    <Text role="h3">Clickable Card</Text>
+    <Text variant="h3">Clickable Card</Text>
     <Text>Click anywhere on this card</Text>
   </Stack>
 </FlowCard>
@@ -1024,7 +1073,11 @@ FlowCard(
         React.createElement(FlowCard, {
           elevation: props.elevation,
           padding: props.padding,
-          children: React.createElement("div", { style: { padding: "16px" } }, String(props.children ?? "Card content")),
+          children: React.createElement(
+            "div",
+            { style: { padding: "16px" } },
+            String(props.children ?? "Card content"),
+          ),
         } as React.ComponentProps<typeof FlowCard>),
       defaults: { children: "Card content", elevation: 1 },
     },
@@ -1065,6 +1118,7 @@ FlowCard(
         ],
         required: ["Provide alt text for images", "Provide full name for initials variant"],
         keyboard: [],
+        wcag: ["1.1.1"],
       },
     },
     demos: {
@@ -1178,6 +1232,19 @@ FlowAvatar(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowAvatar, {
+          name: (props.name as string) || "Jane Doe",
+          size: props.size,
+          status: props.status,
+        } as React.ComponentProps<typeof FlowAvatar>),
+      defaults: {
+        name: "Jane Doe",
+        size: "md",
+        status: "online",
+      },
+    },
   },
 
   // ─── FlowTable ───
@@ -1230,6 +1297,7 @@ FlowAvatar(
           "Use <th> for column headers with scope='col'",
         ],
         keyboard: [],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -1340,6 +1408,38 @@ FlowAvatar(
         { intent: "info", text: "Hoverable rows help users track across wide tables." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          "table",
+          {
+            className: "flow-table",
+            "data-striped": !!props.striped || undefined,
+            "data-hoverable": !!props.hoverable || undefined,
+            style: { width: "100%" },
+          },
+          React.createElement(
+            "thead",
+            null,
+            React.createElement(
+              "tr",
+              null,
+              React.createElement("th", { scope: "col" }, "Name"),
+              React.createElement("th", { scope: "col" }, "Role"),
+              React.createElement("th", { scope: "col" }, "Status"),
+            ),
+          ),
+          React.createElement(
+            "tbody",
+            null,
+            React.createElement("tr", null, React.createElement("td", null, "Alice"), React.createElement("td", null, "Engineer"), React.createElement("td", null, "Active")),
+            React.createElement("tr", null, React.createElement("td", null, "Bob"), React.createElement("td", null, "Designer"), React.createElement("td", null, "Away")),
+            React.createElement("tr", null, React.createElement("td", null, "Carol"), React.createElement("td", null, "PM"), React.createElement("td", null, "Active")),
+          ),
+        ),
+      defaults: { striped: false, hoverable: true },
+      excludeControls: ["children", "responsive", "className", "style"],
+    },
   },
 
   // ─── FlowKPITrendIndicator ───
@@ -1380,6 +1480,7 @@ FlowAvatar(
         ],
         required: ["Provide descriptive aria-label (e.g., 'Up 12.5% from last month')"],
         keyboard: [],
+        wcag: ["1.1.1"],
       },
     },
     demos: {
@@ -1413,8 +1514,8 @@ FlowAvatar(
 // In KPI card
 <FlowCard>
   <Stack gap={1}>
-    <Text role="caption" color="secondary">Revenue</Text>
-    <Text role="h2">$45,230</Text>
+    <Text variant="caption" color="secondary">Revenue</Text>
+    <Text variant="h2">$45,230</Text>
     <FlowKPITrendIndicator value={12.5} period="vs last month" />
   </Stack>
 </FlowCard>`,
@@ -1492,6 +1593,17 @@ FlowKPITrendIndicator(
         { intent: "info", text: "Zero change shows neutral color with no arrow." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowKPITrendIndicator, {
+          value: (props.value as string) ?? "+12.5%",
+          direction: props.direction as "up" | "down" | "neutral" | undefined,
+          upIsGood: props.upIsGood !== false,
+          label: props.label as string | undefined,
+        } as React.ComponentProps<typeof FlowKPITrendIndicator>),
+      defaults: { value: "+12.5%", direction: "up", upIsGood: true, label: "vs last month" },
+      excludeControls: ["aria-label", "className", "style"],
+    },
   },
 
   // ─── FlowTreeView ───
@@ -1553,12 +1665,13 @@ FlowKPITrendIndicator(
           "Ensure keyboard navigation works for all interactions",
         ],
         keyboard: [
-          "Arrow Up/Down: Navigate between nodes",
-          "Arrow Right: Expand node (if collapsed)",
-          "Arrow Left: Collapse node (if expanded) or move to parent",
-          "Enter/Space: Select node",
-          "Home/End: Jump to first/last node",
+          { key: "↑ ↓ Arrow keys", action: "Navigate between nodes" },
+          { key: "→ Arrow Right", action: "Expand node (if collapsed)" },
+          { key: "← Arrow Left", action: "Collapse node (if expanded) or move to parent" },
+          { key: "Enter / Space", action: "Select node" },
+          { key: "Home / End", action: "Jump to first/last node" },
         ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -1715,6 +1828,14 @@ FlowTreeView(
           text: "Multi-select checkboxes support indeterminate state for partial selection.",
         },
       ],
+    },
+    playground: {
+      renderPreview: (_props: Record<string, unknown>) =>
+        React.createElement("div", {
+          style: { textAlign: "left" as const, width: "100%" },
+        }, "TreeView preview requires interactive state — see Overview demo above."),
+      defaults: { multiSelect: false, showIcons: true },
+      excludeControls: ["data", "selectedIds", "onSelect", "onSelectionChange", "defaultExpandedIds", "loadChildren", "className", "style"],
     },
   },
 };

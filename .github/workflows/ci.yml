@@ -53,8 +53,30 @@ jobs:
       - name: Build library
         run: npm run build:lib
 
-      - name: Build Storybook
-        run: npx storybook build
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run visual regression tests
+        run: npx playwright test
+
+      - name: Upload VRT report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-report
+          path: test-results/visual/
+          retention-days: 7
+
+      - name: Check bundle sizes
+        run: npm run size:check
+
+      - name: Bundle size report
+        if: github.event_name == 'pull_request'
+        uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          build_script: build:lib
+          skip_step: build
 
       - name: Check changeset status
         if: github.event_name == 'pull_request'

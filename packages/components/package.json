@@ -1,0 +1,75 @@
+{
+  "name": "@flow/components",
+  "version": "1.0.0-rc.3",
+  "description": "Flow Design System — L3 component library (Button, Card, Input, Dialog, etc.)",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./css": "./css/components.css",
+    "./css/*": "./css/*",
+    "./controls": {
+      "types": "./dist/controls/index.d.ts",
+      "import": "./dist/controls/index.mjs"
+    },
+    "./inputs": {
+      "types": "./dist/inputs/index.d.ts",
+      "import": "./dist/inputs/index.mjs"
+    },
+    "./selection": {
+      "types": "./dist/selection/index.d.ts",
+      "import": "./dist/selection/index.mjs"
+    },
+    "./display": {
+      "types": "./dist/display/index.d.ts",
+      "import": "./dist/display/index.mjs"
+    },
+    "./feedback": {
+      "types": "./dist/feedback/index.d.ts",
+      "import": "./dist/feedback/index.mjs"
+    },
+    "./overlays": {
+      "types": "./dist/overlays/index.d.ts",
+      "import": "./dist/overlays/index.mjs"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "import": "./dist/navigation/index.mjs"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "import": "./dist/layout/index.mjs"
+    },
+    "./data": {
+      "types": "./dist/data/index.d.ts",
+      "import": "./dist/data/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "peerDependencies": {
+    "@flow/primitives": "^1.0.0-rc.3",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ER-Mobility-MX/flow.git",
+    "directory": "packages/components"
+  }
+}

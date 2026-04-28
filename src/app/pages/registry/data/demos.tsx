@@ -4,7 +4,7 @@
  */
 import { useState } from "react";
 
-import { FlowChartLegendItem, FlowSortControl, Inline, Stack, Text } from "../../../../lib";
+import { FlowChartLegendItem, FlowSortControl, Inline, Stack, Text } from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 
@@ -39,7 +39,7 @@ export function FlowSortControlOverview() {
               sortDirection={sortDir}
               onSortChange={handleSort}
             />
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Current: {sortKey ? `${sortKey} ${sortDir}` : "unsorted"}
             </Text>
           </Stack>
@@ -86,7 +86,7 @@ export function FlowSortControlVariants() {
       <DemoSection title="All States" description="Sort direction states for each option.">
         <DemoGroup>
           <Stack gap="subsection" style={{ maxWidth: "var(--sys-frame-content-dialog)" }}>
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Unsorted (no active key):
             </Text>
             <FlowSortControl
@@ -98,7 +98,7 @@ export function FlowSortControlVariants() {
               sortDirection={null}
               onSortChange={() => {}}
             />
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               Ascending (name active):
             </Text>
             <FlowSortControl
@@ -111,7 +111,7 @@ export function FlowSortControlVariants() {
               onSortChange={() => {}}
             />
             <Text
-              role="caption"
+              variant="caption"
               color="secondary"
               style={{ marginTop: "var(--sys-frame-space-3)" }}
             >
@@ -198,7 +198,11 @@ export function FlowChartLegendItemOverview() {
               onToggle={() => toggle("c")}
             />
           </Stack>
-          <Text role="caption" color="secondary" style={{ marginTop: "var(--sys-frame-space-3)" }}>
+          <Text
+            variant="caption"
+            color="secondary"
+            style={{ marginTop: "var(--sys-frame-space-3)" }}
+          >
             Hidden: {Array.from(hidden).join(", ") || "none"}
           </Text>
         </DemoGroup>

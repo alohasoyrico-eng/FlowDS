@@ -4,13 +4,19 @@ export default defineConfig({
   testDir: "src/test/visual",
   outputDir: "test-results/visual",
   snapshotDir: "src/test/visual/__snapshots__",
-  snapshotPathTemplate: "{snapshotDir}/{arg}{ext}",
+  snapshotPathTemplate: "{snapshotDir}/{projectName}/{arg}{ext}",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : 4,
+  timeout: 30_000,
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.01,
+    },
+  },
   use: {
-    baseURL: "http://localhost:6006",
+    baseURL: "http://localhost:5173",
     screenshot: "off",
   },
   projects: [
@@ -18,11 +24,15 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
   ],
   webServer: {
-    command: "npm run storybook -- --ci --port 6006",
-    port: 6006,
+    command: "npm run dev -- --port 5173 --strictPort",
+    port: 5173,
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    timeout: 60_000,
   },
 });

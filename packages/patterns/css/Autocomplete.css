@@ -1,0 +1,177 @@
+/* ── Autocomplete ── */
+
+.flow-autocomplete {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+}
+
+.flow-autocomplete-label {
+  font-size: var(--comp-autocomplete-label-font);
+  color: var(--comp-autocomplete-label-text);
+  font-weight: var(--sys-voice-weight-medium);
+}
+
+.flow-autocomplete-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--comp-autocomplete-height);
+  background: var(--comp-autocomplete-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-autocomplete-border);
+  border-radius: var(--comp-autocomplete-radius);
+  padding: 0 var(--comp-autocomplete-padding-x);
+  gap: var(--ref-frame-space-2);
+  transition:
+    border-color var(--sys-momentum-transition-default),
+    box-shadow var(--sys-momentum-transition-default);
+}
+
+.flow-autocomplete-input-wrap:focus-within {
+  border-color: var(--comp-autocomplete-border-focus);
+  box-shadow: 0 0 0 var(--sys-state-focus-ring-width)
+    rgb(var(--sys-state-focus-ring-color-rgb), var(--comp-focus-ring-opacity));
+}
+
+.flow-autocomplete-input-wrap[data-error="true"] {
+  border-color: var(--comp-autocomplete-border-error);
+}
+
+.flow-autocomplete[data-size="sm"] .flow-autocomplete-input-wrap {
+  height: var(--comp-autocomplete-height-sm);
+}
+
+.flow-autocomplete[data-size="lg"] .flow-autocomplete-input-wrap {
+  height: var(--comp-autocomplete-height-lg);
+}
+
+.flow-autocomplete-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--comp-autocomplete-label-text);
+}
+
+.flow-autocomplete-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--comp-autocomplete-font);
+  color: var(--comp-autocomplete-text);
+  font-family: inherit;
+  height: 100%;
+  min-width: 0;
+}
+
+.flow-autocomplete-input::placeholder {
+  color: var(--comp-autocomplete-placeholder);
+}
+
+.flow-autocomplete-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  color: var(--comp-autocomplete-clear-icon);
+  flex-shrink: 0;
+  border-radius: var(--ref-frame-radius-1);
+  transition: color var(--sys-momentum-transition-default);
+}
+
+.flow-autocomplete-clear:hover {
+  color: var(--comp-autocomplete-clear-icon-hover);
+}
+
+.flow-autocomplete-dropdown {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  margin-block-start: var(--ref-frame-space-1);
+  background: var(--comp-autocomplete-dropdown-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-autocomplete-dropdown-border);
+  border-radius: var(--comp-autocomplete-dropdown-radius);
+  box-shadow: var(--comp-autocomplete-dropdown-shadow);
+  max-height: var(--comp-autocomplete-dropdown-max-height);
+  overflow-y: auto;
+  padding: var(--comp-autocomplete-dropdown-padding);
+  z-index: var(--comp-autocomplete-z-index);
+  animation: flow-autocomplete-dropdown-in var(--sys-momentum-transition-default) ease-out;
+}
+
+@keyframes flow-autocomplete-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flow-autocomplete-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--comp-autocomplete-item-padding-y) var(--comp-autocomplete-item-padding-x);
+  border-radius: var(--comp-autocomplete-item-radius);
+  font-size: var(--comp-autocomplete-item-font);
+  color: var(--comp-autocomplete-item-text);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  width: 100%;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+
+.flow-autocomplete-item:hover,
+.flow-autocomplete-item[data-highlighted="true"] {
+  background: var(--comp-autocomplete-item-bg-hover);
+}
+
+.flow-autocomplete-item[data-selected="true"] {
+  background: var(--comp-autocomplete-item-bg-selected);
+  font-weight: var(--sys-voice-weight-medium);
+}
+
+.flow-autocomplete-item[data-disabled="true"] {
+  opacity: var(--ref-state-opacity-dimmed);
+  cursor: default;
+}
+
+.flow-autocomplete-item-secondary {
+  color: var(--comp-autocomplete-item-text-secondary);
+  font-size: var(--sys-voice-label-s-size);
+  margin-inline-start: auto;
+}
+
+.flow-autocomplete-highlight {
+  background: var(--comp-autocomplete-highlight-bg);
+  color: var(--comp-autocomplete-highlight-text);
+  font-weight: var(--sys-voice-weight-semibold);
+}
+
+.flow-autocomplete-empty {
+  padding: var(--comp-autocomplete-item-padding-y) var(--comp-autocomplete-item-padding-x);
+  font-size: var(--comp-autocomplete-empty-font);
+  color: var(--comp-autocomplete-empty-text);
+  text-align: center;
+}
+
+/* WHCM: box-shadow focus ring invisible; border-color change provides feedback,
+   but add outline for stronger visibility */
+@media (forced-colors: active) {
+  .flow-autocomplete-input-wrap:focus-within {
+    outline: var(--sys-state-focus-ring-width) solid CanvasText;
+    outline-offset: var(--sys-state-focus-ring-offset);
+    box-shadow: none;
+  }
+}

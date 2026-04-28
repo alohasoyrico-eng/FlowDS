@@ -11,12 +11,25 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowNotificationPanel } from "../app/components/patterns";
-import type { NotificationItem } from "../app/components/patterns";
+import { FlowNotificationPanel } from "@flow/patterns";
+import type { NotificationItem } from "@flow/patterns";
 
 const notifications: NotificationItem[] = [
-  { id: "1", title: "New message", message: "You have a new message", timestamp: "2m ago", read: false, variant: "info" as const },
-  { id: "2", title: "Upload complete", timestamp: "1h ago", read: true, variant: "success" as const },
+  {
+    id: "1",
+    title: "New message",
+    message: "You have a new message",
+    timestamp: "2m ago",
+    read: false,
+    status: "info",
+  },
+  {
+    id: "2",
+    title: "Upload complete",
+    timestamp: "1h ago",
+    read: true,
+    status: "success",
+  },
 ];
 
 // ─────────────────────────────────────────────
@@ -60,9 +73,7 @@ describe("FlowNotificationPanel — interaction", () => {
   it("calls onMarkRead when an unread notification is clicked", async () => {
     const user = userEvent.setup();
     const onMarkRead = vi.fn();
-    render(
-      <FlowNotificationPanel notifications={notifications} onMarkRead={onMarkRead} />,
-    );
+    render(<FlowNotificationPanel notifications={notifications} onMarkRead={onMarkRead} />);
     await user.click(screen.getByText("New message"));
     expect(onMarkRead).toHaveBeenCalledWith("1");
   });
@@ -70,9 +81,7 @@ describe("FlowNotificationPanel — interaction", () => {
   it("calls onMarkAllRead when Mark all read button is clicked", async () => {
     const user = userEvent.setup();
     const onMarkAllRead = vi.fn();
-    render(
-      <FlowNotificationPanel notifications={notifications} onMarkAllRead={onMarkAllRead} />,
-    );
+    render(<FlowNotificationPanel notifications={notifications} onMarkAllRead={onMarkAllRead} />);
     await user.click(screen.getByText("Mark all read"));
     expect(onMarkAllRead).toHaveBeenCalledTimes(1);
   });
@@ -80,9 +89,7 @@ describe("FlowNotificationPanel — interaction", () => {
   it("calls onDismiss when a dismiss button is clicked", async () => {
     const user = userEvent.setup();
     const onDismiss = vi.fn();
-    render(
-      <FlowNotificationPanel notifications={notifications} onDismiss={onDismiss} />,
-    );
+    render(<FlowNotificationPanel notifications={notifications} onDismiss={onDismiss} />);
     const dismissBtns = screen.getAllByLabelText(/Dismiss/);
     await user.click(dismissBtns[0]);
     expect(onDismiss).toHaveBeenCalledWith("1");
@@ -116,9 +123,7 @@ describe("FlowNotificationPanel — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowNotificationPanel notifications={notifications} />,
-    );
+    const { container } = render(<FlowNotificationPanel notifications={notifications} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

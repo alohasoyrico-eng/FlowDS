@@ -2,7 +2,7 @@
 import { RouterProvider } from "react-router";
 
 import { router } from "./routes";
-import { FlowThemeProvider } from "./primitives";
+import { FlowThemeProvider } from "@flow/primitives";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
 export default function App() {

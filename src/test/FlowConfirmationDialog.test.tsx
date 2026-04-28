@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowConfirmationDialog } from "../app/components/patterns";
+import { FlowConfirmationDialog } from "@flow/patterns";
 
 const defaultProps = {
   open: true,
@@ -33,9 +33,7 @@ describe("FlowConfirmationDialog — rendering", () => {
   });
 
   it("renders nothing when closed", () => {
-    const { container } = render(
-      <FlowConfirmationDialog {...defaultProps} open={false} />,
-    );
+    const { container } = render(<FlowConfirmationDialog {...defaultProps} open={false} />);
     expect(container.innerHTML).toBe("");
   });
 
@@ -85,9 +83,7 @@ describe("FlowConfirmationDialog — interaction", () => {
 
   it("calls onCancel when clicking the overlay backdrop", async () => {
     const onCancel = vi.fn();
-    const { container } = render(
-      <FlowConfirmationDialog {...defaultProps} onCancel={onCancel} />,
-    );
+    const { container } = render(<FlowConfirmationDialog {...defaultProps} onCancel={onCancel} />);
     const overlay = container.querySelector(".flow-confirmation-dialog-overlay")!;
     await userEvent.click(overlay);
     expect(onCancel).toHaveBeenCalled();

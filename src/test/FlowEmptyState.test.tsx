@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowEmptyState } from "../app/components/patterns";
+import { FlowEmptyState } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -23,9 +23,7 @@ describe("FlowEmptyState — rendering", () => {
   });
 
   it("renders the description when provided", () => {
-    render(
-      <FlowEmptyState title="No results" description="Try a different search term" />,
-    );
+    render(<FlowEmptyState title="No results" description="Try a different search term" />);
     expect(screen.getByText("Try a different search term")).toBeInTheDocument();
   });
 
@@ -35,12 +33,7 @@ describe("FlowEmptyState — rendering", () => {
   });
 
   it("renders the action slot when provided", () => {
-    render(
-      <FlowEmptyState
-        title="No results"
-        action={<button type="button">Retry</button>}
-      />,
-    );
+    render(<FlowEmptyState title="No results" action={<button type="button">Retry</button>} />);
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });
 
@@ -55,9 +48,7 @@ describe("FlowEmptyState — rendering", () => {
   });
 
   it("applies data-size when size is provided", () => {
-    const { container } = render(
-      <FlowEmptyState title="Empty" size="sm" />,
-    );
+    const { container } = render(<FlowEmptyState title="Empty" size="sm" />);
     const el = container.querySelector(".flow-empty-state");
     expect(el).toHaveAttribute("data-size", "sm");
   });

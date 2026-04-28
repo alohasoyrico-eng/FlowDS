@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowOTPInput } from "../app/components/inputs";
+import { FlowOTPInput } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

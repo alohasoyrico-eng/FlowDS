@@ -1,0 +1,68 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FLOW Components — Aggregated CSS (auto-generated barrel)
+   Import all per-component CSS files for backwards compatibility.
+   For tree-shaking, import individual component CSS instead.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* L3 Components */
+@import "./controls/Button.css";
+@import "./controls/IconButton.css";
+@import "./display/Chip.css";
+@import "./display/Avatar.css";
+@import "./display/Badge.css";
+@import "./navigation/Tabs.css";
+@import "./display/List.css";
+@import "./display/TreeView.css";
+@import "./selection/Slider.css";
+@import "./feedback/CircularProgress.css";
+@import "./navigation/Accordion.css";
+@import "./navigation/Breadcrumbs.css";
+@import "./navigation/Pagination.css";
+@import "./selection/SegmentedControl.css";
+@import "./layout/Stepper.css";
+@import "./navigation/BottomNav.css";
+@import "./controls/FAB.css";
+@import "./overlays/Popover.css";
+@import "./overlays/BottomSheet.css";
+@import "./overlays/ContextMenu.css";
+@import "./overlays/Menu.css";
+@import "./selection/ToggleButton.css";
+@import "./navigation/Sidebar.css";
+@import "./feedback/LoadingDots.css";
+@import "./feedback/Skeleton.css";
+@import "./_shared/Tone.css";
+@import "./inputs/OTPInput.css";
+@import "./feedback/InlineValidation.css";
+@import "./_shared/ToneIntegration.css";
+@import "./overlays/Dialog.css";
+@import "./overlays/Tooltip.css";
+@import "./display/KPITrend.css";
+@import "./_shared/ContainerQueries.css";
+@import "./_shared/HighContrast.css";
+@import "./display/ImageWithFallback.css";
+@import "./display/FlagIcons.css";
+@import "./display/Tags.css";
+
+/* L4 Patterns (CSS owned by @flow/patterns) */
+@import "@flow/patterns/css/Toolbar.css";
+@import "@flow/patterns/css/Search.css";
+@import "@flow/patterns/css/PullToRefresh.css";
+@import "@flow/patterns/css/SwipeActions.css";
+@import "@flow/patterns/css/Topbar.css";
+@import "@flow/patterns/css/Autocomplete.css";
+@import "@flow/patterns/css/FullscreenSheet.css";
+@import "@flow/patterns/css/DatePicker.css";
+@import "@flow/patterns/css/MultiSelect.css";
+@import "@flow/patterns/css/InlineEditable.css";
+@import "@flow/patterns/css/ColorPicker.css";
+@import "@flow/patterns/css/FileUpload.css";
+@import "@flow/patterns/css/RichTextEditor.css";
+@import "@flow/patterns/css/DateRangePicker.css";
+@import "@flow/patterns/css/KPICard.css";
+@import "@flow/patterns/css/Timeline.css";
+@import "@flow/patterns/css/SectionHeader.css";
+@import "@flow/patterns/css/HoverCard.css";
+@import "@flow/patterns/css/NotificationPanel.css";
+@import "@flow/patterns/css/ConfirmationDialog.css";
+@import "@flow/patterns/css/DataTable.css";
+@import "@flow/patterns/css/FormSection.css";

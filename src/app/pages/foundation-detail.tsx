@@ -1,7 +1,17 @@
 import { useParams } from "react-router";
 import type React from "react";
 
-import { CodeBlock, Divider, FlowCard, foundationColors, Grid, Inline, Stack, Surface, Text } from "../../lib";
+import {
+  CodeBlock,
+  Divider,
+  FlowCard,
+  foundationColors,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import { VoiceExplorer } from "../components/voice-explorer";
 import { EnergyExplorer } from "../components/energy-explorer";
 import { DepthExplorer } from "../components/depth-explorer";
@@ -20,31 +30,8 @@ import {
   InventoryCard,
   SymbolGallery,
 } from "../components/symbol-gallery";
-import { PAGE_GAP, SECTION_GAP } from "../components/doc-primitives";
+import { PAGE_GAP, Section } from "../components/doc-primitives";
 import { LayoutGrid } from "../components/layout-grid";
-
-/** Local Section for foundation detail pages (used inside content JSX nodes) */
-function Section({
-  title,
-  children,
-  description,
-}: {
-  title: string;
-  children: React.ReactNode;
-  description?: string;
-}) {
-  return (
-    <Stack gap={SECTION_GAP}>
-      <Text role="display-l">{title}</Text>
-      {description && (
-        <Text role="paragraph-m" color="secondary">
-          {description}
-        </Text>
-      )}
-      {children}
-    </Stack>
-  );
-}
 
 const foundationDetails: Record<
   string,
@@ -57,23 +44,23 @@ const foundationDetails: Record<
     content: (
       <>
         {/* ─ 1. Overview ── */}
-        <Section title="Overview">
-          <Text role="paragraph-xl">
+        <Section headingRole="display-l" title="Overview">
+          <Text variant="paragraph-xl">
             When color appears in Flow, it always carries meaning. This discipline allows users to
             interpret the interface quickly and confidently.
           </Text>
           <Grid columns={4} gap={6} minItemWidth="180px">
-            <Text role="paragraph-s">
+            <Text variant="paragraph-s">
               Energy translates Flow&apos;s design principles into visual meaning through color.
             </Text>
-            <Text role="paragraph-s">
+            <Text variant="paragraph-s">
               Color in Flow is never decorative — it communicates intent, hierarchy, and feedback.
             </Text>
-            <Text role="paragraph-s">
+            <Text variant="paragraph-s">
               Energy ensures users can immediately recognize: primary actions, system feedback,
               critical states, and surface hierarchy.
             </Text>
-            <Text role="paragraph-s">
+            <Text variant="paragraph-s">
               By doing so, Energy makes Flow predictable and visually learnable.
             </Text>
           </Grid>
@@ -92,7 +79,7 @@ const foundationDetails: Record<
                 icon: "⚡",
                 role: "Action",
                 desc: "Interactive elements — buttons, links, controls",
-                accent: "action" as const,
+                accent: "info" as const,
                 color: "accent" as const,
               },
               {
@@ -124,13 +111,13 @@ const foundationDetails: Record<
                 color: "secondary" as const,
               },
             ].map((item) => (
-              <FlowCard key={item.role} elevation={1} accent={item.accent} padding="md">
+              <FlowCard key={item.role} elevation={1} status={item.accent} padding="md">
                 <Stack gap={2}>
-                  <Text role="display-s" color={item.color}>
+                  <Text variant="display-s" color={item.color}>
                     {item.icon}
                   </Text>
-                  <Text role="label-m">{item.role}</Text>
-                  <Text role="caption">{item.desc}</Text>
+                  <Text variant="label-m">{item.role}</Text>
+                  <Text variant="caption">{item.desc}</Text>
                 </Stack>
               </FlowCard>
             ))}
@@ -147,16 +134,16 @@ const foundationDetails: Record<
     colorKey: "voice",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Voice defines the complete typographic system: font families, weight distribution, size
             scale, line heights, letter spacing, and their composite semantic styles. PHASE A: Voice
             is now a clean 4×4 grid (Display/Heading/Label/Paragraph × xl/l/m/s) with no overlaps,
             fully aligned with the Figma Edenred design spec.
           </Text>
         </Section>
-        <Section title="Architecture">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Architecture">
+          <Text variant="paragraph-m">
             The Voice layer follows the same ref → sys → comp chain as all Flow tokens. Ref defines
             the raw scales (families, sizes, weights, line-heights, letter-spacings). Sys composes
             them into 18 named styles grouped in 4 categories (Display, Heading, Label, Paragraph)
@@ -198,27 +185,27 @@ NO OVERLAPS:
     colorKey: "frame",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Frame governs all spatial relationships: spacing, sizing, grid, breakpoints, and density
             modes. It ensures that the rhythm of the interface is consistent — every gap, every
             padding, every margin derives from a shared scale.
           </Text>
         </Section>
-        <Section title="Spacing Scale Design">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Spacing Scale Design">
+          <Text variant="paragraph-m">
             The spacing scale uses a 4px base unit with the sequence: 0, 4, 8, 12, 16, 20, 24, 32,
             40, 48, 64, 80. This is not a strict mathematical progression — it is tuned for
             practical use. The jumps between 24→32→40→48 provide enough differentiation for
             section-level spacing without being wasteful.
           </Text>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             <strong>Why 4px base?</strong> 4px aligns with common device pixel ratios (2x, 3x) and
             ensures crisp rendering. 8px is too coarse for tight spacing needs (icon gaps, inline
             margins). 2px is too fine and creates too many options. 4px is the optimal balance.
           </Text>
         </Section>
-        <Section title="Density Modes">
+        <Section headingRole="display-l" title="Density Modes">
           <CodeBlock>{`DENSITY REMAPPING:
   Token                          Compact    Default    Comfortable
   ───────────────────────────── ────────── ────────── ───────────
@@ -242,20 +229,20 @@ A page declares its density, and all Flow components within respond.`}</CodeBloc
     colorKey: "depth",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Depth defines the spatial metaphor of the interface — how surfaces stack visually, how
             elevation communicates hierarchy, and how overlays create focus. Depth governs shadows,
             z-index, surface tinting, and backdrop effects. The shadow system has been recalibrated
             to align with Figma Edenred&apos;s Shadows frame.
           </Text>
         </Section>
-        <Section title="Elevation Model">
-          <Text role="paragraph-m">
-            Flow uses 5 elevation levels (0-4), with Figma Edenred&apos;s 3 named levels (Light / Medium
-            / High) mapped to levels 1-3 via semantic aliases. Shadows use a branded navy blue color
-            (rgba(16, 26, 119, ...)) instead of generic black, with positive spread values (4-8px)
-            at higher levels for richer depth perception.
+        <Section headingRole="display-l" title="Elevation Model">
+          <Text variant="paragraph-m">
+            Flow uses 5 elevation levels (0-4), with Figma Edenred&apos;s 3 named levels (Light /
+            Medium / High) mapped to levels 1-3 via semantic aliases. Shadows use a branded navy
+            blue color (rgba(16, 26, 119, ...)) instead of generic black, with positive spread
+            values (4-8px) at higher levels for richer depth perception.
           </Text>
           <CodeBlock>{`ELEVATION SCALE (5 numeric levels):
 Level 0 — Canvas:     No shadow. Base plane. Page backgrounds.
@@ -292,14 +279,14 @@ Z-INDEX SCALE (non-overlapping ranges):
     colorKey: "momentum",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Momentum governs all animation and transition in the system. It ensures motion is
             intentional, consistent, and respectful of user preferences. Every moving element uses
             Momentum tokens — no raw durations or easing values in component code.
           </Text>
         </Section>
-        <Section title="Motion Categories">
+        <Section headingRole="display-l" title="Motion Categories">
           <CodeBlock>{`MICRO-INTERACTIONS (≤100ms):
   Hover state changes, button press feedback, toggle flips.
   Easing: sys.momentum.easing.standard
@@ -337,23 +324,23 @@ REDUCED MOTION:
     colorKey: "state",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             State defines the formal interaction state model for all Flow components. It determines
             which states exist, how they visually manifest, how they resolve conflicts (precedence),
             and how they are communicated to assistive technologies. See the dedicated State Model
             chapter for full detail.
           </Text>
         </Section>
-        <Section title="State-to-Visual Mapping">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="State-to-Visual Mapping">
+          <Text variant="paragraph-m">
             The State foundation does not define specific colors or shadows — it delegates to Energy
             (colors) and Depth (shadows). What State defines is the <em>pattern</em>: hover uses an
             overlay, focus uses a ring, error uses a border color change + text message. The
             specific token values come from Energy, but the structural pattern comes from State.
           </Text>
         </Section>
-        <Section title="State Composition">
+        <Section headingRole="display-l" title="State Composition">
           <CodeBlock>{`States can coexist. The StateLayer resolves visual conflicts:
 
 selected + hover:     Selected background + hover overlay (additive)
@@ -376,14 +363,14 @@ loading + hover:      Loading visual wins. Hover suppressed.`}</CodeBlock>
     colorKey: "tone",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Tone defines the structural framework for how the product communicates with users
             through text. It governs error messages, empty states, confirmations, labels, and
             instructional text — not the exact wording, but the structure, format, and principles.
           </Text>
         </Section>
-        <Section title="Communication Principles">
+        <Section headingRole="display-l" title="Communication Principles">
           <CodeBlock>{`1. ACTIONABLE OVER INFORMATIONAL
    ✗ "Error 422: Unprocessable Entity"
    ✓ "This email address is already in use. Try signing in instead."
@@ -420,15 +407,15 @@ loading + hover:      Loading visual wins. Hover suppressed.`}</CodeBlock>
     colorKey: "growth",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Growth defines the instrumentation framework that allows components to emit structured
             analytics events. This enables product teams to measure usage patterns, feature
             adoption, and user behavior without ad-hoc tracking code scattered through the
             application.
           </Text>
         </Section>
-        <Section title="Event Schema">
+        <Section headingRole="display-l" title="Event Schema">
           <CodeBlock>{`EVERY GROWTH EVENT CONTAINS:
 {
   "event": "flow.component.interaction",  // taxonomy name
@@ -467,7 +454,7 @@ EVENT TYPES:
           title="System Vision"
           description="Symbol is not about producing illustrations. It is about designing an illustration architecture."
         >
-          <Text role="paragraph-xl">
+          <Text variant="paragraph-xl">
             The Symbol foundation defines a parametric, modular visual system capable of generating
             characters, scenarios, environmental compositions, motion-ready assets, and narrative
             micro-scenes — all governed by FLOW tokens.
@@ -475,8 +462,8 @@ EVENT TYPES:
           <Grid columns={3} gap={6} minItemWidth="200px">
             <FlowCard elevation={1} padding="md">
               <Stack gap={3}>
-                <Text role="label-l">Modular</Text>
-                <Text role="paragraph-s">
+                <Text variant="label-l">Modular</Text>
+                <Text variant="paragraph-s">
                   Every visual element is a composable primitive — body, posture, accessory,
                   environment, object. Mix and match to generate infinite scenes from finite parts.
                 </Text>
@@ -484,8 +471,8 @@ EVENT TYPES:
             </FlowCard>
             <FlowCard elevation={1} padding="md">
               <Stack gap={3}>
-                <Text role="label-l">Token-Driven</Text>
-                <Text role="paragraph-s">
+                <Text variant="label-l">Token-Driven</Text>
+                <Text variant="paragraph-s">
                   Palette, stroke weight, proportions, and sizing derive from FLOW tokens. Change
                   the tokens, the entire illustration library adapts — including dark mode variants.
                 </Text>
@@ -493,8 +480,8 @@ EVENT TYPES:
             </FlowCard>
             <FlowCard elevation={1} padding="md">
               <Stack gap={3}>
-                <Text role="label-l">Automation-Ready</Text>
-                <Text role="paragraph-s">
+                <Text variant="label-l">Automation-Ready</Text>
+                <Text variant="paragraph-s">
                   Parametric generation means the system can be driven by code. React SVG components
                   and Flutter vector widgets render illustrations at build time — no static assets.
                 </Text>
@@ -518,11 +505,11 @@ EVENT TYPES:
           <Grid columns={2} gap={6} minItemWidth="260px">
             <Surface variant="secondary" radius="card" className="flow-p-6">
               <Stack gap={3}>
-                <Text role="heading-l">Saul Bass</Text>
-                <Text role="label-m" color="accent">
+                <Text variant="heading-l">Saul Bass</Text>
+                <Text variant="label-m" color="accent">
                   Reduction · Graphic Tension · Bold Shapes · Asymmetry
                 </Text>
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Every illustration must earn its complexity. Default to fewer elements, not more.
                   Tension comes from deliberate imbalance — one dominant shape against smaller
                   counterpoints. Symmetry is avoided unless it communicates stability intentionally.
@@ -531,11 +518,11 @@ EVENT TYPES:
             </Surface>
             <Surface variant="secondary" radius="card" className="flow-p-6">
               <Stack gap={3}>
-                <Text role="heading-l">Kurt Vonnegut</Text>
-                <Text role="label-m" color="accent">
+                <Text variant="heading-l">Kurt Vonnegut</Text>
+                <Text variant="label-m" color="accent">
                   Narrative Minimalism · Subtle Absurdity · Intellectual Humor
                 </Text>
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Illustrations tell stories with minimum information. A single misplaced object
                   creates curiosity. Humor is structural — a character slightly too large for the
                   environment, a mundane action treated with ceremony. Never slapstick, never
@@ -545,11 +532,11 @@ EVENT TYPES:
             </Surface>
             <Surface variant="secondary" radius="card" className="flow-p-6">
               <Stack gap={3}>
-                <Text role="heading-l">Jacques Tati</Text>
-                <Text role="label-m" color="accent">
+                <Text variant="heading-l">Jacques Tati</Text>
+                <Text variant="label-m" color="accent">
                   Environmental Storytelling · Physical Comedy · Timing
                 </Text>
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   The environment is the character. Illustrations communicate through spatial
                   relationships — a person dwarfed by architecture, objects that suggest a narrative
                   without depicting it. The scene tells the story, not the facial expression.
@@ -558,11 +545,11 @@ EVENT TYPES:
             </Surface>
             <Surface variant="secondary" radius="card" className="flow-p-6">
               <Stack gap={3}>
-                <Text role="heading-l">Pink Panther</Text>
-                <Text role="label-m" color="accent">
+                <Text variant="heading-l">Pink Panther</Text>
+                <Text variant="label-m" color="accent">
                   Fluid Elegance · Playful Movement · Negative Space
                 </Text>
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Motion is implied even in static frames. Poses suggest the moment before or after
                   an action. Negative space is compositional — not empty, but active. Elegance comes
                   from economy of line, not ornament.
@@ -617,8 +604,8 @@ COMPOSITION RULES:
   • Environment provides context without competing for attention
   • Maximum 3 layers of depth per composition
   • Light planes create visual interest without adding complexity`}</CodeBlock>
-          <Text role="heading-m">Composition Evolution</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Composition Evolution</Text>
+          <Text variant="paragraph-s" color="secondary">
             From isolated primitive to full environmental composition — the same character system
             scales through layered complexity.
           </Text>
@@ -633,49 +620,49 @@ COMPOSITION RULES:
           description="How the system evolves from individual assets to automated pipelines."
         >
           <Grid columns={4} gap={4} minItemWidth="160px">
-            <FlowCard elevation={1} accent="neutral" padding="md">
+            <FlowCard elevation={1} status="neutral" padding="md">
               <Stack gap={2}>
-                <Text role="display-s">01</Text>
-                <Text role="label-l">Spot</Text>
-                <Text role="caption">64–128px</Text>
+                <Text variant="display-s">01</Text>
+                <Text variant="label-l">Spot</Text>
+                <Text variant="caption">64–128px</Text>
                 <Divider spacing={0} />
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Single concept. One character or object. Empty states, list items, feature
                   highlights. Geometric, 2-3 Energy colors.
                 </Text>
               </Stack>
             </FlowCard>
-            <FlowCard elevation={1} accent="neutral" padding="md">
+            <FlowCard elevation={1} status="neutral" padding="md">
               <Stack gap={2}>
-                <Text role="display-s">02</Text>
-                <Text role="label-l">Hero</Text>
-                <Text role="caption">200–400px</Text>
+                <Text variant="display-s">02</Text>
+                <Text variant="label-l">Hero</Text>
+                <Text variant="caption">200–400px</Text>
                 <Divider spacing={0} />
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Scene-based. Character + environment. Onboarding, feature intros, error pages. 4-6
                   Energy colors, slight organic curves.
                 </Text>
               </Stack>
             </FlowCard>
-            <FlowCard elevation={1} accent="neutral" padding="md">
+            <FlowCard elevation={1} status="neutral" padding="md">
               <Stack gap={2}>
-                <Text role="display-s">03</Text>
-                <Text role="label-l">Narrative</Text>
-                <Text role="caption">Multi-step</Text>
+                <Text variant="display-s">03</Text>
+                <Text variant="label-l">Narrative</Text>
+                <Text variant="caption">Multi-step</Text>
                 <Divider spacing={0} />
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Sequential compositions. Character continuity across steps. Onboarding flows,
                   walkthroughs, educational content.
                 </Text>
               </Stack>
             </FlowCard>
-            <FlowCard elevation={1} accent="neutral" padding="md">
+            <FlowCard elevation={1} status="neutral" padding="md">
               <Stack gap={2}>
-                <Text role="display-s">04</Text>
-                <Text role="label-l">Motion</Text>
-                <Text role="caption">Animated</Text>
+                <Text variant="display-s">04</Text>
+                <Text variant="label-l">Motion</Text>
+                <Text variant="caption">Animated</Text>
                 <Divider spacing={0} />
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Motion-ready assets. Parametric SVG with Momentum tokens. Micro-animations: card
                   tap, screen transition, walking cycle.
                 </Text>
@@ -684,7 +671,7 @@ COMPOSITION RULES:
           </Grid>
           <Surface variant="secondary" radius="card" className="flow-p-6">
             <Stack gap={3}>
-              <Text role="heading-m">Automation Pipeline</Text>
+              <Text variant="heading-m">Automation Pipeline</Text>
               <CodeBlock>{`INPUT:  Scene descriptor (JSON)
   { character: "standing", accessory: "card", environment: "kiosk", mood: "neutral" }
 
@@ -746,35 +733,35 @@ OUTPUT: Platform-native vector illustration
         >
           <Grid columns={2} gap={6} minItemWidth="240px">
             <Stack gap={2}>
-              <Text role="heading-s">Premium Fintech Positioning</Text>
-              <Text role="paragraph-s">
+              <Text variant="heading-s">Premium Fintech Positioning</Text>
+              <Text variant="paragraph-s">
                 No childish proportions, no cartoon faces, no bright saturated fills. Characters are
                 abstract humanoids — professional, gender-neutral, culturally agnostic. The style
                 communicates trust and sophistication.
               </Text>
             </Stack>
             <Stack gap={2}>
-              <Text role="heading-s">Vector Only</Text>
-              <Text role="paragraph-s">
+              <Text variant="heading-s">Vector Only</Text>
+              <Text variant="paragraph-s">
                 No raster assets. Every illustration is a vector composition that scales cleanly
                 from 64px spot to full-bleed hero. Export formats: SVG (web), vector drawable
                 (Flutter), Lottie (motion).
               </Text>
             </Stack>
             <Stack gap={2}>
-              <Text role="heading-s">Accessibility First</Text>
-              <Text role="paragraph-s">
+              <Text variant="heading-s">Accessibility First</Text>
+              <Text variant="paragraph-s">
                 Every illustration includes alt text describing the scene. Decorative illustrations
                 are marked aria-hidden. Color is never the only differentiator — shapes and
                 composition carry meaning independently.
               </Text>
             </Stack>
             <Stack gap={2}>
-              <Text role="heading-s">Team Scalability</Text>
-              <Text role="paragraph-s">
-                New illustrators compose from existing primitives. They don&apos;t invent new body types
-                or environment styles. The primitive library grows through reviewed proposals —
-                never ad-hoc additions.
+              <Text variant="heading-s">Team Scalability</Text>
+              <Text variant="paragraph-s">
+                New illustrators compose from existing primitives. They don&apos;t invent new body
+                types or environment styles. The primitive library grows through reviewed proposals
+                — never ad-hoc additions.
               </Text>
             </Stack>
           </Grid>
@@ -788,14 +775,14 @@ OUTPUT: Platform-native vector illustration
     colorKey: "iconography",
     content: (
       <>
-        <Section title="Purpose">
-          <Text role="paragraph-m">
+        <Section headingRole="display-l" title="Purpose">
+          <Text variant="paragraph-m">
             Iconography defines the icon system — grid specifications, stroke rules, optical
             adjustments, semantic categorization, and the consumption API. Icons are functional
             glyphs (not artwork) that aid recognition, navigation, and action identification.
           </Text>
         </Section>
-        <Section title="Icon Grid & Rules">
+        <Section headingRole="display-l" title="Icon Grid & Rules">
           <CodeBlock>{`GRID:
   Base: 24×24px with 2px padding (20×20 live area)
   Stroke weight: 1.5px (consistent for all icons)
@@ -857,8 +844,8 @@ export function FoundationDetailPage() {
   if (!detail) {
     return (
       <Stack gap={3}>
-        <Text role="display-s">Foundation Not Found</Text>
-        <Text role="paragraph-m">The requested foundation does not exist.</Text>
+        <Text variant="display-s">Foundation Not Found</Text>
+        <Text variant="paragraph-m">The requested foundation does not exist.</Text>
       </Stack>
     );
   }
@@ -869,7 +856,7 @@ export function FoundationDetailPage() {
         <Surface variant="secondary" radius="surface" className="component-detail-surface">
           <Stack gap={PAGE_GAP}>
             <Stack gap={4}>
-              <Text role="overline">Foundation Deep Dive</Text>
+              <Text variant="overline">Foundation Deep Dive</Text>
               <Inline gap={4}>
                 <Inline
                   gap={0}
@@ -882,8 +869,8 @@ export function FoundationDetailPage() {
                   {detail.title.charAt(0)}
                 </Inline>
                 <Stack gap={0}>
-                  <Text role="display-xl">{detail.title}</Text>
-                  <Text role="paragraph-l" color="secondary">
+                  <Text variant="display-xl">{detail.title}</Text>
+                  <Text variant="paragraph-l" color="secondary">
                     {detail.subtitle}
                   </Text>
                 </Stack>

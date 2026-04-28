@@ -1,0 +1,8 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FORM SECTION — Section header + fields group (L4)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-form-section {
+  display: flex;
+  flex-direction: column;
+}

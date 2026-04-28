@@ -11,7 +11,7 @@
  * Wrapper follows Foundation detail page standard:
  *   LayoutGrid > LayoutGrid.Item span=12 > Surface "secondary" > Stack
  */
-import { Code, Divider, Grid, Inline, Stack, Surface, Text } from "../../lib";
+import { Code, Divider, Grid, Inline, Stack, Surface, Text } from "@flow/design-system";
 import {
   Callout,
   CodeBlock,
@@ -38,7 +38,7 @@ export function TokensPage() {
 
             {/* ═══ Three-Tier Architecture ═══ */}
             <Section title="Three-Tier Token Chain">
-              <Text role="paragraph-m" color="secondary">
+              <Text variant="paragraph-m" color="secondary">
                 Every visual value in Flow flows through three layers. This indirection is what
                 makes theming, density modes, and per-component overrides possible without touching
                 component code.
@@ -88,18 +88,18 @@ export function TokensPage() {
                   >
                     <Stack gap={1}>
                       <Text
-                        role="overline"
+                        variant="overline"
                         color="inherit"
                         style={{ opacity: "var(--ref-state-opacity-subtle)" }}
                       >
                         {tier.tier}
                       </Text>
-                      <Text role="heading-l" color="inherit">
+                      <Text variant="heading-l" color="inherit">
                         {tier.label}
                       </Text>
                     </Stack>
                     <Text
-                      role="paragraph-s"
+                      variant="paragraph-s"
                       color="inherit"
                       style={{ opacity: "var(--ref-state-opacity-soft)" }}
                     >
@@ -109,7 +109,7 @@ export function TokensPage() {
                       {tier.example}
                     </pre>
                     <Text
-                      role="caption"
+                      variant="caption"
                       color="inherit"
                       style={{ opacity: "var(--ref-state-opacity-subtle)" }}
                     >
@@ -131,7 +131,7 @@ Examples:
   comp.button.bg.primary          → tier.component.property.variant
   comp.textfield.border.error     → tier.component.property.state`}</CodeBlock>
               <Callout>
-                <Text role="paragraph-s" color="accent">
+                <Text variant="paragraph-s" color="accent">
                   Names are semantic, never visual. <Code>sys.energy.text.danger</Code> — not{" "}
                   <Code>sys.color.red</Code>. This ensures themes can remap values without semantic
                   confusion.
@@ -147,7 +147,7 @@ Examples:
               <Grid minItemWidth="200px" gap={3}>
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={2}>
-                    <Text role="overline" color="tertiary">
+                    <Text variant="overline" color="tertiary">
                       1. Component Layer
                     </Text>
                     <CodeBlock>{`comp.button.bg.primary
@@ -156,7 +156,7 @@ Examples:
                 </Surface>
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={2}>
-                    <Text role="overline" color="tertiary">
+                    <Text variant="overline" color="tertiary">
                       2. System Layer
                     </Text>
                     <CodeBlock>{`sys.energy.action.primary
@@ -165,7 +165,7 @@ Examples:
                 </Surface>
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={2}>
-                    <Text role="overline" color="tertiary">
+                    <Text variant="overline" color="tertiary">
                       3. Reference Layer
                     </Text>
                     <CodeBlock>{`ref.energy.red.500
@@ -173,7 +173,7 @@ Examples:
                   </Stack>
                 </Surface>
               </Grid>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="paragraph-s" color="secondary">
                 In dark theme, only the sys→ref mapping changes. The component layer and all
                 consumer code remain untouched.
               </Text>
@@ -183,7 +183,7 @@ Examples:
 
             {/* ═══ Theming ═══ */}
             <Section title="Theming via Token Remapping">
-              <Text role="paragraph-m" color="secondary">
+              <Text variant="paragraph-m" color="secondary">
                 Themes work by remapping sys tokens to different ref tokens. Component code never
                 changes. The ref layer is fixed — the sys layer is the switching point.
               </Text>
@@ -223,7 +223,7 @@ sys.frame.padding.control    → ref.frame.space.4   (16px)
 sys.frame.gap.component      → ref.frame.space.4   (16px)
 sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
               <Callout intent="info" title="Density affects more than spacing">
-                <Text role="paragraph-s">
+                <Text variant="paragraph-s">
                   Voice sizes, icon sizes, and control heights all shift with density. This is why
                   components must consume sys tokens — consuming ref tokens directly would bypass
                   density adaptation.
@@ -307,12 +307,12 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                   <Surface key={f.name} variant="primary" padding="container" radius="container">
                     <Stack gap={2}>
                       <Inline gap={2} align="center">
-                        <Text role="display-s" style={{ width: "1.5em", textAlign: "center" }}>
+                        <Text variant="display-s" style={{ width: "1.5em", textAlign: "center" }}>
                           {f.icon}
                         </Text>
-                        <Text role="label-l">{f.name}</Text>
+                        <Text variant="label-l">{f.name}</Text>
                       </Inline>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="paragraph-s" color="secondary">
                         {f.desc}
                       </Text>
                       <code className="flow-inline-code-xs">{f.tokens}</code>
@@ -333,7 +333,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                 {/* Color */}
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={3}>
-                    <Text role="label-l">Color (Energy)</Text>
+                    <Text variant="label-l">Color (Energy)</Text>
                     <Stack gap={2}>
                       {[
                         { token: "sys.energy.surface.primary", desc: "Main content background" },
@@ -350,7 +350,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                           <code className="flow-inline-code-xs" style={{ minWidth: "220px" }}>
                             {t.token}
                           </code>
-                          <Text role="caption" color="secondary">
+                          <Text variant="caption" color="secondary">
                             {t.desc}
                           </Text>
                         </Inline>
@@ -362,7 +362,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                 {/* Spacing */}
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={3}>
-                    <Text role="label-l">Spacing (Frame)</Text>
+                    <Text variant="label-l">Spacing (Frame)</Text>
                     <Stack gap={2}>
                       {[
                         { token: "ref.frame.space.1", value: "4px", desc: "Tight inline gaps" },
@@ -383,10 +383,10 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                           <code className="flow-inline-code-xs" style={{ minWidth: "160px" }}>
                             {t.token}
                           </code>
-                          <Text role="caption" style={{ minWidth: "36px" }}>
+                          <Text variant="caption" style={{ minWidth: "36px" }}>
                             {t.value}
                           </Text>
-                          <Text role="caption" color="secondary">
+                          <Text variant="caption" color="secondary">
                             {t.desc}
                           </Text>
                         </Inline>
@@ -398,7 +398,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                 {/* Typography */}
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={3}>
-                    <Text role="label-l">Typography (Voice)</Text>
+                    <Text variant="label-l">Typography (Voice)</Text>
                     <Stack gap={2}>
                       {[
                         { token: "sys.voice.display-xl", desc: "64px — hero headlines" },
@@ -411,7 +411,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                           <code className="flow-inline-code-xs" style={{ minWidth: "190px" }}>
                             {t.token}
                           </code>
-                          <Text role="caption" color="secondary">
+                          <Text variant="caption" color="secondary">
                             {t.desc}
                           </Text>
                         </Inline>
@@ -423,7 +423,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                 {/* Motion */}
                 <Surface variant="primary" padding="container" radius="container">
                   <Stack gap={3}>
-                    <Text role="label-l">Motion (Momentum)</Text>
+                    <Text variant="label-l">Motion (Momentum)</Text>
                     <Stack gap={2}>
                       {[
                         {
@@ -451,7 +451,7 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                           <code className="flow-inline-code-xs" style={{ minWidth: "220px" }}>
                             {t.token}
                           </code>
-                          <Text role="caption" color="secondary">
+                          <Text variant="caption" color="secondary">
                             {t.desc}
                           </Text>
                         </Inline>
@@ -467,12 +467,9 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
             {/* ═══ Working with Tokens ═══ */}
             <Section title="Working with Tokens">
               <Grid minItemWidth="280px" gap={4}>
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent flow-doc-accent--success"
-                >
+                <Surface padding="control" className="flow-doc-accent flow-doc-accent--success">
                   <Stack gap={2}>
-                    <Text role="label-l">When to use ref tokens</Text>
+                    <Text variant="label-l">When to use ref tokens</Text>
                     <DocList
                       items={[
                         "Defining new sys token mappings",
@@ -482,12 +479,9 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                     />
                   </Stack>
                 </Surface>
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent"
-                >
+                <Surface padding="control" className="flow-doc-accent">
                   <Stack gap={2}>
-                    <Text role="label-l">When to use sys tokens</Text>
+                    <Text variant="label-l">When to use sys tokens</Text>
                     <DocList
                       items={[
                         "Component implementations (default — most common case)",
@@ -497,12 +491,9 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                     />
                   </Stack>
                 </Surface>
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent flow-doc-accent--warning"
-                >
+                <Surface padding="control" className="flow-doc-accent flow-doc-accent--warning">
                   <Stack gap={2}>
-                    <Text role="label-l">When to use comp tokens</Text>
+                    <Text variant="label-l">When to use comp tokens</Text>
                     <DocList
                       items={[
                         "Overriding a specific component's value without affecting the system",
@@ -518,12 +509,9 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
             {/* ═══ Trade-offs ═══ */}
             <Section title="Trade-offs in Token Granularity">
               <Grid minItemWidth="280px" gap={4}>
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent flow-doc-accent--success"
-                >
+                <Surface padding="control" className="flow-doc-accent flow-doc-accent--success">
                   <Stack gap={2}>
-                    <Text role="label-l">Benefits of Fine Granularity</Text>
+                    <Text variant="label-l">Benefits of Fine Granularity</Text>
                     <DocList
                       items={[
                         "Per-component token overrides enable precise customization",
@@ -534,12 +522,9 @@ sys.voice.body.size          → ref.voice.size.md    (16px)`}</CodeBlock>
                     />
                   </Stack>
                 </Surface>
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent flow-doc-accent--warning"
-                >
+                <Surface padding="control" className="flow-doc-accent flow-doc-accent--warning">
                   <Stack gap={2}>
-                    <Text role="label-l">Costs of Fine Granularity</Text>
+                    <Text variant="label-l">Costs of Fine Granularity</Text>
                     <DocList
                       items={[
                         "Token count grows with every new component",

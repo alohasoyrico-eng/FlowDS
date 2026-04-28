@@ -10,7 +10,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { FlowHoverCard } from "../app/components/patterns";
+import { FlowHoverCard } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering

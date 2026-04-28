@@ -11,7 +11,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { FlowSnackbarProvider, useSnackbar } from "../app/components/patterns";
+import { FlowSnackbarProvider, useSnackbar } from "@flow/patterns";
 
 // Stub IntersectionObserver for GrowthObserver used inside FlowSnackbarItem
 const IntersectionObserverMock = vi.fn(() => ({
@@ -23,9 +23,15 @@ const IntersectionObserverMock = vi.fn(() => ({
 vi.stubGlobal("IntersectionObserver", IntersectionObserverMock);
 
 /** Test harness that exposes `show()` via a button */
-function SnackbarHarness({ message = "Test notification", variant = "info" as const, duration = 5000, actionLabel, actionFn }: {
+function SnackbarHarness({
+  message = "Test notification",
+  status = "info" as const,
+  duration = 5000,
+  actionLabel,
+  actionFn,
+}: {
   message?: string;
-  variant?: "info" | "success" | "warning" | "error";
+  status?: "info" | "success" | "warning" | "error";
   duration?: number;
   actionLabel?: string;
   actionFn?: () => void;
@@ -36,7 +42,7 @@ function SnackbarHarness({ message = "Test notification", variant = "info" as co
       onClick={() =>
         show({
           message,
-          variant,
+          status,
           duration,
           action: actionLabel && actionFn ? { label: actionLabel, onClick: actionFn } : undefined,
         })

@@ -2,6 +2,17 @@
  * FLOW - Overlays Domain Registry
  * Component metadata, demos, and developer guides for overlay components.
  */
+import React from "react";
+import {
+  FlowBottomSheet,
+  FlowButton,
+  FlowContextMenu,
+  FlowDialog,
+  FlowMenu,
+  FlowPopover,
+  FlowTooltip,
+} from "@flow/design-system";
+import { Text } from "@flow/primitives";
 import type { ComponentEntry } from "../types";
 import {
   FlowBottomSheetOverview,
@@ -66,10 +77,11 @@ export const OVERLAYS_REGISTRY: Record<string, ComponentEntry> = {
           "Trigger must be focusable (button, link, input) — tooltips on non-interactive elements are inaccessible",
         ],
         keyboard: [
-          "Tab to focus trigger — tooltip shows",
-          "Tab away — tooltip hides",
-          "Escape to dismiss (browser handles focus blur)",
+          { key: "Tab", action: "Focus trigger — tooltip shows" },
+          { key: "Tab (away)", action: "Hide tooltip" },
+          { key: "Escape", action: "Dismiss" },
         ],
+        wcag: ["4.1.2"],
       },
     },
     demos: {
@@ -80,21 +92,21 @@ export const OVERLAYS_REGISTRY: Record<string, ComponentEntry> = {
       reactImport: `import { FlowTooltip } from "@flow/design-system";`,
       reactUsage: `// Basic tooltip - wraps any focusable element
 <FlowTooltip content="Save changes">
-  <FlowButton variant="high">Save</FlowButton>
+  <FlowButton variant="primary">Save</FlowButton>
 </FlowTooltip>
 
 // All four positions (top is default)
 <FlowTooltip content="Top tooltip" position="top">
-  <FlowButton variant="outline">Top</FlowButton>
+  <FlowButton variant="outlined">Top</FlowButton>
 </FlowTooltip>
 <FlowTooltip content="Bottom tooltip" position="bottom">
-  <FlowButton variant="outline">Bottom</FlowButton>
+  <FlowButton variant="outlined">Bottom</FlowButton>
 </FlowTooltip>
 <FlowTooltip content="Left tooltip" position="left">
-  <FlowButton variant="outline">Left</FlowButton>
+  <FlowButton variant="outlined">Left</FlowButton>
 </FlowTooltip>
 <FlowTooltip content="Right tooltip" position="right">
-  <FlowButton variant="outline">Right</FlowButton>
+  <FlowButton variant="outlined">Right</FlowButton>
 </FlowTooltip>
 
 // All four sizes (md is default)
@@ -113,36 +125,36 @@ export const OVERLAYS_REGISTRY: Record<string, ComponentEntry> = {
 
 // Custom delay (default is 300ms show, 100ms hide)
 <FlowTooltip content="Instant tooltip" delay={0}>
-  <FlowButton variant="outline">No delay</FlowButton>
+  <FlowButton variant="outlined">No delay</FlowButton>
 </FlowTooltip>
 <FlowTooltip content="Slow tooltip" delay={600}>
-  <FlowButton variant="outline">Slow</FlowButton>
+  <FlowButton variant="outlined">Slow</FlowButton>
 </FlowTooltip>
 
 // Disabled state
 <FlowTooltip content="This won't show" disabled>
-  <FlowButton variant="outline">Disabled tooltip</FlowButton>
+  <FlowButton variant="outlined">Disabled tooltip</FlowButton>
 </FlowTooltip>
 
 // Rich content (ReactNode)
 <FlowTooltip content={<span>Line 1<br/>Line 2<br/>Line 3</span>}>
-  <FlowButton variant="outline">Multi-line</FlowButton>
+  <FlowButton variant="outlined">Multi-line</FlowButton>
 </FlowTooltip>
 
 <FlowTooltip content={<span><strong>Bold</strong><br/>Regular text</span>}>
-  <FlowButton variant="outline">Formatted</FlowButton>
+  <FlowButton variant="outlined">Formatted</FlowButton>
 </FlowTooltip>
 
 // Common patterns
 
 // Icon-only buttons (REQUIRED for accessibility)
 <FlowTooltip content="Delete item">
-  <FlowIconButton icon="trash" variant="danger" aria-label="Delete" />
+  <FlowIconButton icon="trash" variant="primary" intent="danger" aria-label="Delete" />
 </FlowTooltip>
 
 // Keyboard shortcuts
 <FlowTooltip content="Save (⌘S)">
-  <FlowIconButton icon="save" variant="high" aria-label="Save" />
+  <FlowIconButton icon="save" variant="primary" aria-label="Save" />
 </FlowTooltip>
 
 // Context actions
@@ -279,6 +291,21 @@ FlowTooltip(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowTooltip,
+          {
+            content: (props.content as string) || "Tooltip text",
+            position: props.position,
+            size: props.size,
+            disabled: !!props.disabled,
+          } as React.ComponentProps<typeof FlowTooltip>,
+          React.createElement(FlowButton, { variant: "outlined", size: "sm", children: "Hover me" } as React.ComponentProps<typeof FlowButton>),
+        ),
+      defaults: { content: "Tooltip text", position: "top", size: "md", disabled: false },
+      excludeControls: ["children", "delay", "className", "style"],
+    },
   },
 
   // ─── FlowDialog ───
@@ -326,7 +353,11 @@ FlowTooltip(
       accessibility: {
         handled: ["role='dialog'", "aria-modal='true'", "Focus trap", "Escape to close"],
         required: ["Provide aria-label or aria-labelledby"],
-        keyboard: ["Escape: Close dialog", "Tab: Navigate focusable elements (trapped)"],
+        keyboard: [
+          { key: "Escape", action: "Close dialog" },
+          { key: "Tab", action: "Navigate focusable elements (trapped)" },
+        ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -348,8 +379,8 @@ FlowTooltip(
   title="Confirm Action"
   footer={
     <>
-      <FlowButton variant="outline" onClick={() => setOpen(false)}>Cancel</FlowButton>
-      <FlowButton variant="high" onClick={handleConfirm}>Confirm</FlowButton>
+      <FlowButton variant="outlined" onClick={() => setOpen(false)}>Cancel</FlowButton>
+      <FlowButton variant="primary" onClick={handleConfirm}>Confirm</FlowButton>
     </>
   }
 >
@@ -397,6 +428,22 @@ FlowTooltip(
         { intent: "info", text: "Dialog automatically traps focus for accessibility." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowDialog,
+          {
+            open: !!props.open,
+            onClose: props.onClose as () => void,
+            title: (props.title as string) || "Dialog Title",
+            size: props.size,
+          } as React.ComponentProps<typeof FlowDialog>,
+          React.createElement(Text, { variant: "paragraph-s", children: "Dialog content goes here." } as React.ComponentProps<typeof Text>),
+        ),
+      defaults: { title: "Dialog Title", size: "md" },
+      overlay: true,
+      excludeControls: ["open", "onClose", "children", "footer"],
+    },
   },
 
   // ─── FlowBottomSheet ───
@@ -435,6 +482,7 @@ FlowTooltip(
         handled: ["role='dialog'", "aria-modal='true'", "Focus trap"],
         required: ["Provide aria-label"],
         keyboard: [],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -495,6 +543,20 @@ FlowTooltip(
         { intent: "info", text: "Sheet supports swipe-to-dismiss gesture." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowBottomSheet,
+          {
+            open: !!props.open,
+            onClose: props.onClose as () => void,
+            title: (props.title as string) || "Sheet Title",
+            children: React.createElement(Text, { variant: "paragraph-s", children: "Sheet content goes here." } as React.ComponentProps<typeof Text>),
+          } as React.ComponentProps<typeof FlowBottomSheet>),
+      defaults: { title: "Sheet Title" },
+      overlay: true,
+      excludeControls: ["open", "onClose", "children"],
+    },
   },
 
   // ─── FlowContextMenu ───
@@ -533,10 +595,11 @@ FlowTooltip(
         handled: ["role='menu'", "role='menuitem' on items", "Keyboard navigation"],
         required: ["Provide accessible labels"],
         keyboard: [
-          "Arrow Up/Down: Navigate items",
-          "Enter/Space: Select item",
-          "Escape: Close menu",
+          { key: "↑ ↓ Arrow keys", action: "Navigate items" },
+          { key: "Enter / Space", action: "Select item" },
+          { key: "Escape", action: "Close menu" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -597,6 +660,30 @@ FlowTooltip(
         { intent: "info", text: "Context menu automatically positions at cursor location." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowContextMenu,
+          {
+            items: props.items,
+          } as React.ComponentProps<typeof FlowContextMenu>,
+          React.createElement(
+            "div",
+            { style: { padding: "24px", border: "1px dashed var(--sys-energy-border-default)", borderRadius: "8px", textAlign: "center" as const } },
+            "Right-click this area",
+          ),
+        ),
+      defaults: {},
+      fixtures: {
+        items: [
+          { label: "Cut", icon: "scissors", onSelect: () => {} },
+          { label: "Copy", icon: "copy", onSelect: () => {} },
+          { label: "Paste", icon: "clipboard", onSelect: () => {} },
+          { label: "Delete", icon: "trash", onSelect: () => {} },
+        ],
+      },
+      excludeControls: ["items", "children"],
+    },
   },
 
   // ─── FlowMenu ───
@@ -631,10 +718,11 @@ FlowTooltip(
         handled: ["role='menu'", "role='menuitem' on items", "aria-expanded on trigger"],
         required: ["Provide accessible labels"],
         keyboard: [
-          "Arrow Up/Down: Navigate items",
-          "Enter/Space: Select item",
-          "Escape: Close menu",
+          { key: "↑ ↓ Arrow keys", action: "Navigate items" },
+          { key: "Enter / Space", action: "Select item" },
+          { key: "Escape", action: "Close menu" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -697,6 +785,24 @@ FlowTooltip(
         { intent: "info", text: "Menu automatically positions itself to stay within viewport." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowMenu, {
+          trigger: React.createElement(FlowButton, { variant: "outlined", size: "sm", children: "Open Menu" } as React.ComponentProps<typeof FlowButton>),
+          items: props.items,
+          onSelect: () => {},
+          placement: props.placement,
+        } as React.ComponentProps<typeof FlowMenu>),
+      defaults: { placement: "bottom-start" },
+      fixtures: {
+        items: [
+          { id: "profile", label: "Profile", icon: "user" },
+          { id: "settings", label: "Settings", icon: "settings" },
+          { id: "logout", label: "Logout", icon: "log-out" },
+        ],
+      },
+      excludeControls: ["trigger", "items", "onSelect"],
+    },
   },
 
   // ─── FlowPopover ───
@@ -730,7 +836,11 @@ FlowTooltip(
       accessibility: {
         handled: ["role='dialog'", "aria-expanded on trigger", "Focus trap (optional)"],
         required: ["Provide accessible labels"],
-        keyboard: ["Escape: Close popover", "Tab: Navigate content"],
+        keyboard: [
+          { key: "Escape", action: "Close popover" },
+          { key: "Tab", action: "Navigate content" },
+        ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -743,7 +853,7 @@ FlowTooltip(
   trigger={<FlowButton>Open Popover</FlowButton>}
   content={
     <Stack gap={2}>
-      <Text role="h3">Popover Title</Text>
+      <Text variant="h3">Popover Title</Text>
       <Text>Custom popover content.</Text>
     </Stack>
   }
@@ -790,6 +900,16 @@ FlowTooltip(
         },
         { intent: "info", text: "Popover automatically positions to stay within viewport." },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowPopover, {
+          trigger: React.createElement(FlowButton, { variant: "outlined", size: "sm", children: "Open Popover" } as React.ComponentProps<typeof FlowButton>),
+          content: React.createElement(Text, { variant: "paragraph-s", children: "Popover content goes here." } as React.ComponentProps<typeof Text>),
+          position: props.position,
+        } as React.ComponentProps<typeof FlowPopover>),
+      defaults: { position: "bottom" },
+      excludeControls: ["trigger", "content"],
     },
   },
 };

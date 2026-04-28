@@ -1,0 +1,2462 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   L2 PRIMITIVE STRUCTURAL CLASSES
+   Surface, Stack, Inline, Grid, Text, Divider, Overlay,
+   FormField, Icon, ThemeToggle, Code, Callout, Demo helpers.
+   Dynamic values bridged via --_* CSS custom properties
+   so visual rules live in CSS, JS only sets token refs.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── ActionSurface base reset (L2 primitive) ──
+   Defined BEFORE L3 components so .flow-btn-v2, .flow-icon-btn etc.
+   can naturally override via later declaration + equal specificity. */
+.flow-action-surface {
+  border: none;
+  background: transparent;
+  text-align: start;
+  font-family: var(--sys-voice-family);
+  padding: 0;
+  cursor: pointer;
+}
+
+.flow-action-surface[disabled],
+.flow-action-surface[data-state="disabled"] {
+  cursor: not-allowed;
+  opacity: var(--sys-state-disabled-opacity);
+  pointer-events: none;
+}
+
+.flow-action-surface[data-state="loading"] {
+  cursor: wait;
+  pointer-events: none;
+}
+
+/* ── Surface ── */
+.flow-surface {
+  background: var(--_surface-bg);
+  border-radius: var(--_surface-radius);
+  padding: var(--_surface-padding);
+}
+
+.flow-surface[data-elevation="1"] {
+  box-shadow: var(--sys-depth-elevation-1);
+}
+
+.flow-surface[data-elevation="2"] {
+  box-shadow: var(--sys-depth-elevation-2);
+}
+
+.flow-surface[data-elevation="3"] {
+  box-shadow: var(--sys-depth-elevation-3);
+}
+
+.flow-surface[data-elevation="4"] {
+  box-shadow: var(--sys-depth-elevation-4);
+}
+
+.flow-surface[data-border] {
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+/* ── Stack (vertical layout) ── */
+.flow-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_gap);
+  align-items: var(--_align, stretch);
+  min-width: 0;
+}
+
+/* ── Inline (horizontal layout) ── */
+.flow-inline {
+  display: flex;
+  flex-direction: row;
+  gap: var(--_gap);
+  align-items: var(--_align, center);
+  justify-content: var(--_justify, flex-start);
+  min-width: 0;
+}
+
+.flow-inline[data-wrap] {
+  flex-wrap: wrap;
+}
+
+/* ── Grid (v2 — CSS class) ── */
+.flow-grid-v2 {
+  display: grid;
+  grid-template-columns: var(--_grid-cols);
+  gap: var(--_gap);
+}
+
+.flow-grid-v2[data-align="start"] {
+  align-items: start;
+}
+
+/* ── Pattern show-more toggle ── */
+.flow-pattern-show-more {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Grid item stretch — ensures Stack children fill grid cell height */
+.flow-grid-v2 > .flow-stack {
+  height: 100%;
+}
+
+/* Stats grid — vertical dividers between columns */
+.flow-stats-grid > .flow-stack {
+  position: relative;
+}
+
+.flow-stats-grid > .flow-stack:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: calc(-1 * var(--ref-frame-space-4) / 2);
+  inset-block-start: var(--ref-frame-space-2);
+  inset-block-end: var(--ref-frame-space-2);
+  width: var(--sys-frame-border-thin);
+  background: var(--sys-energy-border-default);
+}
+
+/* ── Text: base reset + color/tone via data-attributes ── */
+.flow-text {
+  margin: 0;
+}
+
+.flow-text[data-color="primary"] {
+  color: var(--sys-energy-text-primary);
+}
+
+.flow-text[data-color="secondary"] {
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-text[data-color="tertiary"] {
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-text[data-color="inverse"] {
+  color: var(--sys-energy-text-inverse);
+}
+
+.flow-text[data-color="accent"] {
+  color: var(--sys-energy-text-accent);
+}
+
+.flow-text[data-color="danger"] {
+  color: var(--sys-energy-text-danger);
+}
+
+.flow-text[data-color="success"] {
+  color: var(--sys-energy-text-success);
+}
+
+.flow-text[data-color="warning"] {
+  color: var(--sys-energy-text-warning);
+}
+
+.flow-text[data-color="link"] {
+  color: var(--sys-energy-text-link);
+}
+
+.flow-text[data-color="onAction"] {
+  color: var(--sys-energy-text-on-action);
+}
+
+.flow-text[data-color="inherit"] {
+  color: inherit;
+}
+
+/* Tone overrides (color + weight) */
+.flow-text[data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+.flow-text[data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+.flow-text[data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+.flow-text[data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+/* ── Overlay ── */
+.flow-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sys-depth-layer-overlay);
+  background: var(--sys-depth-overlay);
+  backdrop-filter: var(--sys-depth-backdrop);
+  animation: flowFadeIn var(--ref-momentum-duration-fast) var(--ref-momentum-easing-enter);
+}
+
+/* ── FormField ── */
+.flow-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-size-gap-field);
+}
+
+.flow-form-field[data-full-width] {
+  width: 100%;
+}
+
+.flow-form-field-required {
+  color: var(--sys-energy-status-error);
+  margin-inline-start: var(--sys-size-gap-field);
+}
+
+.flow-form-field-message {
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-form-field-message[data-error] {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-form-field-message[data-success] {
+  color: var(--sys-energy-status-success);
+}
+
+/* ── FlowIcon ── */
+.flow-icon {
+  flex-shrink: 0;
+}
+
+.flow-icon[data-size="xs"] {
+  width: var(--sys-icon-size-xs);
+  height: var(--sys-icon-size-xs);
+}
+
+.flow-icon[data-size="sm"] {
+  width: var(--sys-icon-size-sm);
+  height: var(--sys-icon-size-sm);
+}
+
+.flow-icon[data-size="md"] {
+  width: var(--sys-icon-size-md);
+  height: var(--sys-icon-size-md);
+}
+
+.flow-icon[data-size="lg"] {
+  width: var(--sys-icon-size-lg);
+  height: var(--sys-icon-size-lg);
+}
+
+.flow-icon[data-size="xl"] {
+  width: var(--sys-icon-size-xl);
+  height: var(--sys-icon-size-xl);
+}
+
+/* ── ThemeToggle ── */
+.flow-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sys-frame-height-control-sm);
+  height: var(--sys-frame-height-control-sm);
+  border-radius: var(--sys-frame-radius-control);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  background: var(--sys-energy-surface-tertiary);
+  cursor: pointer;
+  font-size: var(--sys-voice-paragraph-m-size);
+  color: var(--sys-energy-text-secondary);
+  transition: all var(--sys-momentum-transition-fast);
+}
+
+/* ── Callout (doc-primitive) ── */
+.flow-callout {
+  border-inline-start: var(--sys-frame-border-indicator) solid
+    var(--_callout-color, var(--sys-energy-text-accent));
+}
+
+.flow-callout[data-intent="accent"] {
+  --_callout-color: var(--sys-energy-text-accent);
+}
+
+.flow-callout[data-intent="success"] {
+  --_callout-color: var(--sys-energy-status-success);
+}
+
+.flow-callout[data-intent="warning"] {
+  --_callout-color: var(--sys-energy-status-warning);
+}
+
+.flow-callout[data-intent="danger"] {
+  --_callout-color: var(--sys-energy-status-error);
+}
+
+.flow-callout[data-intent="info"] {
+  --_callout-color: var(--sys-energy-status-info);
+}
+
+/* ── Philosophy page: "What Flow Is Not" cards ── */
+.flow-negation-card {
+  border-inline-start: var(--sys-frame-border-indicator) solid var(--sys-energy-status-error);
+}
+
+/* ── Philosophy page: Longevity ordered list ── */
+.flow-longevity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flow-longevity-list li {
+  padding: var(--ref-frame-space-3) 0;
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+.flow-longevity-list li:last-child {
+  border-block-end: none;
+}
+
+/* ── Component Detail: Anatomy ── */
+.flow-anatomy-surface {
+  overflow: hidden;
+}
+
+.flow-anatomy-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-component);
+  padding: var(--sys-frame-padding-container);
+}
+
+.flow-anatomy-item:not(:last-child) {
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-color-border-default);
+}
+
+.flow-anatomy-chip {
+  align-self: flex-start;
+}
+
+/* ── Component Detail: Accessibility ── */
+.flow-a11y-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--comp-grid-auto-min), 100%), 1fr));
+  gap: var(--sys-frame-gap-component);
+  align-items: flex-start;
+}
+
+.flow-a11y-card {
+  overflow: hidden;
+}
+
+.flow-a11y-card-inner {
+  padding: var(--sys-frame-padding-container);
+}
+
+.flow-a11y-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flow-a11y-list li {
+  display: flex;
+  gap: var(--ref-frame-space-2);
+  align-items: flex-start;
+}
+
+.flow-a11y-icon {
+  flex-shrink: 0;
+  margin-block-start: var(--ref-frame-space-micro);
+}
+
+.flow-a11y-icon[data-intent="handled"] {
+  color: var(--sys-energy-status-success);
+}
+
+.flow-a11y-icon[data-intent="required"] {
+  color: var(--sys-energy-status-warning);
+}
+
+.flow-a11y-icon[data-intent="keyboard"] {
+  color: var(--sys-color-content-brand);
+}
+
+/* ── Shared: text-wrap pretty utility ── */
+.flow-text-pretty {
+  text-wrap: pretty;
+}
+
+/* ── PageHeader (doc-primitive) ── */
+
+/* ── CodeBlock (doc-primitive) ── */
+.flow-code-block {
+  overflow: auto;
+}
+
+/* ── GuidelinesColumns (doc-primitive) ── */
+.flow-guidelines-col-header {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-guidelines-icon {
+  font-size: var(--sys-voice-size-5);
+  line-height: var(--sys-voice-line-height-none);
+  flex-shrink: 0;
+  font-weight: var(--sys-voice-weight-bold);
+}
+
+.flow-guidelines-icon[data-type="do"] {
+  color: var(--sys-energy-text-success);
+}
+
+.flow-guidelines-icon[data-type="dont"] {
+  color: var(--sys-energy-text-danger);
+}
+
+.flow-guidelines-icon[data-type="info"] {
+  color: var(--sys-energy-text-accent);
+}
+
+.flow-guidelines-col-title[data-type="do"] {
+  color: var(--sys-energy-text-success);
+}
+
+.flow-guidelines-col-title[data-type="dont"] {
+  color: var(--sys-energy-text-danger);
+}
+
+.flow-guidelines-col-title[data-type="info"] {
+  color: var(--sys-energy-text-accent);
+}
+
+.flow-guidelines-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-guidelines-bullet {
+  flex-shrink: 0;
+  line-height: var(--sys-voice-line-height-relaxed);
+  opacity: var(--ref-state-opacity-dimmed);
+}
+
+.flow-guidelines-bullet[data-type="do"] {
+  color: var(--sys-energy-text-success);
+}
+
+.flow-guidelines-bullet[data-type="dont"] {
+  color: var(--sys-energy-text-danger);
+}
+
+.flow-guidelines-bullet[data-type="info"] {
+  color: var(--sys-energy-text-accent);
+}
+
+/* ── States Grid (component-doc-template) ── */
+.flow-states-grid {
+  display: grid;
+  gap: var(--sys-frame-gap-component);
+}
+
+.flow-states-grid[data-size="sm"] {
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--comp-swatch-grid-min-xs), 100%), 1fr));
+}
+
+.flow-states-grid[data-size="md"] {
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--comp-swatch-grid-min-sm), 100%), 1fr));
+}
+
+.flow-states-grid[data-size="lg"] {
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--comp-swatch-grid-min-md), 100%), 1fr));
+}
+
+.flow-states-grid[data-size="xl"] {
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--comp-swatch-grid-min-lg), 100%), 1fr));
+}
+
+/* ── DemoCell (component-doc-template) ── */
+.flow-demo-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sys-frame-gap-component);
+  padding: var(--sys-frame-padding-inset-s) 0;
+}
+
+.flow-demo-cell--start {
+  align-items: flex-start;
+}
+
+.flow-demo-cell__label {
+  text-align: center;
+}
+
+.flow-demo-cell--start .flow-demo-cell__label {
+  text-align: start;
+}
+
+/* ── VariantMatrix (component-doc-template) ── */
+.flow-variant-matrix {
+  display: grid;
+
+  /* --flow-matrix-cols se setea via style prop en el componente */
+  grid-template-columns: var(--flow-matrix-cols, auto 1fr);
+  align-items: center;
+  gap: var(--ref-frame-space-2) var(--ref-frame-space-3);
+}
+
+.flow-matrix-row {
+  display: contents;
+}
+
+.flow-matrix-header-cell {
+  display: flex;
+  justify-content: center;
+  padding-block-end: var(--ref-frame-space-1);
+}
+
+.flow-matrix-label-cell {
+  display: flex;
+  align-items: center;
+  padding-inline-end: var(--ref-frame-space-3);
+  white-space: nowrap;
+}
+
+.flow-matrix-label-text {
+  text-transform: capitalize;
+}
+
+.flow-matrix-data-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-1);
+  min-width: 0;
+}
+
+/* ── FullWidthSection column labels (component-doc-template) ── */
+.flow-fullwidth-col-label {
+  margin-block-end: var(--sys-frame-gap-component);
+}
+
+/* ── DemoCell inline showcase row (doc-template) ── */
+.flow-demo-cell-row {
+  display: flex;
+  gap: var(--sys-frame-gap-section);
+  flex-wrap: wrap;
+}
+
+/* ── PropsTable (doc-primitive) ── */
+.flow-props-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.flow-props-entry {
+  padding: var(--ref-frame-space-3) 0;
+  border-block-end: var(--sys-frame-border-thin) solid var(--sys-energy-border-subtle);
+}
+
+.flow-props-entry:last-child {
+  border-block-end: none;
+}
+
+.flow-props-entry__required {
+  color: var(--sys-energy-text-danger);
+}
+
+.flow-props-entry__type {
+  font-family: var(--sys-voice-family-mono);
+  font-size: var(--sys-voice-paragraph-s-size);
+  color: var(--sys-energy-text-secondary);
+  overflow-wrap: break-word;
+}
+
+.flow-props-entry__default {
+  font-family: var(--sys-voice-family-mono);
+  font-size: var(--sys-voice-paragraph-s-size);
+  color: var(--sys-energy-text-tertiary);
+}
+
+/* ── DemoSection ── */
+.flow-demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-subsection);
+  width: 100%;
+  min-width: 0;
+}
+
+.flow-demo-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-subsection);
+}
+
+.flow-demo-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-subsection);
+  width: 100%;
+}
+
+.flow-demo-surface {
+  overflow: clip;
+}
+
+.flow-text-balance {
+  text-wrap: balance;
+}
+
+.flow-text-capitalize {
+  text-transform: capitalize;
+}
+
+/* ── DemoGroup ── */
+.flow-demo-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-component);
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── FocusRing (programmatic) ── */
+.flow-focus-ring-container {
+  position: relative;
+  display: contents;
+}
+
+.flow-focus-ring {
+  position: relative;
+  border-radius: inherit;
+  outline: none;
+  transition: outline-color var(--sys-momentum-transition-fast);
+}
+
+.flow-focus-ring--active {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-state-focus-ring-color);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+.flow-focus-ring--active[data-inset] {
+  outline: none;
+  box-shadow: inset 0 0 0 var(--sys-state-focus-ring-width) var(--sys-state-focus-ring-color);
+}
+
+/* WHCM: inset box-shadow is invisible; restore outline for forced-colors */
+@media (forced-colors: active) {
+  .flow-focus-ring--active[data-inset] {
+    outline: var(--sys-state-focus-ring-width) solid CanvasText;
+    outline-offset: calc(var(--sys-state-focus-ring-width) * -1);
+    box-shadow: none;
+  }
+}
+
+/* ── StateLayer ── */
+.flow-state-layer-container {
+  position: relative;
+}
+
+.flow-state-layer-container[data-clip] {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.flow-state-layer-container[data-disabled] {
+  opacity: var(--sys-state-disabled-opacity);
+}
+
+.flow-state-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: var(--_state-layer-bg, transparent);
+  opacity: var(--_state-layer-opacity, 0);
+  transition:
+    background var(--sys-momentum-transition-fast),
+    opacity var(--sys-momentum-transition-fast);
+}
+
+/* ── LayoutGrid: Responsive 12/6/1 column system ── */
+
+/* Consumes comp.layoutGrid tokens (full ref→sys→comp chain) */
+
+/* Mobile-first: 1 column (< 576px) */
+.flow-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--comp-layout-grid-sm-columns), 1fr);
+  gap: var(--comp-layout-grid-sm-gutter);
+  padding-inline-start: var(--comp-layout-grid-sm-margin);
+  padding-inline-end: var(--comp-layout-grid-sm-margin);
+  width: 100%;
+  max-width: var(--comp-layout-grid-lg-max-width);
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  box-sizing: border-box;
+  position: relative;
+  z-index: var(--comp-layout-grid-z-index);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Tablet: 6 columns (>= 576px) */
+@media (width >= 576px) {
+  .flow-layout-grid {
+    grid-template-columns: repeat(var(--comp-layout-grid-md-columns), 1fr);
+    gap: var(--comp-layout-grid-md-gutter);
+    padding-inline-start: var(--comp-layout-grid-md-margin);
+    padding-inline-end: var(--comp-layout-grid-md-margin);
+  }
+}
+
+/* Desktop: 12 columns (>= 992px) */
+@media (width >= 992px) {
+  .flow-layout-grid {
+    grid-template-columns: repeat(var(--comp-layout-grid-lg-columns), 1fr);
+    gap: var(--comp-layout-grid-lg-gutter);
+    padding-inline-start: var(--comp-layout-grid-lg-margin);
+    padding-inline-end: var(--comp-layout-grid-lg-margin);
+  }
+}
+
+/* Span utilities — how many columns a child occupies */
+
+/* min-width: 0 prevents grid children from overflowing on narrow viewports */
+.flow-col-span-1 {
+  grid-column: span 1;
+  min-width: 0;
+}
+
+.flow-col-span-2 {
+  grid-column: span 2;
+  min-width: 0;
+}
+
+.flow-col-span-3 {
+  grid-column: span 3;
+  min-width: 0;
+}
+
+.flow-col-span-4 {
+  grid-column: span 4;
+  min-width: 0;
+}
+
+.flow-col-span-5 {
+  grid-column: span 5;
+  min-width: 0;
+}
+
+.flow-col-span-6 {
+  grid-column: span 6;
+  min-width: 0;
+}
+
+.flow-col-span-7 {
+  grid-column: span 7;
+  min-width: 0;
+}
+
+.flow-col-span-8 {
+  grid-column: span 8;
+  min-width: 0;
+}
+
+.flow-col-span-9 {
+  grid-column: span 9;
+  min-width: 0;
+}
+
+.flow-col-span-10 {
+  grid-column: span 10;
+  min-width: 0;
+}
+
+.flow-col-span-11 {
+  grid-column: span 11;
+  min-width: 0;
+}
+
+.flow-col-span-12 {
+  grid-column: span 12;
+  min-width: 0;
+}
+
+.flow-col-span-full {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+/* Responsive span overrides — collapse to full on smaller viewports */
+@media (width <= 575px) {
+  .flow-col-span-1,
+  .flow-col-span-2,
+  .flow-col-span-3,
+  .flow-col-span-4,
+  .flow-col-span-5,
+  .flow-col-span-6,
+  .flow-col-span-7,
+  .flow-col-span-8,
+  .flow-col-span-9,
+  .flow-col-span-10,
+  .flow-col-span-11,
+  .flow-col-span-12 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Tablet: cap spans at 6 columns (>= 576px and < 992px) */
+@media (width >= 576px) and (width <= 991px) {
+  .flow-col-span-7,
+  .flow-col-span-8,
+  .flow-col-span-9,
+  .flow-col-span-10,
+  .flow-col-span-11,
+  .flow-col-span-12 {
+    grid-column: span 6;
+  }
+}
+
+/* ── LayoutGrid[data-demo-fixed] — desktop layout forced at any viewport ── */
+
+/* For documentation demos that must illustrate column proportions.          */
+
+/* All values come from existing comp tokens — nothing hardcoded.            */
+.flow-layout-grid[data-demo-fixed] {
+  grid-template-columns: repeat(var(--comp-layout-grid-lg-columns), 1fr);
+  gap: var(--comp-layout-grid-lg-gutter);
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+/* Restore correct span behaviour — overrides mobile/tablet collapse rules */
+.flow-layout-grid[data-demo-fixed] .flow-col-span-1 {
+  grid-column: span 1;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-2 {
+  grid-column: span 2;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-3 {
+  grid-column: span 3;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-4 {
+  grid-column: span 4;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-5 {
+  grid-column: span 5;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-6 {
+  grid-column: span 6;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-7 {
+  grid-column: span 7;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-8 {
+  grid-column: span 8;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-9 {
+  grid-column: span 9;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-10 {
+  grid-column: span 10;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-11 {
+  grid-column: span 11;
+}
+
+.flow-layout-grid[data-demo-fixed] .flow-col-span-12 {
+  grid-column: span 12;
+}
+
+/* ── RADIO BUTTON — Pure CSS selection control ────────── */
+
+/* Structure: label.flow-radio > input(sr-only) + span.flow-radio-control */
+
+/* State-layer = ::before on control (40px circle behind 24px mark) */
+
+/* Inner dot = ::after on control (8px white circle, scale transition) */
+
+.flow-radio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc((var(--comp-radio-touch-target) - var(--sys-size-indicator-state-layer)) / 2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* Hidden native input — accessible but invisible */
+.flow-radio-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visual radio mark — sized by sys.size.indicator (24px @ md) */
+.flow-radio-control {
+  position: relative;
+  width: var(--sys-size-indicator);
+  height: var(--sys-size-indicator);
+  border-radius: 50%;
+  border: var(--comp-radio-border-width) solid var(--comp-radio-border-inactive);
+  background: transparent;
+  box-sizing: border-box;
+  transition:
+    border-color var(--sys-momentum-transition-fast),
+    border-width var(--sys-momentum-transition-fast),
+    background-color var(--sys-momentum-transition-fast);
+  flex-shrink: 0;
+}
+
+/* State-layer ring — 40px circle centered behind the mark */
+.flow-radio-control::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * (var(--sys-size-indicator-state-layer) - var(--sys-size-indicator)) / 2);
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  transition:
+    background-color var(--sys-momentum-transition-fast),
+    opacity var(--sys-momentum-transition-fast);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Inner dot — 8px, centered, scale-animated */
+.flow-radio-control::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: calc(var(--sys-size-indicator) / 3);
+  height: calc(var(--sys-size-indicator) / 3);
+  margin-block-start: calc(-1 * calc(var(--sys-size-indicator) / 3) / 2);
+  margin-inline-start: calc(-1 * calc(var(--sys-size-indicator) / 3) / 2);
+  border-radius: 50%;
+  background: var(--comp-radio-dot-color);
+  transform: scale(0);
+  transition: transform var(--sys-momentum-transition-fast);
+}
+
+/* ── UNSELECTED STATES ── */
+
+/* Hover — thicker border + state-layer ring */
+.flow-radio:hover .flow-radio-input:not(:disabled) + .flow-radio-control {
+  border-width: var(--comp-radio-border-width-hover);
+}
+
+.flow-radio:hover .flow-radio-input:not(:disabled, :checked) + .flow-radio-control::before {
+  background: var(--comp-radio-state-layer-inactive);
+  opacity: var(--comp-radio-state-layer-opacity);
+}
+
+/* Pressed — darker border + state-layer ring */
+.flow-radio:active .flow-radio-input:not(:disabled, :checked) + .flow-radio-control {
+  border-color: var(--comp-radio-border-inactive-pressed);
+  border-width: var(--comp-radio-border-width-hover);
+}
+
+.flow-radio:active .flow-radio-input:not(:disabled, :checked) + .flow-radio-control::before {
+  background: var(--comp-radio-state-layer-inactive);
+  opacity: var(--comp-radio-state-layer-opacity);
+}
+
+/* ── SELECTED STATES ── */
+
+/* Checked — filled circle, no border, dot scales in */
+.flow-radio-input:checked + .flow-radio-control {
+  border-color: transparent;
+  border-width: 0;
+  background: var(--comp-radio-fill-active);
+}
+
+.flow-radio-input:checked + .flow-radio-control::after {
+  transform: scale(1);
+}
+
+/* Checked + hover — state-layer ring (blue) */
+.flow-radio:hover .flow-radio-input:checked:not(:disabled) + .flow-radio-control::before {
+  background: var(--comp-radio-state-layer-active);
+  opacity: var(--comp-radio-state-layer-opacity);
+}
+
+/* Checked + pressed — darker fill + state-layer ring */
+.flow-radio:active .flow-radio-input:checked:not(:disabled) + .flow-radio-control {
+  background: var(--comp-radio-fill-active-pressed);
+}
+
+.flow-radio:active .flow-radio-input:checked:not(:disabled) + .flow-radio-control::before {
+  background: var(--comp-radio-state-layer-active);
+  opacity: var(--comp-radio-state-layer-opacity);
+}
+
+/* ── DISABLED STATES ── */
+
+.flow-radio:has(.flow-radio-input:disabled) {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-radio-input:disabled + .flow-radio-control {
+  border-color: var(--comp-radio-border-disabled);
+}
+
+.flow-radio-input:disabled:checked + .flow-radio-control {
+  background: var(--comp-radio-fill-disabled);
+  border-color: transparent;
+  border-width: 0;
+}
+
+/* data-state="disabled" — aligns with ActionSurface/Button state pattern */
+.flow-radio[data-state="disabled"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-radio[data-state="disabled"] .flow-radio-control {
+  border-color: var(--comp-radio-border-disabled);
+}
+
+.flow-radio[data-state="disabled"] .flow-radio-input:checked + .flow-radio-control {
+  background: var(--comp-radio-fill-disabled);
+  border-color: transparent;
+  border-width: 0;
+}
+
+.flow-radio-wrapper:has(.flow-radio[data-state="disabled"]) .flow-radio-label-text {
+  color: var(--sys-energy-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* ── FOCUS-VISIBLE (keyboard only) ── */
+.flow-radio-input:focus-visible + .flow-radio-control {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+/* ── ERROR / SUCCESS STATES ── */
+.flow-radio[data-state="error"] .flow-radio-control {
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-radio[data-state="error"] .flow-radio-input:checked + .flow-radio-control {
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-radio[data-state="error"] .flow-radio-input:checked + .flow-radio-control::after {
+  background: var(--sys-energy-status-error);
+}
+
+.flow-radio[data-state="success"] .flow-radio-control {
+  border-color: var(--sys-energy-status-success);
+}
+
+.flow-radio[data-state="success"] .flow-radio-input:checked + .flow-radio-control {
+  border-color: var(--sys-energy-status-success);
+}
+
+.flow-radio[data-state="success"] .flow-radio-input:checked + .flow-radio-control::after {
+  background: var(--sys-energy-status-success);
+}
+
+/* ── RADIO GROUP — optional wrapper for keyboard nav ── */
+.flow-radio-group {
+  display: flex;
+  gap: var(--comp-radio-group-gap);
+}
+
+.flow-radio-group[data-direction="column"] {
+  flex-direction: column;
+}
+
+/* Radio + label text layout */
+.flow-radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-radio-gap);
+}
+
+.flow-radio-wrapper .flow-radio-label-text {
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body); /* was sys-size-label-font — maps 1:1 to voice.body */
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.flow-radio-wrapper:has(.flow-radio-input:disabled) .flow-radio-label-text {
+  color: var(--sys-energy-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* Radio size variants — MIGRATED to centralized [data-size] blocks (sys.size)
+   Radio comp tokens now derive from --sys-size-indicator via calc():
+   --comp-radio-size: var(--sys-size-indicator)
+   --comp-radio-dot-size: calc(var(--sys-size-indicator) / 3)
+   --comp-radio-state-layer-size: var(--sys-size-indicator-state-layer)
+   --comp-radio-label-font-size: var(--sys-size-voice-body) — migrated from sys-size-label-font */
+
+/* ── CHECKBOX — Pure CSS selection control ────────── */
+
+/* Structure: label.flow-checkbox > input(sr-only) + span.flow-checkbox-control > svg */
+
+/* Mirrors radio pattern: ::before = state-layer, SVG paths for check/dash */
+
+.flow-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc((var(--comp-checkbox-touch-target) - var(--sys-size-indicator-state-layer)) / 2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.flow-checkbox-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visual checkbox mark — sized by sys.size.indicator (24px @ md) */
+.flow-checkbox-control {
+  position: relative;
+  width: var(--sys-size-indicator);
+  height: var(--sys-size-indicator);
+  border-radius: var(--comp-checkbox-radius);
+  border: var(--comp-checkbox-border-width) solid var(--comp-checkbox-border-inactive);
+  background: transparent;
+  box-sizing: border-box;
+  transition:
+    border-color var(--sys-momentum-transition-fast),
+    border-width var(--sys-momentum-transition-fast),
+    background-color var(--sys-momentum-transition-fast);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* State-layer ring — 40px circle centered behind the mark */
+.flow-checkbox-control::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * (var(--sys-size-indicator-state-layer) - var(--sys-size-indicator)) / 2);
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  transition:
+    background-color var(--sys-momentum-transition-fast),
+    opacity var(--sys-momentum-transition-fast);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* SVG icon inside checkbox */
+.flow-checkbox-icon {
+  width: calc(var(--sys-size-indicator) * 2 / 3);
+  height: calc(var(--sys-size-indicator) * 2 / 3);
+  fill: none;
+  stroke: var(--comp-checkbox-icon-color);
+  stroke-width: var(--ref-frame-stroke-icon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity var(--sys-momentum-transition-fast),
+    transform var(--sys-momentum-transition-fast);
+  position: absolute;
+}
+
+/* ── UNCHECKED STATES ── */
+
+.flow-checkbox:hover .flow-checkbox-input:not(:disabled) + .flow-checkbox-control {
+  border-width: var(--comp-checkbox-border-width-hover);
+}
+
+.flow-checkbox:hover
+  .flow-checkbox-input:not(:disabled, :checked, [data-indeterminate])
+  + .flow-checkbox-control::before {
+  background: var(--comp-checkbox-state-layer-inactive);
+  opacity: var(--comp-checkbox-state-layer-opacity);
+}
+
+.flow-checkbox:active
+  .flow-checkbox-input:not(:disabled, :checked, [data-indeterminate])
+  + .flow-checkbox-control {
+  border-color: var(--comp-checkbox-border-inactive-pressed);
+  border-width: var(--comp-checkbox-border-width-hover);
+}
+
+.flow-checkbox:active
+  .flow-checkbox-input:not(:disabled, :checked, [data-indeterminate])
+  + .flow-checkbox-control::before {
+  background: var(--comp-checkbox-state-layer-inactive);
+  opacity: var(--comp-checkbox-state-layer-opacity);
+}
+
+/* ── CHECKED / INDETERMINATE STATES ── */
+
+.flow-checkbox-input:checked + .flow-checkbox-control,
+.flow-checkbox-input[data-indeterminate] + .flow-checkbox-control {
+  border-color: transparent;
+  border-width: 0;
+  background: var(--comp-checkbox-fill-active);
+}
+
+.flow-checkbox-input:checked + .flow-checkbox-control .flow-checkbox-icon,
+.flow-checkbox-input[data-indeterminate] + .flow-checkbox-control .flow-checkbox-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hide the wrong icon based on state */
+.flow-checkbox-input:checked:not([data-indeterminate])
+  + .flow-checkbox-control
+  .flow-checkbox-icon-dash,
+.flow-checkbox-input:not([data-indeterminate], :checked)
+  + .flow-checkbox-control
+  .flow-checkbox-icon-check,
+.flow-checkbox-input:not([data-indeterminate], :checked)
+  + .flow-checkbox-control
+  .flow-checkbox-icon-dash {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.flow-checkbox-input[data-indeterminate] + .flow-checkbox-control .flow-checkbox-icon-check {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.flow-checkbox-input[data-indeterminate] + .flow-checkbox-control .flow-checkbox-icon-dash {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Checked/indeterminate + hover */
+.flow-checkbox:hover .flow-checkbox-input:checked:not(:disabled) + .flow-checkbox-control::before,
+.flow-checkbox:hover
+  .flow-checkbox-input[data-indeterminate]:not(:disabled)
+  + .flow-checkbox-control::before {
+  background: var(--comp-checkbox-state-layer-active);
+  opacity: var(--comp-checkbox-state-layer-opacity);
+}
+
+/* Checked/indeterminate + pressed */
+.flow-checkbox:active .flow-checkbox-input:checked:not(:disabled) + .flow-checkbox-control,
+.flow-checkbox:active
+  .flow-checkbox-input[data-indeterminate]:not(:disabled)
+  + .flow-checkbox-control {
+  background: var(--comp-checkbox-fill-active-pressed);
+}
+
+.flow-checkbox:active .flow-checkbox-input:checked:not(:disabled) + .flow-checkbox-control::before,
+.flow-checkbox:active
+  .flow-checkbox-input[data-indeterminate]:not(:disabled)
+  + .flow-checkbox-control::before {
+  background: var(--comp-checkbox-state-layer-active);
+  opacity: var(--comp-checkbox-state-layer-opacity);
+}
+
+/* ── Breakpoint-responsive sys tokens ── */
+
+/* Tablet ≥576px: introduce content width constraints */
+@media (width >= 576px) {
+  :root {
+    --sys-frame-content-narrow: var(--ref-frame-content-dialog); /* 480px */
+    --sys-frame-content-prose: var(--ref-frame-content-narrow); /* 640px */
+    --sys-frame-content-prose-wide: var(--ref-frame-content-prose); /* 680px */
+  }
+}
+
+/* Desktop ≥992px: nominal content widths */
+@media (width >= 992px) {
+  :root {
+    --sys-frame-content-narrow: var(--ref-frame-content-narrow); /* 640px */
+    --sys-frame-content-prose: var(--ref-frame-content-prose); /* 680px */
+    --sys-frame-content-prose-wide: var(--ref-frame-content-prose-wide); /* 840px */
+  }
+}
+
+/* ── Page-specific overrides ── */
+
+/* Component detail page: responsive padding
+   Unified per-axis padding keeps V:H ratio ≈ 1:1 at every breakpoint.
+   Mobile uses sys-frame-padding-container (density-responsive: 20/24/28px).
+   Tablet equalises both axes at ref-frame-space-14 (56px).
+   Desktop unchanged at ref-frame-space-32 (128px). */
+.component-detail-surface {
+  /* Mobile — balanced at container-level padding */
+  padding-inline-start: var(--sys-frame-padding-container) !important;
+  padding-inline-end: var(--sys-frame-padding-container) !important;
+  padding-block-start: var(--sys-frame-padding-container) !important;
+  padding-block-end: var(--sys-frame-padding-container) !important;
+}
+
+/* Tablet */
+@media (width >= 576px) {
+  .component-detail-surface {
+    padding-inline-start: var(--ref-frame-space-14) !important;
+    padding-inline-end: var(--ref-frame-space-14) !important;
+    padding-block-start: var(--ref-frame-space-14) !important;
+    padding-block-end: var(--ref-frame-space-14) !important;
+  }
+}
+
+/* Desktop */
+@media (width >= 992px) {
+  .component-detail-surface {
+    padding-inline-start: var(--ref-frame-space-32) !important;
+    padding-inline-end: var(--ref-frame-space-32) !important;
+    padding-block-start: var(--ref-frame-space-32) !important;
+    padding-block-end: var(--ref-frame-space-32) !important;
+  }
+}
+
+/* Component detail page: LayoutGrid.Item needs top spacing before Surface */
+.component-detail-surface-wrapper {
+  padding-block-start: var(--sys-frame-padding-container);
+}
+
+/* ── Foundation Detail: Icon Badge ── */
+.flow-foundation-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ref-frame-space-12);
+  height: var(--ref-frame-space-12);
+  border-radius: var(--ref-frame-radius-4);
+  color: var(--sys-energy-text-inverse);
+  font-size: var(--sys-voice-size-6);
+  font-weight: var(--sys-voice-weight-bold);
+}
+
+/* ── DISABLED STATES ── */
+
+.flow-checkbox:has(.flow-checkbox-input:disabled) {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-checkbox-input:disabled + .flow-checkbox-control {
+  border-color: var(--comp-checkbox-border-disabled);
+}
+
+.flow-checkbox-input:disabled:checked + .flow-checkbox-control,
+.flow-checkbox-input:disabled[data-indeterminate] + .flow-checkbox-control {
+  background: var(--comp-checkbox-fill-disabled);
+  border-color: transparent;
+  border-width: 0;
+}
+
+/* data-state="disabled" — aligns with ActionSurface/Button state pattern */
+.flow-checkbox[data-state="disabled"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-checkbox[data-state="disabled"] .flow-checkbox-control {
+  border-color: var(--comp-checkbox-border-disabled);
+}
+
+.flow-checkbox[data-state="disabled"] .flow-checkbox-input:checked + .flow-checkbox-control,
+.flow-checkbox[data-state="disabled"]
+  .flow-checkbox-input[data-indeterminate]
+  + .flow-checkbox-control {
+  background: var(--comp-checkbox-fill-disabled);
+  border-color: transparent;
+  border-width: 0;
+}
+
+.flow-checkbox-wrapper:has(.flow-checkbox[data-state="disabled"]) .flow-checkbox-label-text {
+  color: var(--sys-energy-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* ── FOCUS-VISIBLE ── */
+.flow-checkbox-input:focus-visible + .flow-checkbox-control {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+/* ── PHILOSOPHY PAGE: Quick Link Cards ── */
+.quick-link-card:hover {
+  background: var(--sys-energy-surface-tertiary);
+  transform: translateY(calc(-1 * var(--ref-frame-space-micro)));
+}
+
+.quick-link-card:active {
+  transform: translateY(0);
+}
+
+/* ── ERROR / SUCCESS / LOADING STATES ── */
+.flow-checkbox[data-state="error"] .flow-checkbox-control {
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-checkbox[data-state="error"] .flow-checkbox-input:checked + .flow-checkbox-control,
+.flow-checkbox[data-state="error"]
+  .flow-checkbox-input[data-indeterminate]
+  + .flow-checkbox-control {
+  background: var(--sys-energy-status-error);
+}
+
+.flow-checkbox[data-state="success"] .flow-checkbox-control {
+  border-color: var(--sys-energy-status-success);
+}
+
+.flow-checkbox[data-state="success"] .flow-checkbox-input:checked + .flow-checkbox-control,
+.flow-checkbox[data-state="success"]
+  .flow-checkbox-input[data-indeterminate]
+  + .flow-checkbox-control {
+  background: var(--sys-energy-status-success);
+}
+
+.flow-checkbox[data-state="loading"] .flow-checkbox-control {
+  opacity: var(--ref-state-opacity-subtle);
+  pointer-events: none;
+}
+
+/* Checkbox + label text layout */
+.flow-checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-checkbox-gap);
+}
+
+.flow-checkbox-wrapper .flow-checkbox-label-text {
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body); /* was sys-size-label-font — maps 1:1 to voice.body */
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.flow-checkbox-wrapper:has(.flow-checkbox-input:disabled) .flow-checkbox-label-text {
+  color: var(--sys-energy-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* Checkbox size variants — MIGRATED to centralized [data-size] blocks (sys.size)
+   Checkbox comp tokens now derive from --sys-size-indicator via calc():
+   --comp-checkbox-size: var(--sys-size-indicator)
+   --comp-checkbox-icon-size: calc(var(--sys-size-indicator) * 2 / 3)
+   --comp-checkbox-state-layer-size: var(--sys-size-indicator-state-layer)
+   --comp-checkbox-label-font-size: var(--sys-size-voice-body) — migrated from sys-size-label-font */
+
+/* ── CHECKBOX GROUP — layout wrapper ── */
+.flow-checkbox-group {
+  display: flex;
+  gap: var(--comp-checkbox-group-gap);
+}
+
+.flow-checkbox-group[data-direction="column"] {
+  flex-direction: column;
+}
+
+/* ── SWITCH — Toggle control with sliding thumb ────────── */
+
+/* Structure: button.flow-switch[role=switch] > span.flow-switch-track > span.flow-switch-thumb > svg */
+
+/* Track = pill, thumb slides left↔right, icons swap ×/✓ */
+
+.flow-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc((var(--comp-switch-state-layer-size) - var(--comp-switch-track-height)) / 2);
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  user-select: none;
+  outline: none;
+  font: inherit;
+}
+
+/* Track — the pill background */
+.flow-switch-track {
+  position: relative;
+  width: var(--comp-switch-track-width);
+  height: var(--comp-switch-track-height);
+  border-radius: var(--comp-switch-track-radius);
+  background: var(--comp-switch-track-off);
+  transition: background-color var(--sys-momentum-transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+/* Thumb — the sliding circle */
+.flow-switch-thumb {
+  position: absolute;
+  inset-inline-start: var(--comp-switch-thumb-inset);
+  width: var(--comp-switch-thumb-size);
+  height: var(--comp-switch-thumb-size);
+  border-radius: 50%;
+  background: var(--comp-switch-thumb-off);
+  box-shadow: var(--comp-switch-thumb-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    inset-inline-start var(--sys-momentum-transition-fast),
+    width var(--sys-momentum-transition-fast),
+    height var(--sys-momentum-transition-fast),
+    background-color var(--sys-momentum-transition-fast);
+}
+
+/* Thumb icons */
+.flow-switch-icon {
+  width: var(--comp-switch-icon-size);
+  height: var(--comp-switch-icon-size);
+  fill: none;
+  stroke-width: var(--ref-frame-stroke-icon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    opacity var(--sys-momentum-transition-fast),
+    stroke var(--sys-momentum-transition-fast);
+  position: absolute;
+}
+
+.flow-switch-icon-off {
+  stroke: var(--comp-switch-thumb-icon-off);
+  opacity: 1;
+}
+
+.flow-switch-icon-on {
+  stroke: var(--comp-switch-thumb-icon-on);
+  opacity: 0;
+}
+
+/* State-layer ring — follows thumb */
+.flow-switch-thumb::before {
+  content: "";
+  position: absolute;
+  width: var(--comp-switch-state-layer-size);
+  height: var(--comp-switch-state-layer-size);
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  transition:
+    background-color var(--sys-momentum-transition-fast),
+    opacity var(--sys-momentum-transition-fast);
+  pointer-events: none;
+}
+
+/* ── ON STATE ── */
+.flow-switch[aria-checked="true"] .flow-switch-track {
+  background: var(--comp-switch-track-on);
+}
+
+.flow-switch[aria-checked="true"] .flow-switch-thumb {
+  inset-inline-start: calc(
+    var(--comp-switch-track-width) - var(--comp-switch-thumb-size) - var(--comp-switch-thumb-inset)
+  );
+  background: var(--comp-switch-thumb-on);
+}
+
+.flow-switch[aria-checked="true"] .flow-switch-icon-off {
+  opacity: 0;
+}
+
+.flow-switch[aria-checked="true"] .flow-switch-icon-on {
+  opacity: 1;
+}
+
+/* ── HOVER ── */
+.flow-switch:hover:not(:disabled) .flow-switch-thumb::before {
+  opacity: var(--comp-switch-state-layer-opacity);
+}
+
+.flow-switch:hover:not(:disabled)[aria-checked="false"] .flow-switch-track {
+  background: var(--comp-switch-track-off-hover);
+}
+
+.flow-switch:hover:not(:disabled)[aria-checked="false"] .flow-switch-thumb::before {
+  background: var(--comp-switch-state-layer-off);
+}
+
+.flow-switch:hover:not(:disabled)[aria-checked="true"] .flow-switch-track {
+  background: var(--comp-switch-track-on-hover);
+}
+
+.flow-switch:hover:not(:disabled)[aria-checked="true"] .flow-switch-thumb::before {
+  background: var(--comp-switch-state-layer-on);
+}
+
+/* ── PRESSED — thumb grows ── */
+.flow-switch:active:not(:disabled) .flow-switch-thumb {
+  width: var(--comp-switch-thumb-size-pressed);
+  height: var(--comp-switch-thumb-size-pressed);
+}
+
+.flow-switch:active:not(:disabled)[aria-checked="true"] .flow-switch-track {
+  background: var(--comp-switch-track-on-pressed);
+}
+
+.flow-switch:active:not(:disabled)[aria-checked="true"] .flow-switch-thumb {
+  inset-inline-start: calc(
+    var(--comp-switch-track-width) - var(--comp-switch-thumb-size-pressed) -
+      var(--comp-switch-thumb-inset)
+  );
+}
+
+/* ── DISABLED ── */
+.flow-switch:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-switch:disabled .flow-switch-track {
+  background: var(--comp-switch-track-disabled);
+}
+
+.flow-switch:disabled .flow-switch-thumb {
+  background: var(--comp-switch-thumb-disabled);
+  box-shadow: none;
+}
+
+.flow-switch:disabled .flow-switch-icon-off {
+  stroke: var(--comp-switch-thumb-icon-disabled);
+}
+
+.flow-switch:disabled .flow-switch-icon-on {
+  stroke: var(--comp-switch-thumb-icon-disabled);
+}
+
+/* ── FOCUS-VISIBLE ── */
+.flow-switch:focus-visible .flow-switch-track {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+/* ── ERROR / SUCCESS STATES ── */
+.flow-switch[data-state="error"] .flow-switch-track {
+  background: var(--sys-energy-status-error-subtle);
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-switch[data-state="error"][aria-checked="true"] .flow-switch-track {
+  background: var(--sys-energy-status-error);
+}
+
+.flow-switch[data-state="success"] .flow-switch-track {
+  background: var(--sys-energy-status-success-subtle);
+  border-color: var(--sys-energy-status-success);
+}
+
+.flow-switch[data-state="success"][aria-checked="true"] .flow-switch-track {
+  background: var(--sys-energy-status-success);
+}
+
+/* Switch + label text layout */
+.flow-switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-switch-gap);
+}
+
+.flow-switch-wrapper .flow-switch-label-text {
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  color: var(--sys-energy-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.flow-switch-wrapper:has(.flow-switch:disabled) .flow-switch-label-text {
+  color: var(--sys-energy-text-tertiary);
+  cursor: not-allowed;
+}
+
+/* Switch size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-switch-track-width, --comp-switch-track-height, --comp-switch-thumb-size,
+   --comp-switch-thumb-size-pressed, --comp-switch-thumb-inset, --comp-switch-state-layer-size,
+   --comp-switch-icon-size, --comp-switch-label-font all set in [data-size="sm/md/lg/xl"] blocks. */
+
+/* ── Dark mode body adjustment ── */
+[data-theme="dark"] .flow-doc-body {
+  color-scheme: dark;
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1 Components: Group Error ── */
+
+/* ═══════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: TextArea ── */
+
+/* ═════════════════════════════════════════════���═ */
+
+/* ── TextArea root ── */
+.flow-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-textinput-gap);
+  width: var(--comp-textinput-width);
+  max-width: var(--comp-textinput-max-width);
+  min-width: var(--comp-textinput-min-width);
+}
+
+/* Container — composes .flow-input-surface; adds height/padding overrides.
+   Phase C.1: border → box-shadow via IS composition.
+   padding-top = floated-label-inset(padding+gap) + label-line-box(caption×lh-dense) + gap
+   — extra gap from border vs IS standard gives TextArea proportional breathing room. */
+.flow-textarea-container {
+  height: auto;
+  padding: var(--comp-textinput-padding) var(--comp-textinput-padding-x);
+  padding-block-start: calc(
+    var(--comp-textinput-padding) + var(--sys-size-voice-caption) *
+      var(--sys-voice-line-height-dense) + 2 * var(--comp-textinput-gap)
+  );
+}
+
+/* Container states (incl. loading) → .flow-input-surface */
+
+/* Label — composes .flow-input-surface-label; resting at content-start position
+   (placeholder behavior), floated to top inset via IS focus/has-value trigger.
+   Resting top = container padding-top = padding + caption-line-box + 2×gap.
+   Floated override below adds +gap vs IS standard for proportional breathing room. */
+.flow-textarea-label {
+  inset-block-start: calc(
+    var(--comp-textinput-padding) + var(--sys-size-voice-caption) *
+      var(--sys-voice-line-height-dense) + 2 * var(--comp-textinput-gap)
+  );
+  inset-inline-start: var(--comp-textinput-padding-x);
+  transform: translateY(0) scale(var(--comp-textinput-label-scale));
+}
+
+/* Floated label — override IS trigger: +gap breathing room from border.
+   Specificity 0-2-0, same as IS trigger; wins by source order (later). */
+.flow-input-surface:focus-within .flow-textarea-label,
+.flow-input-surface[data-has-value] .flow-textarea-label {
+  inset-block-start: calc(var(--comp-textinput-padding) + var(--comp-textinput-gap));
+}
+
+/* Label color states (focus, error, disabled) → .flow-input-surface-label rules */
+
+/* Field — native textarea */
+.flow-textarea-field {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--comp-textinput-text);
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  line-height: var(--sys-voice-line-height-normal);
+  padding: 0;
+  min-height: var(--comp-textarea-min-height);
+}
+
+/* Placeholder hidden in resting state (label acts as placeholder);
+   revealed on focus when label has floated up — mirrors IS field pattern. */
+.flow-textarea-field::placeholder {
+  color: transparent;
+  transition: color var(--comp-textinput-transition);
+}
+
+.flow-input-surface:focus-within .flow-textarea-field::placeholder {
+  color: var(--comp-textinput-placeholder);
+}
+
+.flow-input-surface[data-state="disabled"] .flow-textarea-field {
+  color: var(--comp-textinput-text-disabled);
+  cursor: not-allowed;
+}
+
+.flow-textarea-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ref-frame-space-2);
+  min-height: var(--ref-frame-space-4);
+}
+
+/* Hint — composes .flow-input-surface-hint; overrides padding/gap for footer layout */
+.flow-textarea-hint {
+  gap: var(--ref-frame-space-1);
+  padding: 0;
+}
+
+/* Hint error/success states → .flow-input-surface-hint rules */
+
+/* TextArea loading spinner */
+.flow-textarea-loading {
+  position: absolute;
+  inset-block-start: var(--comp-textinput-padding);
+  inset-inline-end: var(--comp-textinput-padding);
+  display: flex;
+  align-items: center;
+}
+
+.flow-textarea-counter {
+  font-size: var(--sys-size-voice-caption);
+  font-family: var(--sys-voice-family-mono);
+  color: var(--sys-energy-text-tertiary);
+  margin-inline-start: auto;
+}
+
+.flow-textarea-counter[data-over] {
+  color: var(--sys-energy-status-error);
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: Tooltip ── */
+
+/* ═══════════════════════════════════════════════ */
+
+.flow-tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+}
+
+.flow-tooltip {
+  position: absolute;
+  z-index: var(--sys-depth-layer-tooltip);
+  padding: var(--comp-tooltip-padding-y) var(--comp-tooltip-padding-x);
+  background: var(--sys-energy-surface-inverse);
+  color: var(--sys-energy-text-inverse);
+  font-size: var(--sys-size-voice-caption);
+  font-family: var(--sys-voice-family);
+  border-radius: var(--ref-frame-radius-1);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: flowFadeIn var(--ref-momentum-duration-fast) var(--ref-momentum-easing-enter);
+  box-shadow: var(--sys-depth-elevation-1);
+}
+
+.flow-tooltip[data-position="top"] {
+  inset-block-end: calc(100% + var(--ref-frame-space-1));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.flow-tooltip[data-position="bottom"] {
+  inset-block-start: calc(100% + var(--ref-frame-space-1));
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.flow-tooltip[data-position="left"] {
+  inset-inline-end: calc(100% + var(--ref-frame-space-1));
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-tooltip[data-position="right"] {
+  inset-inline-start: calc(100% + var(--ref-frame-space-1));
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-tooltip-arrow {
+  position: absolute;
+  width: var(--ref-frame-space-2);
+  height: var(--ref-frame-space-2);
+  background: var(--sys-energy-surface-inverse);
+  transform: rotate(45deg);
+}
+
+.flow-tooltip[data-position="top"] .flow-tooltip-arrow {
+  inset-block-end: var(--comp-tooltip-arrow-offset);
+  inset-inline-start: 50%;
+  margin-inline-start: var(--comp-tooltip-arrow-offset);
+}
+
+.flow-tooltip[data-position="bottom"] .flow-tooltip-arrow {
+  inset-block-start: var(--comp-tooltip-arrow-offset);
+  inset-inline-start: 50%;
+  margin-inline-start: var(--comp-tooltip-arrow-offset);
+}
+
+.flow-tooltip[data-position="left"] .flow-tooltip-arrow {
+  inset-inline-end: var(--comp-tooltip-arrow-offset);
+  inset-block-start: 50%;
+  margin-block-start: var(--comp-tooltip-arrow-offset);
+}
+
+.flow-tooltip[data-position="right"] .flow-tooltip-arrow {
+  inset-inline-start: var(--comp-tooltip-arrow-offset);
+  inset-block-start: 50%;
+  margin-block-start: var(--comp-tooltip-arrow-offset);
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: Snackbar / Toast ── */
+
+/* ═══════════════════════════════════════════════ */
+
+.flow-snackbar-container {
+  position: fixed;
+  inset-block-end: var(--ref-frame-space-6);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: var(--sys-depth-layer-toast);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--ref-frame-space-2);
+  pointer-events: none;
+  max-width: min(var(--comp-snackbar-max-width), calc(100vw - var(--ref-frame-space-8)));
+  width: 100%;
+}
+
+.flow-snackbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--comp-snackbar-padding-y) var(--comp-snackbar-padding-x);
+  border-radius: var(--ref-frame-radius-2);
+  box-shadow: var(--sys-depth-elevation-2);
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  pointer-events: auto;
+  animation: flowSlideUp var(--ref-momentum-duration-normal) var(--ref-momentum-easing-enter);
+}
+
+.flow-snackbar[data-exiting] {
+  animation: flowFadeOut var(--ref-momentum-duration-fast) var(--ref-momentum-easing-exit) forwards;
+}
+
+.flow-snackbar[data-variant="info"] {
+  background: var(--sys-energy-surface-inverse);
+  color: var(--sys-energy-text-inverse);
+}
+
+.flow-snackbar[data-variant="success"] {
+  background: var(--sys-energy-status-success);
+  color: var(--sys-energy-text-inverse);
+}
+
+.flow-snackbar[data-variant="warning"] {
+  background: var(--sys-energy-status-warning);
+  color: var(--sys-energy-text-inverse);
+}
+
+.flow-snackbar[data-variant="error"] {
+  background: var(--sys-energy-status-error);
+  color: var(--sys-energy-text-inverse);
+}
+
+.flow-snackbar-message {
+  flex: 1;
+}
+
+.flow-snackbar-action {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-weight: var(--sys-voice-weight-semibold);
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  cursor: pointer;
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border-radius: var(--ref-frame-radius-1);
+  text-decoration: underline;
+  text-underline-offset: var(--ref-frame-space-micro);
+  opacity: var(--comp-snackbar-action-opacity);
+}
+
+.flow-snackbar-action:hover {
+  opacity: 1;
+}
+
+.flow-snackbar-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  border-radius: var(--ref-frame-radius-1);
+  opacity: var(--ref-state-opacity-muted);
+}
+
+.flow-snackbar-close:hover {
+  opacity: 1;
+}
+
+@keyframes flowSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ref-frame-space-4));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flowFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: Skeleton ── */
+
+/* ═══════════════════════════════════════════════ */
+
+.flow-skeleton-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-skeleton {
+  background: var(--sys-energy-surface-sunken);
+  border-radius: var(--ref-frame-radius-1);
+}
+
+.flow-skeleton[data-variant="text"] {
+  height: var(--comp-skeleton-text-height);
+  border-radius: var(--ref-frame-radius-1);
+}
+
+.flow-skeleton[data-variant="circle"] {
+  border-radius: var(--sys-frame-radius-full);
+}
+
+.flow-skeleton[data-variant="rect"] {
+  border-radius: var(--ref-frame-radius-2);
+}
+
+.flow-skeleton[data-variant="card"] {
+  border-radius: var(--ref-frame-radius-3);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+.flow-skeleton[data-animate] {
+  animation: flowSkeletonPulse var(--ref-momentum-duration-skeleton) ease-in-out infinite;
+}
+
+@keyframes flowSkeletonPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: var(--comp-skeleton-pulse-opacity);
+  }
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ─��� Phase 1: ProgressBar ── */
+
+/* ═══════════════════════════════════════════════ */
+
+.flow-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  width: 100%;
+}
+
+.flow-progress-track {
+  flex: 1;
+  height: var(--comp-progress-track-height);
+  background: var(--sys-energy-surface-sunken);
+  border-radius: var(--sys-frame-radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ProgressBar size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-progress-track-height set in [data-size="sm/md/lg/xl"] blocks. */
+
+.flow-progress-fill {
+  height: 100%;
+  border-radius: var(--sys-frame-radius-full);
+  transition: width var(--sys-momentum-transition-default);
+  background: var(--sys-energy-action-primary);
+}
+
+.flow-progress-track[data-variant="success"] .flow-progress-fill {
+  background: var(--sys-energy-status-success);
+}
+
+.flow-progress-track[data-variant="warning"] .flow-progress-fill {
+  background: var(--sys-energy-status-warning);
+}
+
+.flow-progress-track[data-variant="error"] .flow-progress-fill {
+  background: var(--sys-energy-status-error);
+}
+
+/* Indeterminate animation */
+.flow-progress-track[data-indeterminate] .flow-progress-fill {
+  width: 40% !important;
+  animation: flowProgressIndeterminate var(--ref-momentum-duration-progress) ease-in-out infinite;
+}
+
+@keyframes flowProgressIndeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+.flow-progress-label {
+  font-size: var(--sys-voice-size-3);
+  font-family: var(--sys-voice-family-mono);
+  color: var(--sys-energy-text-secondary);
+  min-width: var(--ref-frame-space-10);
+  text-align: end;
+}
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: EmptyState ── */
+
+/* ═══════════════════════════════════════════════ */
+
+.flow-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-emptystate-gap);
+  padding: var(--comp-emptystate-padding-y) var(--comp-emptystate-padding-x);
+  text-align: center;
+}
+
+/* data-compact backward compat → resolves to size="sm" in React, covered by centralized blocks */
+
+.flow-empty-state-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-emptystate-icon-size);
+  height: var(--comp-emptystate-icon-size);
+  border-radius: var(--sys-frame-radius-full);
+  background: var(--sys-energy-surface-sunken);
+  color: var(--sys-energy-text-tertiary);
+}
+
+/* .flow-empty-state[data-compact] .flow-empty-state-icon — removed, covered by [data-size="sm"] */
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Phase 1: Select ─��� */
+
+/* ═══════════════════════════════════════════════ */
+
+/* ── Select root ── */
+.flow-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-textinput-gap);
+  position: relative;
+  width: var(--comp-textinput-width);
+  max-width: var(--comp-textinput-max-width);
+  min-width: var(--comp-textinput-min-width);
+}
+
+/* Trigger — composes .flow-input-surface; adds cursor/text-align/width overrides.
+   Phase C.1: border → box-shadow via IS composition. */
+.flow-select-trigger {
+  align-items: flex-end;
+  gap: var(--ref-frame-space-2);
+  padding: 0 var(--comp-textinput-padding-x);
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+  color: var(--comp-textinput-text);
+  cursor: pointer;
+  outline: none;
+  text-align: start;
+  width: 100%;
+}
+
+/* Container/border states → .flow-input-surface */
+
+/* Suppress focus ring on mouse click — only show on keyboard navigation.
+   IS uses :focus-within (matches on any focus); button should only
+   show outline when :focus-visible (keyboard). */
+.flow-select-trigger.flow-input-surface:focus-within:not(:focus-visible) {
+  outline: none;
+}
+
+/* Disabled: add opacity: 1 override (IS doesn't reset this) */
+.flow-select-trigger:disabled {
+  opacity: 1;
+}
+
+/* Label — composes .flow-input-surface-label; adds inset-inline-start position */
+.flow-select-label {
+  inset-inline-start: var(--comp-textinput-padding-x);
+}
+
+/* Float/color states → .flow-input-surface-label rules */
+
+/* data-open float trigger (in addition to IS focus-within + data-has-value) */
+.flow-select-trigger[data-open] .flow-select-label {
+  inset-block-start: var(--comp-textinput-padding);
+  transform: translateY(0) scale(1);
+}
+
+/* Value display — anchored at bottom via flex-end + margin-bottom (mirrors IS field pattern) */
+.flow-select-value {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-block-end: var(--comp-textinput-padding);
+}
+
+.flow-select-placeholder {
+  color: var(--comp-textinput-placeholder);
+  opacity: 0;
+  transition: opacity var(--sys-momentum-transition-fast);
+}
+
+/* Show placeholder only when label has floated up */
+.flow-select-trigger[data-open] .flow-select-placeholder,
+.flow-select-trigger:focus-within .flow-select-placeholder {
+  opacity: 1;
+}
+
+/* Chevron — align-self: center keeps it vertically centered with flex-end trigger */
+.flow-select-chevron {
+  transition: transform var(--sys-momentum-transition-fast);
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--comp-textinput-label);
+}
+
+.flow-select-trigger[data-open] .flow-select-chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.flow-select-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + var(--ref-frame-space-2));
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--comp-country-dropdown-bg);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--comp-country-dropdown-radius);
+  box-shadow: var(--comp-country-dropdown-shadow);
+  max-height: var(--comp-country-dropdown-max-height);
+  overflow-y: auto;
+  padding: var(--ref-frame-space-1) 0;
+  animation: flowFadeIn var(--ref-momentum-duration-fast) var(--ref-momentum-easing-enter);
+}
+
+.flow-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: 0 var(--ref-frame-space-3);
+  height: var(--comp-country-dropdown-item-height);
+  cursor: pointer;
+  font-size: var(--sys-voice-size-5);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-primary);
+  transition: background var(--sys-momentum-transition-fast);
+}
+
+.flow-select-option[data-highlighted] {
+  background: var(--comp-country-dropdown-item-hover);
+}
+
+.flow-select-option[data-selected] {
+  background: rgb(var(--ref-energy-blue-500-rgb), var(--ref-state-opacity-selected));
+}
+
+.flow-select-option[data-state="disabled"] {
+  opacity: var(--sys-state-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.flow-select-option-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hint — composes .flow-input-surface-hint; overrides padding for Select layout */
+.flow-select-hint {
+  gap: var(--ref-frame-space-1);
+}
+
+/* Hint error/success states → .flow-input-surface-hint rules */
+
+/* ── FlowCard base class ── */
+.flow-card {
+  border-radius: var(--comp-card-radius);
+  transition:
+    box-shadow var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default);
+}
+
+/* Card variant: stat — metric/KPI display with centered content */
+.flow-card[data-variant="stat"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  background: var(--comp-card-bg-elevated);
+  border: var(--sys-frame-border-thin) solid var(--comp-card-border);
+  box-shadow: none;
+  padding: var(--comp-card-padding);
+}
+
+/* Ensure stat cards inside links/wrappers stretch to grid height */
+.flow-grid-v2 > a > .flow-card[data-variant="stat"],
+.flow-grid-v2 > * > .flow-card[data-variant="stat"] {
+  height: 100%;
+}
+
+.flow-grid-v2 > a {
+  display: flex;
+}
+
+/* Card accent — tinted background + uniform colored border */
+.flow-card[data-accent] {
+  border: var(--comp-card-accent-width) solid;
+}
+
+.flow-card[data-accent="action"] {
+  background: var(--sys-energy-status-info-subtle);
+  border-color: var(--sys-energy-action-primary);
+}
+
+.flow-card[data-accent="success"] {
+  background: var(--sys-energy-status-success-subtle);
+  border-color: var(--sys-energy-status-success);
+}
+
+.flow-card[data-accent="warning"] {
+  background: var(--sys-energy-status-warning-subtle);
+  border-color: var(--sys-energy-status-warning);
+}
+
+.flow-card[data-accent="error"] {
+  background: var(--sys-energy-status-error-subtle);
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-card[data-accent="info"] {
+  background: var(--sys-energy-status-info-subtle);
+  border-color: var(--sys-energy-status-info);
+}
+
+.flow-card[data-accent="neutral"] {
+  background: var(--sys-energy-surface-primary);
+  border-color: var(--sys-energy-border-strong);
+}
+
+/* Card size variants — MIGRATED to centralized [data-size] blocks (sys.size)
+   --comp-card-padding, --comp-card-radius set in [data-size="sm/md/lg/xl"] blocks */
+
+/* Dialog size variants — MIGRATED to centralized [data-size] blocks (sys.size)
+   --comp-dialog-max-width set in [data-size="sm/md/lg/xl"] blocks */
+
+/* Table size variants — MIGRATED to centralized [data-size] blocks (sys.size)
+   comp tokens now consume --sys-size-table-* tokens directly */
+
+/* Tooltip size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-tooltip-padding-y, --comp-tooltip-padding-x, --comp-tooltip-font
+   set in [data-size="sm/md/lg/xl"] blocks. */
+
+/* Snackbar size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-snackbar-padding-y, --comp-snackbar-padding-x, --comp-snackbar-font
+   set in [data-size="sm/md/lg/xl"] blocks. */
+
+/* Skeleton size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-skeleton-text-height set in [data-size="sm/md/lg/xl"] blocks. */
+
+/* ProgressBar xl — MIGRATED to centralized [data-size="xl"] block */
+
+/* EmptyState size variants — MIGRATED to centralized [data-size] blocks (sys.size).
+   --comp-emptystate-padding-y, --comp-emptystate-padding-x, --comp-emptystate-gap,
+   --comp-emptystate-icon-size set in [data-size="sm/md/lg/xl"] blocks. */
+
+/* Select loading spinner — inline in trigger flex (no absolute needed) */
+.flow-select-loading {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
+/* ── Reduced motion (component-specific; container/label → .flow-input-surface) ── */
+@media (prefers-reduced-motion: reduce) {
+  .flow-select-chevron,
+  .flow-select-dropdown,
+  .flow-select-placeholder {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+/* end primitives */

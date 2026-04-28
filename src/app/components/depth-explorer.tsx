@@ -11,7 +11,7 @@
  */
 import { useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Shadow level data ──────────────────────────────────
 interface ShadowLevel {
@@ -116,10 +116,50 @@ interface DarkShadowLevel {
 }
 
 const DARK_SHADOW_LEVELS: DarkShadowLevel[] = [
-  { level: 1, refToken: "ref.depth.shadow.dark-1", cssVar: "--ref-depth-shadow-dark-1", offsetY: "1px", blur: "3px", spread: "0", primaryOpacity: "35%", secondaryOpacity: "24%", color: "rgba(0, 0, 0, ...)" },
-  { level: 2, refToken: "ref.depth.shadow.dark-2", cssVar: "--ref-depth-shadow-dark-2", offsetY: "4px", blur: "12px", spread: "4px", primaryOpacity: "35%", secondaryOpacity: "24%", color: "rgba(0, 0, 0, ...)" },
-  { level: 3, refToken: "ref.depth.shadow.dark-3", cssVar: "--ref-depth-shadow-dark-3", offsetY: "10px", blur: "32px", spread: "6px", primaryOpacity: "40%", secondaryOpacity: "24%", color: "rgba(0, 0, 0, ...)" },
-  { level: 4, refToken: "ref.depth.shadow.dark-4", cssVar: "--ref-depth-shadow-dark-4", offsetY: "20px", blur: "56px", spread: "8px", primaryOpacity: "48%", secondaryOpacity: "30%", color: "rgba(0, 0, 0, ...)" },
+  {
+    level: 1,
+    refToken: "ref.depth.shadow.dark-1",
+    cssVar: "--ref-depth-shadow-dark-1",
+    offsetY: "1px",
+    blur: "3px",
+    spread: "0",
+    primaryOpacity: "35%",
+    secondaryOpacity: "24%",
+    color: "rgba(0, 0, 0, ...)",
+  },
+  {
+    level: 2,
+    refToken: "ref.depth.shadow.dark-2",
+    cssVar: "--ref-depth-shadow-dark-2",
+    offsetY: "4px",
+    blur: "12px",
+    spread: "4px",
+    primaryOpacity: "35%",
+    secondaryOpacity: "24%",
+    color: "rgba(0, 0, 0, ...)",
+  },
+  {
+    level: 3,
+    refToken: "ref.depth.shadow.dark-3",
+    cssVar: "--ref-depth-shadow-dark-3",
+    offsetY: "10px",
+    blur: "32px",
+    spread: "6px",
+    primaryOpacity: "40%",
+    secondaryOpacity: "24%",
+    color: "rgba(0, 0, 0, ...)",
+  },
+  {
+    level: 4,
+    refToken: "ref.depth.shadow.dark-4",
+    cssVar: "--ref-depth-shadow-dark-4",
+    offsetY: "20px",
+    blur: "56px",
+    spread: "8px",
+    primaryOpacity: "48%",
+    secondaryOpacity: "30%",
+    color: "rgba(0, 0, 0, ...)",
+  },
 ];
 
 // ── Z-Index data ──
@@ -361,7 +401,7 @@ function DetailPanel({ level }: { level: ShadowLevel }) {
     <Surface padding="container" variant="secondary">
       <Stack gap={4}>
         <Inline gap={3}>
-          <Text role="heading-m" style={{ margin: 0 }}>
+          <Text variant="heading-m" style={{ margin: 0 }}>
             Level {level.level} — {level.name}
           </Text>
           {level.figmaName && (
@@ -392,7 +432,7 @@ function DetailPanel({ level }: { level: ShadowLevel }) {
         >
           {rows.map((r) => (
             <div key={r.label} style={{ display: "contents" }}>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 {r.label}
               </Text>
               <div
@@ -418,7 +458,10 @@ function DetailPanel({ level }: { level: ShadowLevel }) {
                   }}
                 />
               </div>
-              <Text role="code" style={{ textAlign: "right", fontSize: "var(--ref-voice-size-3)" }}>
+              <Text
+                variant="code"
+                style={{ textAlign: "right", fontSize: "var(--ref-voice-size-3)" }}
+              >
                 {r.value}
               </Text>
             </div>
@@ -429,7 +472,7 @@ function DetailPanel({ level }: { level: ShadowLevel }) {
 
         {/* Token trace */}
         <Stack gap={2}>
-          <Text role="overline">Token Trace</Text>
+          <Text variant="overline">Token Trace</Text>
           <div
             style={{
               fontFamily: "var(--ref-voice-family-mono)",
@@ -470,10 +513,10 @@ export function DepthExplorer() {
       <Divider spacing={0} />
 
       <Stack gap={2}>
-        <Text role="overline">Interactive Explorer</Text>
-        <Text role="heading-l">Depth System</Text>
+        <Text variant="overline">Interactive Explorer</Text>
+        <Text variant="heading-l">Depth System</Text>
         <Text color="secondary">
-          { }
+          {}
           Recalibrated shadow scale with navy blue branded color, positive spread values, and
           semantic aliases mapped to Figma Edenred&apos;s Light / Medium / High levels.
         </Text>
@@ -529,7 +572,7 @@ export function DepthExplorer() {
 
           {/* Side-by-side: Light vs Dark comparison */}
           <Stack gap={3}>
-            <Text role="overline">Theme Comparison</Text>
+            <Text variant="overline">Theme Comparison</Text>
             <div
               style={{
                 display: "grid",
@@ -781,12 +824,12 @@ export function DepthExplorer() {
                                 display: "inline-block",
                               }}
                             />
-                            <Text role="code" style={{ fontSize: "var(--ref-voice-size-2)" }}>
+                            <Text variant="code" style={{ fontSize: "var(--ref-voice-size-2)" }}>
                               #101A77
                             </Text>
                           </Inline>
                         ) : (
-                          <Text role="caption" color="tertiary">
+                          <Text variant="caption" color="tertiary">
                             none
                           </Text>
                         )}
@@ -800,7 +843,7 @@ export function DepthExplorer() {
 
           {/* Semantic aliases */}
           <Stack gap={3}>
-            <Text role="overline">Semantic Aliases (Figma Edenred)</Text>
+            <Text variant="overline">Semantic Aliases (Figma Edenred)</Text>
             <Surface padding="container">
               <div
                 style={{
@@ -821,17 +864,17 @@ export function DepthExplorer() {
                   >
                     <Stack gap={2}>
                       <Text
-                        role="caption"
+                        variant="caption"
                         color="accent"
                         style={{ fontWeight: "var(--ref-voice-weight-bold)" }}
                       >
                         {level.figmaName}
                       </Text>
-                      <Text role="code" style={{ fontSize: "var(--ref-voice-size-2)" }}>
+                      <Text variant="code" style={{ fontSize: "var(--ref-voice-size-2)" }}>
                         {level.semanticCssVar}
                       </Text>
                       <Text
-                        role="caption"
+                        variant="caption"
                         color="secondary"
                         style={{ fontSize: "var(--ref-voice-size-2)" }}
                       >
@@ -846,10 +889,10 @@ export function DepthExplorer() {
 
           {/* Dark theme tokens — full table with real values */}
           <Stack gap={3}>
-            <Text role="overline">Dark Theme Variants</Text>
-            <Text role="caption" color="tertiary">
-              Dark shadows use pure black (navy tint invisible on dark surfaces).
-              Opacity boosted for visibility: 35-48% primary, 24-30% secondary.
+            <Text variant="overline">Dark Theme Variants</Text>
+            <Text variant="caption" color="tertiary">
+              Dark shadows use pure black (navy tint invisible on dark surfaces). Opacity boosted
+              for visibility: 35-48% primary, 24-30% secondary.
             </Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
@@ -867,22 +910,28 @@ export function DepthExplorer() {
                         borderBottom: "1px solid var(--sys-energy-border-default)",
                       }}
                     >
-                      {["Level", "Ref Token", "Offset-Y", "Blur", "Spread", "Primary α", "Secondary α"].map(
-                        (h) => (
-                          <th
-                            key={h}
-                            style={{
-                              padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
-                              textAlign: "left",
-                              fontSize: "var(--ref-voice-size-2)",
-                              fontWeight: "var(--ref-voice-weight-medium)",
-                              color: "var(--sys-energy-text-secondary)",
-                            }}
-                          >
-                            {h}
-                          </th>
-                        ),
-                      )}
+                      {[
+                        "Level",
+                        "Ref Token",
+                        "Offset-Y",
+                        "Blur",
+                        "Spread",
+                        "Primary α",
+                        "Secondary α",
+                      ].map((h) => (
+                        <th
+                          key={h}
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            textAlign: "left",
+                            fontSize: "var(--ref-voice-size-2)",
+                            fontWeight: "var(--ref-voice-weight-medium)",
+                            color: "var(--sys-energy-text-secondary)",
+                          }}
+                        >
+                          {h}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
@@ -891,17 +940,69 @@ export function DepthExplorer() {
                         key={d.level}
                         style={{ borderBottom: "1px solid var(--sys-energy-border-default)" }}
                       >
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontWeight: "var(--ref-voice-weight-medium)" }}>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontWeight: "var(--ref-voice-weight-medium)",
+                          }}
+                        >
                           {d.level}
                         </td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)", color: "var(--sys-energy-text-accent)" }}>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                            color: "var(--sys-energy-text-accent)",
+                          }}
+                        >
                           {d.cssVar}
                         </td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)" }}>{d.offsetY}</td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)" }}>{d.blur}</td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)" }}>{d.spread}</td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)" }}>{d.primaryOpacity}</td>
-                        <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)", fontFamily: "var(--ref-voice-family-mono)", fontSize: "var(--ref-voice-size-2)" }}>{d.secondaryOpacity}</td>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                          }}
+                        >
+                          {d.offsetY}
+                        </td>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                          }}
+                        >
+                          {d.blur}
+                        </td>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                          }}
+                        >
+                          {d.spread}
+                        </td>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                          }}
+                        >
+                          {d.primaryOpacity}
+                        </td>
+                        <td
+                          style={{
+                            padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                            fontFamily: "var(--ref-voice-family-mono)",
+                            fontSize: "var(--ref-voice-size-2)",
+                          }}
+                        >
+                          {d.secondaryOpacity}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -916,8 +1017,8 @@ export function DepthExplorer() {
       {tab === "gaps" && (
         <Stack gap={4}>
           <Text color="secondary">
-            Comparative analysis of FLOW&apos;s depth system against the Figma Edenred Shadows frame. All
-            6 identified gaps have been resolved in this recalibration.
+            Comparative analysis of FLOW&apos;s depth system against the Figma Edenred Shadows
+            frame. All 6 identified gaps have been resolved in this recalibration.
           </Text>
 
           <Surface padding={0} border={true} radius="container">
@@ -1023,7 +1124,7 @@ export function DepthExplorer() {
           {/* Navy blue color swatch */}
           <Surface padding="container">
             <Stack gap={3}>
-              <Text role="overline">Branded Shadow Color</Text>
+              <Text variant="overline">Branded Shadow Color</Text>
               <Inline gap={4}>
                 <div
                   style={{
@@ -1035,14 +1136,14 @@ export function DepthExplorer() {
                   }}
                 />
                 <Stack gap={1}>
-                  <Text role="code" style={{ fontSize: "var(--ref-voice-size-3)" }}>
+                  <Text variant="code" style={{ fontSize: "var(--ref-voice-size-3)" }}>
                     #101A77
                   </Text>
-                  <Text role="code" style={{ fontSize: "var(--ref-voice-size-3)" }}>
+                  <Text variant="code" style={{ fontSize: "var(--ref-voice-size-3)" }}>
                     rgb(16, 26, 119)
                   </Text>
-                  <Text role="caption" color="secondary">
-                    { }
+                  <Text variant="caption" color="secondary">
+                    {}
                     Navy blue — cooler and more refined than generic black. Aligns with Figma
                     Edenred&apos;s brand shadow specification.
                   </Text>

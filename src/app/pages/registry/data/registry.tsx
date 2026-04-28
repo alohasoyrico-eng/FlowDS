@@ -2,7 +2,9 @@
  * FLOW - Data Domain Registry
  * Component metadata, demos, and developer guides for data components.
  */
+import React from "react";
 import type { ComponentEntry } from "../types";
+import { FlowChartLegendItem, FlowSortControl } from "@flow/design-system";
 import {
   FlowChartLegendItemOverview,
   FlowChartLegendItemVariants,
@@ -49,7 +51,11 @@ export const DATA_REGISTRY: Record<string, ComponentEntry> = {
           "Provide aria-label describing column and direction",
           "Update aria-sort on table column when direction changes",
         ],
-        keyboard: ["Tab to focus sort control", "Space or Enter to cycle through sort states"],
+        keyboard: [
+          { key: "Tab", action: "Focus sort control" },
+          { key: "Space / Enter", action: "Cycle through sort states" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -166,6 +172,24 @@ FlowSortControl(
         { intent: "info", text: "Use with FlowTable or data-heavy patterns for best UX." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSortControl, {
+          options: props.options,
+          sortKey: (props.sortKey as string | null) ?? "name",
+          sortDirection: (props.sortDirection as "asc" | "desc" | null) ?? null,
+          onSortChange: () => {},
+        } as React.ComponentProps<typeof FlowSortControl>),
+      defaults: { sortKey: "name", sortDirection: null },
+      fixtures: {
+        options: [
+          { key: "name", label: "Name" },
+          { key: "date", label: "Date" },
+          { key: "price", label: "Price" },
+        ],
+      },
+      excludeControls: ["onSortChange", "options", "aria-label", "className", "style"],
+    },
   },
 
   // ─── FlowChartLegendItem ───
@@ -215,7 +239,11 @@ FlowSortControl(
           "Provide descriptive label text",
           "Don't rely solely on color to convey series identity",
         ],
-        keyboard: ["Tab to focus toggleable legend items", "Space or Enter to toggle visibility"],
+        keyboard: [
+          { key: "Tab", action: "Focus toggleable legend items" },
+          { key: "Space / Enter", action: "Toggle visibility" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -362,6 +390,19 @@ FlowChartLegendItem(
           text: "Swatch can be square or circular based on chart type preference.",
         },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowChartLegendItem, {
+          label: (props.label as string) || "Revenue",
+          color: (props.color as string) || "var(--sys-energy-accent)",
+          size: props.size,
+        } as React.ComponentProps<typeof FlowChartLegendItem>),
+      defaults: {
+        label: "Revenue",
+        color: "var(--sys-energy-accent)",
+        size: "md",
+      },
     },
   },
 };

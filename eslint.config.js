@@ -1,6 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
@@ -10,7 +7,7 @@ import prettier from "eslint-config-prettier";
 
 export default tseslint.config(
   // ── Global ignores ──────────────────────────────────────────────────────────
-  { ignores: ["dist/**", "node_modules/**", "stats.html"] },
+  { ignores: ["**/dist/**", "node_modules/**", "stats.html"] },
   // ── Base: eslint recommended + typescript-eslint recommended ────────────────
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -30,7 +27,7 @@ export default tseslint.config(
   prettier,
   // ── Project rules ───────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}", "packages/**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -88,10 +85,9 @@ export default tseslint.config(
   },
   // ─── .tsx overrides ─────────────────────────────────────────────────────────
   {
-    files: ["src/**/*.tsx"],
+    files: ["src/**/*.tsx", "packages/**/*.tsx"],
     rules: {
       "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   },
-  storybook.configs["flat/recommended"]
 );

@@ -11,7 +11,7 @@
  */
 import { useRef, useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Event types ──
 interface EventType {
@@ -327,8 +327,8 @@ export function GrowthExplorer() {
       <Divider spacing={0} />
 
       <Stack gap={2}>
-        <Text role="overline">Interactive Explorer</Text>
-        <Text role="heading-l">Growth Event System</Text>
+        <Text variant="overline">Interactive Explorer</Text>
+        <Text variant="heading-l">Growth Event System</Text>
         <Text color="secondary">
           Automatic analytics instrumentation across {covered} components. Five event types,
           structured payloads, and {pct}% coverage of the component library.
@@ -338,7 +338,7 @@ export function GrowthExplorer() {
       {/* ── Section 1: Event Taxonomy ── */}
       <Stack gap="component">
         <Stack gap={2}>
-          <Text role="heading-m">Event Taxonomy</Text>
+          <Text variant="heading-m">Event Taxonomy</Text>
           <Text color="secondary">
             Every trackable component emits events under the{" "}
             <span style={codeFont}>flow.component</span> namespace with one of five suffixes.
@@ -354,7 +354,7 @@ export function GrowthExplorer() {
               background: "var(--sys-energy-surface-accent)",
             }}
           >
-            <Text role="label-l" style={codeFont}>
+            <Text variant="label-l" style={codeFont}>
               flow.component
             </Text>
           </Surface>
@@ -386,14 +386,14 @@ export function GrowthExplorer() {
                   >
                     <Stack gap={1}>
                       <Inline gap={2} align="center">
-                        <Text role="label-l" style={codeFont}>
+                        <Text variant="label-l" style={codeFont}>
                           {evt.suffix}
                         </Text>
-                        <Text color="secondary" role="paragraph-s">
+                        <Text color="secondary" variant="paragraph-s">
                           {evt.description}
                         </Text>
                       </Inline>
-                      <Text color="tertiary" role="paragraph-s" style={{ fontStyle: "italic" }}>
+                      <Text color="tertiary" variant="paragraph-s" style={{ fontStyle: "italic" }}>
                         e.g. {evt.example}
                       </Text>
                     </Stack>
@@ -410,7 +410,7 @@ export function GrowthExplorer() {
       {/* ── Section 2: Event Payload Builder ── */}
       <Stack gap="component">
         <Stack gap={2}>
-          <Text role="heading-m">Event Payload Builder</Text>
+          <Text variant="heading-m">Event Payload Builder</Text>
           <Text color="secondary">
             Select a component to inspect its event payload structure. Properties are split between
             auto-captured and developer-defined.
@@ -452,10 +452,13 @@ export function GrowthExplorer() {
           <Stack gap={4}>
             {/* Event name */}
             <Inline gap={2} align="center">
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Event:
               </Text>
-              <Text role="label-l" style={{ ...codeFont, color: "var(--sys-energy-text-accent)" }}>
+              <Text
+                variant="label-l"
+                style={{ ...codeFont, color: "var(--sys-energy-text-accent)" }}
+              >
                 {comp.eventType}
               </Text>
             </Inline>
@@ -489,7 +492,7 @@ export function GrowthExplorer() {
             {/* Auto-captured vs developer-defined */}
             <Inline gap={6} wrap>
               <Stack gap={1}>
-                <Text role="label-s" color="secondary">
+                <Text variant="label-s" color="secondary">
                   Auto-captured
                 </Text>
                 <Inline gap={1} wrap>
@@ -508,7 +511,7 @@ export function GrowthExplorer() {
                 </Inline>
               </Stack>
               <Stack gap={1}>
-                <Text role="label-s" color="secondary">
+                <Text variant="label-s" color="secondary">
                   Developer-defined
                 </Text>
                 <Inline gap={1} wrap>
@@ -526,7 +529,7 @@ export function GrowthExplorer() {
                       </span>
                     ))
                   ) : (
-                    <Text color="tertiary" role="paragraph-s">
+                    <Text color="tertiary" variant="paragraph-s">
                       None required
                     </Text>
                   )}
@@ -542,7 +545,7 @@ export function GrowthExplorer() {
       {/* ── Section 3: Integration Coverage Matrix ── */}
       <Stack gap="component">
         <Stack gap={2}>
-          <Text role="heading-m">Integration Coverage Matrix</Text>
+          <Text variant="heading-m">Integration Coverage Matrix</Text>
           <Text color="secondary">
             Growth instrumentation status across all {total} documented components.
           </Text>
@@ -550,7 +553,7 @@ export function GrowthExplorer() {
 
         {/* Stat bar */}
         <Inline gap={3} align="center">
-          <Text role="heading-s" style={{ ...codeFont, color: "var(--ref-energy-jade-700)" }}>
+          <Text variant="heading-s" style={{ ...codeFont, color: "var(--ref-energy-jade-700)" }}>
             {covered}/{total} = {pct}% coverage
           </Text>
           <div
@@ -576,7 +579,7 @@ export function GrowthExplorer() {
 
         {/* With Growth */}
         <Stack gap={2}>
-          <Text role="label-s" color="secondary">
+          <Text variant="label-s" color="secondary">
             With Growth integration
           </Text>
           <Inline gap={1} wrap>
@@ -597,7 +600,7 @@ export function GrowthExplorer() {
 
         {/* Without Growth */}
         <Stack gap={2}>
-          <Text role="label-s" color="secondary">
+          <Text variant="label-s" color="secondary">
             Without Growth integration
           </Text>
           <Inline gap={1} wrap>
@@ -622,7 +625,7 @@ export function GrowthExplorer() {
       {/* ── Section 4: Live Event Monitor ── */}
       <Stack gap="component">
         <Stack gap={2}>
-          <Text role="heading-m">Live Event Monitor</Text>
+          <Text variant="heading-m">Live Event Monitor</Text>
           <Text color="secondary">
             Interact with the demo components below. Each interaction emits a structured event
             visible in the monitor console.
@@ -636,7 +639,7 @@ export function GrowthExplorer() {
           <Inline gap={4} wrap align="center">
             {/* Demo Button */}
             <Stack gap={1} align="center">
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Button
               </Text>
               <button
@@ -665,7 +668,7 @@ export function GrowthExplorer() {
 
             {/* Demo Toggle */}
             <Stack gap={1} align="center">
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Switch
               </Text>
               <button
@@ -709,7 +712,7 @@ export function GrowthExplorer() {
 
             {/* Demo Text Input */}
             <Stack gap={1} align="center">
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 TextField
               </Text>
               <input
@@ -746,7 +749,7 @@ export function GrowthExplorer() {
 
             {/* Demo Select */}
             <Stack gap={1} align="center">
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 Select
               </Text>
               <select
@@ -802,7 +805,7 @@ export function GrowthExplorer() {
                   fontSize: "var(--ref-voice-size-3)",
                 }}
               >
-                { }
+                {}
                 {"// Interact with the demo components above to see events here..."}
               </Text>
             ) : (

@@ -43,6 +43,13 @@ export interface NavSection {
 
 export const NAV_SECTIONS: NavSection[] = [
   {
+    label: "Get Started",
+    items: [
+      { path: "/installation", name: "Installation", icon: "download" },
+      { path: "/changelog", name: "Changelog", icon: "clock" },
+    ],
+  },
+  {
     label: "Foundations",
     items: [
       { path: "/foundations/energy", name: "Energy (Color)", icon: "palette" },
@@ -61,7 +68,7 @@ export const NAV_SECTIONS: NavSection[] = [
     items: [
       { path: "/tokens", name: "Token Architecture", icon: "code" },
       { path: "/primitives", name: "Primitives", icon: "shapes" },
-      { path: "/state-model", name: "State Model", icon: "git-branch" },
+      { path: "/governance", name: "Governance", icon: "shield" },
     ],
   },
   {
@@ -192,21 +199,8 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: "Showcases",
     items: [
-      { path: "/demos", name: "Interactive Demos", icon: "zap" },
-      { path: "/layout-grid", name: "LayoutGrid", icon: "layout" },
-      { path: "/density-showcase", name: "Density Switcher", icon: "layers" },
-      { path: "/tone-demo", name: "Tone Demo", icon: "message-circle" },
       { path: "/flag-explorer", name: "Flag Explorer", icon: "globe" },
-      { path: "/phase3-showcase", name: "Phase 3 Showcase", icon: "star" },
-    ],
-  },
-  {
-    label: "System",
-    items: [
-      { path: "/governance", name: "Governance", icon: "shield" },
-      { path: "/system-audit", name: "System Audit", icon: "check-circle" },
-      { path: "/density-audit-showcase", name: "Density Audit", icon: "bar-chart-2" },
-      { path: "/momentum-audit-showcase", name: "Momentum Audit", icon: "activity" },
+      { path: "/icon-explorer", name: "Icon Explorer", icon: "grid" },
     ],
   },
 ];

@@ -12,9 +12,18 @@ import { useState } from "react";
 import { Navigate, useParams } from "react-router";
 
 import {
-  Divider, FlowBreadcrumbs, FlowChip, FlowList, FlowListItem,
-  FlowTabs, FlowTag, Inline, Stack, Surface, Text,
-} from "../../lib";
+  Divider,
+  FlowBreadcrumbs,
+  FlowChip,
+  FlowList,
+  FlowListItem,
+  FlowTabs,
+  FlowTag,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import {
   CodeBlock,
   GuidelinesColumns,
@@ -26,12 +35,14 @@ import { getPatternEntry, type PatternEntry } from "./pattern-registry";
 import { LayoutGrid } from "../components/layout-grid";
 import { DemoErrorBoundary } from "../components/page-error-boundary";
 import { DensityDemoWrapper } from "../components/density-demo-wrapper";
+import { AccessibilitySection } from "../components/AccessibilitySection";
+import { PropPlayground } from "../components/prop-playground";
 
 // ── Platform badge ──
 type Platform = "shared" | "desktop" | "mobile";
-const platformVariant: Record<Platform, "success" | "accent" | "warning"> = {
+const platformVariant: Record<Platform, "success" | "info" | "warning"> = {
   shared: "success",
-  desktop: "accent",
+  desktop: "info",
   mobile: "warning",
 };
 const platformLabel: Record<Platform, string> = {
@@ -87,15 +98,15 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
               <Section title="Anatomy" headingRole="display-s">
                 <Surface variant="primary" padding="container" radius="surface">
                   <Stack gap="component">
-                    <Text role="paragraph-s" color="secondary">
+                    <Text variant="paragraph-s" color="secondary">
                       Visual breakdown of the pattern&apos;s structural parts.
                     </Text>
                     <Stack gap="component">
                       {spec.anatomy!.map((part, i) => (
                         <Stack key={i} gap={1}>
-                          <Text role="paragraph-s">{part.part}</Text>
+                          <Text variant="paragraph-s">{part.part}</Text>
                           <Text
-                            role="paragraph-s"
+                            variant="paragraph-s"
                             color="secondary"
                             style={{ paddingLeft: "var(--ref-frame-space-2)" }}
                           >
@@ -119,7 +130,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                           )}
                           {part.note && (
                             <Text
-                              role="paragraph-s"
+                              variant="paragraph-s"
                               color="tertiary"
                               style={{
                                 paddingLeft: "var(--ref-frame-space-2)",
@@ -153,7 +164,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                   <Stack gap="component">
                     {hasVariants && (
                       <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
+                        <Text variant="overline" color="tertiary">
                           Variants
                         </Text>
                         <FlowList dividers aria-label="Pattern variants">
@@ -161,7 +172,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                             <FlowListItem
                               key={i}
                               primary={
-                                <Text as="span" role="paragraph-s">
+                                <Text as="span" variant="paragraph-s">
                                   {variant}
                                 </Text>
                               }
@@ -172,7 +183,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                     )}
                     {hasStates && (
                       <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
+                        <Text variant="overline" color="tertiary">
                           States
                         </Text>
                         <Inline gap={2} wrap>
@@ -190,67 +201,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
             {/* Accessibility */}
             {hasAccessibility && (
               <Section title="Accessibility" headingRole="display-s">
-                <Surface variant="primary" padding="container" radius="surface">
-                  <Stack gap="component">
-                    {spec.accessibility!.handled && spec.accessibility!.handled.length > 0 && (
-                      <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
-                          Handled by FLOW
-                        </Text>
-                        <FlowList dividers aria-label="Accessibility handled automatically">
-                          {spec.accessibility!.handled.map((item, i) => (
-                            <FlowListItem
-                              key={i}
-                              primary={
-                                <Text as="span" role="paragraph-s" color="secondary">
-                                  {item}
-                                </Text>
-                              }
-                            />
-                          ))}
-                        </FlowList>
-                      </Stack>
-                    )}
-                    {spec.accessibility!.required && spec.accessibility!.required.length > 0 && (
-                      <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
-                          Consumer must provide
-                        </Text>
-                        <FlowList dividers aria-label="Accessibility requirements">
-                          {spec.accessibility!.required.map((item, i) => (
-                            <FlowListItem
-                              key={i}
-                              primary={
-                                <Text as="span" role="paragraph-s">
-                                  {item}
-                                </Text>
-                              }
-                            />
-                          ))}
-                        </FlowList>
-                      </Stack>
-                    )}
-                    {spec.accessibility!.keyboard && spec.accessibility!.keyboard.length > 0 && (
-                      <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
-                          Keyboard
-                        </Text>
-                        <FlowList dividers aria-label="Keyboard interaction">
-                          {spec.accessibility!.keyboard.map((item, i) => (
-                            <FlowListItem
-                              key={i}
-                              primary={
-                                <Text as="span" role="paragraph-s" color="secondary">
-                                  {item}
-                                </Text>
-                              }
-                            />
-                          ))}
-                        </FlowList>
-                      </Stack>
-                    )}
-                  </Stack>
-                </Surface>
+                <AccessibilitySection spec={spec.accessibility!} />
               </Section>
             )}
           </Stack>
@@ -263,17 +214,22 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
               <Section title="Composition" headingRole="display-s">
                 <Surface variant="primary" padding="container" radius="surface">
                   <Stack gap="component">
-                    <Text role="paragraph-s" color="secondary">
+                    <Text variant="paragraph-s" color="secondary">
                       This pattern composes the following L3 components:
                     </Text>
                     <Stack gap="component">
                       {entry.composition!.map((comp, i) => (
                         <Stack key={i} gap={1}>
-                          <FlowChip variant="accent" size="sm" style={{ alignSelf: "flex-start" }}>
+                          <FlowChip
+                            variant="filled"
+                            status="info"
+                            size="sm"
+                            style={{ alignSelf: "flex-start" }}
+                          >
                             {comp.component}
                           </FlowChip>
                           <Text
-                            role="paragraph-s"
+                            variant="paragraph-s"
                             color="secondary"
                             style={{ paddingLeft: "var(--ref-frame-space-2)" }}
                           >
@@ -310,7 +266,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                     {/* Pattern orchestrates */}
                     {hasOrchestration && (
                       <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
+                        <Text variant="overline" color="tertiary">
                           This pattern orchestrates
                         </Text>
                         <FlowList dividers aria-label="What this pattern orchestrates">
@@ -318,7 +274,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                             <FlowListItem
                               key={i}
                               primary={
-                                <Text as="span" role="paragraph-s" color="secondary">
+                                <Text as="span" variant="paragraph-s" color="secondary">
                                   {item}
                                 </Text>
                               }
@@ -331,7 +287,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                     {/* Pattern delegates */}
                     {hasDelegation && (
                       <Stack gap={2}>
-                        <Text role="overline" color="tertiary">
+                        <Text variant="overline" color="tertiary">
                           Delegates to lower layers
                         </Text>
                         <FlowList dividers aria-label="What this pattern does not own">
@@ -339,7 +295,7 @@ function OverviewContent({ entry }: { entry: PatternEntry }) {
                             <FlowListItem
                               key={i}
                               primary={
-                                <Text as="span" role="paragraph-s" color="tertiary">
+                                <Text as="span" variant="paragraph-s" color="tertiary">
                                   {item}
                                 </Text>
                               }
@@ -376,7 +332,7 @@ function VariantsContent({ entry }: { entry: PatternEntry }) {
   if (!entry.demos.variants) {
     return (
       <Surface variant="primary" padding="container" radius="surface">
-        <Text role="paragraph-m" color="tertiary">
+        <Text variant="paragraph-m" color="tertiary">
           Variants demo coming soon.
         </Text>
       </Surface>
@@ -396,7 +352,7 @@ function UseCasesContent({ entry }: { entry: PatternEntry }) {
   if (!entry.demos.useCases) {
     return (
       <Surface variant="primary" padding="container" radius="surface">
-        <Text role="paragraph-m" color="tertiary">
+        <Text variant="paragraph-m" color="tertiary">
           Use cases demo coming soon.
         </Text>
       </Surface>
@@ -406,7 +362,7 @@ function UseCasesContent({ entry }: { entry: PatternEntry }) {
   return (
     <DemoErrorBoundary section="Use Cases">
       <Stack gap="section">
-        <Text role="paragraph-l" style={{ maxWidth: "var(--sys-frame-content-prose-wide)" }}>
+        <Text variant="paragraph-l" style={{ maxWidth: "var(--sys-frame-content-prose-wide)" }}>
           Real-world scenarios and implementation examples for <strong>{entry.spec.name}</strong>.
         </Text>
         {entry.demos.useCases({ patternName: entry.spec.name })}
@@ -421,6 +377,16 @@ function DeveloperContent({ entry }: { entry: PatternEntry }) {
   return (
     <DemoErrorBoundary section="Developer">
       <Stack gap="subsection">
+        {entry.playground && developer.props && developer.props.length > 0 && (
+          <Section title="Interactive Playground" headingRole="display-s">
+            <PropPlayground
+              componentName={entry.spec.name}
+              propDefs={developer.props}
+              playground={entry.playground}
+            />
+          </Section>
+        )}
+
         {developer.props && developer.props.length > 0 && (
           <Section title="API Reference" headingRole="display-s">
             <Surface variant="primary" padding="container" radius="surface">
@@ -506,17 +472,17 @@ export function PatternDetailPage() {
               title={spec.name}
               actions={
                 <>
-                  <FlowChip variant={platformVariant[spec.platform]} size="sm">
+                  <FlowChip status={platformVariant[spec.platform]} size="sm">
                     {platformLabel[spec.platform]}
                   </FlowChip>
-                  <FlowChip variant="neutral" size="sm">
+                  <FlowChip variant="tonal" size="sm">
                     Layer 4
                   </FlowChip>
                 </>
               }
             />
 
-            <Text role="paragraph-xl">{spec.purpose}</Text>
+            <Text variant="paragraph-xl">{spec.purpose}</Text>
 
             <Divider spacing={0} />
 

@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowTable } from "../app/components/display";
+import { FlowTable } from "@flow/components";
 
 const sampleColumns = [
   { key: "name", header: "Name" },
@@ -60,16 +60,12 @@ describe("FlowTable — rendering", () => {
   });
 
   it("shows the empty message when data array is empty", () => {
-    render(
-      <FlowTable columns={sampleColumns} data={[]} emptyMessage="No records found" />,
-    );
+    render(<FlowTable columns={sampleColumns} data={[]} emptyMessage="No records found" />);
     expect(screen.getByText("No records found")).toBeInTheDocument();
   });
 
   it("renders a caption when caption prop is provided", () => {
-    render(
-      <FlowTable columns={sampleColumns} data={sampleData} caption="User list" />,
-    );
+    render(<FlowTable columns={sampleColumns} data={sampleData} caption="User list" />);
     expect(screen.getByText("User list")).toBeInTheDocument();
   });
 });
@@ -85,9 +81,7 @@ describe("FlowTable — interaction", () => {
       {
         key: "actions",
         header: "Actions",
-        render: (_row: (typeof sampleData)[0]) => (
-          <button type="button">Edit</button>
-        ),
+        render: (_row: (typeof sampleData)[0]) => <button type="button">Edit</button>,
       },
     ];
     render(<FlowTable columns={columns} data={sampleData} />);
@@ -137,9 +131,7 @@ describe("FlowTable — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowTable columns={sampleColumns} data={sampleData} />,
-    );
+    const { container } = render(<FlowTable columns={sampleColumns} data={sampleData} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

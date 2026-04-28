@@ -13,9 +13,16 @@ const DEMO_FORM_MAX_WIDTH = "600px";
 import { useState } from "react";
 
 import {
-  FlowAccordion, FlowButton, FlowCheckbox, FlowFieldset,
-  FlowSplitPane, FlowSwitch, FlowTextInput, Stack, Text,
-} from "../../../../lib";
+  FlowAccordion,
+  FlowButton,
+  FlowCheckbox,
+  FlowFieldset,
+  FlowSplitPane,
+  FlowSwitch,
+  FlowTextInput,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 import { SIZES } from "../types";
@@ -110,7 +117,7 @@ export function FlowAccordionOverview() {
           <Stack gap={2} style={{ maxWidth: DEMO_FORM_MAX_WIDTH }}>
             <FlowAccordion title="Documentation">
               <Stack gap={2}>
-                <Text role="heading-s">Getting Started</Text>
+                <Text variant="heading-s">Getting Started</Text>
                 <Text>Follow these steps to integrate FLOW into your project:</Text>
                 <ol style={{ paddingLeft: "var(--ref-frame-space-6)", margin: 0 }}>
                   <li>
@@ -150,7 +157,8 @@ export function FlowAccordionOverview() {
           <Callout intent="info">
             FlowAccordion uses semantic HTML with proper ARIA: header is a &lt;button&gt; with
             aria-expanded reflecting state, content panel gets aria-labelledby linking to header,
-            and role=&apos;region&apos; for landmark navigation. Keyboard accessible via Tab + Enter/Space.
+            and role=&apos;region&apos; for landmark navigation. Keyboard accessible via Tab +
+            Enter/Space.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -211,7 +219,7 @@ const SPLIT_PANE_HEIGHT = 300;
 function PaneContent({ title, text }: { title: string; text: string }) {
   return (
     <div style={{ padding: "var(--ref-frame-space-4)" }}>
-      <Text role="heading-s">{title}</Text>
+      <Text variant="heading-s">{title}</Text>
       <Text color="secondary" style={{ marginTop: "var(--ref-frame-space-2)" }}>
         {text}
       </Text>
@@ -280,23 +288,15 @@ export function FlowSplitPaneOverview() {
             <div style={{ height: 200 }}>
               <FlowSplitPane
                 defaultSplit={70}
-                first={
-                  <PaneContent title="70%" text="Main content area gets more space." />
-                }
-                second={
-                  <PaneContent title="30%" text="Sidebar." />
-                }
+                first={<PaneContent title="70%" text="Main content area gets more space." />}
+                second={<PaneContent title="30%" text="Sidebar." />}
               />
             </div>
             <div style={{ height: 200 }}>
               <FlowSplitPane
                 defaultSplit={30}
-                first={
-                  <PaneContent title="30%" text="Navigation." />
-                }
-                second={
-                  <PaneContent title="70%" text="Main content area." />
-                }
+                first={<PaneContent title="30%" text="Navigation." />}
+                second={<PaneContent title="70%" text="Main content area." />}
               />
             </div>
           </Stack>
@@ -314,7 +314,7 @@ export function FlowSplitPaneOverview() {
               first={
                 <div style={{ padding: "var(--ref-frame-space-4)" }}>
                   <Stack gap={2}>
-                    <Text role="heading-s">Navigation</Text>
+                    <Text variant="heading-s">Navigation</Text>
                     <Text>• Dashboard</Text>
                     <Text>• Settings</Text>
                     <Text>• Profile</Text>
@@ -326,11 +326,11 @@ export function FlowSplitPaneOverview() {
               second={
                 <div style={{ padding: "var(--ref-frame-space-4)" }}>
                   <Stack gap={2}>
-                    <Text role="heading-s">Dashboard</Text>
+                    <Text variant="heading-s">Dashboard</Text>
                     <Text>
-                      Welcome to your dashboard. This area shows your main content and can
-                      be resized by dragging the separator. Use keyboard arrow keys when the
-                      separator is focused for precise control.
+                      Welcome to your dashboard. This area shows your main content and can be
+                      resized by dragging the separator. Use keyboard arrow keys when the separator
+                      is focused for precise control.
                     </Text>
                     <Text color="secondary">
                       Tip: Hold Shift while pressing arrow keys to resize in 10% increments.
@@ -350,9 +350,9 @@ export function FlowSplitPaneOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowSplitPane separator uses role=&apos;separator&apos; with aria-orientation,
-            aria-valuenow, aria-valuemin, and aria-valuemax. Keyboard: Arrow keys resize by
-            2%, Shift+Arrow by 10%, Home/End jump to min/max. Focus ring highlights the
-            separator for keyboard users.
+            aria-valuenow, aria-valuemin, and aria-valuemax. Keyboard: Arrow keys resize by 2%,
+            Shift+Arrow by 10%, Home/End jump to min/max. Focus ring highlights the separator for
+            keyboard users.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -370,7 +370,7 @@ export function FlowSplitPaneVariants() {
         <DemoGroup>
           <Stack gap={3}>
             <div>
-              <Text role="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
+              <Text variant="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
                 Horizontal (default)
               </Text>
               <div style={{ height: 200 }}>
@@ -381,7 +381,7 @@ export function FlowSplitPaneVariants() {
               </div>
             </div>
             <div>
-              <Text role="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
+              <Text variant="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
                 Vertical
               </Text>
               <div style={{ height: 200 }}>
@@ -396,14 +396,11 @@ export function FlowSplitPaneVariants() {
         </DemoGroup>
       </DemoSection>
 
-      <DemoSection
-        title="States"
-        description="Default resizable state and disabled (fixed) state."
-      >
+      <DemoSection title="States" description="Default resizable state and disabled (fixed) state.">
         <DemoGroup>
           <Stack gap={3}>
             <div>
-              <Text role="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
+              <Text variant="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
                 Resizable (default)
               </Text>
               <div style={{ height: 200 }}>
@@ -414,7 +411,7 @@ export function FlowSplitPaneVariants() {
               </div>
             </div>
             <div>
-              <Text role="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
+              <Text variant="label-l" style={{ marginBottom: "var(--ref-frame-space-2)" }}>
                 Disabled (non-resizable)
               </Text>
               <div style={{ height: 200 }}>
@@ -482,7 +479,7 @@ export function FlowFieldsetOverview() {
             <FlowFieldset legend="Account Settings" disabled>
               <FlowTextInput label="Username" />
               <FlowTextInput label="Display Name" />
-              <FlowButton variant="medium">Save Changes</FlowButton>
+              <FlowButton variant="secondary">Save Changes</FlowButton>
             </FlowFieldset>
           </div>
         </DemoGroup>
@@ -535,7 +532,7 @@ export function FlowFieldsetOverview() {
               <FlowTextInput label="Email" type="email" />
               <FlowTextInput label="Password" type="password" />
               <FlowCheckbox label="I agree to the terms and conditions" />
-              <FlowButton variant="high">Create Account</FlowButton>
+              <FlowButton variant="primary">Create Account</FlowButton>
             </FlowFieldset>
           </div>
         </DemoGroup>
@@ -547,11 +544,11 @@ export function FlowFieldsetOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowFieldset uses native &lt;fieldset&gt; and &lt;legend&gt; HTML elements.
-            Screen readers announce the legend when entering the group. The disabled prop
-            on &lt;fieldset&gt; natively propagates to all child form controls — no
-            additional state management is needed. Error state is conveyed via data-state
-            attributes for styling hooks.
+            FlowFieldset uses native &lt;fieldset&gt; and &lt;legend&gt; HTML elements. Screen
+            readers announce the legend when entering the group. The disabled prop on
+            &lt;fieldset&gt; natively propagates to all child form controls — no additional state
+            management is needed. Error state is conveyed via data-state attributes for styling
+            hooks.
           </Callout>
         </DemoGroup>
       </DemoSection>

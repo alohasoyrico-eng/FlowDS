@@ -1,0 +1,10 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION HEADER — Section heading with action slot (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-element);
+}

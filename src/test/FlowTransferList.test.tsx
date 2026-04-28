@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowTransferList } from "../app/components/patterns";
+import { FlowTransferList } from "@flow/patterns";
 
 // jsdom does not implement scrollIntoView — stub it to prevent runtime errors
 Element.prototype.scrollIntoView = vi.fn();
@@ -123,8 +123,7 @@ describe("FlowTransferList — accessibility", () => {
     expect(screen.getByLabelText("Move selected left")).toBeDisabled();
   });
 
-  // TODO: listbox requires option children — fix empty state to use role="option"
-  it.skip("has no axe violations", async () => {
+  it("has no axe violations", async () => {
     const { container } = render(<FlowTransferList items={sampleItems} />);
     expect(await axe(container)).toHaveNoViolations();
   });

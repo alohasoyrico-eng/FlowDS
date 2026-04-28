@@ -1,0 +1,94 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOTTOM NAV — Mobile bottom navigation (L3)
+   ━━━━━━━━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: var(--comp-bottom-nav-height);
+  background: var(--comp-bottom-nav-bg);
+  border-block-start: var(--ref-frame-border-thin) solid var(--comp-bottom-nav-border);
+  box-shadow: var(--comp-bottom-nav-shadow);
+  padding: 0;
+}
+
+.flow-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-bottom-nav-item-gap);
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--comp-bottom-nav-text-default);
+  cursor: pointer;
+  padding: var(--comp-bottom-nav-item-padding-y) 0;
+  font-family: var(--sys-voice-family);
+  position: relative;
+  transition: color var(--sys-momentum-transition-default);
+}
+
+.flow-bottom-nav-item[data-active] {
+  color: var(--comp-bottom-nav-text-active);
+}
+
+.flow-bottom-nav-item:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+.flow-bottom-nav-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-bottom-nav-icon-wrap-width);
+  height: var(--comp-bottom-nav-icon-wrap-height);
+  border-radius: var(--ref-frame-radius-round);
+}
+
+.flow-bottom-nav-item[data-active] .flow-bottom-nav-icon-wrap {
+  background: var(--comp-bottom-nav-indicator-bg);
+}
+
+.flow-bottom-nav-icon {
+  color: inherit;
+}
+
+.flow-bottom-nav-label {
+  font-size: var(--comp-bottom-nav-label-font);
+  font-weight: var(--sys-voice-weight-medium);
+  line-height: var(--sys-voice-line-height-none);
+}
+
+/* Badge on bottom nav */
+.flow-bottom-nav-badge {
+  position: absolute;
+  inset-block-start: var(--comp-badge-offset-top);
+  inset-inline-end: var(--comp-badge-offset-right-sm);
+  min-width: var(--comp-bottom-nav-badge-size);
+  height: var(--comp-bottom-nav-badge-size);
+  padding: 0 var(--comp-bottom-nav-badge-padding-x);
+  border-radius: var(--ref-frame-radius-round);
+  background: var(--comp-bottom-nav-badge-bg);
+  color: var(--comp-bottom-nav-badge-text);
+  font-size: var(--comp-bottom-nav-badge-font);
+  font-weight: var(--sys-voice-weight-bold);
+  font-family: var(--sys-voice-family);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: var(--sys-voice-line-height-none);
+}
+
+.flow-bottom-nav-badge[data-dot] {
+  min-width: var(--comp-bottom-nav-badge-dot-size);
+  height: var(--comp-bottom-nav-badge-dot-size);
+  padding: 0;
+  inset-block-start: 0;
+  inset-inline-end: var(--comp-badge-offset-right-lg);
+}

@@ -10,8 +10,8 @@
  */
 import { useCallback, useEffect, useState } from "react";
 
-import { ActionSurface, Inline, Overlay, Stack, Surface, Text } from "../primitives";
-import { FlowCard } from "./display/FlowCard";
+import { ActionSurface, Inline, Overlay, Stack, Surface, Text } from "@flow/primitives";
+import { FlowCard } from "@flow/components";
 
 // ── Slide data ──
 export interface GallerySlide {
@@ -331,10 +331,19 @@ export function InventoryCard({
           <img
             src={thumbnail}
             alt={title}
-            style={{ width: "100%", height: "var(--ref-frame-space-40)", objectFit: "cover", display: "block" }}
+            style={{
+              width: "100%",
+              height: "var(--ref-frame-space-40)",
+              objectFit: "cover",
+              display: "block",
+            }}
           />
-          <Inline gap={4} align="start" style={{ padding: "var(--ref-frame-space-4) var(--ref-frame-space-5)", flex: 1 }}>
-            <Text role="display-l">{count}</Text>
+          <Inline
+            gap={4}
+            align="start"
+            style={{ padding: "var(--ref-frame-space-4) var(--ref-frame-space-5)", flex: 1 }}
+          >
+            <Text variant="display-l">{count}</Text>
             <div
               style={{
                 width: "var(--ref-frame-border-thin)",
@@ -344,8 +353,8 @@ export function InventoryCard({
               }}
             />
             <Stack gap={1} style={{ flex: 1 }}>
-              <Text role="label-l">{title}</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="label-l">{title}</Text>
+              <Text variant="paragraph-s" color="secondary">
                 {description}
               </Text>
             </Stack>
@@ -372,9 +381,14 @@ export function InventoryCard({
           <ActionSurface
             onPress={() => setOpen(false)}
             aria-label="Cerrar"
-            style={{ position: "absolute", top: "var(--ref-frame-space-5)", right: "var(--ref-frame-space-5)", ...NAV_BTN_OVERLAY }}
+            style={{
+              position: "absolute",
+              top: "var(--ref-frame-space-5)",
+              right: "var(--ref-frame-space-5)",
+              ...NAV_BTN_OVERLAY,
+            }}
           >
-            <Text role="label-l" style={{ color: "var(--sys-energy-text-on-action)" }}>
+            <Text variant="label-l" style={{ color: "var(--sys-energy-text-on-action)" }}>
               ✕
             </Text>
           </ActionSurface>
@@ -383,18 +397,31 @@ export function InventoryCard({
           <img
             src={current.src}
             alt={current.title}
-            style={{ maxWidth: "90vw", maxHeight: "65vh", objectFit: "contain", borderRadius: "var(--ref-frame-radius-3)" }}
+            style={{
+              maxWidth: "90vw",
+              maxHeight: "65vh",
+              objectFit: "contain",
+              borderRadius: "var(--ref-frame-radius-3)",
+            }}
           />
 
           {/* Caption */}
           <Stack gap={1} align="center" style={{ maxWidth: "var(--sys-frame-content-prose)" }}>
-            <Text role="label-l" color="inverse">
+            <Text variant="label-l" color="inverse">
               {current.title}
             </Text>
-            <Text role="paragraph-s" color="inverse" style={{ opacity: "var(--ref-state-opacity-muted)", textAlign: "center" }}>
+            <Text
+              variant="paragraph-s"
+              color="inverse"
+              style={{ opacity: "var(--ref-state-opacity-muted)", textAlign: "center" }}
+            >
               {current.caption}
             </Text>
-            <Text role="caption" color="inverse" style={{ opacity: "var(--ref-state-opacity-dimmed)" }}>
+            <Text
+              variant="caption"
+              color="inverse"
+              style={{ opacity: "var(--ref-state-opacity-dimmed)" }}
+            >
               {activeIndex + 1} / {slides.length}
             </Text>
           </Stack>
@@ -402,12 +429,12 @@ export function InventoryCard({
           {/* Nav */}
           <Inline gap={3}>
             <ActionSurface onPress={prev} aria-label="Anterior" style={NAV_BTN_OVERLAY}>
-              <Text role="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
+              <Text variant="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
                 ←
               </Text>
             </ActionSurface>
             <ActionSurface onPress={next} aria-label="Siguiente" style={NAV_BTN_OVERLAY}>
-              <Text role="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
+              <Text variant="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
                 →
               </Text>
             </ActionSurface>
@@ -426,7 +453,10 @@ interface FlowGalleryProps {
   imageHeight?: string | number;
 }
 
-function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" }: FlowGalleryProps) {
+function FlowGallery({
+  slides,
+  imageHeight = "var(--comp-gallery-image-height)",
+}: FlowGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -505,7 +535,7 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
           >
             <Inline gap={2}>
               <ActionSurface onPress={prev} aria-label="Anterior" style={NAV_BTN}>
-                <Text role="label-m" color="accent">
+                <Text variant="label-m" color="accent">
                   ←
                 </Text>
               </ActionSurface>
@@ -515,12 +545,12 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
                 aria-label={isPlaying ? "Pausar" : "Reproducir"}
                 style={NAV_BTN}
               >
-                <Text role="label-s" color="accent">
+                <Text variant="label-s" color="accent">
                   {isPlaying ? "❚❚" : "▶"}
                 </Text>
               </ActionSurface>
               <ActionSurface onPress={next} aria-label="Siguiente" style={NAV_BTN}>
-                <Text role="label-m" color="accent">
+                <Text variant="label-m" color="accent">
                   →
                 </Text>
               </ActionSurface>
@@ -529,13 +559,17 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
               <ActionSurface
                 onPress={() => setFullscreen(true)}
                 aria-label="Pantalla completa"
-                style={{ ...NAV_BTN, width: "var(--ref-frame-space-8)", height: "var(--ref-frame-space-8)" }}
+                style={{
+                  ...NAV_BTN,
+                  width: "var(--ref-frame-space-8)",
+                  height: "var(--ref-frame-space-8)",
+                }}
               >
-                <Text role="label-s" color="accent">
+                <Text variant="label-s" color="accent">
                   ⛶
                 </Text>
               </ActionSurface>
-              <Text role="label-s" color="secondary">
+              <Text variant="label-s" color="secondary">
                 {activeIndex + 1} / {slides.length}
               </Text>
             </Inline>
@@ -544,8 +578,8 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
 
         {/* ── Caption ── */}
         <Stack gap={1}>
-          <Text role="label-l">{slide.title}</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="label-l">{slide.title}</Text>
+          <Text variant="paragraph-s" color="secondary">
             {slide.caption}
           </Text>
         </Stack>
@@ -610,7 +644,7 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
               ...NAV_BTN_OVERLAY,
             }}
           >
-            <Text role="label-l" style={{ color: "var(--sys-energy-text-on-action)" }}>
+            <Text variant="label-l" style={{ color: "var(--sys-energy-text-on-action)" }}>
               ✕
             </Text>
           </ActionSurface>
@@ -629,10 +663,14 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
 
           {/* Caption */}
           <Stack gap={1} align="center" style={{ maxWidth: "var(--sys-frame-content-prose)" }}>
-            <Text role="label-l" color="inverse">
+            <Text variant="label-l" color="inverse">
               {slide.title}
             </Text>
-            <Text role="paragraph-s" color="inverse" style={{ opacity: "var(--ref-state-opacity-muted)", textAlign: "center" }}>
+            <Text
+              variant="paragraph-s"
+              color="inverse"
+              style={{ opacity: "var(--ref-state-opacity-muted)", textAlign: "center" }}
+            >
               {slide.caption}
             </Text>
           </Stack>
@@ -640,7 +678,7 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
           {/* Navigation */}
           <Inline gap={3}>
             <ActionSurface onPress={prev} aria-label="Anterior" style={NAV_BTN_OVERLAY}>
-              <Text role="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
+              <Text variant="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
                 ←
               </Text>
             </ActionSurface>
@@ -658,7 +696,9 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
                   padding: 0,
                   opacity: i === activeIndex ? 1 : "var(--ref-state-opacity-faint)",
                   outline:
-                    i === activeIndex ? "2px solid var(--sys-energy-border-focus)" : "2px solid transparent",
+                    i === activeIndex
+                      ? "2px solid var(--sys-energy-border-focus)"
+                      : "2px solid transparent",
                   transition: `opacity var(--ref-momentum-duration-fast)`,
                 }}
               >
@@ -670,7 +710,7 @@ function FlowGallery({ slides, imageHeight = "var(--comp-gallery-image-height)" 
               </ActionSurface>
             ))}
             <ActionSurface onPress={next} aria-label="Siguiente" style={NAV_BTN_OVERLAY}>
-              <Text role="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
+              <Text variant="label-m" style={{ color: "var(--sys-energy-text-on-action)" }}>
                 →
               </Text>
             </ActionSurface>

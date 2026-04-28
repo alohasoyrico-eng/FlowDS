@@ -3,7 +3,7 @@
  * Component metadata, demos, and developer guides for feedback components.
  */
 import React from "react";
-import { FlowProgressBar } from "../../../../lib";
+import { FlowCircularProgress, FlowInlineValidationMessage, FlowProgressBar, FlowSkeleton } from "@flow/design-system";
 import type { ComponentEntry } from "../types";
 import {
   FlowCircularProgressOverview,
@@ -50,6 +50,7 @@ export const FEEDBACK_REGISTRY: Record<string, ComponentEntry> = {
           "Provide sr-only text describing what's loading",
         ],
         keyboard: [],
+        wcag: ["1.1.1"],
       },
     },
     demos: {
@@ -169,6 +170,19 @@ FlowSkeleton(
         { intent: "info", text: "Circular variant is a perfect circle (width === height)." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSkeleton, {
+          variant: props.variant,
+          width: props.width,
+          height: props.height,
+        } as React.ComponentProps<typeof FlowSkeleton>),
+      defaults: {
+        variant: "text",
+        width: "200px",
+        height: "20px",
+      },
+    },
   },
 
   // ─── FlowProgressBar ───
@@ -207,6 +221,7 @@ FlowSkeleton(
         ],
         required: ["Provide aria-label describing what's loading"],
         keyboard: [],
+        wcag: ["4.1.3"],
       },
     },
     demos: {
@@ -370,6 +385,7 @@ FlowProgressBar(
         ],
         required: ["Provide aria-label describing what's loading"],
         keyboard: [],
+        wcag: ["4.1.3"],
       },
     },
     demos: {
@@ -492,6 +508,17 @@ FlowCircularProgress(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowCircularProgress, {
+          size: props.size,
+          value: props.value as number,
+        } as React.ComponentProps<typeof FlowCircularProgress>),
+      defaults: {
+        size: "md",
+        value: 65,
+      },
+    },
   },
 
   // ─── FlowInlineValidationMessage ───
@@ -532,6 +559,7 @@ FlowCircularProgress(
           "Ensure message is visible and readable",
         ],
         keyboard: [],
+        wcag: ["4.1.3"],
       },
     },
     demos: {
@@ -656,6 +684,17 @@ FlowInlineValidationMessage(
         },
         { intent: "info", text: "Icons are aria-hidden — message text conveys full meaning." },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowInlineValidationMessage, {
+          status: props.status,
+          message: (props.message as string) ?? "Please enter a valid email address",
+        } as React.ComponentProps<typeof FlowInlineValidationMessage>),
+      defaults: {
+        message: "Please enter a valid email address",
+        status: "error",
+      },
     },
   },
 };

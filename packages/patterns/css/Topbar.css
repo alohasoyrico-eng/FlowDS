@@ -1,0 +1,41 @@
+/* ── Topbar ── */
+
+.flow-topbar {
+  display: flex;
+  align-items: center;
+  height: var(--comp-topbar-height);
+  padding: 0 var(--comp-topbar-padding-x);
+  background: var(--comp-topbar-bg);
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-topbar-border);
+  box-shadow: var(--comp-topbar-shadow);
+  z-index: var(--comp-topbar-z-index);
+  gap: var(--comp-topbar-gap);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.flow-topbar-title {
+  font-size: var(--comp-topbar-title-font);
+  color: var(--comp-topbar-text);
+  font-weight: var(--sys-voice-weight-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-topbar-spacer {
+  flex: 1;
+}
+
+.flow-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-topbar-action-gap);
+  flex-shrink: 0;
+}
+
+.flow-topbar-section {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-topbar-gap);
+}

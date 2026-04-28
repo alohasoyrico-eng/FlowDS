@@ -11,8 +11,8 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowTreeView } from "../app/components/display";
-import type { TreeNode } from "../app/components/display";
+import { FlowTreeView } from "@flow/components";
+import type { TreeNode } from "@flow/components";
 
 const sampleNodes: TreeNode[] = [
   {

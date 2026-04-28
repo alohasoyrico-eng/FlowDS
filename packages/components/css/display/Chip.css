@@ -1,0 +1,170 @@
+/* ── Chip: Variant-model CSS ───────────────────────── */
+
+/* Pill-shaped token with optional remove button.
+   data-variant drives color scheme; data-selected overrides.
+   Structural sizing comes from centralized [data-size] blocks. */
+
+.flow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-chip-gap);
+  max-width: 100%;
+  padding: var(--comp-chip-padding-y) var(--comp-chip-padding-x);
+  border-radius: var(--comp-chip-radius);
+  font-size: var(--comp-chip-font);
+  font-weight: var(--comp-chip-font-weight);
+  font-family: var(--comp-chip-font-family);
+  transition: all var(--comp-chip-transition);
+  user-select: none;
+  cursor: default;
+  outline: none;
+  width: auto;
+}
+
+/* ── Chip sizing — padding-driven ──
+   Chip uses padding-y + padding-x instead of fixed height.
+   [data-size] shifts padding, gap, and font via the density/viewport cascade.
+   No height token needed — the chip grows from its content + padding. */
+
+/* ��─ Chip label — inherits all font/color from parent .flow-chip ── */
+.flow-chip-label {
+  font: inherit;
+  color: inherit;
+  line-height: var(--comp-chip-line-height);
+}
+
+.flow-chip-remove.flow-action-surface {
+  padding: 0;
+  border-radius: 50%;
+  width: var(--comp-chip-remove-size);
+  height: var(--comp-chip-remove-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+
+/* ── Variant colors ── */
+.flow-chip[data-variant="filled"] {
+  background: var(--comp-chip-bg);
+  color: var(--sys-energy-text-accent);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+
+.flow-chip[data-variant="outlined"] {
+  background: transparent;
+  color: var(--sys-energy-text-primary);
+  border: var(--comp-chip-border-width) solid var(--sys-energy-border-strong);
+}
+
+.flow-chip[data-variant="tonal"] {
+  background: var(--sys-energy-surface-sunken);
+  color: var(--sys-energy-text-accent);
+  border: var(--comp-chip-border-width) solid transparent;
+}
+
+/* ── Status colors (semantic overlay on any variant) ── */
+.flow-chip[data-status="info"] {
+  background: var(--sys-energy-status-info-subtle);
+  color: var(--sys-energy-text-accent);
+}
+
+.flow-chip[data-status="success"] {
+  background: var(--sys-energy-status-success-subtle);
+  color: var(--sys-energy-status-success);
+}
+
+.flow-chip[data-status="warning"] {
+  background: var(--sys-energy-status-warning-subtle);
+  color: var(--sys-energy-status-warning);
+}
+
+.flow-chip[data-status="error"] {
+  background: var(--sys-energy-status-error-subtle);
+  color: var(--sys-energy-status-error);
+}
+
+/* ── Selected state — overrides variant bg/border ── */
+.flow-chip[data-selected] {
+  background: var(--sys-state-selected-overlay);
+  border: var(--comp-chip-border-width) solid var(--sys-energy-border-focus);
+}
+
+/* ── Disabled state ── */
+.flow-chip[data-state="disabled"] {
+  background: var(--comp-chip-bg-disabled);
+  color: var(--comp-chip-text-disabled);
+  border-color: var(--comp-chip-border-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ── Loading state ── */
+.flow-chip[data-state="loading"],
+.flow-chip[aria-busy="true"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ── Interactive chip hover/active ── */
+.flow-chip:hover:not(:disabled, [data-state="disabled"]) {
+  filter: brightness(var(--comp-chip-brightness-hover));
+}
+
+.flow-chip:active:not(:disabled, [data-state="disabled"]) {
+  filter: brightness(var(--comp-chip-brightness-active));
+}
+
+/* ── Focus ring — outline + box-shadow gap fill ── */
+.flow-chip:focus-visible {
+  outline: var(--comp-chip-focus-ring-width) solid var(--comp-chip-focus-ring-color);
+  outline-offset: var(--comp-chip-focus-ring-offset);
+  box-shadow: 0 0 0 var(--comp-chip-focus-ring-offset) var(--comp-chip-focus-gap-color);
+}
+
+/* ── Tone override — brand voice/personality variants ── */
+
+/* Applies tone color+weight when data-tone is present. Only affects filled/outlined/tonal variants. */
+.flow-chip[data-variant="filled"][data-tone="brand"],
+.flow-chip[data-variant="outlined"][data-tone="brand"],
+.flow-chip[data-variant="tonal"][data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+.flow-chip[data-variant="filled"][data-tone="marketing"],
+.flow-chip[data-variant="outlined"][data-tone="marketing"],
+.flow-chip[data-variant="tonal"][data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+.flow-chip[data-variant="filled"][data-tone="system"],
+.flow-chip[data-variant="outlined"][data-tone="system"],
+.flow-chip[data-variant="tonal"][data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+.flow-chip[data-variant="filled"][data-tone="neutral"],
+.flow-chip[data-variant="outlined"][data-tone="neutral"],
+.flow-chip[data-variant="tonal"][data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+/* ── Remove button ── */
+.flow-chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-chip-remove-size);
+  height: var(--comp-chip-remove-size);
+  border-radius: var(--comp-chip-remove-radius);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}

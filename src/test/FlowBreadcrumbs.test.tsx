@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowBreadcrumbs } from "../app/components/navigation";
+import { FlowBreadcrumbs } from "@flow/components";
 
 const DEFAULT_ITEMS = [
   { key: "home", label: "Home", href: "/" },

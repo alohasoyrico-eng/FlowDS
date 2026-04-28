@@ -163,9 +163,9 @@ Every component documentation should follow this structure:
 
 | Role | Use Case |
 |------|----------|
-| `<Text role="overline">` | Subsection separators |
-| `<Text role="label-s" color="tertiary">` | Individual element labels |
-| `<Text role="label-m" color="secondary">` | Matrix row labels |
+| `<Text variant="overline">` | Subsection separators |
+| `<Text variant="label-s" color="tertiary">` | Individual element labels |
+| `<Text variant="label-m" color="secondary">` | Matrix row labels |
 
 ### Layout Rules
 

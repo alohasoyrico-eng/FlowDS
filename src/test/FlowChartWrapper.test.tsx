@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowChartWrapper } from "../app/components/patterns";
+import { FlowChartWrapper } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -51,11 +51,7 @@ describe("FlowChartWrapper — rendering", () => {
   });
 
   it("renders legend content below the chart", () => {
-    render(
-      <FlowChartWrapper legend={<span>Legend item</span>}>
-        Chart
-      </FlowChartWrapper>,
-    );
+    render(<FlowChartWrapper legend={<span>Legend item</span>}>Chart</FlowChartWrapper>);
     expect(screen.getByText("Legend item")).toBeInTheDocument();
   });
 

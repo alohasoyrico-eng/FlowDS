@@ -1,0 +1,194 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━
+   STEPPER — Multi-step wizard navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-stepper {
+  width: 100%;
+}
+
+.flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-md);
+  --stepper-font: var(--comp-stepper-font-md);
+  --stepper-label-font: var(--comp-stepper-label-font-md);
+  --stepper-desc-font: var(--comp-stepper-desc-font-md);
+
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: stepper;
+}
+
+.flow-stepper[data-size="sm"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-sm);
+  --stepper-font: var(--comp-stepper-font-sm);
+  --stepper-label-font: var(--comp-stepper-label-font-sm);
+  --stepper-desc-font: var(--comp-stepper-desc-font-sm);
+}
+
+.flow-stepper[data-size="lg"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-lg);
+  --stepper-font: var(--comp-stepper-font-lg);
+  --stepper-label-font: var(--comp-stepper-label-font-lg);
+  --stepper-desc-font: var(--comp-stepper-desc-font-lg);
+}
+
+.flow-stepper[data-size="xl"] .flow-stepper-list {
+  --stepper-indicator-size: var(--comp-stepper-indicator-size-xl);
+  --stepper-font: var(--comp-stepper-font-xl);
+  --stepper-label-font: var(--comp-stepper-label-font-xl);
+  --stepper-desc-font: var(--comp-stepper-desc-font-xl);
+}
+
+/* Horizontal steps */
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-list {
+  flex-direction: row;
+}
+
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-connector {
+  position: absolute;
+  inset-block-start: calc(var(--stepper-indicator-size) / 2);
+  inset-inline-start: calc(50% + var(--stepper-indicator-size) / 2 + var(--comp-stepper-gap));
+  inset-inline-end: calc(-50% + var(--stepper-indicator-size) / 2 + var(--comp-stepper-gap));
+  height: var(--comp-stepper-connector-height);
+  background: var(--comp-stepper-connector-default);
+  transform: translateY(-50%);
+}
+
+.flow-stepper[data-orientation="horizontal"] .flow-stepper-connector[data-status="complete"] {
+  background: var(--comp-stepper-connector-complete);
+}
+
+/* Vertical steps */
+.flow-stepper[data-orientation="vertical"] .flow-stepper-list {
+  flex-direction: column;
+}
+
+.flow-stepper[data-orientation="vertical"] .flow-stepper-step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  padding-block-end: var(--comp-stepper-step-padding-block-end);
+}
+
+.flow-stepper[data-orientation="vertical"] .flow-stepper-connector {
+  position: absolute;
+  inset-block-start: calc(
+    var(--stepper-indicator-size) + var(--comp-stepper-connector-margin-block-start)
+  );
+  inset-inline-start: calc(var(--stepper-indicator-size) / 2);
+  inset-block-end: 0;
+  width: var(--comp-stepper-connector-height);
+  background: var(--comp-stepper-connector-default);
+  transform: translateX(-50%);
+}
+
+.flow-stepper[data-orientation="vertical"] .flow-stepper-connector[data-status="complete"] {
+  background: var(--comp-stepper-connector-complete);
+}
+
+.flow-stepper[data-orientation="vertical"] .flow-stepper-content {
+  margin-inline-start: var(--comp-stepper-gap);
+  text-align: start;
+}
+
+/* Indicator circle */
+.flow-stepper-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--stepper-indicator-size);
+  height: var(--stepper-indicator-size);
+  border-radius: var(--ref-frame-radius-round);
+  border: none;
+  font-family: var(--sys-voice-family);
+  font-size: var(--stepper-font);
+  font-weight: var(--sys-voice-weight-semibold);
+  cursor: default;
+  flex-shrink: 0;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default);
+  padding: 0;
+}
+
+.flow-stepper-indicator[data-status="upcoming"] {
+  background: var(--comp-stepper-indicator-bg-upcoming);
+  color: var(--comp-stepper-indicator-text);
+}
+
+.flow-stepper-indicator[data-status="current"] {
+  background: var(--comp-stepper-indicator-bg-current);
+  color: var(--comp-stepper-indicator-text-active);
+}
+
+.flow-stepper-indicator[data-status="complete"] {
+  background: var(--comp-stepper-indicator-bg-complete);
+  color: var(--comp-stepper-indicator-text-active);
+}
+
+.flow-stepper-indicator[data-status="error"] {
+  background: var(--comp-stepper-indicator-bg-error);
+  color: var(--comp-stepper-indicator-text-error);
+}
+
+.flow-stepper-indicator:not([disabled]):hover {
+  opacity: var(--comp-stepper-hover-opacity);
+}
+
+.flow-stepper-indicator:not([disabled]) {
+  cursor: pointer;
+}
+
+.flow-stepper-indicator:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+.flow-stepper-number {
+  line-height: var(--sys-voice-line-height-none);
+}
+
+.flow-stepper-content {
+  margin-block-start: var(--comp-stepper-content-margin-block-start);
+}
+
+.flow-stepper-label {
+  display: block;
+  font-family: var(--sys-voice-family);
+  font-size: var(--stepper-label-font);
+  font-weight: var(--sys-voice-weight-medium);
+  color: var(--comp-stepper-label-text);
+}
+
+.flow-stepper-label[data-status="upcoming"] {
+  color: var(--comp-stepper-label-text-upcoming);
+}
+
+.flow-stepper-label[data-status="error"] {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-stepper-description {
+  display: block;
+  font-family: var(--sys-voice-family);
+  font-size: var(--stepper-desc-font);
+  color: var(--comp-stepper-label-text-secondary);
+  margin-block-start: var(--comp-stepper-description-margin-block-start);
+}
+
+/* Last step: no flex-grow needed */
+.flow-stepper-step[data-last] {
+  flex: 0;
+}

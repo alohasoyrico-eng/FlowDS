@@ -1,0 +1,11 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NOTIFICATION PANEL — Notification center (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-notification-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--sys-depth-elevation-medium);
+}

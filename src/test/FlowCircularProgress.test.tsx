@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowCircularProgress } from "../app/components/feedback";
+import { FlowCircularProgress } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

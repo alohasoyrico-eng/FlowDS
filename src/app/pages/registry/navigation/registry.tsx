@@ -2,6 +2,15 @@
  * FLOW - Navigation Domain Registry
  * Component metadata, demos, and developer guides for navigation components.
  */
+import React from "react";
+import {
+  FlowBottomNav,
+  FlowBreadcrumbs,
+  FlowPagination,
+  FlowSidebar,
+  FlowStepper,
+  FlowTabs,
+} from "@flow/design-system";
 import type { ComponentEntry } from "../types";
 import {
   FlowBottomNavOverview,
@@ -78,10 +87,11 @@ export const NAVIGATION_REGISTRY: Record<string, ComponentEntry> = {
           "Ellipsis button is keyboard-accessible",
         ],
         keyboard: [
-          "Tab to navigate between breadcrumb links",
-          "Enter to follow link",
-          "Enter on ellipsis to expand collapsed items",
+          { key: "Tab", action: "Navigate between breadcrumb links" },
+          { key: "Enter", action: "Follow link" },
+          { key: "Enter (on ellipsis)", action: "Expand collapsed items" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -363,6 +373,23 @@ FlowBreadcrumbs(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowBreadcrumbs, {
+          items: props.items,
+          variant: props.variant,
+          maxItems: props.maxItems,
+        } as React.ComponentProps<typeof FlowBreadcrumbs>),
+      defaults: { variant: "default" },
+      fixtures: {
+        items: [
+          { label: "Home", onClick: () => {} },
+          { label: "Products", onClick: () => {} },
+          { label: "Current Product" },
+        ],
+      },
+      excludeControls: ["items", "items[].label", "items[].onClick", "items[].href", "items[].icon", "className", "style", "id", "data-*", "aria-label", "role"],
+    },
   },
 
   // ─── FlowTabs ───
@@ -406,10 +433,11 @@ FlowBreadcrumbs(
         ],
         required: ["Provide unique value for each tab"],
         keyboard: [
-          "Arrow Left/Right: Navigate between tabs",
-          "Tab: Focus tab list",
-          "Enter/Space: Activate focused tab",
+          { key: "← → Arrow keys", action: "Navigate between tabs" },
+          { key: "Tab", action: "Focus tab list" },
+          { key: "Enter / Space", action: "Activate focused tab" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -483,6 +511,22 @@ const [activeTab, setActiveTab] = useState("overview");
         { intent: "info", text: "Active tab shows bottom border indicator." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowTabs, {
+          tabs: props.tabs,
+          defaultActiveKey: "overview",
+        } as React.ComponentProps<typeof FlowTabs>),
+      defaults: {},
+      fixtures: {
+        tabs: [
+          { key: "overview", label: "Overview", content: "Overview content" },
+          { key: "features", label: "Features", content: "Features content" },
+          { key: "pricing", label: "Pricing", content: "Pricing content" },
+        ],
+      },
+      excludeControls: ["value", "onChange", "tabs", "className"],
+    },
   },
 
   // ─── FlowPagination ───
@@ -520,7 +564,11 @@ const [activeTab, setActiveTab] = useState("overview");
           "Current page has aria-current='page'",
         ],
         required: ["Provide descriptive aria-label for navigation"],
-        keyboard: ["Tab to focus buttons", "Enter/Space to activate"],
+        keyboard: [
+          { key: "Tab", action: "Focus buttons" },
+          { key: "Enter / Space", action: "Activate" },
+        ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -591,6 +639,17 @@ const [activeTab, setActiveTab] = useState("overview");
         { intent: "info", text: "Previous/Next buttons disable at first/last page." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowPagination, {
+          page: (props.page as number) ?? 1,
+          totalPages: (props.totalPages as number) ?? 10,
+          siblingCount: props.siblingCount,
+          onChange: () => {},
+        } as React.ComponentProps<typeof FlowPagination>),
+      defaults: { page: 1, totalPages: 10, siblingCount: 1 },
+      excludeControls: ["onChange", "className"],
+    },
   },
 
   // ─── FlowStepper ───
@@ -633,6 +692,7 @@ const [activeTab, setActiveTab] = useState("overview");
         ],
         required: ["Provide descriptive step labels"],
         keyboard: [],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -692,6 +752,22 @@ const [activeTab, setActiveTab] = useState("overview");
         { intent: "info", text: "Completed steps show checkmarks, current step is highlighted." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowStepper, {
+          activeStep: (props.activeStep as number) ?? 1,
+          steps: props.steps,
+        } as React.ComponentProps<typeof FlowStepper>),
+      defaults: { activeStep: 1 },
+      fixtures: {
+        steps: [
+          { id: "s1", label: "Account Info" },
+          { id: "s2", label: "Preferences" },
+          { id: "s3", label: "Confirmation" },
+        ],
+      },
+      excludeControls: ["steps", "className"],
+    },
   },
 
   // ─── FlowBottomNav ───
@@ -733,6 +809,7 @@ const [activeTab, setActiveTab] = useState("overview");
         ],
         required: ["Provide descriptive labels for all items"],
         keyboard: [],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -797,6 +874,24 @@ const [activeTab, setActiveTab] = useState("overview");
         { intent: "info", text: "Bottom nav is fixed to viewport bottom with safe area insets." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowBottomNav, {
+          value: "home",
+          onChange: () => {},
+          items: props.items,
+        } as React.ComponentProps<typeof FlowBottomNav>),
+      defaults: {},
+      fixtures: {
+        items: [
+          { value: "home", label: "Home", icon: "home" },
+          { value: "search", label: "Search", icon: "search" },
+          { value: "favorites", label: "Favorites", icon: "heart" },
+          { value: "profile", label: "Profile", icon: "user" },
+        ],
+      },
+      excludeControls: ["value", "onChange", "items", "className"],
+    },
   },
 
   // ─── FlowSidebar ───
@@ -842,7 +937,12 @@ const [activeTab, setActiveTab] = useState("overview");
           "Section headers use proper heading levels",
         ],
         required: ["Provide descriptive labels for all items"],
-        keyboard: ["Tab to focus items", "Enter/Space to activate", "Arrow Up/Down to navigate"],
+        keyboard: [
+          { key: "Tab", action: "Focus items" },
+          { key: "Enter / Space", action: "Activate" },
+          { key: "↑ ↓ Arrow keys", action: "Navigate" },
+        ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -939,6 +1039,25 @@ const [activeTab, setActiveTab] = useState("overview");
         { intent: "dont", text: "Don't use on mobile — use FlowBottomNav instead." },
         { intent: "info", text: "Sidebar can collapse to icon-only mode to save space." },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSidebar, {
+          activeItem: "dashboard",
+          onItemClick: () => {},
+          items: props.items,
+          collapsed: !!props.collapsed,
+        } as React.ComponentProps<typeof FlowSidebar>),
+      defaults: { collapsed: false },
+      fixtures: {
+        items: [
+          { id: "dashboard", label: "Dashboard", icon: "layout-dashboard" },
+          { id: "projects", label: "Projects", icon: "folder" },
+          { id: "analytics", label: "Analytics", icon: "bar-chart" },
+          { id: "settings", label: "Settings", icon: "settings" },
+        ],
+      },
+      excludeControls: ["activeItem", "onItemClick", "items", "sections", "className"],
     },
   },
 };

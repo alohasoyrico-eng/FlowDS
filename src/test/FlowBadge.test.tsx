@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowBadge } from "../app/components/display";
+import { FlowBadge } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -110,15 +110,15 @@ describe("FlowBadge — wrapper behavior", () => {
 // Color
 // ─────────────────────────────────────────────
 
-describe("FlowBadge — color", () => {
-  it("does not set data-color for default color", () => {
+describe("FlowBadge — status", () => {
+  it("does not set data-status for default (no status prop)", () => {
     const { container } = render(<FlowBadge content={1} />);
-    expect(container.querySelector(".flow-badge")).not.toHaveAttribute("data-color");
+    expect(container.querySelector(".flow-badge")).not.toHaveAttribute("data-status");
   });
 
-  it("sets data-color for non-default color", () => {
-    const { container } = render(<FlowBadge content={1} color="error" />);
-    expect(container.querySelector(".flow-badge")).toHaveAttribute("data-color", "error");
+  it("sets data-status for non-default status", () => {
+    const { container } = render(<FlowBadge content={1} status="error" />);
+    expect(container.querySelector(".flow-badge")).toHaveAttribute("data-status", "error");
   });
 });
 

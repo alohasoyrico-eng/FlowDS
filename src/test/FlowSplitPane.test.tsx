@@ -11,7 +11,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowSplitPane } from "../app/components/layout";
+import { FlowSplitPane } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -19,30 +19,22 @@ import { FlowSplitPane } from "../app/components/layout";
 
 describe("FlowSplitPane — rendering", () => {
   it("renders the first panel content", () => {
-    render(
-      <FlowSplitPane first={<div>Left Panel</div>} second={<div>Right Panel</div>} />,
-    );
+    render(<FlowSplitPane first={<div>Left Panel</div>} second={<div>Right Panel</div>} />);
     expect(screen.getByText("Left Panel")).toBeInTheDocument();
   });
 
   it("renders the second panel content", () => {
-    render(
-      <FlowSplitPane first={<div>Left Panel</div>} second={<div>Right Panel</div>} />,
-    );
+    render(<FlowSplitPane first={<div>Left Panel</div>} second={<div>Right Panel</div>} />);
     expect(screen.getByText("Right Panel")).toBeInTheDocument();
   });
 
   it("renders a resize separator", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     expect(screen.getByRole("separator")).toBeInTheDocument();
   });
 
   it("applies flow-split-pane class", () => {
-    const { container } = render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    const { container } = render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     expect(container.querySelector(".flow-split-pane")).toBeInTheDocument();
   });
 });
@@ -53,9 +45,7 @@ describe("FlowSplitPane — rendering", () => {
 
 describe("FlowSplitPane — states", () => {
   it("defaults to horizontal direction (flex-direction: row)", () => {
-    const { container } = render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    const { container } = render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     const pane = container.querySelector(".flow-split-pane");
     expect(pane).toHaveStyle({ flexDirection: "row" });
   });
@@ -69,31 +59,23 @@ describe("FlowSplitPane — states", () => {
   });
 
   it("separator has aria-orientation='vertical' for horizontal split", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} direction="horizontal" />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} direction="horizontal" />);
     expect(screen.getByRole("separator")).toHaveAttribute("aria-orientation", "vertical");
   });
 
   it("separator has aria-orientation='horizontal' for vertical split", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} direction="vertical" />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} direction="vertical" />);
     expect(screen.getByRole("separator")).toHaveAttribute("aria-orientation", "horizontal");
   });
 
   it("uses defaultSplit for initial sizing", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} defaultSplit={30} />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} defaultSplit={30} />);
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("aria-valuenow", "30");
   });
 
   it("sets aria-disabled on separator when disabled", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} disabled />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} disabled />);
     expect(screen.getByRole("separator")).toHaveAttribute("aria-disabled", "true");
   });
 });
@@ -104,17 +86,13 @@ describe("FlowSplitPane — states", () => {
 
 describe("FlowSplitPane — interaction", () => {
   it("separator is keyboard focusable when not disabled", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("tabindex", "0");
   });
 
   it("separator is not keyboard focusable when disabled", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} disabled />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} disabled />);
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("tabindex", "-1");
   });
@@ -126,28 +104,19 @@ describe("FlowSplitPane — interaction", () => {
 
 describe("FlowSplitPane — accessibility", () => {
   it("separator has role='separator'", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     expect(screen.getByRole("separator")).toBeInTheDocument();
   });
 
   it("separator has aria-valuenow reflecting current split", () => {
-    render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} defaultSplit={50} />,
-    );
+    render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} defaultSplit={50} />);
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("aria-valuenow", "50");
   });
 
   it("separator has aria-valuemin and aria-valuemax", () => {
     render(
-      <FlowSplitPane
-        first={<div>A</div>}
-        second={<div>B</div>}
-        minFirst={20}
-        minSecond={30}
-      />,
+      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} minFirst={20} minSecond={30} />,
     );
     const separator = screen.getByRole("separator");
     expect(separator).toHaveAttribute("aria-valuemin", "20");
@@ -155,9 +124,7 @@ describe("FlowSplitPane — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowSplitPane first={<div>A</div>} second={<div>B</div>} />,
-    );
+    const { container } = render(<FlowSplitPane first={<div>A</div>} second={<div>B</div>} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

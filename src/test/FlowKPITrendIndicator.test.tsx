@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowKPITrendIndicator } from "../app/components/display";
+import { FlowKPITrendIndicator } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -85,9 +85,7 @@ describe("FlowKPITrendIndicator — direction", () => {
 
 describe("FlowKPITrendIndicator — custom styling", () => {
   it("applies custom className", () => {
-    const { container } = render(
-      <FlowKPITrendIndicator value="+12%" className="custom-trend" />,
-    );
+    const { container } = render(<FlowKPITrendIndicator value="+12%" className="custom-trend" />);
     expect(container.querySelector(".flow-kpi-trend")).toHaveClass("custom-trend");
   });
 });

@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowPopover } from "../app/components/overlays";
+import { FlowPopover } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -49,9 +49,7 @@ describe("FlowPopover — rendering", () => {
 
   it("renders children as popover content", async () => {
     render(
-      <FlowPopover
-        trigger={<span>Open popover</span>}
-      >
+      <FlowPopover trigger={<span>Open popover</span>}>
         <div>Alt content</div>
       </FlowPopover>,
     );

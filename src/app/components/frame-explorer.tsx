@@ -12,7 +12,7 @@
  */
 import { useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Spacing data ──
 interface SpaceStep {
@@ -487,8 +487,8 @@ export function FrameExplorer() {
       <Divider spacing={0} />
 
       <Stack gap={2}>
-        <Text role="overline">Interactive Explorer</Text>
-        <Text role="heading-l">Frame System</Text>
+        <Text variant="overline">Interactive Explorer</Text>
+        <Text variant="heading-l">Frame System</Text>
         <Text color="secondary">
           4px base-unit spacing scale, responsive 12/6/1 grid, radius scale, breakpoints, and
           density-adaptive controls. All spatial tokens trace back to ref.frame.
@@ -539,7 +539,8 @@ export function FrameExplorer() {
                   key={s.step}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "var(--ref-frame-space-9) var(--ref-frame-space-12) 1fr auto",
+                    gridTemplateColumns:
+                      "var(--ref-frame-space-9) var(--ref-frame-space-12) 1fr auto",
                     gap: "var(--ref-frame-space-3)",
                     alignItems: "center",
                   }}
@@ -568,7 +569,10 @@ export function FrameExplorer() {
                     <div
                       style={{
                         height: "100%",
-                        width: s.px === 0 ? "var(--ref-frame-space-micro)" : `${Math.min(100, (s.px / 80) * 100)}%`,
+                        width:
+                          s.px === 0
+                            ? "var(--ref-frame-space-micro)"
+                            : `${Math.min(100, (s.px / 80) * 100)}%`,
                         borderRadius: "var(--ref-frame-radius-1)",
                         background:
                           s.px === 0
@@ -598,7 +602,7 @@ export function FrameExplorer() {
 
           {/* Token reference table */}
           <Stack gap={3}>
-            <Text role="overline">Token Reference</Text>
+            <Text variant="overline">Token Reference</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -696,7 +700,7 @@ export function FrameExplorer() {
           {/* Design rationale */}
           <Surface padding="control" variant="secondary">
             <Stack gap={3}>
-              <Text role="overline">Design Rationale</Text>
+              <Text variant="overline">Design Rationale</Text>
               <div
                 style={{
                   fontFamily: "var(--ref-voice-family-mono)",
@@ -705,37 +709,37 @@ export function FrameExplorer() {
                   color: "var(--sys-energy-text-secondary)",
                 }}
               >
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// 4px base unit for crisp rendering on 2x/3x displays"}
                   </span>
                 </div>
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// Sequence: 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 64, 80"}
                   </span>
                 </div>
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// Steps 0-12: linear 4px increments (fine control)"}
                   </span>
                 </div>
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// Steps 16, 20: jump to 64px, 80px (section-level spacing)"}
                   </span>
                 </div>
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// No 2px step: too fine for most use cases, creates ambiguity"}
                   </span>
                 </div>
-                { }
+                {}
                 <div>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>
                     {"// Grid gutters/margins directly reference space steps for traceability"}
@@ -788,7 +792,7 @@ export function FrameExplorer() {
           {/* Grid spec detail */}
           <Surface padding="container" variant="secondary">
             <Stack gap={4}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 {GRID_TIERS[selectedGrid].name}
               </Text>
               <Text color="secondary">{GRID_TIERS[selectedGrid].description}</Text>
@@ -838,7 +842,7 @@ export function FrameExplorer() {
 
           {/* All tiers comparison table */}
           <Stack gap={3}>
-            <Text role="overline">Grid Specification Comparison</Text>
+            <Text variant="overline">Grid Specification Comparison</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -949,7 +953,7 @@ export function FrameExplorer() {
 
           {/* CSS variable mapping */}
           <Stack gap={3}>
-            <Text role="overline">CSS Variable Trace</Text>
+            <Text variant="overline">CSS Variable Trace</Text>
             <Surface padding="control" variant="secondary">
               <div
                 style={{
@@ -1044,7 +1048,8 @@ export function FrameExplorer() {
               >
                 <div
                   style={{
-                    width: r.step === "full" ? "var(--ref-frame-space-20)" : "var(--ref-frame-space-20)",
+                    width:
+                      r.step === "full" ? "var(--ref-frame-space-20)" : "var(--ref-frame-space-20)",
                     height: "var(--ref-frame-space-20)",
                     borderRadius: r.value,
                     background: "var(--sys-energy-surface-accent)",
@@ -1090,7 +1095,7 @@ export function FrameExplorer() {
 
           {/* Radius token table */}
           <Stack gap={3}>
-            <Text role="overline">Token Reference</Text>
+            <Text variant="overline">Token Reference</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -1188,11 +1193,12 @@ export function FrameExplorer() {
 
           {/* Component-to-radius mapping */}
           <Stack gap={3}>
-            <Text role="overline">Component Radius Mapping</Text>
+            <Text variant="overline">Component Radius Mapping</Text>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(var(--ref-frame-doc-col-token), 1fr))",
+                gridTemplateColumns:
+                  "repeat(auto-fill, minmax(var(--ref-frame-doc-col-token), 1fr))",
                 gap: "var(--ref-frame-space-4)",
               }}
             >
@@ -1470,7 +1476,7 @@ export function FrameExplorer() {
 
           {/* Content width constraints */}
           <Stack gap={3}>
-            <Text role="overline">Content Width Constraints</Text>
+            <Text variant="overline">Content Width Constraints</Text>
             <div
               style={{
                 display: "grid",
@@ -1532,7 +1538,7 @@ export function FrameExplorer() {
                     >
                       {cw.token}
                     </span>
-                    <Text role="caption" color="secondary">
+                    <Text variant="caption" color="secondary">
                       {cw.useCase}
                     </Text>
                   </Stack>
@@ -1554,7 +1560,7 @@ export function FrameExplorer() {
 
           {/* Frame density table */}
           <Stack gap={3}>
-            <Text role="overline">Frame Tokens by Density</Text>
+            <Text variant="overline">Frame Tokens by Density</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -1641,7 +1647,7 @@ export function FrameExplorer() {
 
           {/* Grid density table */}
           <Stack gap={3}>
-            <Text role="overline">Grid Tokens by Density</Text>
+            <Text variant="overline">Grid Tokens by Density</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -1728,7 +1734,7 @@ export function FrameExplorer() {
 
           {/* Visual density comparison */}
           <Stack gap={3}>
-            <Text role="overline">Visual Comparison</Text>
+            <Text variant="overline">Visual Comparison</Text>
             <div
               style={{
                 display: "grid",
@@ -1740,9 +1746,24 @@ export function FrameExplorer() {
                 const pad = density === "compact" ? "8px" : density === "default" ? "12px" : "16px";
                 const gap = density === "compact" ? "8px" : density === "default" ? "12px" : "16px";
                 const h = density === "compact" ? "32px" : density === "default" ? "40px" : "44px";
-                const padVar = density === "compact" ? "var(--ref-frame-space-2)" : density === "default" ? "var(--ref-frame-space-3)" : "var(--ref-frame-space-4)";
-                const gapVar = density === "compact" ? "var(--ref-frame-space-2)" : density === "default" ? "var(--ref-frame-space-3)" : "var(--ref-frame-space-4)";
-                const hVar = density === "compact" ? "var(--ref-frame-space-8)" : density === "default" ? "var(--ref-frame-space-10)" : "var(--ref-frame-space-11)";
+                const padVar =
+                  density === "compact"
+                    ? "var(--ref-frame-space-2)"
+                    : density === "default"
+                      ? "var(--ref-frame-space-3)"
+                      : "var(--ref-frame-space-4)";
+                const gapVar =
+                  density === "compact"
+                    ? "var(--ref-frame-space-2)"
+                    : density === "default"
+                      ? "var(--ref-frame-space-3)"
+                      : "var(--ref-frame-space-4)";
+                const hVar =
+                  density === "compact"
+                    ? "var(--ref-frame-space-8)"
+                    : density === "default"
+                      ? "var(--ref-frame-space-10)"
+                      : "var(--ref-frame-space-11)";
                 return (
                   <Surface key={density} padding="control" variant="secondary">
                     <Stack gap={3}>

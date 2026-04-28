@@ -5,10 +5,10 @@
  */
 import { Link, Navigate, useParams } from "react-router";
 
-import { Divider, Inline, Stack, Surface, Text } from "../../lib";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/design-system";
 import { type ComponentSpec, ComponentSpecAccordion } from "../components/component-accordion";
 import { Callout, PAGE_GAP, PageHeader, Section } from "../components/doc-primitives";
-import { DOMAIN_DEMO_MAP } from "./domain-demos";
+import { LayoutGrid } from "../components/layout-grid";
 import { COMPONENT_REGISTRY } from "./component-registry";
 
 // ── Platform badge ──
@@ -725,148 +725,155 @@ export function ComponentsByDomainPage() {
   const mobileCount = spec.components.filter((c) => c.platform === "mobile").length;
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter={`Layer 3 — ${spec.layer} Components`} title={spec.title}>
-        {spec.description}
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter={`Layer 3 — ${spec.layer} Components`} title={spec.title}>
+              {spec.description}
+            </PageHeader>
 
-      {/* Summary bar */}
-      <Inline gap={3} wrap>
-        <Surface padding="control" style={{ flex: 1, minWidth: 120 }}>
-          <Stack gap={1}>
-            <Text role="overline">Total</Text>
-            <Text role="heading-l">{spec.components.length}</Text>
-          </Stack>
-        </Surface>
-        {sharedCount > 0 && (
-          <Surface
-            padding="control"
-            style={{ flex: 1, minWidth: 120, borderLeft: `3px solid ${platformColors.shared}` }}
-          >
-            <Stack gap={1}>
-              <Text role="overline">Shared</Text>
-              <Text role="heading-l">{sharedCount}</Text>
-            </Stack>
-          </Surface>
-        )}
-        {desktopCount > 0 && (
-          <Surface
-            padding="control"
-            style={{ flex: 1, minWidth: 120, borderLeft: `3px solid ${platformColors.desktop}` }}
-          >
-            <Stack gap={1}>
-              <Text role="overline">Desktop</Text>
-              <Text role="heading-l">{desktopCount}</Text>
-            </Stack>
-          </Surface>
-        )}
-        {mobileCount > 0 && (
-          <Surface
-            padding="control"
-            style={{ flex: 1, minWidth: 120, borderLeft: `3px solid ${platformColors.mobile}` }}
-          >
-            <Stack gap={1}>
-              <Text role="overline">Mobile</Text>
-              <Text role="heading-l">{mobileCount}</Text>
-            </Stack>
-          </Surface>
-        )}
-      </Inline>
-
-      <Callout>
-        <Text role="paragraph-s" color="accent">
-          <strong>Import:</strong>{" "}
-          <code style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
-            import {"{ ... }"} from &quot;{spec.importPath}&quot;;
-          </code>
-        </Text>
-      </Callout>
-
-      {/* Component list with platform badges */}
-      <Section title="Components">
-        <Stack gap={2}>
-          {spec.components.map((c) => {
-            const slug = toSlug(c.name);
-            const hasDetail = !!COMPONENT_REGISTRY[`${domain}/${slug}`];
-            return (
-              <Link
-                key={c.name}
-                to={hasDetail ? `/components/${domain}/${slug}` : "#"}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+            {/* Summary bar */}
+            <Inline gap={3} wrap>
+              <Surface padding="control" style={{ flex: 1, minWidth: 120 }}>
+                <Stack gap={1}>
+                  <Text variant="overline">Total</Text>
+                  <Text variant="heading-l">{spec.components.length}</Text>
+                </Stack>
+              </Surface>
+              {sharedCount > 0 && (
                 <Surface
                   padding="control"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--ref-frame-space-3)",
-                    cursor: hasDetail ? "pointer" : "default",
-                    opacity: hasDetail ? 1 : 0.7,
-                    transition: "background var(--sys-momentum-transition-default)",
+                    flex: 1,
+                    minWidth: 120,
+                    borderLeft: `3px solid ${platformColors.shared}`,
                   }}
                 >
-                  <PlatformBadge platform={c.platform} />
-                  <Stack gap={1} style={{ flex: 1, minWidth: 0 }}>
-                    <Text
-                      role="label-m"
-                      style={{ color: hasDetail ? "var(--sys-energy-text-accent)" : undefined }}
-                    >
-                      {c.name}
-                    </Text>
-                    <Text
-                      role="paragraph-s"
-                      color="tertiary"
-                      style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {c.purpose}
-                    </Text>
+                  <Stack gap={1}>
+                    <Text variant="overline">Shared</Text>
+                    <Text variant="heading-l">{sharedCount}</Text>
                   </Stack>
-                  {hasDetail && (
-                    <Text role="caption" color="tertiary" style={{ flexShrink: 0 }}>
-                      →
-                    </Text>
-                  )}
                 </Surface>
-              </Link>
-            );
-          })}
-        </Stack>
-      </Section>
+              )}
+              {desktopCount > 0 && (
+                <Surface
+                  padding="control"
+                  style={{
+                    flex: 1,
+                    minWidth: 120,
+                    borderLeft: `3px solid ${platformColors.desktop}`,
+                  }}
+                >
+                  <Stack gap={1}>
+                    <Text variant="overline">Desktop</Text>
+                    <Text variant="heading-l">{desktopCount}</Text>
+                  </Stack>
+                </Surface>
+              )}
+              {mobileCount > 0 && (
+                <Surface
+                  padding="control"
+                  style={{
+                    flex: 1,
+                    minWidth: 120,
+                    borderLeft: `3px solid ${platformColors.mobile}`,
+                  }}
+                >
+                  <Stack gap={1}>
+                    <Text variant="overline">Mobile</Text>
+                    <Text variant="heading-l">{mobileCount}</Text>
+                  </Stack>
+                </Surface>
+              )}
+            </Inline>
 
-      <Divider spacing={2} />
+            <Callout>
+              <Text variant="paragraph-s" color="accent">
+                <strong>Import:</strong>{" "}
+                <code style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+                  import {"{ ... }"} from &quot;{spec.importPath}&quot;;
+                </code>
+              </Text>
+            </Callout>
 
-      {/* Detailed specs */}
-      <Section title="Specifications">
-        <ComponentSpecAccordion
-          items={spec.components.map((c) => ({
-            ...c,
-            extra: (
-              <Inline gap={2} style={{ marginTop: "var(--ref-frame-space-2)" }}>
-                <PlatformBadge platform={c.platform} />
-              </Inline>
-            ),
-          }))}
-          accentColor={domain === "data" ? "var(--sys-energy-status-info)" : undefined}
-        />
-      </Section>
+            {/* Component list with platform badges */}
+            <Section title="Components">
+              <Stack gap={2}>
+                {spec.components.map((c) => {
+                  const slug = toSlug(c.name);
+                  const hasDetail = !!COMPONENT_REGISTRY[`${domain}/${slug}`];
+                  return (
+                    <Link
+                      key={c.name}
+                      to={hasDetail ? `/components/${domain}/${slug}` : "#"}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Surface
+                        padding="control"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "var(--ref-frame-space-3)",
+                          cursor: hasDetail ? "pointer" : "default",
+                          opacity: hasDetail ? 1 : 0.7,
+                          transition: "background var(--sys-momentum-transition-default)",
+                        }}
+                      >
+                        <PlatformBadge platform={c.platform} />
+                        <Stack gap={1} style={{ flex: 1, minWidth: 0 }}>
+                          <Text
+                            variant="label-m"
+                            style={{
+                              color: hasDetail ? "var(--sys-energy-text-accent)" : undefined,
+                            }}
+                          >
+                            {c.name}
+                          </Text>
+                          <Text
+                            variant="paragraph-s"
+                            color="tertiary"
+                            style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {c.purpose}
+                          </Text>
+                        </Stack>
+                        {hasDetail && (
+                          <Text variant="caption" color="tertiary" style={{ flexShrink: 0 }}>
+                            →
+                          </Text>
+                        )}
+                      </Surface>
+                    </Link>
+                  );
+                })}
+              </Stack>
+            </Section>
 
-      {/* Live Demos */}
-      {DOMAIN_DEMO_MAP[domain] && (
-        <>
-          <Divider spacing={2} />
-          <Section title="Live Demos">
-            {(() => {
-              const DemoComponent = DOMAIN_DEMO_MAP[domain];
-              return <DemoComponent />;
-            })()}
-          </Section>
-        </>
-      )}
-    </Stack>
+            <Divider spacing={2} />
+
+            {/* Detailed specs */}
+            <Section title="Specifications">
+              <ComponentSpecAccordion
+                items={spec.components.map((c) => ({
+                  ...c,
+                  extra: (
+                    <Inline gap={2} style={{ marginTop: "var(--ref-frame-space-2)" }}>
+                      <PlatformBadge platform={c.platform} />
+                    </Inline>
+                  ),
+                }))}
+                accentColor={domain === "data" ? "var(--sys-energy-status-info)" : undefined}
+              />
+            </Section>
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }
 

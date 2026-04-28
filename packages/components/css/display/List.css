@@ -1,0 +1,124 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━━━━━━━━━━━━━
+   LIST / LIST ITEM — Content display (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flow-list-divider {
+  display: block;
+  height: var(--sys-frame-border-thin);
+  min-height: var(--sys-frame-border-thin);
+  pointer-events: none;
+  flex-shrink: 0;
+  background: var(--comp-list-divider);
+  margin-inline: var(--comp-list-item-padding-x);
+}
+
+.flow-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-list-item-gap);
+  padding: var(--comp-list-item-padding-y) var(--comp-list-item-padding-x);
+  background: var(--comp-list-item-bg);
+  cursor: default;
+  transition: background var(--comp-list-item-transition);
+  border-radius: 0;
+  min-height: var(--comp-list-item-min-height);
+  width: 100%;
+  text-align: start;
+}
+
+.flow-list-item[data-interactive] {
+  cursor: pointer;
+}
+
+.flow-list-item[data-interactive]:hover:not([data-state="disabled"]) {
+  background: var(--comp-list-item-bg-hover);
+}
+
+.flow-list-item[data-interactive]:active {
+  background: var(--comp-list-item-bg-active);
+}
+
+.flow-list-item[data-selected],
+.flow-list-item[data-state="selected"] {
+  background: var(--comp-list-item-bg-selected);
+}
+
+.flow-list-item[data-state="disabled"] {
+  color: var(--comp-list-item-text-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.flow-list-item-leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--comp-list-text-secondary);
+}
+
+.flow-list-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-list-content-gap);
+}
+
+.flow-list-item-primary {
+  color: var(--comp-list-text-primary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-primary);
+}
+
+.flow-list-item-secondary {
+  color: var(--comp-list-text-secondary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.architecture-layer-item .flow-list-item-secondary {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.architecture-layer-item .flow-list-item-leading {
+  color: var(--comp-list-text-primary);
+}
+
+.architecture-layer-item .flow-list-item-trailing {
+  color: var(--comp-list-text-primary);
+  align-self: center;
+}
+
+.architecture-layer-item .flow-list-item-content {
+  align-items: center;
+  text-align: center;
+}
+
+.flow-list-item-tertiary {
+  color: var(--comp-list-text-tertiary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+}
+
+.flow-list-item-trailing {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--comp-list-text-tertiary);
+  font-family: var(--comp-list-font-family);
+  font-size: var(--comp-list-font-secondary);
+}

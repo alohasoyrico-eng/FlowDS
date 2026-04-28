@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowAvatar, FlowAvatarGroup } from "../app/components/display";
+import { FlowAvatar, FlowAvatarGroup } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

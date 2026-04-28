@@ -1,0 +1,95 @@
+/* ━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOGGLE BUTTON — Toggle on/off button (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-toggle-button {
+  --tb-height: var(--comp-toggle-button-height-md);
+  --tb-font: var(--comp-toggle-button-font-md);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-toggle-button-gap);
+  height: var(--tb-height);
+  padding: 0 var(--comp-toggle-button-padding-x);
+  border: var(--comp-toggle-button-border-width) solid var(--comp-toggle-button-border);
+  border-radius: var(--comp-toggle-button-radius);
+  background: var(--comp-toggle-button-bg-off);
+  color: var(--comp-toggle-button-text-off);
+  font-family: var(--comp-toggle-button-font-family);
+  font-size: var(--tb-font);
+  font-weight: var(--comp-toggle-button-font-weight);
+  cursor: pointer;
+  transition:
+    background var(--comp-toggle-button-transition),
+    color var(--comp-toggle-button-transition),
+    border-color var(--comp-toggle-button-transition);
+}
+
+.flow-toggle-button[data-size="sm"] {
+  --tb-height: var(--comp-toggle-button-height-sm);
+  --tb-font: var(--comp-toggle-button-font-sm);
+}
+
+.flow-toggle-button[data-size="lg"] {
+  --tb-height: var(--comp-toggle-button-height-lg);
+  --tb-font: var(--comp-toggle-button-font-lg);
+}
+
+.flow-toggle-button[data-size="xl"] {
+  --tb-height: var(--comp-toggle-button-height-xl);
+  --tb-font: var(--comp-toggle-button-font-xl);
+}
+
+.flow-toggle-button:hover:not(:disabled) {
+  background: var(--comp-toggle-button-bg-off-hover);
+}
+
+.flow-toggle-button[aria-pressed="true"] {
+  background: var(--comp-toggle-button-bg-on);
+  color: var(--comp-toggle-button-text-on);
+  border-color: var(--comp-toggle-button-border-on);
+}
+
+.flow-toggle-button[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--comp-toggle-button-bg-on-hover);
+}
+
+.flow-toggle-button:disabled {
+  background: var(--comp-toggle-button-bg-disabled);
+  color: var(--comp-toggle-button-text-disabled);
+  border-color: var(--comp-toggle-button-border-disabled);
+  cursor: not-allowed;
+}
+
+.flow-toggle-button:focus-visible {
+  outline: var(--comp-toggle-button-focus-ring-width) solid
+    var(--comp-toggle-button-focus-ring-color);
+  outline-offset: var(--comp-toggle-button-focus-ring-offset);
+}
+
+/* Toggle button group */
+.flow-toggle-button-group {
+  display: inline-flex;
+  gap: var(--comp-toggle-button-group-gap);
+  border-radius: var(--comp-toggle-button-group-radius);
+  overflow: hidden;
+}
+
+.flow-toggle-button-group .flow-toggle-button {
+  border-radius: 0;
+}
+
+.flow-toggle-button-group .flow-toggle-button:first-child {
+  border-top-left-radius: var(--comp-toggle-button-group-radius);
+  border-bottom-left-radius: var(--comp-toggle-button-group-radius);
+}
+
+.flow-toggle-button-group .flow-toggle-button:last-child {
+  border-top-right-radius: var(--comp-toggle-button-group-radius);
+  border-bottom-right-radius: var(--comp-toggle-button-group-radius);
+}
+
+.flow-toggle-button-group .flow-toggle-button + .flow-toggle-button {
+  margin-inline-start: calc(var(--comp-toggle-button-border-width) * -1);
+}

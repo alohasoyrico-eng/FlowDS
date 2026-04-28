@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowInlineEditable } from "../app/components/patterns";
+import { FlowInlineEditable } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -102,9 +102,7 @@ describe("FlowInlineEditable — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowInlineEditable value="Test value" onChange={vi.fn()} />,
-    );
+    const { container } = render(<FlowInlineEditable value="Test value" onChange={vi.fn()} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

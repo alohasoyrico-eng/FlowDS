@@ -11,7 +11,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowPullToRefresh } from "../app/components/patterns";
+import { FlowPullToRefresh } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering

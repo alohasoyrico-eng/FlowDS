@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowDragSortableList } from "../app/components/patterns";
+import { FlowDragSortableList } from "@flow/patterns";
 
 const sampleItems = [
   { id: "1", content: "First item" },
@@ -93,7 +93,9 @@ describe("FlowDragSortableList — accessibility", () => {
   });
 
   it("supports custom aria-label", () => {
-    render(<FlowDragSortableList items={sampleItems} onReorder={vi.fn()} aria-label="Priority list" />);
+    render(
+      <FlowDragSortableList items={sampleItems} onReorder={vi.fn()} aria-label="Priority list" />,
+    );
     expect(screen.getByRole("listbox")).toHaveAttribute("aria-label", "Priority list");
   });
 

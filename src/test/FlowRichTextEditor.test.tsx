@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { FlowRichTextEditor } from "../app/components/patterns";
+import { FlowRichTextEditor } from "@flow/patterns";
 
 // Polyfill document.execCommand for jsdom (not implemented natively)
 beforeAll(() => {
@@ -102,9 +102,7 @@ describe("FlowRichTextEditor — interaction", () => {
 
 describe("FlowRichTextEditor — accessibility", () => {
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowRichTextEditor label="Notes" />,
-    );
+    const { container } = render(<FlowRichTextEditor label="Notes" />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

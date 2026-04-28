@@ -1,0 +1,91 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONTEXT MENU — Right-click positioned menu (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-context-menu {
+  position: fixed;
+  z-index: var(--comp-context-menu-z-index);
+  background: var(--comp-context-menu-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-context-menu-border);
+  border-radius: var(--comp-context-menu-radius);
+  box-shadow: var(--comp-context-menu-shadow);
+  padding: var(--comp-context-menu-padding);
+  min-width: var(--comp-context-menu-min-width);
+  max-width: var(--comp-context-menu-max-width);
+  font-family: var(--sys-voice-family);
+  font-size: var(--comp-context-menu-font);
+  animation: flow-popover-in var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-context-menu-item-gap);
+  width: 100%;
+  padding: var(--comp-context-menu-item-padding-y) var(--comp-context-menu-item-padding-x);
+  border: none;
+  border-radius: var(--comp-context-menu-item-radius);
+  background: transparent;
+  color: var(--comp-context-menu-text);
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  transition: background var(--sys-momentum-transition-default);
+}
+
+.flow-context-menu-item:hover {
+  background: var(--comp-context-menu-item-bg-hover);
+}
+
+.flow-context-menu-item:active {
+  background: var(--comp-context-menu-item-bg-active);
+}
+
+.flow-context-menu-item[data-danger] {
+  color: var(--comp-context-menu-text-danger);
+}
+
+.flow-context-menu-item[data-state="disabled"] {
+  color: var(--comp-context-menu-text-disabled);
+  pointer-events: none;
+}
+
+.flow-context-menu-item:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+.flow-context-menu-item-label {
+  flex: 1;
+}
+
+.flow-context-menu-item-shortcut {
+  font-size: var(--comp-context-menu-shortcut-font);
+  color: var(--comp-context-menu-text-secondary);
+  margin-inline-start: auto;
+  padding-inline-start: var(--comp-context-menu-shortcut-padding-start);
+}
+
+.flow-context-menu-item-icon {
+  width: var(--comp-context-menu-icon-size);
+  height: var(--comp-context-menu-icon-size);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-context-menu-separator {
+  height: var(--ref-frame-border-thin);
+  background: var(--comp-context-menu-separator);
+  margin: var(--comp-context-menu-separator-margin-y) 0;
+}
+
+.flow-context-menu-label {
+  padding: var(--comp-context-menu-item-padding-y) var(--comp-context-menu-item-padding-x);
+  font-size: var(--comp-context-menu-shortcut-font);
+  font-weight: var(--sys-voice-weight-semibold);
+  color: var(--comp-context-menu-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--sys-voice-letter-spacing-expanded);
+}

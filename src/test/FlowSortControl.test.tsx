@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowSortControl } from "../app/components/data";
+import { FlowSortControl } from "@flow/components";
 
 const DEFAULT_OPTIONS = [
   { key: "name", label: "Name" },
@@ -186,9 +186,7 @@ describe("FlowSortControl — accessibility", () => {
       />,
     );
     DEFAULT_OPTIONS.forEach((opt) => {
-      expect(
-        screen.getByRole("button", { name: `Sort by ${opt.label}` }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: `Sort by ${opt.label}` })).toBeInTheDocument();
     });
   });
 

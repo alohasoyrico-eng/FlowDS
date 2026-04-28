@@ -1,0 +1,83 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEGMENTED CONTROL — Mutually exclusive options (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-segmented {
+  --seg-height: var(--comp-segmented-height-md);
+  --seg-font: var(--comp-segmented-font-md);
+
+  display: inline-flex;
+  align-items: center;
+  background: var(--comp-segmented-bg);
+  border-radius: var(--comp-segmented-radius);
+  padding: var(--comp-segmented-padding);
+  gap: var(--comp-segmented-gap);
+}
+
+.flow-segmented[data-size="sm"] {
+  --seg-height: var(--comp-segmented-height-sm);
+  --seg-font: var(--comp-segmented-font-sm);
+}
+
+.flow-segmented[data-size="lg"] {
+  --seg-height: var(--comp-segmented-height-lg);
+  --seg-font: var(--comp-segmented-font-lg);
+}
+
+.flow-segmented[data-size="xl"] {
+  --seg-height: var(--comp-segmented-height-xl);
+  --seg-font: var(--comp-segmented-font-xl);
+}
+
+.flow-segmented[data-full-width] {
+  display: flex;
+  width: 100%;
+}
+
+.flow-segmented[data-full-width] .flow-segmented-btn {
+  flex: 1;
+}
+
+.flow-segmented-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-segmented-segment-gap);
+  height: calc(var(--seg-height) - var(--comp-segmented-padding) * 2);
+  padding: 0 var(--comp-segmented-segment-padding-x);
+  border: none;
+  border-radius: calc(var(--comp-segmented-radius) - var(--comp-segmented-padding));
+  background: transparent;
+  color: var(--comp-segmented-text);
+  font-family: var(--comp-segmented-font-family);
+  font-size: var(--seg-font);
+  font-weight: var(--comp-segmented-font-weight);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--comp-segmented-transition),
+    color var(--comp-segmented-transition),
+    box-shadow var(--comp-segmented-transition);
+}
+
+.flow-segmented-btn:hover:not([aria-checked="true"], [disabled]) {
+  background: var(--comp-segmented-bg-hover);
+}
+
+.flow-segmented-btn[aria-checked="true"] {
+  background: var(--comp-segmented-bg-active);
+  color: var(--comp-segmented-text-active);
+  font-weight: var(--comp-segmented-font-weight-active);
+  box-shadow: var(--comp-segmented-shadow);
+}
+
+.flow-segmented-btn:focus-visible {
+  outline: var(--comp-segmented-focus-ring-width) solid var(--comp-segmented-focus-ring-color);
+  outline-offset: calc(var(--comp-segmented-focus-ring-offset) * -1);
+}
+
+.flow-segmented-btn[disabled] {
+  background: var(--comp-segmented-bg-disabled);
+  color: var(--comp-segmented-text-disabled);
+  cursor: not-allowed;
+}

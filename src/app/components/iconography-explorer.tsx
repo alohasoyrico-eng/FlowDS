@@ -80,7 +80,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 import svgPaths from "../../imports/svg-i9u0t6gowv";
 
 // ── Tab types ──
@@ -486,7 +486,7 @@ const monoStyle: React.CSSProperties = {
 function GridTab() {
   return (
     <Stack gap="component">
-      <Text role="heading-m">Grid Specification</Text>
+      <Text variant="heading-m">Grid Specification</Text>
       <Text>
         Every FLOW icon is drawn on a 24x24px canvas with a 2px padding zone, yielding a 20x20px
         live area. Figma source uses a 32x32 viewBox as virtual canvas. All strokes are 1.5px with
@@ -505,7 +505,7 @@ function GridTab() {
         {/* Grid anatomy */}
         <div style={cardStyle}>
           <Stack gap={4}>
-            <Text role="caption">Grid Anatomy</Text>
+            <Text variant="caption">Grid Anatomy</Text>
             <div style={{ position: "relative", width: 192, height: 192 }}>
               {/* Outer canvas */}
               <div
@@ -601,7 +601,7 @@ function GridTab() {
         {/* Stroke rules */}
         <div style={{ ...cardStyle, flex: 1, minWidth: 280 }}>
           <Stack gap={4}>
-            <Text role="caption">Stroke Rules</Text>
+            <Text variant="caption">Stroke Rules</Text>
             <div
               style={{
                 display: "grid",
@@ -618,7 +618,7 @@ function GridTab() {
                 ["Optical adjust", "+1px for circles"],
               ].map(([label, value]) => (
                 <div key={label} style={{ display: "contents" }}>
-                  <Text role="caption" color="secondary">
+                  <Text variant="caption" color="secondary">
                     {label}
                   </Text>
                   <Text style={monoStyle}>{value}</Text>
@@ -627,10 +627,15 @@ function GridTab() {
             </div>
 
             <Divider spacing={2} />
-            <Text role="caption">Style Variants</Text>
+            <Text variant="caption">Style Variants</Text>
             <Inline gap={4}>
               <div
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--ref-frame-space-1)" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "var(--ref-frame-space-1)",
+                }}
               >
                 <div
                   style={{
@@ -645,7 +650,7 @@ function GridTab() {
                     style={{ color: "var(--sys-energy-icon-default)" }}
                   />
                 </div>
-                <Text role="caption" color="secondary">
+                <Text variant="caption" color="secondary">
                   Outline
                 </Text>
                 <Text style={{ ...monoStyle, color: "var(--sys-energy-status-success)" }}>
@@ -653,7 +658,12 @@ function GridTab() {
                 </Text>
               </div>
               <div
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--ref-frame-space-1)" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "var(--ref-frame-space-1)",
+                }}
               >
                 <div
                   style={{
@@ -669,7 +679,7 @@ function GridTab() {
                     style={{ color: "var(--sys-energy-icon-default)" }}
                   />
                 </div>
-                <Text role="caption" color="secondary">
+                <Text variant="caption" color="secondary">
                   Filled
                 </Text>
                 <Text style={{ ...monoStyle, color: "var(--sys-energy-text-tertiary)" }}>
@@ -684,7 +694,7 @@ function GridTab() {
       {/* Figma export note */}
       <Surface variant="filled" padding={4} radius={2}>
         <Stack gap={2}>
-          <Text role="caption">Export Specification (Figma to FLOW)</Text>
+          <Text variant="caption">Export Specification (Figma to FLOW)</Text>
           <div
             style={{
               display: "grid",
@@ -725,7 +735,7 @@ function CategoriesTab() {
   return (
     <Stack gap="component">
       <Inline gap={2} justify="between" style={{ flexWrap: "wrap" }}>
-        <Text role="heading-m">Semantic Categories</Text>
+        <Text variant="heading-m">Semantic Categories</Text>
         <div
           style={{
             display: "flex",
@@ -787,7 +797,7 @@ function CategoriesTab() {
       <div style={cardStyle}>
         <Stack gap={4}>
           <Inline gap={2}>
-            <Text role="label-l">{currentCat.label}</Text>
+            <Text variant="label-l">{currentCat.label}</Text>
             <span
               style={{
                 ...monoStyle,
@@ -813,7 +823,7 @@ function CategoriesTab() {
           {/* Icon grid */}
           {showFigma && currentCat.id === "finance" ? (
             <Stack gap={4}>
-              <Text role="caption">Figma Edenred Finance Icons (imported from source)</Text>
+              <Text variant="caption">Figma Edenred Finance Icons (imported from source)</Text>
               <div
                 style={{
                   display: "grid",
@@ -883,7 +893,7 @@ function CategoriesTab() {
               {currentCat.families && (
                 <Surface variant="filled" padding={3} radius={2}>
                   <Stack gap={1}>
-                    <Text role="caption">Icon Families in this category</Text>
+                    <Text variant="caption">Icon Families in this category</Text>
                     <Text style={monoStyle}>{currentCat.families.join(", ")}</Text>
                   </Stack>
                 </Surface>
@@ -950,7 +960,7 @@ function CategoriesTab() {
           <Surface key={cat.id} variant="outlined" padding={3} radius={2}>
             <Stack gap={1}>
               <Inline gap={2}>
-                <Text role="caption">{cat.label}</Text>
+                <Text variant="caption">{cat.label}</Text>
                 <span
                   style={{
                     ...monoStyle,
@@ -989,12 +999,12 @@ function CategoriesTab() {
 function ColorsTab() {
   return (
     <Stack gap="component">
-      <Text role="heading-m">Icon Color Tokens</Text>
+      <Text variant="heading-m">Icon Color Tokens</Text>
       <Text>
-        { }
+        {}
         sys.energy.icon.* tokens formalize the default <span style={monoStyle}>#0F172A</span> from
-        Figma&apos;s <span style={monoStyle}>var(--stroke-0)</span> into proper semantic roles. These
-        tokens automatically adapt between light and dark themes.
+        Figma&apos;s <span style={monoStyle}>var(--stroke-0)</span> into proper semantic roles.
+        These tokens automatically adapt between light and dark themes.
       </Text>
 
       <div style={{ overflowX: "auto" }}>
@@ -1023,7 +1033,13 @@ function ColorsTab() {
                 style={{ borderBottom: "1px solid var(--sys-energy-border-default)" }}
               >
                 <td style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)" }}>
-                  <div style={{ display: "flex", gap: "var(--ref-frame-space-2)", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "var(--ref-frame-space-2)",
+                      alignItems: "center",
+                    }}
+                  >
                     <div
                       style={{
                         width: "var(--ref-frame-space-8)",
@@ -1094,7 +1110,7 @@ function ColorsTab() {
                     color: "var(--sys-energy-text-secondary)",
                   }}
                 >
-                  <Text role="caption">{t.useCase}</Text>
+                  <Text variant="caption">{t.useCase}</Text>
                 </td>
               </tr>
             ))}
@@ -1105,7 +1121,7 @@ function ColorsTab() {
       {/* Live demo row */}
       <div style={cardStyle}>
         <Stack gap={4}>
-          <Text role="caption">Live Token Demo</Text>
+          <Text variant="caption">Live Token Demo</Text>
           <div style={{ display: "flex", gap: "var(--ref-frame-space-6)", flexWrap: "wrap" }}>
             {/* Default on surface */}
             <Stack gap={2} style={{ alignItems: "center" }}>
@@ -1279,7 +1295,7 @@ function NamingTab() {
 
   return (
     <Stack gap="component">
-      <Text role="heading-m">Naming Convention</Text>
+      <Text variant="heading-m">Naming Convention</Text>
       <Text>
         Icons follow a compositional naming pattern:{" "}
         <span style={monoStyle}>
@@ -1291,7 +1307,7 @@ function NamingTab() {
       {/* Pattern breakdown */}
       <div style={cardStyle}>
         <Stack gap={4}>
-          <Text role="caption">Composition Patterns</Text>
+          <Text variant="caption">Composition Patterns</Text>
           <div
             style={{
               display: "grid",
@@ -1312,7 +1328,7 @@ function NamingTab() {
                   {pattern}
                 </Text>
                 <Text style={monoStyle}>{example}</Text>
-                <Text role="caption" color="secondary">
+                <Text variant="caption" color="secondary">
                   {desc}
                 </Text>
               </div>
@@ -1324,7 +1340,7 @@ function NamingTab() {
       {/* Modifier set */}
       <div style={cardStyle}>
         <Stack gap={4}>
-          <Text role="caption">Closed Modifier Set (11 actions)</Text>
+          <Text variant="caption">Closed Modifier Set (11 actions)</Text>
           <Text color="secondary">
             These are the only valid action suffixes. New modifiers require design system governance
             approval.
@@ -1352,7 +1368,7 @@ function NamingTab() {
       {/* Family x Modifier matrix */}
       <div style={cardStyle}>
         <Stack gap={4}>
-          <Text role="caption">Family x Modifier Matrix (Finance)</Text>
+          <Text variant="caption">Family x Modifier Matrix (Finance)</Text>
           <div style={{ overflowX: "auto" }}>
             <table style={{ borderCollapse: "collapse", width: "100%" }}>
               <thead>
@@ -1401,9 +1417,22 @@ function NamingTab() {
                       key={fam}
                       style={{ borderBottom: "1px solid var(--sys-energy-border-default)" }}
                     >
-                      <td style={{ ...monoStyle, padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)" }}>{fam}</td>
+                      <td
+                        style={{
+                          ...monoStyle,
+                          padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)",
+                        }}
+                      >
+                        {fam}
+                      </td>
                       {modifiers.slice(0, 7).map((m) => (
-                        <td key={m} style={{ textAlign: "center", padding: "var(--ref-frame-space-1) var(--ref-frame-space-1)" }}>
+                        <td
+                          key={m}
+                          style={{
+                            textAlign: "center",
+                            padding: "var(--ref-frame-space-1) var(--ref-frame-space-1)",
+                          }}
+                        >
                           {variants.includes(m) ? (
                             <Check
                               size={14}
@@ -1432,7 +1461,7 @@ function NamingTab() {
 function SizesTab() {
   return (
     <Stack gap="component">
-      <Text role="heading-m">Size Scale</Text>
+      <Text variant="heading-m">Size Scale</Text>
       <Text>
         5 icon sizes from 12px (inline indicators) to 32px (empty states). The default size for most
         UI contexts is 20px (MD).
@@ -1476,7 +1505,7 @@ function SizesTab() {
               />
             </div>
             <Stack gap={1} style={{ alignItems: "center" }}>
-              <Text role="caption">{s.name}</Text>
+              <Text variant="caption">{s.name}</Text>
               <Text style={monoStyle}>{s.value}</Text>
               <Text
                 style={{
@@ -1495,7 +1524,7 @@ function SizesTab() {
       {/* Token reference */}
       <div style={cardStyle}>
         <Stack gap={3}>
-          <Text role="caption">Token Reference</Text>
+          <Text variant="caption">Token Reference</Text>
           {SIZE_TOKENS.map((s) => (
             <div
               key={s.name}
@@ -1517,7 +1546,7 @@ function SizesTab() {
               <Text style={{ ...monoStyle, color: "var(--sys-energy-text-accent)" }}>
                 {s.token}
               </Text>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 {s.useCase}
               </Text>
             </div>
@@ -1528,7 +1557,7 @@ function SizesTab() {
       {/* Size context examples */}
       <Surface variant="filled" padding={4} radius={2}>
         <Stack gap={3}>
-          <Text role="caption">Size in Context</Text>
+          <Text variant="caption">Size in Context</Text>
           <div style={{ display: "flex", gap: "var(--ref-frame-space-8)", flexWrap: "wrap" }}>
             {/* Button */}
             <div
@@ -1601,10 +1630,11 @@ export function IconographyExplorer() {
     <Stack gap="component">
       <Divider spacing={4} />
       <Stack gap={2}>
-        <Text role="heading-l">Interactive Explorer</Text>
+        <Text variant="heading-l">Interactive Explorer</Text>
         <Text color="secondary">
-          Explore FLOW&apos;s icon system: grid specs, 8 semantic categories (including Edenred Finance),
-          color tokens with light/dark support, naming conventions, and the 5-step size scale.
+          Explore FLOW&apos;s icon system: grid specs, 8 semantic categories (including Edenred
+          Finance), color tokens with light/dark support, naming conventions, and the 5-step size
+          scale.
         </Text>
       </Stack>
 

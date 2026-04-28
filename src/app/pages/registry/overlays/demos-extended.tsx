@@ -5,9 +5,15 @@
 import { useState } from "react";
 
 import {
-  FlowBottomSheet, FlowButton, FlowContextMenu,
-  FlowDialog, FlowMenu, FlowPopover, Stack, Text,
-} from "../../../../lib";
+  FlowBottomSheet,
+  FlowButton,
+  FlowContextMenu,
+  FlowDialog,
+  FlowMenu,
+  FlowPopover,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -142,9 +148,9 @@ export function FlowMenuOverview() {
           <FlowMenu
             trigger={<FlowButton>Open Menu</FlowButton>}
             items={[
-              { key: "profile", label: "Profile", icon: "user" },
-              { key: "settings", label: "Settings", icon: "settings" },
-              { key: "logout", label: "Logout", icon: "log-out" },
+              { id: "profile", label: "Profile", icon: "user" },
+              { id: "settings", label: "Settings", icon: "settings" },
+              { id: "logout", label: "Logout", icon: "log-out" },
             ]}
             onSelect={(key) => console.log(key)}
           />
@@ -178,11 +184,9 @@ export function FlowPopoverOverview() {
     <Stack gap={6}>
       <DemoSection title="Basic Usage" description="Click-triggered popover with custom content.">
         <DemoGroup>
-          <FlowPopover
-            trigger={<FlowButton>Open Popover</FlowButton>}
-          >
+          <FlowPopover trigger={<FlowButton>Open Popover</FlowButton>}>
             <Stack gap={2}>
-              <Text role="h3">Popover Title</Text>
+              <Text variant="h3">Popover Title</Text>
               <Text>This is popover content with any ReactNode.</Text>
             </Stack>
           </FlowPopover>

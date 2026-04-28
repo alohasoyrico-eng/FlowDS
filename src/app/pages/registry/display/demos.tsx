@@ -5,12 +5,24 @@
 import { useState } from "react";
 
 import {
-  FlowAvatar, FlowBadge, FlowCard, FlowChip,
-  FlowKPITrendIndicator, FlowList, FlowListItem, FlowSkeleton,
-  FlowTable, type FlowTableColumn, FlowTag, FlowTreeView,
-  Inline, Stack, Text, type TreeNode,
-} from "../../../../lib";
-import { FlowIcon } from "../../../primitives";
+  FlowAvatar,
+  FlowBadge,
+  FlowCard,
+  FlowChip,
+  FlowKPITrendIndicator,
+  FlowList,
+  FlowListItem,
+  FlowSkeleton,
+  FlowTable,
+  type FlowTableColumn,
+  FlowTag,
+  FlowTreeView,
+  Inline,
+  Stack,
+  Text,
+  type TreeNode,
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 import { SIZES } from "../types";
@@ -123,7 +135,7 @@ export function FlowListOverview() {
             <FlowListItem
               primary="Storage"
               secondary="8.3 GB of 15 GB used"
-              trailing={<Text role="label-m">55%</Text>}
+              trailing={<Text variant="label-m">55%</Text>}
             />
             <FlowListItem
               primary="Updates"
@@ -141,8 +153,9 @@ export function FlowListOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowList renders semantic &lt;ul&gt; with role=&apos;list&apos; and optional aria-label.
-            FlowListItem renders &lt;li&gt; with role=&apos;option&apos; for interactive items. Selected state
-            adds aria-selected=&apos;true&apos;. Keyboard accessible via Tab + Enter/Space.
+            FlowListItem renders &lt;li&gt; with role=&apos;option&apos; for interactive items.
+            Selected state adds aria-selected=&apos;true&apos;. Keyboard accessible via Tab +
+            Enter/Space.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -157,7 +170,7 @@ export function FlowListVariants() {
         <DemoGroup>
           <Inline gap={4} wrap alignItems="start">
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Without dividers
               </Text>
               <FlowList className="demo-content-frame-sm">
@@ -167,7 +180,7 @@ export function FlowListVariants() {
               </FlowList>
             </div>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 With dividers
               </Text>
               <FlowList dividers className="demo-content-frame-sm">
@@ -212,11 +225,19 @@ export function FlowChipOverview() {
       >
         <DemoGroup>
           <Inline gap={2} wrap>
-            <FlowChip variant="default">Default</FlowChip>
-            <FlowChip variant="accent">Accent</FlowChip>
-            <FlowChip variant="success">Success</FlowChip>
-            <FlowChip variant="warning">Warning</FlowChip>
-            <FlowChip variant="danger">Danger</FlowChip>
+            <FlowChip variant="filled">Default</FlowChip>
+            <FlowChip variant="filled" status="info">
+              Accent
+            </FlowChip>
+            <FlowChip variant="filled" status="success">
+              Success
+            </FlowChip>
+            <FlowChip variant="filled" status="warning">
+              Warning
+            </FlowChip>
+            <FlowChip variant="filled" status="error">
+              Danger
+            </FlowChip>
             <FlowChip variant="outlined">Outlined</FlowChip>
             <FlowChip variant="tonal">Tonal</FlowChip>
           </Inline>
@@ -270,7 +291,7 @@ export function FlowChipOverview() {
               </FlowChip>
             ))}
           </Inline>
-          {chips.length === 0 && <Text role="caption">All chips removed</Text>}
+          {chips.length === 0 && <Text variant="caption">All chips removed</Text>}
         </DemoGroup>
       </DemoSection>
 
@@ -281,7 +302,7 @@ export function FlowChipOverview() {
         <DemoGroup>
           <Inline gap={2} wrap>
             <FlowChip disabled>Disabled</FlowChip>
-            <FlowChip variant="accent" disabled>
+            <FlowChip variant="filled" status="info" disabled>
               Disabled Accent
             </FlowChip>
             <FlowChip variant="outlined" disabled>
@@ -316,16 +337,43 @@ export function FlowChipVariants() {
       >
         <DemoGroup>
           <Stack gap={4}>
-            {(
-              ["default", "accent", "success", "warning", "danger", "outlined", "tonal"] as const
-            ).map((variant) => (
+            {(["filled", "outlined", "tonal", "filter"] as const).map((variant) => (
               <div key={variant}>
-                <Text role="label-m" className="demo-label" style={{ textTransform: "capitalize" }}>
+                <Text
+                  variant="label-m"
+                  className="demo-label"
+                  style={{ textTransform: "capitalize" }}
+                >
                   {variant}
                 </Text>
                 <Inline gap={2} wrap>
                   {SIZES.map((size) => (
                     <FlowChip key={size} variant={variant} size={size}>
+                      {size.toUpperCase()}
+                    </FlowChip>
+                  ))}
+                </Inline>
+              </div>
+            ))}
+          </Stack>
+        </DemoGroup>
+      </DemoSection>
+
+      <DemoSection title="Status × Sizes" description="Chips with semantic status colors.">
+        <DemoGroup>
+          <Stack gap={4}>
+            {(["neutral", "info", "success", "warning", "error"] as const).map((status) => (
+              <div key={status}>
+                <Text
+                  variant="label-m"
+                  className="demo-label"
+                  style={{ textTransform: "capitalize" }}
+                >
+                  {status}
+                </Text>
+                <Inline gap={2} wrap>
+                  {SIZES.map((size) => (
+                    <FlowChip key={size} status={status} size={size}>
                       {size.toUpperCase()}
                     </FlowChip>
                   ))}
@@ -343,22 +391,24 @@ export function FlowChipVariants() {
         <DemoGroup>
           <Stack gap={4}>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Unselected
               </Text>
               <Inline gap={2} wrap>
                 <FlowChip>Default</FlowChip>
-                <FlowChip variant="accent">Accent</FlowChip>
+                <FlowChip variant="filled" status="info">
+                  Accent
+                </FlowChip>
                 <FlowChip variant="outlined">Outlined</FlowChip>
               </Inline>
             </div>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Selected
               </Text>
               <Inline gap={2} wrap>
                 <FlowChip selected>Default</FlowChip>
-                <FlowChip variant="accent" selected>
+                <FlowChip variant="filled" status="info" selected>
                   Accent
                 </FlowChip>
                 <FlowChip variant="outlined" selected>
@@ -387,7 +437,7 @@ export function FlowTagOverview() {
         <DemoGroup>
           <Stack gap={3}>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Label variant (sans-serif)
               </Text>
               <Inline gap={2} wrap>
@@ -399,7 +449,7 @@ export function FlowTagOverview() {
               </Inline>
             </div>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Code variant (monospace)
               </Text>
               <Inline gap={2} wrap>
@@ -440,19 +490,19 @@ export function FlowTagOverview() {
         <DemoGroup>
           <Stack gap={2}>
             <Inline gap={1} alignItems="center">
-              <Text role="label-m">Status:</Text>
+              <Text variant="label-m">Status:</Text>
               <FlowTag status="success">Active</FlowTag>
             </Inline>
             <Inline gap={1} alignItems="center">
-              <Text role="label-m">Priority:</Text>
+              <Text variant="label-m">Priority:</Text>
               <FlowTag status="error">High</FlowTag>
             </Inline>
             <Inline gap={1} alignItems="center">
-              <Text role="label-m">Type:</Text>
+              <Text variant="label-m">Type:</Text>
               <FlowTag status="info">Feature</FlowTag>
             </Inline>
             <Inline gap={1} alignItems="center">
-              <Text role="label-m">Code:</Text>
+              <Text variant="label-m">Code:</Text>
               <FlowTag variant="code">npm install</FlowTag>
             </Inline>
           </Stack>
@@ -548,14 +598,18 @@ export function FlowTagVariants() {
           <Stack gap={4}>
             {(["label", "code"] as const).map((variant) => (
               <div key={variant}>
-                <Text role="label-l" className="demo-label" style={{ textTransform: "capitalize" }}>
+                <Text
+                  variant="label-l"
+                  className="demo-label"
+                  style={{ textTransform: "capitalize" }}
+                >
                   {variant} variant
                 </Text>
                 <Stack gap={3}>
                   {(["neutral", "info", "success", "warning", "error"] as const).map((status) => (
                     <div key={status}>
                       <Text
-                        role="caption"
+                        variant="caption"
                         className="demo-label"
                         color="secondary"
                         style={{ textTransform: "capitalize" }}
@@ -585,7 +639,7 @@ export function FlowTagVariants() {
         <DemoGroup>
           <Stack gap={3}>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 System Status
               </Text>
               <Inline gap={1} wrap>
@@ -601,7 +655,7 @@ export function FlowTagVariants() {
               </Inline>
             </div>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Tech Stack
               </Text>
               <Inline gap={1} wrap>
@@ -620,7 +674,7 @@ export function FlowTagVariants() {
               </Inline>
             </div>
             <div>
-              <Text role="label-m" className="demo-label">
+              <Text variant="label-m" className="demo-label">
                 Project Labels
               </Text>
               <Inline gap={1} wrap>
@@ -642,8 +696,8 @@ export function FlowTagVariants() {
             <LayoutGrid.Item span={6}>
               <FlowCard elevation={1} padding="lg">
                 <Stack gap={2}>
-                  <Text role="heading-m">Authentication Module</Text>
-                  <Text role="paragraph-s" color="secondary">
+                  <Text variant="heading-m">Authentication Module</Text>
+                  <Text variant="paragraph-s" color="secondary">
                     JWT-based auth with refresh tokens and role-based access control
                   </Text>
                   <Inline gap={1} wrap>
@@ -663,8 +717,8 @@ export function FlowTagVariants() {
             <LayoutGrid.Item span={6}>
               <FlowCard elevation={1} padding="lg">
                 <Stack gap={2}>
-                  <Text role="heading-m">Payment Gateway</Text>
-                  <Text role="paragraph-s" color="secondary">
+                  <Text variant="heading-m">Payment Gateway</Text>
+                  <Text variant="paragraph-s" color="secondary">
                     Stripe integration with webhook handling and subscription management
                   </Text>
                   <Inline gap={1} wrap>
@@ -719,19 +773,19 @@ export function FlowBadgeOverview() {
       >
         <DemoGroup>
           <Inline gap={4} wrap>
-            <FlowBadge content={1} color="default">
+            <FlowBadge content={1} status="neutral">
               <FlowIcon name="bell" size="lg" />
             </FlowBadge>
-            <FlowBadge content={2} color="accent">
+            <FlowBadge content={2} status="info">
               <FlowIcon name="bell" size="lg" />
             </FlowBadge>
-            <FlowBadge content={3} color="success">
+            <FlowBadge content={3} status="success">
               <FlowIcon name="bell" size="lg" />
             </FlowBadge>
-            <FlowBadge content={4} color="warning">
+            <FlowBadge content={4} status="warning">
               <FlowIcon name="bell" size="lg" />
             </FlowBadge>
-            <FlowBadge content={5} color="danger">
+            <FlowBadge content={5} status="error">
               <FlowIcon name="bell" size="lg" />
             </FlowBadge>
           </Inline>
@@ -763,7 +817,7 @@ export function FlowBadgeOverview() {
       >
         <DemoGroup>
           <Stack gap={2}>
-            <FlowBadge content={count} color="danger">
+            <FlowBadge content={count} status="error">
               <FlowIcon name="shopping-cart" size="lg" />
             </FlowBadge>
             <Inline gap={2}>
@@ -773,7 +827,10 @@ export function FlowBadgeOverview() {
               >
                 -
               </button>
-              <button onClick={() => setCount(count + 1)} style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-4)" }}>
+              <button
+                onClick={() => setCount(count + 1)}
+                style={{ padding: "var(--ref-frame-space-2) var(--ref-frame-space-4)" }}
+              >
                 +
               </button>
             </Inline>
@@ -804,8 +861,8 @@ export function FlowBadgeOverview() {
         <DemoGroup>
           <Inline gap={2} wrap>
             <FlowBadge content={12} standalone />
-            <FlowBadge variant="dot" color="success" standalone />
-            <FlowBadge content="New" standalone color="accent" />
+            <FlowBadge variant="dot" status="success" standalone />
+            <FlowBadge content="New" standalone status="info" />
           </Inline>
         </DemoGroup>
       </DemoSection>
@@ -817,8 +874,8 @@ export function FlowBadgeOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowBadge is purely visual — ensure the parent element (button, icon) has descriptive
-            aria-label including the badge content (e.g., &apos;Notifications, 5 unread&apos;). Badges use
-            absolute positioning within a relative wrapper.
+            aria-label including the badge content (e.g., &apos;Notifications, 5 unread&apos;).
+            Badges use absolute positioning within a relative wrapper.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -835,19 +892,23 @@ export function FlowBadgeVariants() {
       >
         <DemoGroup>
           <Stack gap={4}>
-            {(["default", "accent", "success", "warning", "danger"] as const).map((color) => (
-              <div key={color}>
+            {(["neutral", "info", "success", "warning", "error"] as const).map((status) => (
+              <div key={status}>
                 <Text
-                  role="label-m"
-                  style={{ marginBottom: "var(--ref-frame-space-2)", display: "block", textTransform: "capitalize" }}
+                  variant="label-m"
+                  style={{
+                    marginBottom: "var(--ref-frame-space-2)",
+                    display: "block",
+                    textTransform: "capitalize",
+                  }}
                 >
-                  {color}
+                  {status}
                 </Text>
                 <Inline gap={4} wrap>
-                  <FlowBadge content={5} color={color}>
+                  <FlowBadge content={5} status={status}>
                     <FlowIcon name="bell" size="lg" />
                   </FlowBadge>
-                  <FlowBadge variant="dot" color={color}>
+                  <FlowBadge variant="dot" status={status}>
                     <FlowIcon name="bell" size="lg" />
                   </FlowBadge>
                 </Inline>
@@ -905,42 +966,42 @@ export function FlowCardOverview() {
             {(
               [
                 {
-                  accent: "accent",
+                  status: "info",
                   icon: "⚡",
                   title: "Action",
                   desc: "Interactive elements — buttons, links, controls",
                   stat: "12 active",
                 },
                 {
-                  accent: "success",
+                  status: "success",
                   icon: "✔",
                   title: "Success",
                   desc: "Positive outcomes — confirmations, completed states",
                   stat: "+18%",
                 },
                 {
-                  accent: "warning",
+                  status: "warning",
                   icon: "▲",
                   title: "Warning",
                   desc: "Caution states — limits, degraded conditions",
                   stat: "3 alerts",
                 },
                 {
-                  accent: "danger",
+                  status: "error",
                   icon: "✕",
                   title: "Error",
                   desc: "Failures — validation errors, blocked actions",
                   stat: "2 issues",
                 },
                 {
-                  accent: "info",
+                  status: "info",
                   icon: "ℹ",
                   title: "Info",
                   desc: "Informational notes, tips, and guidance",
                   stat: "5 new",
                 },
                 {
-                  accent: "neutral",
+                  status: "neutral",
                   icon: "◻",
                   title: "Surface",
                   desc: "Backgrounds — content layering, visual depth",
@@ -948,17 +1009,17 @@ export function FlowCardOverview() {
                 },
               ] as const
             ).map((item) => (
-              <LayoutGrid.Item key={item.accent} span={4}>
-                <FlowCard elevation={1} accent={item.accent} padding="lg">
+              <LayoutGrid.Item key={item.status} span={4}>
+                <FlowCard elevation={1} status={item.status} padding="lg">
                   <Stack gap={3}>
-                    <Text role="display-s">{item.icon}</Text>
+                    <Text variant="display-s">{item.icon}</Text>
                     <Stack gap={1}>
-                      <Text role="label-l">{item.title}</Text>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="label-l">{item.title}</Text>
+                      <Text variant="paragraph-s" color="secondary">
                         {item.desc}
                       </Text>
                     </Stack>
-                    <Text role="label-m" color="tertiary">
+                    <Text variant="label-m" color="tertiary">
                       {item.stat}
                     </Text>
                   </Stack>
@@ -985,10 +1046,10 @@ export function FlowCardOverview() {
                   padding="lg"
                 >
                   <Stack gap={3}>
-                    <Text role="heading-m" style={{ textTransform: "capitalize" }}>
+                    <Text variant="heading-m" style={{ textTransform: "capitalize" }}>
                       {id}
                     </Text>
-                    <Text role="paragraph-s">
+                    <Text variant="paragraph-s">
                       {id === "analytics" && "View metrics and KPIs"}
                       {id === "reports" && "Generate custom reports"}
                       {id === "settings" && "Configure preferences"}
@@ -998,7 +1059,7 @@ export function FlowCardOverview() {
                         {id}
                       </FlowChip>
                       {selected === id && (
-                        <FlowChip size="sm" variant="accent">
+                        <FlowChip size="sm" variant="filled" status="info">
                           selected
                         </FlowChip>
                       )}
@@ -1023,8 +1084,8 @@ export function FlowCardOverview() {
                 <DemoCell label={`elevation ${elevation}`}>
                   <FlowCard elevation={elevation} padding="md">
                     <Stack gap={2}>
-                      <Text role="label-m">Elevation {elevation}</Text>
-                      <Text role="paragraph-s">
+                      <Text variant="label-m">Elevation {elevation}</Text>
+                      <Text variant="paragraph-s">
                         {elevation === 0 && "Border instead of shadow"}
                         {elevation === 1 && "Subtle shadow (default)"}
                         {elevation === 2 && "Medium shadow"}
@@ -1048,27 +1109,27 @@ export function FlowCardOverview() {
           <div {...statesGridProps(demoSize)}>
             <DemoCell label="Static">
               <FlowCard padding="md">
-                <Text role="paragraph-m">Static card</Text>
+                <Text variant="paragraph-m">Static card</Text>
               </FlowCard>
             </DemoCell>
             <DemoCell label="Interactive">
               <FlowCard interactive padding="md" onClick={() => {}}>
-                <Text role="paragraph-m">Interactive</Text>
+                <Text variant="paragraph-m">Interactive</Text>
               </FlowCard>
             </DemoCell>
             <DemoCell label="Hover">
               <FlowCard interactive padding="md" data-demo-state="hover" onClick={() => {}}>
-                <Text role="paragraph-m">Hover</Text>
+                <Text variant="paragraph-m">Hover</Text>
               </FlowCard>
             </DemoCell>
             <DemoCell label="Focus">
               <FlowCard interactive padding="md" data-demo-state="focus" onClick={() => {}}>
-                <Text role="paragraph-m">Focus</Text>
+                <Text variant="paragraph-m">Focus</Text>
               </FlowCard>
             </DemoCell>
             <DemoCell label="Selected">
               <FlowCard interactive selected padding="md" onClick={() => {}}>
-                <Text role="paragraph-m">Selected</Text>
+                <Text variant="paragraph-m">Selected</Text>
               </FlowCard>
             </DemoCell>
           </div>
@@ -1084,8 +1145,8 @@ export function FlowCardOverview() {
           <Callout intent="info">
             FlowCard renders as &lt;div&gt; when static, or &lt;button&gt; when interactive prop is
             present. Interactive cards get full keyboard support (Tab + Enter/Space), focus ring,
-            and hover states. Selected state adds aria-selected=&apos;true&apos;. Ensure interactive cards
-            have meaningful text content for screen readers.
+            and hover states. Selected state adds aria-selected=&apos;true&apos;. Ensure interactive
+            cards have meaningful text content for screen readers.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1110,8 +1171,8 @@ export function FlowCardVariants() {
                 <DemoCell label={padding}>
                   <FlowCard padding={padding}>
                     <Stack gap={1}>
-                      <Text role="label-m">Padding {padding}</Text>
-                      <Text role="paragraph-s">Inner spacing scales with size</Text>
+                      <Text variant="label-m">Padding {padding}</Text>
+                      <Text variant="paragraph-s">Inner spacing scales with size</Text>
                     </Stack>
                   </FlowCard>
                 </DemoCell>
@@ -1135,8 +1196,8 @@ export function FlowCardVariants() {
                   <Inline gap={3} alignItems="center">
                     <FlowAvatar size="lg" initials="JC" />
                     <Stack gap={1}>
-                      <Text role="label-l">Jane Cooper</Text>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="label-l">Jane Cooper</Text>
+                      <Text variant="paragraph-s" color="secondary">
                         Product Designer
                       </Text>
                     </Stack>
@@ -1158,13 +1219,13 @@ export function FlowCardVariants() {
 
             {/* Stats card */}
             <LayoutGrid.Item span={4}>
-              <FlowCard elevation={1} accent="success" padding="lg">
+              <FlowCard elevation={1} status="success" padding="lg">
                 <Stack gap={3}>
                   <Stack gap={1}>
-                    <Text role="caption" color="tertiary">
+                    <Text variant="caption" color="tertiary">
                       Revenue
                     </Text>
-                    <Text role="display-s">$45,230</Text>
+                    <Text variant="display-s">$45,230</Text>
                   </Stack>
                   <FlowKPITrendIndicator value="+12.5%" direction="up" label="vs last month" />
                 </Stack>
@@ -1173,14 +1234,14 @@ export function FlowCardVariants() {
 
             {/* Feature highlight */}
             <LayoutGrid.Item span={4}>
-              <FlowCard elevation={2} accent="info" padding="lg">
+              <FlowCard elevation={2} status="info" padding="lg">
                 <Stack gap={3}>
-                  <Text role="display-s">ℹ</Text>
+                  <Text variant="display-s">ℹ</Text>
                   <Stack gap={1}>
-                    <Text role="label-l">New Feature</Text>
-                    <Text role="paragraph-s">Advanced analytics dashboard now available</Text>
+                    <Text variant="label-l">New Feature</Text>
+                    <Text variant="paragraph-s">Advanced analytics dashboard now available</Text>
                   </Stack>
-                  <FlowChip size="sm" variant="accent">
+                  <FlowChip size="sm" variant="filled" status="info">
                     New
                   </FlowChip>
                 </Stack>
@@ -1197,29 +1258,27 @@ export function FlowCardVariants() {
       >
         <DemoGroup>
           <Stack gap={4}>
-            {(["accent", "success", "warning", "danger", "info", "neutral"] as const).map(
-              (accent) => (
-                <div key={accent}>
-                  <Text
-                    role="label-m"
-                    style={{
-                      marginBottom: "var(--ref-frame-space-2)",
-                      display: "block",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    {accent}
-                  </Text>
-                  <Inline gap={2} wrap>
-                    {[0, 1, 2].map((elevation) => (
-                      <FlowCard key={elevation} accent={accent} elevation={elevation} padding="sm">
-                        <Text role="paragraph-s">Elevation {elevation}</Text>
-                      </FlowCard>
-                    ))}
-                  </Inline>
-                </div>
-              ),
-            )}
+            {(["info", "success", "warning", "error", "neutral"] as const).map((status) => (
+              <div key={status}>
+                <Text
+                  variant="label-m"
+                  style={{
+                    marginBottom: "var(--ref-frame-space-2)",
+                    display: "block",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {status}
+                </Text>
+                <Inline gap={2} wrap>
+                  {[0, 1, 2].map((elevation) => (
+                    <FlowCard key={elevation} status={status} elevation={elevation} padding="sm">
+                      <Text variant="paragraph-s">Elevation {elevation}</Text>
+                    </FlowCard>
+                  ))}
+                </Inline>
+              </div>
+            ))}
           </Stack>
         </DemoGroup>
       </DemoSection>
@@ -1343,9 +1402,9 @@ export function FlowAvatarOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowAvatar renders &lt;img&gt; when src is provided (requires alt prop for screen
-            readers). Initials and icon modes render as &lt;div&gt; with role=&apos;img&apos; and aria-label.
-            Status indicators use absolute positioning and should be described in parent aria-label
-            (e.g., &apos;Jane Doe, online&apos;).
+            readers). Initials and icon modes render as &lt;div&gt; with role=&apos;img&apos; and
+            aria-label. Status indicators use absolute positioning and should be described in parent
+            aria-label (e.g., &apos;Jane Doe, online&apos;).
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1363,8 +1422,12 @@ export function FlowAvatarVariants() {
             {(["circle", "square"] as const).map((shape) => (
               <div key={shape}>
                 <Text
-                  role="label-m"
-                  style={{ marginBottom: "var(--ref-frame-space-2)", display: "block", textTransform: "capitalize" }}
+                  variant="label-m"
+                  style={{
+                    marginBottom: "var(--ref-frame-space-2)",
+                    display: "block",
+                    textTransform: "capitalize",
+                  }}
                 >
                   {shape}
                 </Text>
@@ -1391,8 +1454,12 @@ export function FlowAvatarVariants() {
             {(["online", "offline", "away", "busy"] as const).map((status) => (
               <div key={status}>
                 <Text
-                  role="label-m"
-                  style={{ marginBottom: "var(--ref-frame-space-2)", display: "block", textTransform: "capitalize" }}
+                  variant="label-m"
+                  style={{
+                    marginBottom: "var(--ref-frame-space-2)",
+                    display: "block",
+                    textTransform: "capitalize",
+                  }}
                 >
                   {status}
                 </Text>
@@ -1531,7 +1598,7 @@ export function FlowTableOverview() {
                         .map((n) => n[0])
                         .join("")}
                     />
-                    <Text role="label-m">{row.name}</Text>
+                    <Text variant="label-m">{row.name}</Text>
                   </Inline>
                 ),
               },
@@ -1628,10 +1695,10 @@ export function FlowTableVariants() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowTable renders semantic &lt;table&gt; with role=&apos;table&apos;, &lt;thead&gt;/&lt;tbody&gt;,
-            and proper &lt;th&gt; headers with scope=&apos;col&apos;. Optional caption prop adds
-            &lt;caption&gt; for context. Custom render functions should maintain semantic text
-            hierarchy for screen readers.
+            FlowTable renders semantic &lt;table&gt; with role=&apos;table&apos;,
+            &lt;thead&gt;/&lt;tbody&gt;, and proper &lt;th&gt; headers with scope=&apos;col&apos;.
+            Optional caption prop adds &lt;caption&gt; for context. Custom render functions should
+            maintain semantic text hierarchy for screen readers.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1676,7 +1743,10 @@ export function FlowKPITrendIndicatorOverview() {
         <DemoGroup>
           <Stack gap={4}>
             <div>
-              <Text role="label-m" style={{ marginBottom: "var(--ref-frame-space-2)", display: "block" }}>
+              <Text
+                variant="label-m"
+                style={{ marginBottom: "var(--ref-frame-space-2)", display: "block" }}
+              >
                 upIsGood={"{true}"} — Revenue, growth metrics
               </Text>
               <Inline gap={4} wrap>
@@ -1685,7 +1755,10 @@ export function FlowKPITrendIndicatorOverview() {
               </Inline>
             </div>
             <div>
-              <Text role="label-m" style={{ marginBottom: "var(--ref-frame-space-2)", display: "block" }}>
+              <Text
+                variant="label-m"
+                style={{ marginBottom: "var(--ref-frame-space-2)", display: "block" }}
+              >
                 upIsGood={"{false}"} — Error rate, costs
               </Text>
               <Inline gap={4} wrap>
@@ -1727,14 +1800,21 @@ export function FlowKPITrendIndicatorVariants() {
             {(["up", "down", "neutral"] as const).map((direction) => (
               <div key={direction}>
                 <Text
-                  role="label-m"
-                  style={{ marginBottom: "var(--ref-frame-space-2)", display: "block", textTransform: "capitalize" }}
+                  variant="label-m"
+                  style={{
+                    marginBottom: "var(--ref-frame-space-2)",
+                    display: "block",
+                    textTransform: "capitalize",
+                  }}
                 >
                   Direction: {direction}
                 </Text>
                 <Inline gap={4} wrap>
                   <div>
-                    <Text role="caption" style={{ display: "block", marginBottom: "var(--ref-frame-space-1)" }}>
+                    <Text
+                      variant="caption"
+                      style={{ display: "block", marginBottom: "var(--ref-frame-space-1)" }}
+                    >
                       upIsGood=true
                     </Text>
                     <FlowKPITrendIndicator
@@ -1744,7 +1824,10 @@ export function FlowKPITrendIndicatorVariants() {
                     />
                   </div>
                   <div>
-                    <Text role="caption" style={{ display: "block", marginBottom: "var(--ref-frame-space-1)" }}>
+                    <Text
+                      variant="caption"
+                      style={{ display: "block", marginBottom: "var(--ref-frame-space-1)" }}
+                    >
                       upIsGood=false
                     </Text>
                     <FlowKPITrendIndicator
@@ -1765,11 +1848,11 @@ export function FlowKPITrendIndicatorVariants() {
         <DemoGroup>
           <Stack gap={3}>
             <div>
-              <Text role="label-m">Revenue</Text>
+              <Text variant="label-m">Revenue</Text>
               <FlowKPITrendIndicator value="+18.2%" direction="up" upIsGood={true} label="vs Q3" />
             </div>
             <div>
-              <Text role="label-m">Bounce Rate</Text>
+              <Text variant="label-m">Bounce Rate</Text>
               <FlowKPITrendIndicator
                 value="-5.4%"
                 direction="down"
@@ -1778,7 +1861,7 @@ export function FlowKPITrendIndicatorVariants() {
               />
             </div>
             <div>
-              <Text role="label-m">Active Users</Text>
+              <Text variant="label-m">Active Users</Text>
               <FlowKPITrendIndicator
                 value="+2,341"
                 direction="up"
@@ -1787,7 +1870,7 @@ export function FlowKPITrendIndicatorVariants() {
               />
             </div>
             <div>
-              <Text role="label-m">Error Rate</Text>
+              <Text variant="label-m">Error Rate</Text>
               <FlowKPITrendIndicator
                 value="+0.8%"
                 direction="up"
@@ -1796,7 +1879,7 @@ export function FlowKPITrendIndicatorVariants() {
               />
             </div>
             <div>
-              <Text role="label-m">Conversion Rate</Text>
+              <Text variant="label-m">Conversion Rate</Text>
               <FlowKPITrendIndicator value="0.0%" direction="neutral" label="unchanged" />
             </div>
           </Stack>
@@ -1811,9 +1894,9 @@ export function FlowKPITrendIndicatorVariants() {
         <DemoGroup>
           <Callout intent="info">
             FlowKPITrendIndicator renders as &lt;span&gt; with aria-label that combines value,
-            direction, and semantic meaning (e.g., &apos;Revenue up 12%, positive trend&apos;). Color and
-            icons provide visual cues, while aria-label ensures screen readers convey the full
-            context. Always pair with descriptive label text for KPI name.
+            direction, and semantic meaning (e.g., &apos;Revenue up 12%, positive trend&apos;).
+            Color and icons provide visual cues, while aria-label ensures screen readers convey the
+            full context. Always pair with descriptive label text for KPI name.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1919,7 +2002,7 @@ export function FlowTreeViewOverview() {
               aria-label="Selectable file tree"
             />
             {selected && (
-              <Text role="caption">
+              <Text variant="caption">
                 Selected: <code>{selected}</code>
               </Text>
             )}

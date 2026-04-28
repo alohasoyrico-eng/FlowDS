@@ -3,7 +3,15 @@
  * Demo functions for overlay components (FlowTooltip)
  */
 
-import { FlowButton, FlowChip, FlowIconButton, FlowTooltip, Inline, Stack, Text } from "../../../../lib";
+import {
+  FlowButton,
+  FlowChip,
+  FlowIconButton,
+  FlowTooltip,
+  Inline,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 
@@ -22,10 +30,10 @@ export function FlowTooltipOverview() {
               <FlowButton>Hover me</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Edit item">
-              <FlowIconButton icon="edit" variant="outline" aria-label="Edit" />
+              <FlowIconButton icon="edit" variant="outlined" aria-label="Edit" />
             </FlowTooltip>
             <FlowTooltip content="Delete item">
-              <FlowIconButton icon="trash" variant="danger" aria-label="Delete" />
+              <FlowIconButton icon="trash" variant="primary" intent="danger" aria-label="Delete" />
             </FlowTooltip>
           </Inline>
         </DemoGroup>
@@ -65,13 +73,13 @@ export function FlowTooltipOverview() {
         <DemoGroup>
           {TOOLTIP_POSITIONS.map((pos) => (
             <Stack key={pos} gap={1}>
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 {pos.toUpperCase()}
               </Text>
               <Inline gap={3} wrap>
                 {(["sm", "md", "lg", "xl"] as const).map((s) => (
                   <FlowTooltip key={s} content={`${pos} ${s}`} position={pos} size={s}>
-                    <FlowButton variant="outline" size={s}>
+                    <FlowButton variant="outlined" size={s}>
                       {s}
                     </FlowButton>
                   </FlowTooltip>
@@ -89,13 +97,13 @@ export function FlowTooltipOverview() {
         <DemoGroup>
           <Inline gap={3} wrap>
             <FlowTooltip content="Standard button">
-              <FlowButton variant="high">Button</FlowButton>
+              <FlowButton variant="primary">Button</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Icon-only button">
-              <FlowIconButton icon="settings" variant="outline" aria-label="Settings" />
+              <FlowIconButton icon="settings" variant="outlined" aria-label="Settings" />
             </FlowTooltip>
             <FlowTooltip content="Outline button">
-              <FlowButton variant="outline" leadingIcon="plus">
+              <FlowButton variant="outlined" leadingIcon="plus">
                 Create
               </FlowButton>
             </FlowTooltip>
@@ -105,7 +113,7 @@ export function FlowTooltipOverview() {
               </FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Dangerous action">
-              <FlowButton variant="danger" leadingIcon="trash">
+              <FlowButton variant="primary" intent="danger" leadingIcon="trash">
                 Delete
               </FlowButton>
             </FlowTooltip>
@@ -128,7 +136,7 @@ export function FlowTooltipOverview() {
                 </span>
               }
             >
-              <FlowButton variant="outline">Multi-line</FlowButton>
+              <FlowButton variant="outlined">Multi-line</FlowButton>
             </FlowTooltip>
             <FlowTooltip
               content={
@@ -139,10 +147,10 @@ export function FlowTooltipOverview() {
                 </span>
               }
             >
-              <FlowButton variant="outline">Formatted</FlowButton>
+              <FlowButton variant="outlined">Formatted</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Keyboard shortcut: ⌘⇧P">
-              <FlowButton variant="outline" leadingIcon="command">
+              <FlowButton variant="outlined" leadingIcon="command">
                 Command Palette
               </FlowButton>
             </FlowTooltip>
@@ -157,13 +165,13 @@ export function FlowTooltipOverview() {
         <DemoGroup>
           <Inline gap={3} wrap>
             <FlowTooltip content="Instant (0ms)" delay={0}>
-              <FlowButton variant="outline">No delay</FlowButton>
+              <FlowButton variant="outlined">No delay</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Default (300ms)">
-              <FlowButton variant="outline">Default</FlowButton>
+              <FlowButton variant="outlined">Default</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Slow (600ms)" delay={600}>
-              <FlowButton variant="outline">Slow</FlowButton>
+              <FlowButton variant="outlined">Slow</FlowButton>
             </FlowTooltip>
           </Inline>
         </DemoGroup>
@@ -176,10 +184,10 @@ export function FlowTooltipOverview() {
         <DemoGroup>
           <Inline gap={3} wrap>
             <FlowTooltip content="This will show">
-              <FlowButton variant="outline">Enabled tooltip</FlowButton>
+              <FlowButton variant="outlined">Enabled tooltip</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="This won't show" disabled>
-              <FlowButton variant="outline">Disabled tooltip</FlowButton>
+              <FlowButton variant="outlined">Disabled tooltip</FlowButton>
             </FlowTooltip>
           </Inline>
         </DemoGroup>
@@ -190,44 +198,44 @@ export function FlowTooltipOverview() {
         description="Real-world tooltip usage patterns for buttons, icons, and actions."
       >
         <DemoGroup>
-          <Text role="overline" color="tertiary">
+          <Text variant="overline" color="tertiary">
             Actions with shortcuts
           </Text>
           <Inline gap={3} wrap>
             <FlowTooltip content="Save (⌘S)">
-              <FlowIconButton icon="save" variant="high" aria-label="Save" />
+              <FlowIconButton icon="save" variant="primary" aria-label="Save" />
             </FlowTooltip>
             <FlowTooltip content="Undo (⌘Z)">
-              <FlowIconButton icon="undo" variant="outline" aria-label="Undo" />
+              <FlowIconButton icon="undo" variant="outlined" aria-label="Undo" />
             </FlowTooltip>
             <FlowTooltip content="Redo (⌘⇧Z)">
-              <FlowIconButton icon="redo" variant="outline" aria-label="Redo" />
+              <FlowIconButton icon="redo" variant="outlined" aria-label="Redo" />
             </FlowTooltip>
           </Inline>
         </DemoGroup>
 
         <DemoGroup>
-          <Text role="overline" color="tertiary">
+          <Text variant="overline" color="tertiary">
             Icon-only buttons (required)
           </Text>
           <Inline gap={3} wrap>
             <FlowTooltip content="Edit item">
-              <FlowIconButton icon="edit" variant="outline" aria-label="Edit" />
+              <FlowIconButton icon="edit" variant="outlined" aria-label="Edit" />
             </FlowTooltip>
             <FlowTooltip content="Share with team">
-              <FlowIconButton icon="share" variant="outline" aria-label="Share" />
+              <FlowIconButton icon="share" variant="outlined" aria-label="Share" />
             </FlowTooltip>
             <FlowTooltip content="Add to favorites">
-              <FlowIconButton icon="star" variant="outline" aria-label="Favorite" />
+              <FlowIconButton icon="star" variant="outlined" aria-label="Favorite" />
             </FlowTooltip>
             <FlowTooltip content="Delete permanently">
-              <FlowIconButton icon="trash" variant="danger" aria-label="Delete" />
+              <FlowIconButton icon="trash" variant="primary" intent="danger" aria-label="Delete" />
             </FlowTooltip>
           </Inline>
         </DemoGroup>
 
         <DemoGroup>
-          <Text role="overline" color="tertiary">
+          <Text variant="overline" color="tertiary">
             Context buttons
           </Text>
           <Inline gap={3} wrap>
@@ -278,10 +286,10 @@ export function FlowTooltipVariants() {
                 </span>
               }
             >
-              <FlowButton variant="outline">Multi-line</FlowButton>
+              <FlowButton variant="outlined">Multi-line</FlowButton>
             </FlowTooltip>
             <FlowTooltip content="Keyboard shortcut: ⌘+S">
-              <FlowButton variant="outline" leadingIcon="check">
+              <FlowButton variant="outlined" leadingIcon="check">
                 Save
               </FlowButton>
             </FlowTooltip>
@@ -296,15 +304,15 @@ export function FlowTooltipVariants() {
         <DemoGroup>
           {TOOLTIP_POSITIONS.map((pos) => (
             <Stack key={pos} gap={1}>
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 {pos.toUpperCase()}
               </Text>
               <Inline gap={3} wrap>
                 <FlowTooltip content={`${pos} on button`} position={pos}>
-                  <FlowButton variant="outline">Button</FlowButton>
+                  <FlowButton variant="outlined">Button</FlowButton>
                 </FlowTooltip>
                 <FlowTooltip content={`${pos} on icon`} position={pos}>
-                  <FlowIconButton icon="settings" variant="outline" aria-label="Settings" />
+                  <FlowIconButton icon="settings" variant="outlined" aria-label="Settings" />
                 </FlowTooltip>
                 <FlowTooltip content={`${pos} on chip`} position={pos}>
                   <FlowChip onClick={() => {}}>Chip</FlowChip>
@@ -322,13 +330,13 @@ export function FlowTooltipVariants() {
         <DemoGroup>
           {(["sm", "md", "lg", "xl"] as const).map((s) => (
             <Stack key={s} gap={1}>
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 {s.toUpperCase()}
               </Text>
               <Inline gap={3} wrap>
                 {TOOLTIP_POSITIONS.map((pos) => (
                   <FlowTooltip key={pos} content={`${s} ${pos}`} size={s} position={pos}>
-                    <FlowButton variant="outline" size={s}>
+                    <FlowButton variant="outlined" size={s}>
                       {pos}
                     </FlowButton>
                   </FlowTooltip>

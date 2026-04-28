@@ -1,0 +1,39 @@
+/* ── Container Queries — Adaptive Component Rules ─────────────────── */
+
+/* FlowCard — stack layout in narrow containers */
+@container (max-width: 320px) {
+  .flow-card {
+    padding: var(--comp-card-compact-padding);
+  }
+
+  .flow-card [data-slot="actions"] {
+    flex-direction: column;
+  }
+}
+
+/* FlowKPICard — vertical layout when narrow */
+@container (max-width: 320px) {
+  .flow-kpi-card {
+    flex-direction: column;
+    text-align: start;
+  }
+}
+
+/* FlowToolbar — wrap items in narrow containers */
+@container (max-width: 480px) {
+  .flow-toolbar {
+    flex-wrap: wrap;
+    gap: var(--comp-toolbar-compact-gap);
+  }
+}
+
+/* FlowSplitPane — stack vertically when narrow */
+@container (max-width: 480px) {
+  .flow-split-pane[data-orientation="horizontal"] {
+    flex-direction: column;
+  }
+
+  .flow-split-pane[data-orientation="horizontal"] > .flow-split-pane-handle {
+    cursor: row-resize;
+  }
+}

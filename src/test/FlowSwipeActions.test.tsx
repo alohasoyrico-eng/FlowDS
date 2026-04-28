@@ -12,15 +12,21 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowSwipeActions } from "../app/components/patterns";
+import { FlowSwipeActions } from "@flow/patterns";
 
 const LEFT_ACTIONS = [
-  { key: "archive", label: "Archive", icon: "archive", variant: "default" as const, onAction: vi.fn() },
+  {
+    key: "archive",
+    label: "Archive",
+    icon: "archive",
+    intent: "default" as const,
+    onAction: vi.fn(),
+  },
 ];
 
 const RIGHT_ACTIONS = [
-  { key: "delete", label: "Delete", icon: "trash", variant: "danger" as const, onAction: vi.fn() },
-  { key: "flag", label: "Flag", icon: "flag", variant: "warning" as const, onAction: vi.fn() },
+  { key: "delete", label: "Delete", icon: "trash", intent: "danger" as const, onAction: vi.fn() },
+  { key: "flag", label: "Flag", icon: "flag", intent: "warning" as const, onAction: vi.fn() },
 ];
 
 // ─────────────────────────────────────────────
@@ -77,16 +83,16 @@ describe("FlowSwipeActions — rendering", () => {
     expect(container.querySelector(".flow-swipe-actions-panel")).toBeNull();
   });
 
-  it("applies variant data attributes to action buttons", () => {
+  it("applies intent data attributes to action buttons", () => {
     render(
       <FlowSwipeActions rightActions={RIGHT_ACTIONS}>
         <div>Item</div>
       </FlowSwipeActions>,
     );
     const deleteBtn = screen.getByRole("button", { name: "Delete" });
-    expect(deleteBtn).toHaveAttribute("data-variant", "danger");
+    expect(deleteBtn).toHaveAttribute("data-intent", "danger");
     const flagBtn = screen.getByRole("button", { name: "Flag" });
-    expect(flagBtn).toHaveAttribute("data-variant", "warning");
+    expect(flagBtn).toHaveAttribute("data-intent", "warning");
   });
 
   it("content starts at translateX(0)", () => {
@@ -111,7 +117,9 @@ describe("FlowSwipeActions — interaction", () => {
   it("calls onAction when an action button is clicked directly", async () => {
     const user = userEvent.setup();
     const onDelete = vi.fn();
-    const actions = [{ key: "delete", label: "Delete", variant: "danger" as const, onAction: onDelete }];
+    const actions = [
+      { key: "delete", label: "Delete", intent: "danger" as const, onAction: onDelete },
+    ];
     render(
       <FlowSwipeActions rightActions={actions}>
         <div>Item</div>

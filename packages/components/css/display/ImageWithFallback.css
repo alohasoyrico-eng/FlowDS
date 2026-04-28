@@ -1,0 +1,15 @@
+/* ── ImageWithFallback — replaces former Tailwind utilities ───────── */
+.flow-img-fallback {
+  display: inline-block;
+  background: var(--sys-energy-surface-secondary);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.flow-img-fallback-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}

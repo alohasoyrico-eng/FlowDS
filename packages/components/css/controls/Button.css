@@ -1,0 +1,491 @@
+/* ── Button v2: Emphasis-model CSS (D1-D8) ────────── */
+
+/* Proper :hover/:active pseudo-classes for the subtle→filled
+   paradigm and per-variant state transitions that inline styles
+   cannot express. data-variant drives variant selection. */
+
+.flow-btn-v2 {
+  /* Resolve comp tokens per-element so they track the local sys value
+     (varies by [data-size], @media phone, [data-density]) */
+  --comp-button-radius: var(--sys-frame-radius-control);
+
+  /* Focus ring comp tokens — alias sys tokens so variants or context
+     can override (e.g. button on dark surface needs different gap fill) */
+  --comp-button-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-button-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-button-focus-ring-color: var(--sys-state-focus-ring-color);
+  --comp-button-focus-gap-color: var(--sys-energy-surface-primary);
+
+  position: relative;
+  z-index: var(--comp-button-z-index, auto);
+  height: var(--comp-button-height);
+  max-width: 100%;
+  font-size: var(--comp-button-font);
+  line-height: var(--comp-button-line-height);
+  letter-spacing: var(--comp-button-letter-spacing);
+  border-radius: var(--comp-button-radius);
+  font-family: var(--comp-button-font-family);
+  font-weight: var(--comp-button-font-weight);
+  transition:
+    background var(--comp-button-transition),
+    color var(--comp-button-transition),
+    border-color var(--comp-button-transition),
+    box-shadow var(--comp-button-transition),
+    opacity var(--comp-button-transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-button-gap);
+  padding: 0 var(--comp-button-padding-x);
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  width: fit-content;
+  text-align: center;
+}
+
+/* Button label — truncation safety net for constrained containers.
+   Moves overflow responsibility from flex container to flex item so
+   padding and border-radius remain intact when the button shrinks. */
+.flow-btn-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Full width — via data-attribute for CSS cascade compatibility */
+.flow-btn-v2[data-full-width] {
+  width: 100%;
+}
+
+/* ── Button size — per-instance [data-size] → per-size comp tokens ──
+   Height auto-shifts with density because --comp-button-height-{size}
+   references --sys-frame-height-control-{size} which density redefines.
+   Font, padding-x, and gap per-size tokens are explicitly overridden
+   in [data-density] blocks. md is default (no selector needed for
+   buttons without data-size, but included for explicit composition). */
+.flow-btn-v2[data-size="sm"] {
+  --comp-button-height: var(--comp-button-height-sm);
+  --comp-button-font: var(--comp-button-font-sm);
+  --comp-button-padding-x: var(--comp-button-padding-x-sm);
+  --comp-button-gap: var(--comp-button-gap-sm);
+}
+
+.flow-btn-v2[data-size="md"] {
+  --comp-button-height: var(--comp-button-height-md);
+  --comp-button-font: var(--comp-button-font-md);
+  --comp-button-padding-x: var(--comp-button-padding-x-md);
+  --comp-button-gap: var(--comp-button-gap-md);
+}
+
+.flow-btn-v2[data-size="lg"] {
+  --comp-button-height: var(--comp-button-height-lg);
+  --comp-button-font: var(--comp-button-font-lg);
+  --comp-button-padding-x: var(--comp-button-padding-x-lg);
+  --comp-button-gap: var(--comp-button-gap-lg);
+}
+
+.flow-btn-v2[data-size="xl"] {
+  --comp-button-height: var(--comp-button-height-xl);
+  --comp-button-font: var(--comp-button-font-xl);
+  --comp-button-padding-x: var(--comp-button-padding-x-xl);
+  --comp-button-gap: var(--comp-button-gap-xl);
+}
+
+/* PRIMARY — dark filled (light filled on dark) */
+.flow-btn-v2[data-variant="primary"] {
+  background: var(--comp-button-bg-high);
+  color: var(--comp-button-text-high);
+  border: var(--comp-button-border-width) solid transparent;
+}
+
+.flow-btn-v2[data-variant="primary"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-high-hover);
+}
+
+.flow-btn-v2[data-variant="primary"]:active:not(:disabled) {
+  background: var(--comp-button-bg-high-active);
+}
+
+/* SECONDARY — outlined */
+.flow-btn-v2[data-variant="secondary"] {
+  background: var(--comp-button-bg-medium);
+  color: var(--comp-button-text-medium);
+  border: var(--comp-button-border-width) solid var(--comp-button-border-medium);
+}
+
+.flow-btn-v2[data-variant="secondary"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-medium-hover);
+}
+
+.flow-btn-v2[data-variant="secondary"]:active:not(:disabled) {
+  background: var(--comp-button-bg-medium-active);
+}
+
+/* TERTIARY — link button with underline (D4) */
+.flow-btn-v2[data-variant="tertiary"] {
+  background: var(--comp-button-bg-low);
+  color: var(--comp-button-text-low);
+  border: var(--comp-button-border-width) solid transparent;
+  text-decoration: underline;
+  text-underline-offset: var(--comp-button-text-underline-offset);
+  padding: 0 var(--comp-button-padding-x);
+  height: auto;
+  min-height: var(--comp-button-height);
+}
+
+.flow-btn-v2[data-variant="tertiary"]:hover:not(:disabled) {
+  color: var(--comp-button-text-low-hover);
+}
+
+.flow-btn-v2[data-variant="tertiary"]:active:not(:disabled) {
+  color: var(--comp-button-text-low-active);
+}
+
+/* GHOST — transparent bg, text-secondary color, padding + hover bg (D6)
+   Used for navigation items (breadcrumbs, toolbars) where buttons
+   need chrome on hover but are visually invisible at rest. */
+.flow-btn-v2[data-variant="ghost"] {
+  background: transparent;
+  color: var(--comp-button-text-ghost);
+  border: var(--comp-button-border-width) solid transparent;
+  text-decoration: none;
+}
+
+.flow-btn-v2[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-ghost-hover);
+  color: var(--comp-button-text-ghost-hover);
+}
+
+.flow-btn-v2[data-variant="ghost"]:active:not(:disabled) {
+  background: var(--comp-button-bg-ghost-active);
+  color: var(--comp-button-text-ghost-hover);
+}
+
+/* OUTLINED — transparent bg, accent text, strong border (D5) */
+.flow-btn-v2[data-variant="outlined"] {
+  background: var(--comp-button-bg-outline);
+  color: var(--comp-button-text-outline);
+  border: var(--comp-button-border-width) solid var(--comp-button-border-outline);
+}
+
+.flow-btn-v2[data-variant="outlined"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-outline-hover);
+}
+
+.flow-btn-v2[data-variant="outlined"]:active:not(:disabled) {
+  background: var(--comp-button-bg-outline-active);
+}
+
+/* DANGER — subtle→filled paradigm (D2) */
+.flow-btn-v2[data-intent="danger"] {
+  background: var(--comp-button-bg-danger-subtle);
+  color: var(--comp-button-text-danger-subtle);
+  border: var(--comp-button-border-width) solid transparent;
+}
+
+.flow-btn-v2[data-intent="danger"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-danger-hover);
+  color: var(--comp-button-text-danger-on-filled);
+}
+
+.flow-btn-v2[data-intent="danger"]:active:not(:disabled) {
+  background: var(--comp-button-bg-danger-active);
+  color: var(--comp-button-text-danger-on-filled);
+}
+
+/* WARNING — subtle→filled paradigm (mirrors danger with yellow palette) */
+.flow-btn-v2[data-intent="warning"] {
+  background: var(--comp-button-bg-warning-subtle);
+  color: var(--comp-button-text-warning-subtle);
+  border: var(--comp-button-border-width) solid transparent;
+}
+
+.flow-btn-v2[data-intent="warning"]:hover:not(:disabled) {
+  background: var(--comp-button-bg-warning-hover);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+.flow-btn-v2[data-intent="warning"]:active:not(:disabled) {
+  background: var(--comp-button-bg-warning-active);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+/* DISABLED — per-emphasis identity preservation (D3)
+   Each emphasis retains its structural identity when disabled so users
+   can still distinguish button hierarchy at a glance. */
+.flow-btn-v2:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1; /* Override ActionSurface base opacity — Button uses explicit disabled colors */
+}
+
+/* PRIMARY disabled: dimmed filled → still reads as primary action */
+.flow-btn-v2[data-variant="primary"]:disabled {
+  background: var(--comp-button-bg-disabled-high);
+  color: var(--comp-button-text-disabled-high);
+  border-color: transparent;
+}
+
+/* SECONDARY disabled: transparent + faded border → preserves bordered structure */
+.flow-btn-v2[data-variant="secondary"]:disabled {
+  background: var(--comp-button-bg-disabled-medium);
+  color: var(--comp-button-text-disabled-medium);
+  border-color: var(--comp-button-border-disabled-medium);
+}
+
+/* TERTIARY disabled: transparent + dimmed underline text */
+.flow-btn-v2[data-variant="tertiary"]:disabled {
+  background: transparent;
+  color: var(--comp-button-text-disabled);
+  border-color: transparent;
+  text-decoration: underline;
+}
+
+/* GHOST disabled: transparent + dimmed text */
+.flow-btn-v2[data-variant="ghost"]:disabled {
+  background: transparent;
+  color: var(--comp-button-text-disabled);
+  border-color: transparent;
+}
+
+/* OUTLINED disabled: transparent + lighter faded border → preserves outlined structure */
+.flow-btn-v2[data-variant="outlined"]:disabled {
+  background: var(--comp-button-bg-disabled-outline);
+  color: var(--comp-button-text-disabled-outline);
+  border-color: var(--comp-button-border-disabled-outline);
+}
+
+/* DANGER disabled: faint red tint → preserves semantic danger identity */
+.flow-btn-v2[data-intent="danger"]:disabled {
+  background: var(--comp-button-bg-disabled-danger);
+  color: var(--comp-button-text-disabled-danger);
+  border-color: transparent;
+}
+
+/* WARNING disabled: faint yellow tint → preserves semantic warning identity */
+.flow-btn-v2[data-intent="warning"]:disabled {
+  background: var(--comp-button-bg-disabled-warning);
+  color: var(--comp-button-text-disabled-warning);
+  border-color: transparent;
+}
+
+/* LOADING — preserve active colors, only change cursor.
+   aria-busy indicates loading state (ActionSurface sets disabled
+   when loading, but we override visual styles to maintain emphasis
+   colors so loading≠disabled visually).
+   cursor/pointer-events are handled by the shared rule below. */
+
+/* PRIMARY loading: maintain filled style */
+.flow-btn-v2[data-variant="primary"][aria-busy="true"] {
+  background: var(--comp-button-bg-high);
+  color: var(--comp-button-text-high);
+  border-color: transparent;
+}
+
+/* SECONDARY loading: maintain outlined style */
+.flow-btn-v2[data-variant="secondary"][aria-busy="true"] {
+  background: var(--comp-button-bg-medium);
+  color: var(--comp-button-text-medium);
+  border-color: var(--comp-button-border-medium);
+}
+
+/* TERTIARY loading: maintain link style */
+.flow-btn-v2[data-variant="tertiary"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-button-text-low);
+  border-color: transparent;
+  text-decoration: underline;
+}
+
+/* OUTLINED loading: maintain outlined accent style */
+.flow-btn-v2[data-variant="outlined"][aria-busy="true"] {
+  background: var(--comp-button-bg-outline);
+  color: var(--comp-button-text-outline);
+  border-color: var(--comp-button-border-outline);
+}
+
+/* GHOST loading: maintain transparent style */
+.flow-btn-v2[data-variant="ghost"][aria-busy="true"] {
+  background: transparent;
+  color: var(--comp-button-text-ghost);
+  border-color: transparent;
+}
+
+/* DANGER loading: maintain subtle danger style */
+.flow-btn-v2[data-intent="danger"][aria-busy="true"] {
+  background: var(--comp-button-bg-danger-subtle);
+  color: var(--comp-button-text-danger-subtle);
+  border-color: transparent;
+}
+
+/* WARNING loading: maintain subtle warning style */
+.flow-btn-v2[data-intent="warning"][aria-busy="true"] {
+  background: var(--comp-button-bg-warning-subtle);
+  color: var(--comp-button-text-warning-subtle);
+  border-color: transparent;
+}
+
+/* ── Loading label transition (P9 — moved from inline style to CSS) ── */
+.flow-btn-v2[aria-busy="true"] .flow-btn-label {
+  transition: opacity var(--comp-button-transition);
+}
+
+/* ── State layer: data-state selectors (P11 — connect resolveState to CSS) ──
+   ActionSurface emits data-state for programmatic states. These selectors
+   mirror the existing :disabled / [aria-busy] rules so the state system
+   is connected to styling regardless of which attribute is used. */
+.flow-btn-v2[data-state="disabled"] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.flow-btn-v2[data-state="loading"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ── Tone override — brand voice/personality variants ── */
+
+/* Applies tone color+weight when data-tone is present (TERTIARY/SECONDARY/OUTLINED/GHOST emphasis only).
+   PRIMARY/DANGER emphasis preserve their semantic colors. */
+.flow-btn-v2[data-variant="tertiary"][data-tone="brand"],
+.flow-btn-v2[data-variant="secondary"][data-tone="brand"],
+.flow-btn-v2[data-variant="outlined"][data-tone="brand"],
+.flow-btn-v2[data-variant="ghost"][data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+.flow-btn-v2[data-variant="tertiary"][data-tone="marketing"],
+.flow-btn-v2[data-variant="secondary"][data-tone="marketing"],
+.flow-btn-v2[data-variant="outlined"][data-tone="marketing"],
+.flow-btn-v2[data-variant="ghost"][data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+.flow-btn-v2[data-variant="tertiary"][data-tone="system"],
+.flow-btn-v2[data-variant="secondary"][data-tone="system"],
+.flow-btn-v2[data-variant="outlined"][data-tone="system"],
+.flow-btn-v2[data-variant="ghost"][data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+.flow-btn-v2[data-variant="tertiary"][data-tone="neutral"],
+.flow-btn-v2[data-variant="secondary"][data-tone="neutral"],
+.flow-btn-v2[data-variant="outlined"][data-tone="neutral"],
+.flow-btn-v2[data-variant="ghost"][data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+/* Focus ring — consistent across all emphasis levels.
+   Uses double box-shadow (gap fill + ring) because CSS outline does NOT
+   follow border-radius reliably in all Chromium builds.
+   outline: none suppresses the native rectangular ring completely.
+   WHCM (forced-colors) gets a dedicated outline so the ring is visible
+   in Windows High Contrast Mode where box-shadow is ignored. */
+.flow-btn-v2:is(:focus-visible, [data-demo-state="focus"]:not(:disabled)) {
+  outline: none;
+  outline-offset: 0;
+  box-shadow:
+    0 0 0 var(--comp-button-focus-ring-offset) var(--comp-button-focus-gap-color),
+    0 0 0 calc(var(--comp-button-focus-ring-offset) + var(--comp-button-focus-ring-width))
+      var(--comp-button-focus-ring-color);
+}
+
+@media (forced-colors: active) {
+  .flow-btn-v2:focus-visible {
+    outline: var(--comp-button-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-button-focus-ring-offset);
+  }
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-btn-v2[data-demo-state="hover"]:not(:disabled) {
+  /* Apply hover styles per emphasis */
+}
+
+.flow-btn-v2[data-variant="primary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-high-hover);
+}
+
+.flow-btn-v2[data-variant="secondary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-medium-hover);
+}
+
+.flow-btn-v2[data-variant="tertiary"][data-demo-state="hover"]:not(:disabled) {
+  color: var(--comp-button-text-low-hover);
+}
+
+.flow-btn-v2[data-variant="outlined"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-outline-hover);
+}
+
+.flow-btn-v2[data-intent="danger"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-danger-hover);
+  color: var(--comp-button-text-danger-on-filled);
+}
+
+.flow-btn-v2[data-variant="ghost"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-ghost-hover);
+  color: var(--comp-button-text-ghost-hover);
+}
+
+.flow-btn-v2[data-intent="warning"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-button-bg-warning-hover);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+.flow-btn-v2[data-demo-state="pressed"]:not(:disabled) {
+  /* Apply active/pressed styles per emphasis */
+}
+
+.flow-btn-v2[data-variant="primary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-high-active);
+}
+
+.flow-btn-v2[data-variant="secondary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-medium-active);
+}
+
+.flow-btn-v2[data-variant="tertiary"][data-demo-state="pressed"]:not(:disabled) {
+  color: var(--comp-button-text-low-active);
+}
+
+.flow-btn-v2[data-variant="outlined"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-outline-active);
+}
+
+.flow-btn-v2[data-intent="danger"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-danger-active);
+  color: var(--comp-button-text-danger-on-filled);
+}
+
+.flow-btn-v2[data-variant="ghost"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-ghost-active);
+  color: var(--comp-button-text-ghost-hover);
+}
+
+.flow-btn-v2[data-intent="warning"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-button-bg-warning-active);
+  color: var(--comp-button-text-warning-on-filled);
+}
+
+/* Loading state — Momentum-aligned pulsing dots (shared by Button + IconButton) */
+.flow-btn-v2[aria-busy="true"],
+.flow-icon-btn[aria-busy="true"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* Loading dots inside buttons inherit text color for contrast */
+.flow-btn-v2 .flow-loading-dots > span,
+.flow-icon-btn .flow-loading-dots > span {
+  background: currentcolor;
+}

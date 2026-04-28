@@ -1,0 +1,98 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGINATION — Page navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-pagination-gap);
+}
+
+.flow-pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  padding: 0 var(--comp-pagination-btn-padding-x);
+  border: var(--ref-frame-border-thin) solid transparent;
+  border-radius: var(--comp-pagination-radius);
+  background: var(--comp-pagination-bg);
+  color: var(--comp-pagination-text);
+  font-family: var(--sys-voice-family);
+  font-size: var(--comp-pagination-font);
+  font-weight: var(--comp-pagination-font-weight);
+  cursor: pointer;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default);
+  user-select: none;
+  line-height: var(--sys-voice-line-height-none);
+}
+
+.flow-pagination-btn:hover:not([disabled], [data-active]) {
+  background: var(--comp-pagination-bg-hover);
+  color: var(--comp-pagination-text-hover);
+  border-color: var(--comp-pagination-border);
+}
+
+.flow-pagination-btn[data-active] {
+  background: var(--comp-pagination-bg-active);
+  color: var(--comp-pagination-text-active);
+  border-color: transparent;
+  cursor: default;
+}
+
+.flow-pagination-btn:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+.flow-pagination-btn[disabled] {
+  color: var(--comp-pagination-text-disabled);
+  cursor: not-allowed;
+}
+
+.flow-pagination-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  border: none;
+  border-radius: var(--comp-pagination-radius);
+  background: transparent;
+  color: var(--comp-pagination-nav-icon);
+  cursor: pointer;
+  transition:
+    background var(--sys-momentum-transition-default),
+    color var(--sys-momentum-transition-default);
+}
+
+.flow-pagination-nav:hover:not([disabled]) {
+  background: var(--comp-pagination-bg-hover);
+  color: var(--comp-pagination-text-hover);
+}
+
+.flow-pagination-nav:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+.flow-pagination-nav[disabled] {
+  color: var(--comp-pagination-nav-icon-disabled);
+  cursor: not-allowed;
+}
+
+.flow-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--comp-pagination-min-width);
+  height: var(--comp-pagination-height);
+  color: var(--comp-pagination-text);
+  font-family: var(--sys-voice-family);
+  font-size: var(--comp-pagination-font);
+  user-select: none;
+}

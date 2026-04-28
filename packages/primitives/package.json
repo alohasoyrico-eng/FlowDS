@@ -1,0 +1,43 @@
+{
+  "name": "@flow/primitives",
+  "version": "1.0.0-rc.3",
+  "description": "Flow Design System — L2 structural primitives (Surface, Text, Stack, Inline, Grid, etc.)",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./css/primitives": "./css/primitives.css",
+    "./css/input-surface": "./css/input-surface.css",
+    "./css/utilities": "./css/utilities.css"
+  },
+  "files": [
+    "dist",
+    "css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "peerDependencies": {
+    "@flow/tokens": "^1.0.0-rc.3",
+    "@flow/icons": "^1.0.0-rc.3",
+    "@flow/flags": "^1.0.0-rc.3",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ER-Mobility-MX/flow.git",
+    "directory": "packages/primitives"
+  }
+}

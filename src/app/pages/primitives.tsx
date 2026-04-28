@@ -9,8 +9,17 @@
  *   LayoutGrid > LayoutGrid.Item span=12 > Surface "secondary" > Stack
  */
 
-import { Divider, FlowChip, FlowTag, Grid, Inline, Stack, Surface, Text } from "../../lib";
-import { FlowIcon } from "../primitives";
+import {
+  Divider,
+  FlowChip,
+  FlowTag,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import {
   Callout,
   CodeBlock,
@@ -27,19 +36,19 @@ function DemoSurface() {
   return (
     <Inline gap={4} wrap>
       <Surface variant="primary" padding="container" radius="container" border>
-        <Text role="paragraph-s">primary</Text>
+        <Text variant="paragraph-s">primary</Text>
       </Surface>
       <Surface variant="secondary" padding="container" radius="container">
-        <Text role="paragraph-s">secondary</Text>
+        <Text variant="paragraph-s">secondary</Text>
       </Surface>
       <Surface variant="tertiary" padding="container" radius="container">
-        <Text role="paragraph-s">tertiary</Text>
+        <Text variant="paragraph-s">tertiary</Text>
       </Surface>
       <Surface variant="sunken" padding="container" radius="container">
-        <Text role="paragraph-s">sunken</Text>
+        <Text variant="paragraph-s">sunken</Text>
       </Surface>
       <Surface variant="inverse" padding="container" radius="container">
-        <Text role="paragraph-s" color="inverse">
+        <Text variant="paragraph-s" color="inverse">
           inverse
         </Text>
       </Surface>
@@ -50,15 +59,15 @@ function DemoSurface() {
 function DemoText() {
   return (
     <Stack gap={2}>
-      <Text role="display-s">Display S</Text>
-      <Text role="heading-l">Heading L</Text>
-      <Text role="label-m">Label M</Text>
-      <Text role="paragraph-m">Paragraph M — body text for content.</Text>
-      <Text role="caption" color="secondary">
+      <Text variant="display-s">Display S</Text>
+      <Text variant="heading-l">Heading L</Text>
+      <Text variant="label-m">Label M</Text>
+      <Text variant="paragraph-m">Paragraph M — body text for content.</Text>
+      <Text variant="caption" color="secondary">
         Caption — secondary color
       </Text>
-      <Text role="overline">Overline</Text>
-      <Text role="code">code role</Text>
+      <Text variant="overline">Overline</Text>
+      <Text variant="code">code role</Text>
     </Stack>
   );
 }
@@ -68,13 +77,13 @@ function DemoStack() {
     <Surface variant="tertiary" padding="container" radius="container">
       <Stack gap="component">
         <Surface variant="primary" padding="control" radius="control">
-          <Text role="paragraph-s">Item 1</Text>
+          <Text variant="paragraph-s">Item 1</Text>
         </Surface>
         <Surface variant="primary" padding="control" radius="control">
-          <Text role="paragraph-s">Item 2</Text>
+          <Text variant="paragraph-s">Item 2</Text>
         </Surface>
         <Surface variant="primary" padding="control" radius="control">
-          <Text role="paragraph-s">Item 3</Text>
+          <Text variant="paragraph-s">Item 3</Text>
         </Surface>
       </Stack>
     </Surface>
@@ -84,10 +93,16 @@ function DemoStack() {
 function DemoInline() {
   return (
     <Inline gap={3} wrap>
-      <FlowChip variant="accent">Tag A</FlowChip>
-      <FlowChip variant="success">Tag B</FlowChip>
-      <FlowChip variant="warning">Tag C</FlowChip>
-      <FlowChip variant="neutral">Tag D</FlowChip>
+      <FlowChip variant="filled" status="info">
+        Tag A
+      </FlowChip>
+      <FlowChip variant="filled" status="success">
+        Tag B
+      </FlowChip>
+      <FlowChip variant="filled" status="warning">
+        Tag C
+      </FlowChip>
+      <FlowChip variant="tonal">Tag D</FlowChip>
     </Inline>
   );
 }
@@ -97,7 +112,7 @@ function DemoGrid() {
     <Grid minItemWidth="120px" gap={3}>
       {[1, 2, 3, 4].map((n) => (
         <Surface key={n} variant="primary" padding="control" radius="control">
-          <Text role="paragraph-s" style={{ textAlign: "center" }}>
+          <Text variant="paragraph-s" style={{ textAlign: "center" }}>
             Cell {n}
           </Text>
         </Surface>
@@ -112,7 +127,7 @@ function DemoIcon() {
       {(["xs", "sm", "md", "lg", "xl"] as const).map((s) => (
         <Stack key={s} gap={1} align="center">
           <FlowIcon name="star" size={s} />
-          <Text role="caption">{s}</Text>
+          <Text variant="caption">{s}</Text>
         </Stack>
       ))}
     </Inline>
@@ -122,9 +137,9 @@ function DemoIcon() {
 function DemoDivider() {
   return (
     <Stack gap={3}>
-      <Text role="paragraph-s">Above divider</Text>
+      <Text variant="paragraph-s">Above divider</Text>
       <Divider spacing={0} />
-      <Text role="paragraph-s">Below divider</Text>
+      <Text variant="paragraph-s">Below divider</Text>
     </Stack>
   );
 }
@@ -534,7 +549,7 @@ export function PrimitivesPage() {
             </PageHeader>
 
             <Callout>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 <strong>Rule:</strong> Primitives consume tokens only. They never define raw visual
                 values. They never contain business logic. They are the enforcement layer between
                 foundations and components.
@@ -543,7 +558,7 @@ export function PrimitivesPage() {
 
             {/* ── Inventory ── */}
             <Section title="Inventory">
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="paragraph-s" color="secondary">
                 {primitives.length} primitives — covering layout, typography, interaction, motion,
                 accessibility, and instrumentation.
               </Text>
@@ -576,8 +591,8 @@ export function PrimitivesPage() {
                     <FlowIcon name="shapes" size="sm" color="var(--sys-energy-text-secondary)" />
                   </Inline>
                   <Stack gap={0}>
-                    <Text role="heading-l">{p.name}</Text>
-                    <Text role="paragraph-s" color="secondary">
+                    <Text variant="heading-l">{p.name}</Text>
+                    <Text variant="paragraph-s" color="secondary">
                       {p.desc}
                     </Text>
                   </Stack>
@@ -587,7 +602,7 @@ export function PrimitivesPage() {
                 {p.demo && (
                   <Surface variant="primary" padding="container" radius="container">
                     <Stack gap={2}>
-                      <Text role="overline" color="tertiary">
+                      <Text variant="overline" color="tertiary">
                         Live Demo
                       </Text>
                       <p.demo />
@@ -598,14 +613,14 @@ export function PrimitivesPage() {
                 {/* Responsibilities */}
                 <Surface padding="control">
                   <Stack gap={2}>
-                    <Text role="overline">Responsibilities</Text>
+                    <Text variant="overline">Responsibilities</Text>
                     <DocList items={p.responsibilities} />
                   </Stack>
                 </Surface>
 
                 {/* API Reference */}
                 <Stack gap={2}>
-                  <Text role="overline">API Reference</Text>
+                  <Text variant="overline">API Reference</Text>
                   <CodeBlock>{p.api}</CodeBlock>
                 </Stack>
 
@@ -614,7 +629,7 @@ export function PrimitivesPage() {
                   {p.tokens.length > 0 && (
                     <Surface padding="control">
                       <Stack gap={2}>
-                        <Text role="overline">Tokens Consumed</Text>
+                        <Text variant="overline">Tokens Consumed</Text>
                         <Inline wrap gap={1}>
                           {p.tokens.map((t) => (
                             <code key={t} className="flow-inline-code-xs">
@@ -628,10 +643,10 @@ export function PrimitivesPage() {
                   {/* Foundations */}
                   <Surface padding="control">
                     <Stack gap={2}>
-                      <Text role="overline">Foundations</Text>
+                      <Text variant="overline">Foundations</Text>
                       <Inline wrap gap={2}>
                         {p.foundations.map((f) => (
-                          <FlowChip key={f} variant="accent">
+                          <FlowChip key={f} variant="filled" status="info">
                             {f}
                           </FlowChip>
                         ))}
@@ -641,15 +656,12 @@ export function PrimitivesPage() {
                 </Grid>
 
                 {/* What it Prevents */}
-                <Surface
-                  padding="control"
-                  className="flow-doc-accent flow-doc-accent--error"
-                >
+                <Surface padding="control" className="flow-doc-accent flow-doc-accent--error">
                   <Stack gap={2}>
-                    <Text role="overline" color="danger">
+                    <Text variant="overline" color="danger">
                       What It Prevents
                     </Text>
-                    <Text role="paragraph-s">{p.prevents}</Text>
+                    <Text variant="paragraph-s">{p.prevents}</Text>
                   </Stack>
                 </Surface>
 

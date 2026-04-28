@@ -1,0 +1,42 @@
+
+> @flow/flags@1.0.0-rc.3 build
+> vite build && tsc -p tsconfig.build.json
+
+/Users/r1c0/Desktop/Flow 2/node_modules/rollup/dist/native.js:115
+		throw new Error(
+		      ^
+
+Error: Cannot find module @rollup/rollup-darwin-arm64. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at requireWithFriendlyError (/Users/r1c0/Desktop/Flow 2/node_modules/rollup/dist/native.js:115:9)
+    at Object.<anonymous> (/Users/r1c0/Desktop/Flow 2/node_modules/rollup/dist/native.js:124:76)
+    at Module._compile (node:internal/modules/cjs/loader:1829:14)
+    at Object..js (node:internal/modules/cjs/loader:1969:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:325:3)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:230:7)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25) {
+  [cause]: Error: dlopen(/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node, 0x0001): tried: '/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node' (code signature in <425C763F-8810-399A-B3C9-232C3BDD3D15> '/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node' not valid for use in process: library load disallowed by system policy), '/System/Volumes/Preboot/Cryptexes/OS/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node' (no such file), '/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node' (code signature in <425C763F-8810-399A-B3C9-232C3BDD3D15> '/Users/r1c0/Desktop/Flow 2/node_modules/@rollup/rollup-darwin-arm64/rollup.darwin-arm64.node' not valid for use in process: library load disallowed by system policy)
+      at Object..node (node:internal/modules/cjs/loader:1996:18)
+      at Module.load (node:internal/modules/cjs/loader:1552:32)
+      at Module._load (node:internal/modules/cjs/loader:1354:12)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+      at Module.require (node:internal/modules/cjs/loader:1575:12)
+      at require (node:internal/modules/helpers:191:16)
+      at requireWithFriendlyError (/Users/r1c0/Desktop/Flow 2/node_modules/rollup/dist/native.js:97:10)
+      at Object.<anonymous> (/Users/r1c0/Desktop/Flow 2/node_modules/rollup/dist/native.js:124:76)
+      at Module._compile (node:internal/modules/cjs/loader:1829:14)
+      at Object..js (node:internal/modules/cjs/loader:1969:10) {
+    code: 'ERR_DLOPEN_FAILED'
+  }
+}
+
+Node.js v25.8.1
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/r1c0/Desktop/Flow 2/packages/flags
+npm error workspace @flow/flags@1.0.0-rc.3
+npm error location /Users/r1c0/Desktop/Flow 2/packages/flags
+npm error command failed
+npm error command sh -c vite build && tsc -p tsconfig.build.json

@@ -1,6 +1,7 @@
-import { FlowChip, Inline, Stack } from "../../lib";
+import { FlowChip, Inline, Stack, Surface } from "@flow/design-system";
 import { ComponentSpecAccordion } from "../components/component-accordion";
 import { PAGE_GAP, PageHeader } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 const desktopComponents: {
   name: string;
@@ -488,20 +489,26 @@ export function ComponentsDesktopPage() {
   }));
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 05 — Desktop" title="Desktop-First Components">
-        Desktop-first components leverage pointer precision, keyboard interaction, and larger
-        viewports. They typically have no mobile equivalent or are replaced by different patterns on
-        mobile (e.g., Sidebar becomes BottomNav).
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 05 — Desktop" title="Desktop-First Components">
+              Desktop-first components leverage pointer precision, keyboard interaction, and larger
+              viewports. They typically have no mobile equivalent or are replaced by different
+              patterns on mobile (e.g., Sidebar becomes BottomNav).
+            </PageHeader>
 
-      <Inline gap={2} wrap>
-        {desktopComponents.map((c) => (
-          <FlowChip key={c.name}>{c.name}</FlowChip>
-        ))}
-      </Inline>
+            <Inline gap={2} wrap>
+              {desktopComponents.map((c) => (
+                <FlowChip key={c.name}>{c.name}</FlowChip>
+              ))}
+            </Inline>
 
-      <ComponentSpecAccordion items={items} badge="DESKTOP" layout="full" />
-    </Stack>
+            <ComponentSpecAccordion items={items} badge="DESKTOP" layout="full" />
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }

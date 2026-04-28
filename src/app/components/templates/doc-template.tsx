@@ -12,11 +12,11 @@
  */
 import type { ReactNode } from "react";
 
-import { Divider, Stack, Surface, Text } from "../../primitives";
+import { Divider, Stack, Surface, Text } from "@flow/primitives";
 import { Callout, CodeBlock, PAGE_GAP, PageHeader, Section, SECTION_GAP } from "../doc-primitives";
 import { DemoGroup, DemoSection } from "../demo-helpers";
 import { LayoutGrid } from "../layout-grid";
-import { FlowButton } from "../controls";
+import { FlowButton } from "@flow/components";
 import {
   DemoCell,
   FullWidthSection,
@@ -70,7 +70,7 @@ export function DocTemplate({ chapter, title, intro, children }: DocTemplateProp
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const BUTTON_SIZES = ["sm", "md", "lg", "xl"] as const;
-const VARIANT_LEVELS = ["high", "medium", "low", "outline", "danger", "warning", "ghost"] as const;
+const VARIANT_LEVELS = ["primary", "secondary", "tertiary", "outlined", "ghost"] as const;
 
 export function DocTemplateExample() {
   const demoSize = useDemoSize();
@@ -84,13 +84,13 @@ export function DocTemplateExample() {
       {/* ── 1. useDemoSize ─────────────────────────────────────────── */}
       <Section title="useDemoSize()">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Devuelve el tamaño de componente que corresponde a la densidad del viewport actual (
-            <code>sm | md | lg | xl</code>). Úsalo en secciones de estados y variantes —
-            nunca en la sección Sizes (que siempre muestra todos los tamaños explícitamente).
+            <code>sm | md | lg | xl</code>). Úsalo en secciones de estados y variantes — nunca en la
+            sección Sizes (que siempre muestra todos los tamaños explícitamente).
           </Text>
           <Callout>
-            <Text role="paragraph-s" color="accent">
+            <Text variant="paragraph-s" color="accent">
               <strong>Tamaño actual:</strong> <code>{demoSize}</code> — cambia el viewport para ver
               cómo responde.
             </Text>
@@ -111,7 +111,7 @@ export function DocTemplateExample() {
       {/* ── 2. DemoCell ────────────────────────────────────────────── */}
       <Section title="DemoCell">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Envuelve un componente con un label opcional debajo. Prop <code>align</code> controla la
             alineación: <code>&quot;center&quot;</code> (default) o <code>&quot;start&quot;</code>.
           </Text>
@@ -123,7 +123,7 @@ export function DocTemplateExample() {
                   <FlowButton size={demoSize}>Button</FlowButton>
                 </DemoCell>
                 <DemoCell label="align=start" align="start">
-                  <FlowButton size={demoSize} variant="outline">
+                  <FlowButton size={demoSize} variant="outlined">
                     Button
                   </FlowButton>
                 </DemoCell>
@@ -141,7 +141,7 @@ export function DocTemplateExample() {
 </DemoCell>
 
 <DemoCell label="align=start" align="start">
-  <FlowButton size={demoSize} variant="outline">Button</FlowButton>
+  <FlowButton size={demoSize} variant="outlined">Button</FlowButton>
 </DemoCell>
 
 <DemoCell>
@@ -156,13 +156,13 @@ export function DocTemplateExample() {
       {/* ── 3. statesGridProps ─────────────────────────────────────── */}
       <Section title="statesGridProps(demoSize)">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Devuelve <code>{`{ className: "flow-states-grid", "data-size": demoSize }`}</code>. Las
             clases CSS en <code>flow.css</code> aplican el <code>min-width</code> correcto según el
             tamaño, evitando overflow del texto &quot;Disabled&quot;. Sin inline styles.
           </Text>
           <Callout>
-            <Text role="paragraph-s" color="accent">
+            <Text variant="paragraph-s" color="accent">
               <strong>Regla:</strong> Siempre usa <code>statesGridProps()</code> para el grid de
               estados. Nunca hardcodees <code>minWidth</code> o <code>gridTemplateColumns</code>.
             </Text>
@@ -214,7 +214,7 @@ export function DocTemplateExample() {
       {/* ── 4. SizesSection ────────────────────────────────────────── */}
       <Section title="SizesSection">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Siempre muestra <strong>todos</strong> los tamaños explícitamente — nunca usa{" "}
             <code>useDemoSize()</code>. Layout: <code>span{"{3}"}</code> × 4 para cuatro tamaños.
             Cada tamaño en un <code>DemoCell</code> con label.
@@ -241,7 +241,7 @@ export function DocTemplateExample() {
       {/* ── 5. StatesSection ───────────────────────────────────────── */}
       <Section title="StatesSection">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Muestra el componente al tamaño responsive (<code>useDemoSize()</code>). Usa{" "}
             <code>statesGridProps</code> internamente. Los estados estándar son: default, hover,
             focus-visible, pressed, disabled, loading.
@@ -311,16 +311,16 @@ export function DocTemplateExample() {
       {/* ── 6. VariantLevelsSection ─────────────────────────────── */}
       <Section title="VariantLevelsSection">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
-            Muestra los 7 niveles de variante al tamaño responsive. Layout: <code>span</code>{" "}
-            × 7. Nunca muestra todos los tamaños — solo el tamaño del viewport actual.
+          <Text variant="paragraph-m">
+            Muestra los 7 niveles de variante al tamaño responsive. Layout: <code>span</code> × 7.
+            Nunca muestra todos los tamaños — solo el tamaño del viewport actual.
           </Text>
 
           <VariantLevelsSection
             variantLevels={VARIANT_LEVELS}
             render={(variant, size) => (
               <FlowButton
-                variant={variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"}
+                variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
                 size={size as "sm" | "md" | "lg" | "xl"}
               >
                 Button
@@ -329,7 +329,7 @@ export function DocTemplateExample() {
           />
 
           <CodeBlock language="tsx">{`<VariantLevelsSection
-  variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+  variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
   render={(variant, size) => (
     <FlowButton variant={variant} size={size}>Button</FlowButton>
   )}
@@ -342,7 +342,7 @@ export function DocTemplateExample() {
       {/* ── 7. VariantSizeMatrixSection ───────────────────────────── */}
       <Section title="VariantSizeMatrixSection">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Matriz completa de variante × tamaño. Siempre muestra todas las combinaciones.
             Responsive: en mobile oculta columnas intermedias para evitar overflow horizontal.
           </Text>
@@ -352,7 +352,7 @@ export function DocTemplateExample() {
             variantLevels={VARIANT_LEVELS}
             render={(variant, size) => (
               <FlowButton
-                variant={variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"}
+                variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
                 size={size as "sm" | "md" | "lg" | "xl"}
               >
                 {size.toUpperCase()}
@@ -362,7 +362,7 @@ export function DocTemplateExample() {
 
           <CodeBlock language="tsx">{`<VariantSizeMatrixSection
   sizes={["sm", "md", "lg", "xl"]}
-  variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+  variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
   render={(variant, size) => (
     <FlowButton variant={variant} size={size}>
       {size.toUpperCase()}
@@ -377,7 +377,7 @@ export function DocTemplateExample() {
       {/* ── 8. VariantMatrix (primitivo) ──────────────────────────── */}
       <Section title="VariantMatrix (helper bajo nivel)">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             El grid CSS que usa <code>VariantSizeMatrixSection</code> internamente. Úsalo
             directamente cuando necesites una matriz custom sin el wrapper de{" "}
             <code>DemoSection</code>.
@@ -388,9 +388,7 @@ export function DocTemplateExample() {
               <VariantMatrix sizes={BUTTON_SIZES} variantLevels={VARIANT_LEVELS}>
                 {(variant, size) => (
                   <FlowButton
-                    variant={
-                      variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"
-                    }
+                    variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
                     size={size as "sm" | "md" | "lg" | "xl"}
                   >
                     {size}
@@ -402,7 +400,7 @@ export function DocTemplateExample() {
 
           <CodeBlock language="tsx">{`<VariantMatrix
   sizes={["sm", "md", "lg", "xl"]}
-  variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+  variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
 >
   {(variant, size) => (
     <FlowButton variant={variant} size={size}>{size}</FlowButton>
@@ -416,7 +414,7 @@ export function DocTemplateExample() {
       {/* ── 9. FullWidthSection ────────────────────────────────────── */}
       <Section title="FullWidthSection">
         <Stack gap={SECTION_GAP}>
-          <Text role="paragraph-m">
+          <Text variant="paragraph-m">
             Sección de tres subsecciones: sin <code>fullWidth</code>, con <code>fullWidth</code> en
             todos los variantes, y contenedores responsive (12 / 8 / 6 / 4 columnas). Usa overlines
             como separadores narrativos.
@@ -426,7 +424,7 @@ export function DocTemplateExample() {
             variantLevels={VARIANT_LEVELS}
             renderNormal={(variant) => (
               <FlowButton
-                variant={variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"}
+                variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
               >
                 Button
               </FlowButton>
@@ -434,7 +432,7 @@ export function DocTemplateExample() {
             renderFullWidth={(variant) => (
               <FlowButton
                 fullWidth
-                variant={variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"}
+                variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
               >
                 Button
               </FlowButton>
@@ -442,7 +440,7 @@ export function DocTemplateExample() {
             renderResponsive={(variant, span) => (
               <FlowButton
                 fullWidth
-                variant={variant as "high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"}
+                variant={variant as "primary" | "secondary" | "tertiary" | "outlined" | "ghost"}
               >
                 span {span}
               </FlowButton>
@@ -450,7 +448,7 @@ export function DocTemplateExample() {
           />
 
           <CodeBlock language="tsx">{`<FullWidthSection
-  variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+  variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
   renderNormal={(variant) => (
     <FlowButton variant={variant}>Button</FlowButton>
   )}
@@ -471,23 +469,22 @@ export function DocTemplateExample() {
         <Stack gap={SECTION_GAP}>
           <Callout>
             <Stack gap={2}>
-              <Text role="paragraph-s" color="accent">
-                <strong>✅ useDemoSize()</strong> — solo en States y VariantLevels. Nunca en
-                Sizes.
+              <Text variant="paragraph-s" color="accent">
+                <strong>✅ useDemoSize()</strong> — solo en States y VariantLevels. Nunca en Sizes.
               </Text>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 <strong>✅ statesGridProps()</strong> — siempre para el grid de estados. Nunca{" "}
                 <code>statesGridStyle()</code> (deprecated).
               </Text>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 <strong>✅ SizesSection</strong> — siempre muestra todos los tamaños. Nunca filtra
                 por viewport.
               </Text>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 <strong>✅ VariantSizeMatrixSection</strong> — siempre todas las combinaciones.
                 Responsive hiding lo maneja <code>VariantMatrix</code> internamente.
               </Text>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 <strong>❌ Inline styles</strong> — prohibidos. Todo debe ir a través de clases CSS
                 con tokens <code>--sys-*</code> y <code>--ref-*</code>.
               </Text>

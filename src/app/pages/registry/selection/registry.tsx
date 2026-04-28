@@ -4,7 +4,16 @@
  */
 import type { ComponentEntry } from "../types";
 import React from "react";
-import { FlowCheckbox, FlowSwitch } from "../../../../lib";
+import {
+  FlowCheckbox,
+  FlowRadioButton,
+  FlowRadioGroup,
+  FlowSegmentedControl,
+  FlowSelect,
+  FlowSlider,
+  FlowSwitch,
+  FlowToggleButton,
+} from "@flow/design-system";
 import {
   FlowCheckboxOverview,
   FlowCheckboxVariants,
@@ -62,7 +71,11 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Keyboard support (Space to toggle)",
         ],
         required: ["Provide label prop or aria-label"],
-        keyboard: ["Tab to focus", "Space to toggle"],
+        keyboard: [
+          { key: "Tab", action: "Focus" },
+          { key: "Space", action: "Toggle" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -184,7 +197,12 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "FlowRadioGroup provides role='radiogroup'",
         ],
         required: ["Use within FlowRadioGroup for proper behavior", "Provide label prop"],
-        keyboard: ["Tab to focus group", "Arrow keys to navigate", "Space to select"],
+        keyboard: [
+          { key: "Tab", action: "Focus group" },
+          { key: "← → ↑ ↓ Arrow keys", action: "Navigate" },
+          { key: "Space", action: "Select" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -263,6 +281,21 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowRadioButton, {
+          label: (props.label as string) || "Option A",
+          size: props.size,
+          disabled: !!props.disabled,
+          checked: !!props.checked,
+        } as React.ComponentProps<typeof FlowRadioButton>),
+      defaults: {
+        label: "Option A",
+        size: "md",
+        disabled: false,
+        checked: false,
+      },
+    },
   },
 
   // ─── FlowRadioGroup ───
@@ -289,7 +322,12 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Manages checked state across children",
         ],
         required: ["Provide aria-label or aria-labelledby"],
-        keyboard: ["Tab to focus group", "Arrow keys to navigate options", "Space to select"],
+        keyboard: [
+          { key: "Tab", action: "Focus group" },
+          { key: "← → ↑ ↓ Arrow keys", action: "Navigate options" },
+          { key: "Space", action: "Select" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -337,6 +375,18 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         { intent: "info", text: "FlowRadioGroup handles mutual exclusion automatically." },
       ],
     },
+    playground: {
+      renderPreview: (_props: Record<string, unknown>) =>
+        React.createElement(
+          FlowRadioGroup,
+          { name: "demo-group", value: "option1", onChange: () => {} } as unknown as React.ComponentProps<typeof FlowRadioGroup>,
+          React.createElement(FlowRadioButton, { value: "option1", label: "Option 1" }),
+          React.createElement(FlowRadioButton, { value: "option2", label: "Option 2" }),
+          React.createElement(FlowRadioButton, { value: "option3", label: "Option 3" }),
+        ),
+      defaults: {},
+      excludeControls: ["value", "onChange", "children"],
+    },
   },
 
   // ─── FlowCheckbox ───
@@ -378,7 +428,11 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Keyboard support (Space to toggle)",
         ],
         required: ["Provide label prop or aria-label"],
-        keyboard: ["Tab to focus", "Space to toggle"],
+        keyboard: [
+          { key: "Tab", action: "Focus" },
+          { key: "Space", action: "Toggle" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -494,6 +548,7 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         handled: ["role='group'", "Optional aria-label"],
         required: [],
         keyboard: [],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -523,6 +578,18 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         },
       ],
       guidelines: [{ intent: "do", text: "Use for grouping related checkboxes." }],
+    },
+    playground: {
+      renderPreview: () =>
+        React.createElement(
+          "div",
+          { role: "group" },
+          React.createElement(FlowCheckbox, { label: "Option A" }),
+          React.createElement(FlowCheckbox, { label: "Option B" }),
+          React.createElement(FlowCheckbox, { label: "Option C" }),
+        ),
+      defaults: {},
+      excludeControls: ["children"],
     },
   },
 
@@ -624,12 +691,13 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         ],
         required: ["Provide label prop for accessible field name"],
         keyboard: [
-          "Tab to focus trigger",
-          "Enter/Space to open dropdown",
-          "Arrow keys to navigate options",
-          "Enter to select highlighted option",
-          "Escape to close dropdown",
+          { key: "Tab", action: "Focus trigger" },
+          { key: "Enter / Space", action: "Open dropdown" },
+          { key: "↑ ↓ Arrow keys", action: "Navigate options" },
+          { key: "Enter", action: "Select highlighted option" },
+          { key: "Escape", action: "Close dropdown" },
         ],
+        wcag: ["2.1.1", "3.3.1", "3.3.2", "4.1.2"],
       },
     },
     demos: {
@@ -791,6 +859,27 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSelect, {
+          label: (props.label as string) || "Choose an option",
+          options: props.options,
+          size: props.size,
+          disabled: !!props.disabled,
+          placeholder: props.placeholder as string,
+          onChange: () => {},
+        } as React.ComponentProps<typeof FlowSelect>),
+      defaults: { label: "Choose an option", size: "md", disabled: false, placeholder: "Select an option..." },
+      fixtures: {
+        options: [
+          { value: "1", label: "Option 1" },
+          { value: "2", label: "Option 2" },
+          { value: "3", label: "Option 3" },
+          { value: "4", label: "Option 4" },
+        ],
+      },
+      excludeControls: ["options", "value", "defaultValue", "onChange", "hint", "error", "success", "loading", "readOnly", "required", "className"],
+    },
   },
 
   // ─── FlowSlider ───
@@ -828,7 +917,12 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Keyboard support (Arrow keys)",
         ],
         required: ["Provide label prop or aria-label"],
-        keyboard: ["Tab to focus", "Arrow keys to adjust", "Page Up/Down for larger steps"],
+        keyboard: [
+          { key: "Tab", action: "Focus" },
+          { key: "← → Arrow keys", action: "Adjust" },
+          { key: "Page Up / Page Down", action: "Larger steps" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -902,6 +996,25 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         { intent: "info", text: "Thumb size increases on hover/focus for easier interaction." },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSlider, {
+          min: (props.min as number) ?? 0,
+          max: (props.max as number) ?? 100,
+          value: (props.value as number) ?? 50,
+          size: props.size,
+          disabled: !!props.disabled,
+          label: (props.label as string) || "Volume",
+        } as React.ComponentProps<typeof FlowSlider>),
+      defaults: {
+        label: "Volume",
+        min: 0,
+        max: 100,
+        value: 50,
+        size: "md",
+        disabled: false,
+      },
+    },
   },
 
   // ─── FlowSegmentedControl ───
@@ -939,7 +1052,12 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Keyboard navigation",
         ],
         required: ["Provide aria-label on control"],
-        keyboard: ["Tab to focus", "Arrow keys to navigate", "Space/Enter to select"],
+        keyboard: [
+          { key: "Tab", action: "Focus" },
+          { key: "← → Arrow keys", action: "Navigate" },
+          { key: "Space / Enter", action: "Select" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -1022,6 +1140,24 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowSegmentedControl, {
+          options: props.options,
+          value: "list",
+          onChange: () => {},
+          size: props.size,
+        } as React.ComponentProps<typeof FlowSegmentedControl>),
+      defaults: { size: "md" },
+      fixtures: {
+        options: [
+          { value: "list", label: "List" },
+          { value: "grid", label: "Grid" },
+          { value: "table", label: "Table" },
+        ],
+      },
+      excludeControls: ["options", "value", "onChange"],
+    },
   },
 
   // ─── FlowToggleButton ───
@@ -1049,7 +1185,11 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           "Keyboard support",
         ],
         required: ["Provide aria-label or children text"],
-        keyboard: ["Tab to focus", "Space/Enter to toggle"],
+        keyboard: [
+          { key: "Tab", action: "Focus" },
+          { key: "Space / Enter", action: "Toggle" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -1111,6 +1251,22 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowToggleButton,
+          {
+            pressed: !!props.pressed,
+            onChange: () => {},
+            size: props.size,
+            disabled: !!props.disabled,
+            "aria-label": "Bold",
+            children: "B",
+          } as React.ComponentProps<typeof FlowToggleButton>,
+        ),
+      defaults: { pressed: false, size: "md", disabled: false },
+      excludeControls: ["onPressedChange", "children"],
+    },
   },
 
   // ─── FlowToggleButtonGroup ───
@@ -1131,9 +1287,18 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
       variants: [],
       states: ["default"],
       accessibility: {
-        handled: ["role='toolbar'"],
-        required: [],
-        keyboard: [],
+        handled: [
+          "Container has role='toolbar' for group semantics",
+          "Buttons have aria-pressed reflecting toggle state",
+          "Connected border styling creates visual grouping",
+        ],
+        required: ["Provide aria-label on the group describing its purpose"],
+        keyboard: [
+          { key: "Tab", action: "Move focus into/out of the group" },
+          { key: "← → Arrow keys", action: "Move focus between toggle buttons" },
+          { key: "Enter / Space", action: "Toggle the focused button" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -1170,6 +1335,18 @@ export const SELECTION_REGISTRY: Record<string, ComponentEntry> = {
           text: "Use for grouping related toggle buttons (text formatting toolbar).",
         },
       ],
+    },
+    playground: {
+      renderPreview: () =>
+        React.createElement(
+          "div",
+          { role: "toolbar", style: { display: "flex", gap: "2px" } },
+          React.createElement(FlowToggleButton, { pressed: true, "aria-label": "Bold", children: "B" } as React.ComponentProps<typeof FlowToggleButton>),
+          React.createElement(FlowToggleButton, { pressed: false, "aria-label": "Italic", children: "I" } as React.ComponentProps<typeof FlowToggleButton>),
+          React.createElement(FlowToggleButton, { pressed: false, "aria-label": "Underline", children: "U" } as React.ComponentProps<typeof FlowToggleButton>),
+        ),
+      defaults: {},
+      excludeControls: ["children"],
     },
   },
 };

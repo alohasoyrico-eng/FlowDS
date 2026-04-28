@@ -10,9 +10,17 @@ import { useState } from "react";
 import { Navigate, useParams } from "react-router";
 
 import {
-  Divider, FlowBreadcrumbs, FlowChip, FlowTabs, FlowTag,
-  Inline, Stack, Surface, Text, useFlowTheme,
-} from "../../lib";
+  Divider,
+  FlowBreadcrumbs,
+  FlowChip,
+  FlowTabs,
+  FlowTag,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+  useFlowTheme,
+} from "@flow/design-system";
 import { LayoutGrid } from "../components/layout-grid";
 import {
   Callout,
@@ -26,14 +34,15 @@ import { registry } from "./component-registry";
 import { PropPlayground } from "../components/prop-playground";
 import { DensityDemoWrapper } from "../components/density-demo-wrapper";
 import { DemoErrorBoundary } from "../components/page-error-boundary";
+import { AccessibilitySection } from "../components/AccessibilitySection";
 
 // ─── Platform badge ─────────────────────────────────────────────────────────
 type Platform = "shared" | "desktop" | "mobile";
-const PLATFORM_LABELS: Record<Platform, { label: string; variant: "success" | "info" | "accent" }> =
+const PLATFORM_LABELS: Record<Platform, { label: string; status: "success" | "info" | "warning" }> =
   {
-    shared: { label: "Shared", variant: "success" },
-    desktop: { label: "Desktop", variant: "info" },
-    mobile: { label: "Mobile", variant: "accent" },
+    shared: { label: "Shared", status: "success" },
+    desktop: { label: "Desktop", status: "info" },
+    mobile: { label: "Mobile", status: "warning" },
   };
 
 export function ComponentDetailPage() {
@@ -54,8 +63,8 @@ export function ComponentDetailPage() {
         <LayoutGrid.Item span={12}>
           <Surface variant="secondary" radius="surface" padding="container">
             <Stack gap="component">
-              <Text role="heading-l">Component not found</Text>
-              <Text role="paragraph-m">
+              <Text variant="heading-l">Component not found</Text>
+              <Text variant="paragraph-m">
                 No component registered at <code>{key}</code>
               </Text>
             </Stack>
@@ -82,7 +91,7 @@ export function ComponentDetailPage() {
     if (!demos?.overview) {
       return (
         <Surface variant="primary" padding="container" radius="surface">
-          <Text role="paragraph-m" color="tertiary">
+          <Text variant="paragraph-m" color="tertiary">
             No overview demo available.
           </Text>
         </Surface>
@@ -93,9 +102,7 @@ export function ComponentDetailPage() {
       <DemoErrorBoundary section="Overview">
         <Stack gap="section">
           {/* Live demo (DemoSection manages its own sections internally) */}
-          <DensityDemoWrapper>
-            {demos.overview()}
-          </DensityDemoWrapper>
+          <DensityDemoWrapper>{demos.overview()}</DensityDemoWrapper>
 
           {/* ── Anatomy + Accessibility ───────────────────────────────────────
               LayoutGrid span 6+6: side-by-side on desktop (≥992px, 12 cols),
@@ -111,11 +118,15 @@ export function ComponentDetailPage() {
                     <Stack gap={0}>
                       {spec.anatomy.map((part, idx) => (
                         <div key={idx} className="flow-anatomy-item">
-                          <FlowChip variant="default" size="sm" className="flow-anatomy-chip">
+                          <FlowChip variant="filled" size="sm" className="flow-anatomy-chip">
                             {part.part}
                           </FlowChip>
                           <Stack gap="component">
-                            <Text role="paragraph-m" color="secondary" className="flow-text-pretty">
+                            <Text
+                              variant="paragraph-m"
+                              color="secondary"
+                              className="flow-text-pretty"
+                            >
                               {part.description}
                             </Text>
                             {part.tokens.length > 0 && (
@@ -138,97 +149,7 @@ export function ComponentDetailPage() {
               {/* ── Accessibility ─────────────────────────────────── */}
               {spec.accessibility && (
                 <Section title="Accessibility" headingRole="display-s">
-                  <div className="flow-a11y-grid">
-                    {spec.accessibility.handled && spec.accessibility.handled.length > 0 && (
-                      <Surface variant="primary" radius="surface" className="flow-a11y-card">
-                        <div className="flow-a11y-card-inner">
-                          <Stack gap="component">
-                            <Text role="label-m">Handled by FLOW</Text>
-                            <Stack gap="component" as="ul" className="flow-a11y-list">
-                              {spec.accessibility.handled.map((item, i) => (
-                                <li key={i}>
-                                  <span
-                                    className="flow-a11y-icon"
-                                    data-intent="handled"
-                                    aria-hidden="true"
-                                  >
-                                    ✓
-                                  </span>
-                                  <Text
-                                    role="paragraph-m"
-                                    color="secondary"
-                                    className="flow-text-pretty"
-                                  >
-                                    {item}
-                                  </Text>
-                                </li>
-                              ))}
-                            </Stack>
-                          </Stack>
-                        </div>
-                      </Surface>
-                    )}
-
-                    {spec.accessibility.required && spec.accessibility.required.length > 0 && (
-                      <Surface variant="primary" radius="surface" className="flow-a11y-card">
-                        <div className="flow-a11y-card-inner">
-                          <Stack gap="component">
-                            <Text role="label-m">Required from Consumer</Text>
-                            <Stack gap="component" as="ul" className="flow-a11y-list">
-                              {spec.accessibility.required.map((item, i) => (
-                                <li key={i}>
-                                  <span
-                                    className="flow-a11y-icon"
-                                    data-intent="required"
-                                    aria-hidden="true"
-                                  >
-                                    !
-                                  </span>
-                                  <Text
-                                    role="paragraph-m"
-                                    color="secondary"
-                                    className="flow-text-pretty"
-                                  >
-                                    {item}
-                                  </Text>
-                                </li>
-                              ))}
-                            </Stack>
-                          </Stack>
-                        </div>
-                      </Surface>
-                    )}
-
-                    {spec.accessibility.keyboard && spec.accessibility.keyboard.length > 0 && (
-                      <Surface variant="primary" radius="surface" className="flow-a11y-card">
-                        <div className="flow-a11y-card-inner">
-                          <Stack gap="component">
-                            <Text role="label-m">Keyboard Interaction</Text>
-                            <Stack gap="component" as="ul" className="flow-a11y-list">
-                              {spec.accessibility.keyboard.map((item, i) => (
-                                <li key={i}>
-                                  <span
-                                    className="flow-a11y-icon"
-                                    data-intent="keyboard"
-                                    aria-hidden="true"
-                                  >
-                                    ⌨
-                                  </span>
-                                  <Text
-                                    role="paragraph-m"
-                                    color="secondary"
-                                    className="flow-text-pretty"
-                                  >
-                                    {item}
-                                  </Text>
-                                </li>
-                              ))}
-                            </Stack>
-                          </Stack>
-                        </div>
-                      </Surface>
-                    )}
-                  </div>
+                  <AccessibilitySection spec={spec.accessibility} />
                 </Section>
               )}
             </Stack>
@@ -245,7 +166,7 @@ export function ComponentDetailPage() {
     if (!demos?.variants) {
       return (
         <Surface variant="primary" padding="container" radius="surface">
-          <Text role="paragraph-m" color="tertiary">
+          <Text variant="paragraph-m" color="tertiary">
             No variants demo available.
           </Text>
         </Surface>
@@ -267,7 +188,7 @@ export function ComponentDetailPage() {
     if (!developer) {
       return (
         <Surface variant="primary" padding="container" radius="surface">
-          <Text role="paragraph-m" color="tertiary">
+          <Text variant="paragraph-m" color="tertiary">
             No developer documentation available.
           </Text>
         </Surface>
@@ -318,7 +239,7 @@ export function ComponentDetailPage() {
           {developer.notes && !developer.guidelines && (
             <Section title="Notes" headingRole="display-s">
               <Callout intent="info">
-                <Text role="paragraph-m">{developer.notes}</Text>
+                <Text variant="paragraph-m">{developer.notes}</Text>
               </Callout>
             </Section>
           )}
@@ -348,13 +269,13 @@ export function ComponentDetailPage() {
                 breadcrumbs={<FlowBreadcrumbs variant="icon-root" items={breadcrumbItems} />}
                 title={spec.name}
                 actions={
-                  <FlowChip variant={platformBadge.variant} size="sm">
+                  <FlowChip status={platformBadge.status} size="sm">
                     {platformBadge.label}
                   </FlowChip>
                 }
               />
 
-              <Text role="paragraph-xl">{spec.purpose}</Text>
+              <Text variant="paragraph-xl">{spec.purpose}</Text>
 
               <Divider spacing={0} />
 

@@ -6,11 +6,25 @@
 import { useState } from "react";
 
 import {
-  Divider, FlowAutocomplete, FlowButton, FlowChip, FlowDatePicker,
-  FlowFileUpload, FlowList, FlowListItem, FlowMultiSelect, FlowSearch,
-  FlowTextInput, Grid, Inline, type MultiSelectOption,
-  Stack, Surface, Text, useFlowTheme,
-} from "../../lib";
+  Divider,
+  FlowAutocomplete,
+  FlowButton,
+  FlowChip,
+  FlowDatePicker,
+  FlowFileUpload,
+  FlowList,
+  FlowListItem,
+  FlowMultiSelect,
+  FlowSearch,
+  FlowTextInput,
+  Grid,
+  Inline,
+  type MultiSelectOption,
+  Stack,
+  Surface,
+  Text,
+  useFlowTheme,
+} from "@flow/design-system";
 import { Callout } from "../components/doc-primitives";
 import { DemoGroup, DemoSection } from "../components/demo-helpers";
 
@@ -71,7 +85,7 @@ export function SearchOverviewDemo() {
           <Grid {...gridProps} gap="component">
             {SEARCH_SIZES.map((size) => (
               <Stack key={size} gap="component" align="center">
-                <Text role="overline" color="tertiary">
+                <Text variant="overline" color="tertiary">
                   {size.toUpperCase()}
                 </Text>
                 <FlowSearch size={size} placeholder={`${size.toUpperCase()} search`} />
@@ -94,7 +108,7 @@ export function SearchOverviewDemo() {
           <Grid {...gridProps} gap="component">
             {SEARCH_STATES.map(({ label, props }) => (
               <Stack key={label} gap="component" align="center">
-                <Text role="overline" color="tertiary">
+                <Text variant="overline" color="tertiary">
                   {label}
                 </Text>
                 <FlowSearch placeholder="Search..." {...props} />
@@ -126,7 +140,7 @@ export function SearchVariantsDemo() {
         <DemoGroup>
           {SEARCH_SIZES.map((size) => (
             <Stack key={size} gap={1}>
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 {size.toUpperCase()}
               </Text>
               <Inline gap="component" wrap align="center">
@@ -240,7 +254,7 @@ export function SearchUseCasesDemo() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <Surface variant="primary" padding="container" radius="control">
         <Stack gap="component">
-          <Text role="heading-m">Document Library</Text>
+          <Text variant="heading-m">Document Library</Text>
           <FlowSearch
             value={query}
             onChange={handleSearch}
@@ -251,7 +265,7 @@ export function SearchUseCasesDemo() {
           />
           {query && (
             <Callout>
-              <Text role="paragraph-s">
+              <Text variant="paragraph-s">
                 Showing results for <strong>&quot;{query}&quot;</strong>
               </Text>
             </Callout>
@@ -266,8 +280,8 @@ export function SearchUseCasesDemo() {
         <Stack gap="component">
           <Inline gap={2} justify="between" align="center">
             <Stack gap={1}>
-              <Text role="heading-m">Team Members</Text>
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="heading-m">Team Members</Text>
+              <Text variant="paragraph-s" color="secondary">
                 {filteredUsers.length} of {allUsers.length} members
               </Text>
             </Stack>
@@ -299,8 +313,8 @@ export function SearchUseCasesDemo() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <Surface variant="primary" padding="container" radius="control">
         <Stack gap="component">
-          <Text role="heading-m">Command Bar</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Command Bar</Text>
+          <Text variant="paragraph-s" color="secondary">
             Press ⌘K anywhere to open search
           </Text>
           <FlowSearch placeholder="Search commands..." shortcut="⌘K" size="lg" />
@@ -411,7 +425,7 @@ export function AutocompleteUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Address Form</Text>
+          <Text variant="heading-m">Address Form</Text>
           <FlowTextInput label="Street Address" placeholder="123 Main St" />
           <FlowAutocomplete
             label="City"
@@ -427,14 +441,14 @@ export function AutocompleteUseCasesDemo() {
             options={["California", "Texas", "New York", "Florida", "Illinois"]}
             placeholder="Select state"
           />
-          <FlowButton variant="high">Continue</FlowButton>
+          <FlowButton variant="primary">Continue</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Profile Setup</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Profile Setup</Text>
+          <Text variant="paragraph-s" color="secondary">
             Add skills to your profile
           </Text>
           <FlowAutocomplete
@@ -462,7 +476,7 @@ export function AutocompleteUseCasesDemo() {
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Quick Filters</Text>
+          <Text variant="heading-m">Quick Filters</Text>
           <Grid minItemWidth="200px" gap="component">
             <FlowAutocomplete
               label="Category"
@@ -586,7 +600,7 @@ export function MultiSelectUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Project Configuration</Text>
+          <Text variant="heading-m">Project Configuration</Text>
           <FlowTextInput label="Project Name" placeholder="My Awesome Project" />
           <FlowMultiSelect
             label="Frameworks"
@@ -613,13 +627,13 @@ export function MultiSelectUseCasesDemo() {
             selectAll
             searchable
           />
-          <FlowButton variant="high">Create Project</FlowButton>
+          <FlowButton variant="primary">Create Project</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Task Assignment</Text>
+          <Text variant="heading-m">Task Assignment</Text>
           <FlowTextInput label="Task Title" placeholder="Update documentation" />
           <FlowMultiSelect
             label="Assign To"
@@ -646,15 +660,15 @@ export function MultiSelectUseCasesDemo() {
             onChange={setTags}
           />
           <Inline gap={2}>
-            <FlowButton variant="high">Create Task</FlowButton>
-            <FlowButton variant="outline">Cancel</FlowButton>
+            <FlowButton variant="primary">Create Task</FlowButton>
+            <FlowButton variant="outlined">Cancel</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Filter Panel</Text>
+          <Text variant="heading-m">Filter Panel</Text>
           <FlowMultiSelect
             label="Categories"
             options={[
@@ -667,7 +681,7 @@ export function MultiSelectUseCasesDemo() {
             searchable
             size="sm"
           />
-          <FlowButton variant="outline" size="sm">
+          <FlowButton variant="outlined" size="sm">
             Apply Filters
           </FlowButton>
         </Stack>
@@ -736,7 +750,7 @@ export function DatePickerOverviewDemo() {
       <DemoSection title="Validation States" description="Error state for form validation.">
         <Grid minItemWidth="280px" gap="component">
           <FlowDatePicker label="Valid Date" defaultValue="2026-03-11" />
-          <FlowDatePicker label="Invalid Date" error />
+          <FlowDatePicker label="Invalid Date" error="Date is required" />
         </Grid>
       </DemoSection>
 
@@ -761,7 +775,7 @@ export function DatePickerUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Event Planning</Text>
+          <Text variant="heading-m">Event Planning</Text>
           <FlowTextInput label="Event Name" placeholder="Team Offsite 2026" />
           <FlowDatePicker
             label="Start Date"
@@ -777,13 +791,13 @@ export function DatePickerUseCasesDemo() {
             min={startDate || today}
             placeholder="Select end date"
           />
-          <FlowButton variant="high">Create Event</FlowButton>
+          <FlowButton variant="primary">Create Event</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">User Profile</Text>
+          <Text variant="heading-m">User Profile</Text>
           <FlowTextInput label="Full Name" placeholder="Jane Doe" />
           <FlowDatePicker
             label="Date of Birth"
@@ -792,36 +806,36 @@ export function DatePickerUseCasesDemo() {
             max={maxBirthISO}
             placeholder="MM/DD/YYYY"
           />
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="paragraph-s" color="secondary">
             You must be 18 or older
           </Text>
-          <FlowButton variant="high">Save Profile</FlowButton>
+          <FlowButton variant="primary">Save Profile</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Task Deadline</Text>
+          <Text variant="heading-m">Task Deadline</Text>
           <FlowTextInput label="Task Title" placeholder="Review design mockups" />
           <FlowDatePicker label="Due Date (Optional)" min={today} placeholder="Select deadline" />
           <Inline gap={2}>
-            <FlowButton variant="high">Create Task</FlowButton>
-            <FlowButton variant="outline">Cancel</FlowButton>
+            <FlowButton variant="primary">Create Task</FlowButton>
+            <FlowButton variant="outlined">Cancel</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Availability Calendar</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Availability Calendar</Text>
+          <Text variant="paragraph-s" color="secondary">
             Select your available dates
           </Text>
           <Grid minItemWidth="250px" gap="component">
             <FlowDatePicker label="From" defaultValue={today} />
             <FlowDatePicker label="To" min={today} />
           </Grid>
-          <FlowButton variant="outline">Save Availability</FlowButton>
+          <FlowButton variant="outlined">Save Availability</FlowButton>
         </Stack>
       </Surface>
     </Stack>
@@ -902,8 +916,8 @@ export function FileUploadUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Profile Photo</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Profile Photo</Text>
+          <Text variant="paragraph-s" color="secondary">
             Upload a profile picture
           </Text>
           <FlowFileUpload
@@ -913,14 +927,14 @@ export function FileUploadUseCasesDemo() {
             label="Profile Photo"
             description="PNG or JPG, max 2MB"
           />
-          <FlowButton variant="high">Save Profile</FlowButton>
+          <FlowButton variant="primary">Save Profile</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Document Upload</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Document Upload</Text>
+          <Text variant="paragraph-s" color="secondary">
             Upload supporting documents (PDF, DOCX)
           </Text>
           <FlowFileUpload
@@ -932,16 +946,16 @@ export function FileUploadUseCasesDemo() {
             description="PDF or Word documents, max 10MB each, up to 5 files"
           />
           <Inline gap={2}>
-            <FlowButton variant="high">Submit Application</FlowButton>
-            <FlowButton variant="outline">Cancel</FlowButton>
+            <FlowButton variant="primary">Submit Application</FlowButton>
+            <FlowButton variant="outlined">Cancel</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Bulk Import</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Bulk Import</Text>
+          <Text variant="paragraph-s" color="secondary">
             Upload CSV file to import data
           </Text>
           <FlowFileUpload
@@ -952,15 +966,15 @@ export function FileUploadUseCasesDemo() {
             description="CSV format only"
           />
           <Inline gap={2}>
-            <FlowButton variant="high">Import</FlowButton>
-            <FlowButton variant="outline">Download Template</FlowButton>
+            <FlowButton variant="primary">Import</FlowButton>
+            <FlowButton variant="outlined">Download Template</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Media Gallery</Text>
+          <Text variant="heading-m">Media Gallery</Text>
           <FlowFileUpload
             accept="image/*,video/*"
             multiple

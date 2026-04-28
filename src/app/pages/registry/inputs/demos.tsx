@@ -4,7 +4,14 @@
  */
 import { useState } from "react";
 
-import { FlowCountrySelect, FlowPhoneInput, FlowTextArea, FlowTextInput, Stack, Text } from "../../../../lib";
+import {
+  FlowCountrySelect,
+  FlowPhoneInput,
+  FlowTextArea,
+  FlowTextInput,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 import { SIZES } from "../types";
@@ -148,8 +155,8 @@ export function FlowTextInputOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowTextInput uses native &lt;input&gt; with associated &lt;label&gt; via htmlFor.
-            Error/hint text is linked via aria-describedby. Error state adds aria-invalid=&apos;true&apos;.
-            Focus ring is visible for keyboard navigation.
+            Error/hint text is linked via aria-describedby. Error state adds
+            aria-invalid=&apos;true&apos;. Focus ring is visible for keyboard navigation.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -283,7 +290,7 @@ export function FlowTextAreaOverview() {
               hint="Tell us about yourself"
               rows={4}
             />
-            <Text role="caption" color="secondary">
+            <Text variant="caption" color="secondary">
               {value3.length} / 200 characters
             </Text>
           </Stack>
@@ -310,8 +317,9 @@ export function FlowTextAreaOverview() {
         <DemoGroup>
           <Callout intent="info">
             FlowTextArea uses native &lt;textarea&gt; with associated &lt;label&gt; via htmlFor.
-            Error/hint text is linked via aria-describedby. Error state adds aria-invalid=&apos;true&apos;.
-            Character count updates are announced via aria-live for screen readers.
+            Error/hint text is linked via aria-describedby. Error state adds
+            aria-invalid=&apos;true&apos;. Character count updates are announced via aria-live for
+            screen readers.
           </Callout>
         </DemoGroup>
       </DemoSection>

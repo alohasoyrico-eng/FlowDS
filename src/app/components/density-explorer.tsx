@@ -9,11 +9,11 @@
  */
 import { useState } from "react";
 
-import { Code, Divider, Inline, Stack, Surface, Text } from "../primitives";
-import { FlowButton } from "./controls";
-import { FlowTextInput } from "./inputs";
-import { FlowCard, FlowTag } from "./display";
-import { FlowCheckbox, FlowSwitch } from "./selection";
+import { Code, Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
+import { FlowButton } from "@flow/components";
+import { FlowTextInput } from "@flow/components";
+import { FlowCard, FlowTag } from "@flow/components";
+import { FlowCheckbox, FlowSwitch } from "@flow/components";
 import { LayoutGrid } from "./layout-grid";
 
 // ── Types ──
@@ -31,35 +31,179 @@ interface TokenRow {
 
 const TOKEN_ROWS: TokenRow[] = [
   // Frame — heights
-  { token: "sys.frame.height.control.sm", compact: "44px", defaultVal: "48px", comfortable: "58px", foundation: "Frame" },
-  { token: "sys.frame.height.control.md", compact: "50px", defaultVal: "60px", comfortable: "72px", foundation: "Frame" },
-  { token: "sys.frame.height.control.lg", compact: "60px", defaultVal: "72px", comfortable: "86px", foundation: "Frame" },
-  { token: "sys.frame.height.control.xl", compact: "74px", defaultVal: "88px", comfortable: "106px", foundation: "Frame" },
+  {
+    token: "sys.frame.height.control.sm",
+    compact: "44px",
+    defaultVal: "48px",
+    comfortable: "58px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.height.control.md",
+    compact: "50px",
+    defaultVal: "60px",
+    comfortable: "72px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.height.control.lg",
+    compact: "60px",
+    defaultVal: "72px",
+    comfortable: "86px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.height.control.xl",
+    compact: "74px",
+    defaultVal: "88px",
+    comfortable: "106px",
+    foundation: "Frame",
+  },
   // Frame — spacing
-  { token: "sys.frame.padding.control", compact: "16px", defaultVal: "20px", comfortable: "24px", foundation: "Frame" },
-  { token: "sys.frame.padding.container", compact: "20px", defaultVal: "24px", comfortable: "28px", foundation: "Frame" },
-  { token: "sys.frame.padding.surface", compact: "40px", defaultVal: "48px", comfortable: "64px", foundation: "Frame" },
-  { token: "sys.frame.gap.component", compact: "16px", defaultVal: "20px", comfortable: "24px", foundation: "Frame" },
-  { token: "sys.frame.gap.subsection", compact: "28px", defaultVal: "36px", comfortable: "44px", foundation: "Frame" },
-  { token: "sys.frame.gap.section", compact: "48px", defaultVal: "64px", comfortable: "80px", foundation: "Frame" },
-  { token: "sys.frame.radius.control", compact: "8px", defaultVal: "12px", comfortable: "16px", foundation: "Frame" },
+  {
+    token: "sys.frame.padding.control",
+    compact: "16px",
+    defaultVal: "20px",
+    comfortable: "24px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.padding.container",
+    compact: "20px",
+    defaultVal: "24px",
+    comfortable: "28px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.padding.surface",
+    compact: "40px",
+    defaultVal: "48px",
+    comfortable: "64px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.gap.component",
+    compact: "16px",
+    defaultVal: "20px",
+    comfortable: "24px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.gap.subsection",
+    compact: "28px",
+    defaultVal: "36px",
+    comfortable: "44px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.gap.section",
+    compact: "48px",
+    defaultVal: "64px",
+    comfortable: "80px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.radius.control",
+    compact: "8px",
+    defaultVal: "12px",
+    comfortable: "16px",
+    foundation: "Frame",
+  },
   // Frame — grid
-  { token: "sys.frame.grid.lg.gutter", compact: "24px", defaultVal: "32px", comfortable: "40px", foundation: "Frame" },
-  { token: "sys.frame.grid.lg.margin", compact: "40px", defaultVal: "48px", comfortable: "64px", foundation: "Frame" },
+  {
+    token: "sys.frame.grid.lg.gutter",
+    compact: "24px",
+    defaultVal: "32px",
+    comfortable: "40px",
+    foundation: "Frame",
+  },
+  {
+    token: "sys.frame.grid.lg.margin",
+    compact: "40px",
+    defaultVal: "48px",
+    comfortable: "64px",
+    foundation: "Frame",
+  },
   // Voice
-  { token: "sys.voice.paragraph.m.size", compact: "14px", defaultVal: "16px", comfortable: "18px", foundation: "Voice" },
-  { token: "sys.voice.paragraph.s.size", compact: "13px", defaultVal: "14px", comfortable: "16px", foundation: "Voice" },
-  { token: "sys.voice.label.xs.size", compact: "13px", defaultVal: "14px", comfortable: "16px", foundation: "Voice" },
-  { token: "sys.voice.caption.size", compact: "12px", defaultVal: "13px", comfortable: "14px", foundation: "Voice" },
-  { token: "sys.voice.heading.xl.size", compact: "18px", defaultVal: "20px", comfortable: "24px", foundation: "Voice" },
+  {
+    token: "sys.voice.paragraph.m.size",
+    compact: "14px",
+    defaultVal: "16px",
+    comfortable: "18px",
+    foundation: "Voice",
+  },
+  {
+    token: "sys.voice.paragraph.s.size",
+    compact: "13px",
+    defaultVal: "14px",
+    comfortable: "16px",
+    foundation: "Voice",
+  },
+  {
+    token: "sys.voice.label.xs.size",
+    compact: "13px",
+    defaultVal: "14px",
+    comfortable: "16px",
+    foundation: "Voice",
+  },
+  {
+    token: "sys.voice.caption.size",
+    compact: "12px",
+    defaultVal: "13px",
+    comfortable: "14px",
+    foundation: "Voice",
+  },
+  {
+    token: "sys.voice.heading.xl.size",
+    compact: "18px",
+    defaultVal: "20px",
+    comfortable: "24px",
+    foundation: "Voice",
+  },
   // Momentum
-  { token: "sys.momentum.duration.default", compact: "100ms", defaultVal: "200ms", comfortable: "200ms", foundation: "Momentum" },
-  { token: "sys.momentum.duration.slow", compact: "200ms", defaultVal: "350ms", comfortable: "500ms", foundation: "Momentum" },
+  {
+    token: "sys.momentum.duration.default",
+    compact: "100ms",
+    defaultVal: "200ms",
+    comfortable: "200ms",
+    foundation: "Momentum",
+  },
+  {
+    token: "sys.momentum.duration.slow",
+    compact: "200ms",
+    defaultVal: "350ms",
+    comfortable: "500ms",
+    foundation: "Momentum",
+  },
   // Comp
-  { token: "comp.button.height", compact: "44px", defaultVal: "48px", comfortable: "58px", foundation: "Comp" },
-  { token: "comp.button.font", compact: "13px", defaultVal: "14px", comfortable: "16px", foundation: "Comp" },
-  { token: "comp.tag.font", compact: "10px", defaultVal: "11px", comfortable: "13px", foundation: "Comp" },
-  { token: "comp.tag.padding-x", compact: "8px", defaultVal: "12px", comfortable: "16px", foundation: "Comp" },
+  {
+    token: "comp.button.height",
+    compact: "44px",
+    defaultVal: "48px",
+    comfortable: "58px",
+    foundation: "Comp",
+  },
+  {
+    token: "comp.button.font",
+    compact: "13px",
+    defaultVal: "14px",
+    comfortable: "16px",
+    foundation: "Comp",
+  },
+  {
+    token: "comp.tag.font",
+    compact: "10px",
+    defaultVal: "11px",
+    comfortable: "13px",
+    foundation: "Comp",
+  },
+  {
+    token: "comp.tag.padding-x",
+    compact: "8px",
+    defaultVal: "12px",
+    comfortable: "16px",
+    foundation: "Comp",
+  },
 ];
 
 // ── Tab button ──
@@ -94,13 +238,7 @@ function TabButton({
 }
 
 // ── Density switcher ──
-function DensitySwitcher({
-  value,
-  onChange,
-}: {
-  value: Density;
-  onChange: (d: Density) => void;
-}) {
+function DensitySwitcher({ value, onChange }: { value: Density; onChange: (d: Density) => void }) {
   const options: Density[] = ["compact", "default", "comfortable"];
   return (
     <div
@@ -167,12 +305,20 @@ function LiveDemoTab({ density }: { density: Density }) {
         <Stack gap="subsection">
           {/* Control heights */}
           <Stack gap="component">
-            <Text role="overline">Frame — Control Heights (sm / md / lg / xl)</Text>
+            <Text variant="overline">Frame — Control Heights (sm / md / lg / xl)</Text>
             <Inline gap={3} wrap>
-              <FlowButton variant="high" size="sm">Small</FlowButton>
-              <FlowButton variant="high" size="md">Medium</FlowButton>
-              <FlowButton variant="high" size="lg">Large</FlowButton>
-              <FlowButton variant="high" size="xl">Extra Large</FlowButton>
+              <FlowButton variant="primary" size="sm">
+                Small
+              </FlowButton>
+              <FlowButton variant="primary" size="md">
+                Medium
+              </FlowButton>
+              <FlowButton variant="primary" size="lg">
+                Large
+              </FlowButton>
+              <FlowButton variant="primary" size="xl">
+                Extra Large
+              </FlowButton>
             </Inline>
           </Stack>
 
@@ -180,7 +326,7 @@ function LiveDemoTab({ density }: { density: Density }) {
 
           {/* Input fields */}
           <Stack gap="component">
-            <Text role="overline">Frame + Voice — Input Fields</Text>
+            <Text variant="overline">Frame + Voice — Input Fields</Text>
             <LayoutGrid density={density}>
               <LayoutGrid.Item span={6}>
                 <FlowTextInput label="First name" placeholder="Enter name" size="md" />
@@ -195,12 +341,18 @@ function LiveDemoTab({ density }: { density: Density }) {
 
           {/* Typography scale */}
           <Stack gap="component">
-            <Text role="overline">Voice — Typography Scale</Text>
+            <Text variant="overline">Voice — Typography Scale</Text>
             <Stack gap={1}>
-              <Text role="heading-xl">Heading XL adapts to density</Text>
-              <Text role="paragraph-m">Body text scales: compact 14px → default 16px → comfortable 18px</Text>
-              <Text role="paragraph-s" color="secondary">Paragraph-s adapts proportionally</Text>
-              <Text role="caption" color="tertiary">Caption also scales</Text>
+              <Text variant="heading-xl">Heading XL adapts to density</Text>
+              <Text variant="paragraph-m">
+                Body text scales: compact 14px → default 16px → comfortable 18px
+              </Text>
+              <Text variant="paragraph-s" color="secondary">
+                Paragraph-s adapts proportionally
+              </Text>
+              <Text variant="caption" color="tertiary">
+                Caption also scales
+              </Text>
             </Stack>
           </Stack>
 
@@ -208,14 +360,14 @@ function LiveDemoTab({ density }: { density: Density }) {
 
           {/* Cards + tags */}
           <Stack gap="component">
-            <Text role="overline">Comp — Cards, Tags, Selection</Text>
+            <Text variant="overline">Comp — Cards, Tags, Selection</Text>
             <LayoutGrid density={density}>
               {["Energy", "Voice", "Frame"].map((name) => (
                 <LayoutGrid.Item key={name} span={4}>
                   <FlowCard elevation={1} padding="md">
                     <Stack gap={2}>
-                      <Text role="label-m">{name}</Text>
-                      <Text role="paragraph-s" color="secondary">
+                      <Text variant="label-m">{name}</Text>
+                      <Text variant="paragraph-s" color="secondary">
                         Card content with density-responsive padding and spacing.
                       </Text>
                       <Inline gap={1} wrap>
@@ -233,7 +385,7 @@ function LiveDemoTab({ density }: { density: Density }) {
 
           {/* Selection controls */}
           <Stack gap="component">
-            <Text role="overline">Selection Controls at Current Density</Text>
+            <Text variant="overline">Selection Controls at Current Density</Text>
             <Inline gap="component" wrap>
               <FlowSwitch label="Dark mode" />
               <FlowCheckbox label="Remember me" />
@@ -251,11 +403,13 @@ function LiveDemoTab({ density }: { density: Density }) {
             }}
           >
             <Stack gap={1}>
-              <Text role="label-m" color="accent">Momentum — Transition Speed</Text>
-              <Text role="paragraph-s">
-                Hover any button above. In compact, transitions are snappier (100ms default).
-                In comfortable, they are more expressive (200ms default, 500ms slow).
-                The same interaction feels qualitatively different per density.
+              <Text variant="label-m" color="accent">
+                Momentum — Transition Speed
+              </Text>
+              <Text variant="paragraph-s">
+                Hover any button above. In compact, transitions are snappier (100ms default). In
+                comfortable, they are more expressive (200ms default, 500ms slow). The same
+                interaction feels qualitatively different per density.
               </Text>
             </Stack>
           </div>
@@ -272,8 +426,8 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
   return (
     <Stack gap="component">
       <Text color="secondary">
-        All density-responsive tokens. The highlighted column shows the active density.
-        Values come from the <Code>ref → sys → comp</Code> token chain.
+        All density-responsive tokens. The highlighted column shows the active density. Values come
+        from the <Code>ref → sys → comp</Code> token chain.
       </Text>
 
       {foundations.map((foundation) => {
@@ -290,7 +444,7 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
                   border: "1px solid var(--sys-energy-border-default)",
                 }}
               />
-              <Text role="overline">{foundation} Tokens</Text>
+              <Text variant="overline">{foundation} Tokens</Text>
             </Inline>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
@@ -305,7 +459,13 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
                     <tr style={{ borderBottom: "1px solid var(--sys-energy-border-default)" }}>
                       {["Token", "Compact", "Default", "Comfortable"].map((h, i) => {
                         const densityKey: Density | null =
-                          i === 1 ? "compact" : i === 2 ? "default" : i === 3 ? "comfortable" : null;
+                          i === 1
+                            ? "compact"
+                            : i === 2
+                              ? "default"
+                              : i === 3
+                                ? "comfortable"
+                                : null;
                         const isActive = densityKey === activeDensity;
                         return (
                           <th
@@ -320,7 +480,9 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
                                 : "var(--sys-energy-text-secondary)",
                               textTransform: "uppercase",
                               letterSpacing: "var(--ref-voice-letter-spacing-caps)",
-                              background: isActive ? "var(--sys-energy-status-info-subtle)" : "transparent",
+                              background: isActive
+                                ? "var(--sys-energy-status-info-subtle)"
+                                : "transparent",
                             }}
                           >
                             {h}
@@ -346,7 +508,8 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
                           {row.token}
                         </td>
                         {(["compact", "defaultVal", "comfortable"] as const).map((col, i) => {
-                          const densityKey: Density = i === 0 ? "compact" : i === 1 ? "default" : "comfortable";
+                          const densityKey: Density =
+                            i === 0 ? "compact" : i === 1 ? "default" : "comfortable";
                           const isActive = densityKey === activeDensity;
                           return (
                             <td
@@ -361,7 +524,9 @@ function TokenReferenceTab({ activeDensity }: { activeDensity: Density }) {
                                 fontWeight: isActive
                                   ? "var(--ref-voice-weight-medium)"
                                   : "var(--ref-voice-weight-regular)",
-                                background: isActive ? "var(--sys-energy-status-info-subtle)" : "transparent",
+                                background: isActive
+                                  ? "var(--sys-energy-status-info-subtle)"
+                                  : "transparent",
                               }}
                             >
                               {row[col]}
@@ -386,25 +551,25 @@ function MechanismTab() {
   return (
     <Stack gap="component">
       <Text color="secondary">
-        Density is applied at the layout level via the <Code>data-density</Code> attribute.
-        All Flow components respond automatically through the CSS custom property cascade.
+        Density is applied at the layout level via the <Code>data-density</Code> attribute. All Flow
+        components respond automatically through the CSS custom property cascade.
       </Text>
 
       {/* How it works */}
       <Stack gap={3}>
-        <Text role="overline">CSS Cascade</Text>
+        <Text variant="overline">CSS Cascade</Text>
         <Surface variant="primary" padding="container" radius="container">
           <Stack gap={2}>
-            <Text role="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+            <Text variant="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
               1. Page/layout sets: <Code>&lt;div data-density=&quot;compact&quot;&gt;</Code>
             </Text>
-            <Text role="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+            <Text variant="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
               2. CSS selector <Code>[data-density=&quot;compact&quot;]</Code> overrides sys tokens
             </Text>
-            <Text role="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+            <Text variant="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
               3. Comp tokens reference sys → pick up new values automatically
             </Text>
-            <Text role="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+            <Text variant="paragraph-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
               4. Components use comp tokens → render at new density
             </Text>
           </Stack>
@@ -413,14 +578,16 @@ function MechanismTab() {
 
       {/* Automatic viewport mapping */}
       <Stack gap={3}>
-        <Text role="overline">Automatic Viewport Mapping</Text>
+        <Text variant="overline">Automatic Viewport Mapping</Text>
         <Surface variant="primary" padding="container" radius="container">
           <Stack gap={2}>
-            <Text role="paragraph-s">
-              The <Code>useFlowBreakpoint</Code> hook automatically sets <Code>data-density</Code> on{" "}
-              <Code>&lt;html&gt;</Code> based on viewport width:
+            <Text variant="paragraph-s">
+              The <Code>useFlowBreakpoint</Code> hook automatically sets <Code>data-density</Code>{" "}
+              on <Code>&lt;html&gt;</Code> based on viewport width:
             </Text>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-2)" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-2)" }}
+            >
               {[
                 { range: "< 576px", density: "compact", label: "Mobile" },
                 { range: "576px – 1439px", density: "default", label: "Tablet / Desktop" },
@@ -440,7 +607,12 @@ function MechanismTab() {
                   }}
                 >
                   <span style={{ color: "var(--sys-energy-text-secondary)" }}>{bp.range}</span>
-                  <span style={{ color: "var(--sys-energy-text-accent)", fontWeight: "var(--ref-voice-weight-medium)" }}>
+                  <span
+                    style={{
+                      color: "var(--sys-energy-text-accent)",
+                      fontWeight: "var(--ref-voice-weight-medium)",
+                    }}
+                  >
                     {bp.density}
                   </span>
                   <span style={{ color: "var(--sys-energy-text-tertiary)" }}>{bp.label}</span>
@@ -453,15 +625,15 @@ function MechanismTab() {
 
       {/* Animated transitions */}
       <Stack gap={3}>
-        <Text role="overline">Animated Density Transitions</Text>
+        <Text variant="overline">Animated Density Transitions</Text>
         <Surface variant="primary" padding="container" radius="container">
           <Stack gap={2}>
-            <Text role="paragraph-s">
-              Add <Code>data-density-animate</Code> to enable smooth transitions between density modes.
-              Gap, padding, margin, font-size, line-height, and height all transition using{" "}
+            <Text variant="paragraph-s">
+              Add <Code>data-density-animate</Code> to enable smooth transitions between density
+              modes. Gap, padding, margin, font-size, line-height, and height all transition using{" "}
               <Code>var(--sys-momentum-transition-default)</Code>.
             </Text>
-            <Text role="paragraph-s" color="secondary">
+            <Text variant="paragraph-s" color="secondary">
               This is used in the Live Demo tab above — toggle densities to see it in action.
             </Text>
           </Stack>
@@ -470,7 +642,7 @@ function MechanismTab() {
 
       {/* Foundations affected */}
       <Stack gap={3}>
-        <Text role="overline">Foundations Affected</Text>
+        <Text variant="overline">Foundations Affected</Text>
         <div
           style={{
             display: "grid",
@@ -486,8 +658,10 @@ function MechanismTab() {
           ].map((f) => (
             <Surface key={f.name} variant="secondary" padding="control" radius="container">
               <Stack gap={1}>
-                <Text role="label-m">{f.name}</Text>
-                <Text role="caption" color="tertiary">{f.desc}</Text>
+                <Text variant="label-m">{f.name}</Text>
+                <Text variant="caption" color="tertiary">
+                  {f.desc}
+                </Text>
               </Stack>
             </Surface>
           ))}
@@ -505,18 +679,18 @@ export function DensityExplorer() {
   return (
     <Stack gap="component">
       <Divider spacing={0} />
-      <Text role="overline">Interactive Explorer</Text>
-      <Text role="display-m">Density Modes</Text>
+      <Text variant="overline">Interactive Explorer</Text>
+      <Text variant="display-m">Density Modes</Text>
       <Text color="secondary" style={{ maxWidth: "var(--sys-frame-content-prose)" }}>
         Density is not a zoom — it is a coordinated adaptation of <strong>4 foundations</strong>{" "}
-        (Frame, Voice, Momentum, Comp). Toggle between compact, default, and comfortable to see
-        how the entire UI adapts through the <Code>data-density</Code> attribute cascade.
+        (Frame, Voice, Momentum, Comp). Toggle between compact, default, and comfortable to see how
+        the entire UI adapts through the <Code>data-density</Code> attribute cascade.
       </Text>
 
       {/* Controls bar */}
       <Inline gap="component" align="center" wrap>
         <DensitySwitcher value={density} onChange={setDensity} />
-        <Text role="caption" color="tertiary">
+        <Text variant="caption" color="tertiary">
           Active: <Code>{density}</Code>
         </Text>
       </Inline>
@@ -524,8 +698,16 @@ export function DensityExplorer() {
       {/* Tab bar */}
       <Inline gap={1}>
         <TabButton label="Live Demo" active={tab === "live"} onClick={() => setTab("live")} />
-        <TabButton label="Token Reference" active={tab === "tokens"} onClick={() => setTab("tokens")} />
-        <TabButton label="Mechanism" active={tab === "mechanism"} onClick={() => setTab("mechanism")} />
+        <TabButton
+          label="Token Reference"
+          active={tab === "tokens"}
+          onClick={() => setTab("tokens")}
+        />
+        <TabButton
+          label="Mechanism"
+          active={tab === "mechanism"}
+          onClick={() => setTab("mechanism")}
+        />
       </Inline>
 
       {/* Tab content */}

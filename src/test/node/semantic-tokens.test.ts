@@ -19,7 +19,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 // Read the source files once
-const primitivesSource = readFileSync(resolve("src/app/primitives.tsx"), "utf-8");
+const primitivesSource = readFileSync(resolve("packages/primitives/src/types.ts"), "utf-8");
 
 // ─────────────────────────────────────────────
 // Contract declarations

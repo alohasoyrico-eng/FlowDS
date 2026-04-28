@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowFAB } from "../app/components/controls";
+import { FlowFAB } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

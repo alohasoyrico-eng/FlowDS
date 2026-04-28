@@ -1,0 +1,131 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FILE UPLOAD — Drag-and-drop upload zone
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-3);
+}
+
+.flow-file-upload[data-state~="disabled"] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height);
+  border: var(--sys-frame-border-medium) dashed var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-frame-space-2);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    background var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+.flow-file-upload-zone[data-drag-over] {
+  border-color: var(--sys-energy-status-info);
+  background: var(--sys-energy-surface-accent-subtle);
+}
+
+.flow-file-upload[data-state~="disabled"] .flow-file-upload-zone {
+  cursor: default;
+}
+
+.flow-file-upload[data-size="sm"] .flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height-sm);
+}
+
+.flow-file-upload[data-size="lg"] .flow-file-upload-zone {
+  height: var(--comp-file-upload-zone-height-lg);
+}
+
+.flow-file-upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-file-upload-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-2) var(--ref-frame-space-3);
+  background: var(--sys-energy-surface-secondary);
+  border-radius: var(--sys-frame-radius-control);
+}
+
+.flow-file-upload-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.flow-file-upload-item-name {
+  font-size: var(--sys-voice-label-m-size);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flow-file-upload-item-size {
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-file-upload-progress {
+  width: 100%;
+  height: var(--ref-frame-space-1);
+  background: var(--sys-energy-surface-interactive);
+  border-radius: var(--ref-frame-radius-full);
+  overflow: hidden;
+  margin-block-start: var(--ref-frame-space-1);
+}
+
+.flow-file-upload-progress-bar {
+  height: 100%;
+  background: var(--sys-energy-surface-accent);
+  border-radius: var(--ref-frame-radius-full);
+  transition: width var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+.flow-file-upload-item[data-status="error"] .flow-file-upload-progress-bar {
+  background: var(--sys-energy-status-error);
+}
+
+.flow-file-upload-item[data-status="success"] .flow-file-upload-progress-bar {
+  background: var(--sys-energy-status-success);
+}
+
+.flow-file-upload-item-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ref-frame-space-1);
+  display: flex;
+  color: var(--sys-energy-text-tertiary);
+  border-radius: var(--ref-frame-radius-1);
+}
+
+.flow-file-upload-item-remove:hover {
+  color: var(--sys-energy-text-secondary);
+  background: var(--sys-energy-state-hover);
+}
+
+/* WHCM: zone's outline: none suppresses .flow-focusable fallback; restore */
+@media (forced-colors: active) {
+  .flow-file-upload-zone:focus-visible {
+    outline: var(--sys-state-focus-ring-width) solid CanvasText;
+    outline-offset: var(--sys-state-focus-ring-offset);
+  }
+}

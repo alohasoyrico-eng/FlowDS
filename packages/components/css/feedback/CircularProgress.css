@@ -1,0 +1,119 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CIRCULAR PROGRESS — Circular loading indicator (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-circular-progress {
+  --cp-size: var(--comp-circular-progress-size-md);
+  --cp-font: var(--comp-circular-progress-font-md);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cp-size);
+  height: var(--cp-size);
+}
+
+.flow-circular-progress[data-size="sm"] {
+  --cp-size: var(--comp-circular-progress-size-sm);
+  --cp-font: var(--comp-circular-progress-font-sm);
+}
+
+.flow-circular-progress[data-size="lg"] {
+  --cp-size: var(--comp-circular-progress-size-lg);
+  --cp-font: var(--comp-circular-progress-font-lg);
+}
+
+.flow-circular-progress[data-size="xl"] {
+  --cp-size: var(--comp-circular-progress-size-xl);
+  --cp-font: var(--comp-circular-progress-font-xl);
+}
+
+.flow-circular-progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.flow-circular-progress-track {
+  fill: none;
+  stroke: var(--comp-circular-progress-track-color);
+  stroke-width: var(--comp-circular-progress-stroke-width);
+}
+
+.flow-circular-progress-fill {
+  fill: none;
+  stroke: var(--comp-circular-progress-fill-default);
+  stroke-width: var(--comp-circular-progress-stroke-width);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--comp-circular-progress-transition);
+}
+
+.flow-circular-progress-fill[data-status="success"] {
+  stroke: var(--comp-circular-progress-fill-success);
+}
+
+.flow-circular-progress-fill[data-status="warning"] {
+  stroke: var(--comp-circular-progress-fill-warning);
+}
+
+.flow-circular-progress-fill[data-status="error"] {
+  stroke: var(--comp-circular-progress-fill-error);
+}
+
+/* Indeterminate animation */
+.flow-circular-progress[data-indeterminate] .flow-circular-progress-svg {
+  animation: flow-cp-rotate var(--comp-circular-progress-spin-duration)
+    var(--comp-circular-progress-spin-easing-rotate) infinite;
+}
+
+.flow-circular-progress[data-indeterminate] .flow-circular-progress-fill {
+  stroke-dasharray: 80, 200;
+  stroke-dashoffset: 0;
+  animation: flow-cp-dash var(--comp-circular-progress-spin-duration)
+    var(--comp-circular-progress-spin-easing-dash) infinite;
+}
+
+@keyframes flow-cp-rotate {
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes flow-cp-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -15;
+  }
+
+  100% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -125;
+  }
+}
+
+.flow-circular-progress-label {
+  position: absolute;
+  font-family: var(--comp-circular-progress-label-family);
+  font-size: var(--cp-font);
+  font-weight: var(--comp-circular-progress-label-weight);
+  color: var(--comp-circular-progress-label);
+  line-height: var(--sys-voice-line-height-none);
+}
+
+/* When CircularProgress is used inside a button, inherit text color for spinner */
+.flow-btn-v2 .flow-circular-progress-fill,
+.flow-icon-btn .flow-circular-progress-fill {
+  stroke: currentcolor;
+}
+
+.flow-btn-v2 .flow-circular-progress-track,
+.flow-icon-btn .flow-circular-progress-track {
+  stroke: currentcolor;
+  opacity: var(--ref-state-opacity-faint);
+}

@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowTabs } from "../app/components/navigation";
+import { FlowTabs } from "@flow/components";
 
 const DEFAULT_TABS = [
   { key: "overview", label: "Overview" },
@@ -157,8 +157,7 @@ describe("FlowTabs — tab count boundaries", () => {
 // ─────────────────────────────────────────────
 
 describe("FlowTabs — accessibility", () => {
-  // TODO: aria-controls references panel id not present in DOM — fix FlowTabs to render tabpanel
-  it.skip("has no axe violations", async () => {
+  it("has no axe violations", async () => {
     const { container } = render(
       <FlowTabs activeKey="overview" onChange={() => {}} tabs={DEFAULT_TABS} />,
     );

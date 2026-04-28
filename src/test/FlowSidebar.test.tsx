@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowSidebar } from "../app/components/navigation";
+import { FlowSidebar } from "@flow/components";
 
 const DEFAULT_GROUPS = [
   {
@@ -114,16 +114,18 @@ describe("FlowSidebar — interaction", () => {
   it("calls onCollapsedChange when toggle button is clicked", async () => {
     const onCollapsedChange = vi.fn();
     render(
-      <FlowSidebar groups={DEFAULT_GROUPS} collapsed={false} onCollapsedChange={onCollapsedChange} />,
+      <FlowSidebar
+        groups={DEFAULT_GROUPS}
+        collapsed={false}
+        onCollapsedChange={onCollapsedChange}
+      />,
     );
     await userEvent.click(screen.getByRole("button", { name: "Collapse sidebar" }));
     expect(onCollapsedChange).toHaveBeenCalledWith(true);
   });
 
   it("shows expand label on toggle when collapsed", () => {
-    render(
-      <FlowSidebar groups={DEFAULT_GROUPS} collapsed onCollapsedChange={vi.fn()} />,
-    );
+    render(<FlowSidebar groups={DEFAULT_GROUPS} collapsed onCollapsedChange={vi.fn()} />);
     expect(screen.getByRole("button", { name: "Expand sidebar" })).toBeInTheDocument();
   });
 

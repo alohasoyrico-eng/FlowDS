@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowTopbar } from "../app/components/patterns";
+import { FlowTopbar } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -61,9 +61,7 @@ describe("FlowTopbar — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(
-      <FlowTopbar title="My App" actions={<button>Profile</button>} />,
-    );
+    const { container } = render(<FlowTopbar title="My App" actions={<button>Profile</button>} />);
     expect(await axe(container)).toHaveNoViolations();
   });
 });

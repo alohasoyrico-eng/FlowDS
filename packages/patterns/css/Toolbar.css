@@ -1,0 +1,44 @@
+/* ━━━━━━━━━━━━━━━━━━━━━���━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOOLBAR — Desktop action bar (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-toolbar {
+  --toolbar-height: var(--comp-toolbar-height-md);
+
+  display: flex;
+  align-items: center;
+  gap: var(--comp-toolbar-gap);
+  padding: 0 var(--comp-toolbar-padding);
+  height: var(--toolbar-height);
+  background: var(--comp-toolbar-bg);
+  border-radius: var(--comp-toolbar-radius);
+}
+
+.flow-toolbar[data-bordered] {
+  border: var(--ref-frame-border-thin) solid var(--comp-toolbar-border);
+}
+
+.flow-toolbar[data-size="sm"] {
+  --toolbar-height: var(--comp-toolbar-height-sm);
+}
+
+.flow-toolbar[data-size="lg"] {
+  --toolbar-height: var(--comp-toolbar-height-lg);
+}
+
+.flow-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-toolbar-gap);
+}
+
+.flow-toolbar-divider {
+  width: var(--comp-toolbar-divider-width);
+  height: var(--comp-toolbar-divider-height);
+  background: var(--comp-toolbar-divider-color);
+  flex-shrink: 0;
+}
+
+.flow-toolbar-spacer {
+  flex: 1;
+}

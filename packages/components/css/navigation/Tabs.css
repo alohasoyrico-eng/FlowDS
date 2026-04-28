@@ -1,0 +1,216 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TABS — Adaptive tab navigation (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.flow-tablist {
+  --tab-height: var(--comp-tabs-height-md);
+  --tab-font: var(--comp-tabs-font-md);
+  --tab-px: var(--comp-tabs-padding-x-md);
+
+  display: flex;
+  align-items: stretch;
+  border-block-end: var(--ref-frame-border-thin) solid var(--comp-tabs-border-default);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.flow-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.flow-tablist[data-size="sm"] {
+  --tab-height: var(--comp-tabs-height-sm);
+  --tab-font: var(--comp-tabs-font-sm);
+  --tab-px: var(--comp-tabs-padding-x-sm);
+}
+
+.flow-tablist[data-size="lg"] {
+  --tab-height: var(--comp-tabs-height-lg);
+  --tab-font: var(--comp-tabs-font-lg);
+  --tab-px: var(--comp-tabs-padding-x-lg);
+}
+
+.flow-tablist[data-size="xl"] {
+  --tab-height: var(--comp-tabs-height-xl);
+  --tab-font: var(--comp-tabs-font-xl);
+  --tab-px: var(--comp-tabs-padding-x-xl);
+}
+
+/* Filled variant */
+.flow-tablist[data-variant="filled"] {
+  border-block-end: none;
+  background: var(--comp-tabs-filled-bg);
+  border-radius: var(--comp-tabs-filled-radius);
+  padding: var(--comp-tabs-filled-padding);
+  gap: var(--comp-tabs-filled-gap);
+}
+
+.flow-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--comp-tabs-gap);
+  height: var(--tab-height);
+  padding: 0 var(--tab-px);
+  border: none;
+  background: transparent;
+  color: var(--comp-tabs-text-default);
+  font-family: var(--sys-voice-family);
+  font-size: var(--tab-font);
+  font-weight: var(--sys-voice-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition:
+    color var(--sys-momentum-transition-default),
+    background var(--sys-momentum-transition-default);
+  flex-shrink: 0;
+}
+
+.flow-tab:hover {
+  color: var(--comp-tabs-text-hover);
+}
+
+.flow-tab[aria-selected="true"] {
+  color: var(--comp-tabs-text-active);
+  font-weight: var(--sys-voice-weight-semibold);
+}
+
+/* Focus ring — double box-shadow (gap fill + ring).
+   outline doesn't follow border-radius in Chromium sandbox.
+   Matches FlowButton pattern. */
+.flow-tab:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  border-radius: var(--comp-tabs-focus-radius);
+  box-shadow:
+    0 0 0 var(--comp-tabs-focus-ring-offset) var(--comp-tabs-focus-gap-color),
+    0 0 0 calc(var(--comp-tabs-focus-ring-offset) + var(--comp-tabs-focus-ring-width))
+      var(--comp-tabs-focus-ring-color);
+}
+
+@media (forced-colors: active) {
+  .flow-tab:focus-visible {
+    outline: var(--comp-tabs-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-tabs-focus-ring-offset);
+    box-shadow: none;
+  }
+}
+
+.flow-tab[disabled] {
+  color: var(--comp-tabs-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Label wrapper — inline-grid overlap prevents layout shift
+   when font-weight changes between medium ↔ semibold on selection.
+   The invisible bold ::after reserves the maximum text width. */
+.flow-tab-label {
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.flow-tab-label > span,
+.flow-tab-label::after {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.flow-tab-label::after {
+  content: attr(data-text);
+  font-weight: var(--sys-voice-weight-semibold);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Line indicator */
+.flow-tab::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: var(--tab-px);
+  inset-inline-end: var(--tab-px);
+  height: var(--comp-tabs-indicator-height);
+  background: transparent;
+  border-radius: var(--comp-tabs-indicator-height);
+  transition: background var(--sys-momentum-transition-default);
+}
+
+.flow-tab[aria-selected="true"]::after {
+  background: var(--comp-tabs-indicator);
+}
+
+/* Filled variant tab */
+.flow-tablist[data-variant="filled"] .flow-tab {
+  border-radius: calc(var(--comp-tabs-filled-radius) - var(--comp-tabs-filled-tab-radius-inset));
+}
+
+.flow-tablist[data-variant="filled"] .flow-tab::after {
+  display: none;
+}
+
+.flow-tablist[data-variant="filled"] .flow-tab[aria-selected="true"] {
+  background: var(--comp-tabs-filled-active-bg);
+  box-shadow: var(--comp-tabs-filled-active-shadow);
+}
+
+/* Tab panel */
+.flow-tabpanel {
+  padding-block-start: var(--sys-frame-gap-component);
+}
+
+/* Tabpanel focus ring — double box-shadow pattern */
+.flow-tabpanel:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  border-radius: var(--comp-tabs-focus-radius);
+  box-shadow:
+    0 0 0 var(--comp-tabs-focus-ring-offset) var(--comp-tabs-focus-gap-color),
+    0 0 0 calc(var(--comp-tabs-focus-ring-offset) + var(--comp-tabs-focus-ring-width))
+      var(--comp-tabs-focus-ring-color);
+}
+
+@media (forced-colors: active) {
+  .flow-tabpanel:focus-visible {
+    outline: var(--comp-tabs-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-tabs-focus-ring-offset);
+    box-shadow: none;
+  }
+}
+
+/* ── Tabs responsive step-down ──
+   Font already scales via sys.voice aliases; height, padding-x, and gap
+   step down −1 (tablet) / −2 (phone), sm = floor.
+   Scroll safety-net in .flow-tablist remains as passive fallback. */
+
+/* Tablet: −1 step (< 992px) */
+@media (width <= 991px) {
+  :root {
+    --comp-tabs-height-md: var(--ref-frame-space-10); /* 40px ← 44 (= sm) */
+    --comp-tabs-height-lg: var(--ref-frame-space-11); /* 44px ← 48 (= md) */
+    --comp-tabs-height-xl: var(--ref-frame-space-12); /* 48px ← 56 (= lg) */
+    --comp-tabs-padding-x-md: var(--ref-frame-space-3); /* 12px ← 16 (= sm) */
+    --comp-tabs-padding-x-lg: var(--ref-frame-space-4); /* 16px ← 20 (= md) */
+    --comp-tabs-padding-x-xl: var(--ref-frame-space-5); /* 20px ← 24 (= lg) */
+  }
+}
+
+/* Phone: −2 steps (< 576px) */
+@media (width <= 575px) {
+  :root {
+    --comp-tabs-height-md: var(--ref-frame-space-10); /* 40px — floor (= sm) */
+    --comp-tabs-height-lg: var(--ref-frame-space-10); /* 40px — floor (= sm) */
+    --comp-tabs-height-xl: var(--ref-frame-space-11); /* 44px ← 56 (= md−2) */
+    --comp-tabs-padding-x-md: var(--ref-frame-space-3); /* 12px — floor (= sm) */
+    --comp-tabs-padding-x-lg: var(--ref-frame-space-3); /* 12px — floor (= sm) */
+    --comp-tabs-padding-x-xl: var(--ref-frame-space-4); /* 16px ← 24 (= md−2) */
+    --comp-tabs-gap: var(--ref-frame-space-1); /* 4px ← 8 */
+  }
+}

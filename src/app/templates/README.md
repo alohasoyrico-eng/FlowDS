@@ -174,9 +174,9 @@ Use these semantic roles consistently:
 
 | Role | Use Case | Example |
 |------|----------|---------|
-| `<Text role="overline">` | Subsection separators | "Without fullWidth", "Action row" |
-| `<Text role="label-s" color="tertiary">` | Individual element labels | "sm", "12 columns" |
-| `<Text role="label-m" color="secondary">` | Matrix row labels | "Unselected", "primary" |
+| `<Text variant="overline">` | Subsection separators | "Without fullWidth", "Action row" |
+| `<Text variant="label-s" color="tertiary">` | Individual element labels | "sm", "12 columns" |
+| `<Text variant="label-m" color="secondary">` | Matrix row labels | "Unselected", "primary" |
 
 ---
 
@@ -204,7 +204,7 @@ Optional sections:
 ✅ **DO:**
 - Use `useDemoSize()` for States, Emphasis, and single-instance demos
 - Always show all sizes explicitly in "Sizes" section
-- Use `<Text role="overline">` for subsection separators
+- Use `<Text variant="overline">` for subsection separators
 - Use `display: contents` in CSS Grids (not `<Fragment>`)
 - Follow the canonical FlowButton documentation structure
 
@@ -227,7 +227,7 @@ When refactoring existing component docs to use the template:
 - [ ] Replace local `statesGridStyle` with template import
 - [ ] Update "Sizes" section to use explicit size loop (not `useDemoSize`)
 - [ ] Ensure "States" section uses `useDemoSize()`
-- [ ] Add `<Text role="overline">` for subsections where appropriate
+- [ ] Add `<Text variant="overline">` for subsections where appropriate
 - [ ] Verify `label-s tertiary` for individual labels
 - [ ] Verify `label-m secondary` for matrix row labels
 - [ ] Remove any custom grid implementations (use template helpers)

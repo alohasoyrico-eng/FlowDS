@@ -12,7 +12,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Duration data ──
 interface DurationToken {
@@ -412,7 +412,7 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
   if (type === "micro") {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-4)" }}>
-        <Text role="caption" color="secondary">
+        <Text variant="caption" color="secondary">
           Hover states, button press feedback (100ms, standard easing)
         </Text>
         <div style={{ display: "flex", gap: "var(--ref-frame-space-4)", flexWrap: "wrap" }}>
@@ -483,7 +483,7 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
   if (type === "transition") {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-4)" }}>
-        <Text role="caption" color="secondary">
+        <Text variant="caption" color="secondary">
           Expand/collapse, dropdown, page fade (200-350ms, enter/exit easing)
         </Text>
         <button
@@ -512,10 +512,10 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
         >
           <Surface padding="control" variant="secondary">
             <Stack gap={2}>
-              <Text role="caption" color="accent">
+              <Text variant="caption" color="accent">
                 Panel content revealed
               </Text>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 This panel uses 350ms enter easing to appear and exit easing to collapse. The
                 opacity transitions at 200ms for a snappy feel.
               </Text>
@@ -530,7 +530,7 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
     const items = ["Dashboard", "Analytics", "Reports", "Settings", "Users"];
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-4)" }}>
-        <Text role="caption" color="secondary">
+        <Text variant="caption" color="secondary">
           Staggered list reveal (50ms stagger, 200ms each, enter easing)
         </Text>
         <button
@@ -559,7 +559,9 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
                 background: "var(--sys-energy-surface-secondary)",
                 border: "1px solid var(--sys-energy-border-default)",
                 opacity: active ? 1 : 0,
-                transform: active ? "translateX(0)" : "translateX(calc(-1 * var(--ref-frame-space-3)))",
+                transform: active
+                  ? "translateX(0)"
+                  : "translateX(calc(-1 * var(--ref-frame-space-3)))",
                 transition: `opacity var(--ref-momentum-duration-normal) var(--ref-momentum-easing-enter) ${i * 50}ms, transform var(--ref-momentum-duration-normal) var(--ref-momentum-easing-enter) ${i * 50}ms`,
                 fontFamily: "var(--ref-voice-family-sans)",
                 fontSize: "var(--ref-voice-size-5)",
@@ -577,7 +579,7 @@ function LiveDemo({ type }: { type: "micro" | "transition" | "choreography" | "c
   // continuous
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-4)" }}>
-      <Text role="caption" color="secondary">
+      <Text variant="caption" color="secondary">
         Loading spinners, progress indicators (infinite loop using ref.momentum.duration.cycle)
       </Text>
       <div style={{ display: "flex", gap: "var(--ref-frame-space-6)", alignItems: "center" }}>
@@ -642,8 +644,8 @@ export function MomentumExplorer() {
       <Divider spacing={0} />
 
       <Stack gap={2}>
-        <Text role="overline">Interactive Explorer</Text>
-        <Text role="heading-l">Motion System</Text>
+        <Text variant="overline">Interactive Explorer</Text>
+        <Text variant="heading-l">Motion System</Text>
         <Text color="secondary">
           5-step duration scale, 4 easing curves, stagger delays, and density-responsive timing. All
           motion respects prefers-reduced-motion.
@@ -783,7 +785,7 @@ export function MomentumExplorer() {
                     </span>
                     <Text style={{ fontWeight: "var(--ref-voice-weight-semibold)" }}>{d.name}</Text>
                   </Inline>
-                  <Text role="caption" color="secondary">
+                  <Text variant="caption" color="secondary">
                     {d.useCase}
                   </Text>
                   <div
@@ -802,7 +804,7 @@ export function MomentumExplorer() {
 
           {/* Stagger tokens */}
           <Stack gap={3}>
-            <Text role="overline">Stagger Delays</Text>
+            <Text variant="overline">Stagger Delays</Text>
             <Text color="secondary">
               Used in choreographed sequences where multiple elements animate in succession. Each
               item&apos;s animation starts after the previous item&apos;s stagger delay.
@@ -832,7 +834,7 @@ export function MomentumExplorer() {
                         Stagger {s.name}
                       </Text>
                     </Inline>
-                    <Text role="caption" color="secondary">
+                    <Text variant="caption" color="secondary">
                       {s.useCase}
                     </Text>
                     <div
@@ -924,7 +926,7 @@ export function MomentumExplorer() {
               <Inline gap={4} style={{ alignItems: "flex-start" }}>
                 <EasingCurve easing={EASINGS[selectedEasing]} size={160} selected />
                 <Stack gap={3} style={{ flex: 1 }}>
-                  <Text role="heading-m" style={{ margin: 0 }}>
+                  <Text variant="heading-m" style={{ margin: 0 }}>
                     {EASINGS[selectedEasing].name} Easing
                   </Text>
                   <Text color="secondary">{EASINGS[selectedEasing].description}</Text>
@@ -956,7 +958,7 @@ export function MomentumExplorer() {
                   </div>
                   {/* Animated preview ball */}
                   <div style={{ marginTop: "var(--ref-frame-space-2)" }}>
-                    <Text role="overline">Animation Preview</Text>
+                    <Text variant="overline">Animation Preview</Text>
                     <EasingPreviewBall easing={EASINGS[selectedEasing]} />
                   </div>
                 </Stack>
@@ -971,7 +973,7 @@ export function MomentumExplorer() {
         <Stack gap="component">
           <Surface padding="container">
             <Stack gap={3}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Micro-interactions
               </Text>
               <span
@@ -993,7 +995,7 @@ export function MomentumExplorer() {
 
           <Surface padding="container">
             <Stack gap={3}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Transitions
               </Text>
               <span
@@ -1015,7 +1017,7 @@ export function MomentumExplorer() {
 
           <Surface padding="container">
             <Stack gap={3}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Choreography
               </Text>
               <span
@@ -1037,7 +1039,7 @@ export function MomentumExplorer() {
 
           <Surface padding="container">
             <Stack gap={3}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Continuous
               </Text>
               <span
@@ -1064,7 +1066,7 @@ export function MomentumExplorer() {
         <Stack gap="component">
           {/* Ref tokens table */}
           <Stack gap={3}>
-            <Text role="overline">Ref Tokens (Raw Scale)</Text>
+            <Text variant="overline">Ref Tokens (Raw Scale)</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -1166,7 +1168,7 @@ export function MomentumExplorer() {
 
           {/* Easing tokens table */}
           <Stack gap={3}>
-            <Text role="overline">Easing Functions</Text>
+            <Text variant="overline">Easing Functions</Text>
             <Surface padding={0} border={true} radius="container">
               <div style={{ overflowX: "auto" }}>
                 <table
@@ -1247,8 +1249,8 @@ export function MomentumExplorer() {
 
           {/* Sys mapping — density-responsive */}
           <Stack gap={3}>
-            <Text role="overline">Sys Tokens (Density-Responsive)</Text>
-            <Text role="caption" color="secondary">
+            <Text variant="overline">Sys Tokens (Density-Responsive)</Text>
+            <Text variant="caption" color="secondary">
               Sys momentum tokens shift with density mode. Compact UIs use faster timings;
               comfortable UIs allow more expressive transitions.
             </Text>
@@ -1338,7 +1340,7 @@ export function MomentumExplorer() {
 
           {/* Composite transition tokens */}
           <Stack gap={3}>
-            <Text role="overline">Composite Transition Tokens</Text>
+            <Text variant="overline">Composite Transition Tokens</Text>
             <Surface padding="control" variant="secondary">
               <div
                 style={{
@@ -1382,13 +1384,14 @@ export function MomentumExplorer() {
         <Stack gap="component">
           <Surface padding="container">
             <Stack gap={4}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 prefers-reduced-motion Strategy
               </Text>
               <Text color="secondary">
-                When the user&apos;s system setting requests reduced motion, FLOW adapts all animations
-                to be non-disorienting. The strategy is progressive: remove spatial animations
-                first, simplify to opacity-only fades, and reduce durations to near-instant.
+                When the user&apos;s system setting requests reduced motion, FLOW adapts all
+                animations to be non-disorienting. The strategy is progressive: remove spatial
+                animations first, simplify to opacity-only fades, and reduce durations to
+                near-instant.
               </Text>
 
               <div
@@ -1401,7 +1404,7 @@ export function MomentumExplorer() {
                 {/* Standard */}
                 <Surface padding="control" variant="secondary">
                   <Stack gap={3}>
-                    <Text role="overline">Standard Motion</Text>
+                    <Text variant="overline">Standard Motion</Text>
                     <div
                       style={{
                         fontFamily: "var(--ref-voice-family-mono)",
@@ -1422,7 +1425,7 @@ export function MomentumExplorer() {
                 {/* Reduced */}
                 <Surface padding="control" variant="secondary">
                   <Stack gap={3}>
-                    <Text role="overline">Reduced Motion</Text>
+                    <Text variant="overline">Reduced Motion</Text>
                     <div
                       style={{
                         fontFamily: "var(--ref-voice-family-mono)",
@@ -1445,7 +1448,7 @@ export function MomentumExplorer() {
 
           <Surface padding="container">
             <Stack gap={4}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Implementation Pattern
               </Text>
               <Surface padding="control" variant="secondary">
@@ -1517,7 +1520,7 @@ export function MomentumExplorer() {
 
           <Surface padding="container">
             <Stack gap={4}>
-              <Text role="heading-m" style={{ margin: 0 }}>
+              <Text variant="heading-m" style={{ margin: 0 }}>
                 Decision Matrix
               </Text>
               <Surface padding={0} border={true} radius="container">
@@ -1615,11 +1618,12 @@ function EasingPreviewBall({ easing }: { easing: EasingToken }) {
 
   useEffect(() => {
     // Read the slower duration token from CSS and add a pause buffer
-    const slowerMs = parseFloat(
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--ref-momentum-duration-slower")
-        .trim(),
-    ) || 500;
+    const slowerMs =
+      parseFloat(
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--ref-momentum-duration-slower")
+          .trim(),
+      ) || 500;
     const intervalMs = slowerMs + 700; // duration + pause
     const interval = setInterval(() => {
       setAnimate((a) => !a);

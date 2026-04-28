@@ -5,9 +5,18 @@
  */
 import { Link, Navigate, useParams } from "react-router";
 
-import { Divider, FlowButton, FlowChip, Grid, Inline, Stack, Surface, Text } from "../../lib";
+import {
+  Divider,
+  FlowButton,
+  FlowChip,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import { Callout, PAGE_GAP, PageHeader, Section } from "../components/doc-primitives";
-import { PATTERN_DEMO_MAP } from "./domain-demos";
+import { LayoutGrid } from "../components/layout-grid";
 
 type Platform = "shared" | "desktop" | "mobile";
 
@@ -766,173 +775,163 @@ export function PatternsByCategoryPage() {
   const cat = PATTERN_CATEGORIES[category];
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Layer 4 — Patterns" title={cat.title}>
-        {cat.description}
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Layer 4 — Patterns" title={cat.title}>
+              {cat.description}
+            </PageHeader>
 
-      <Callout>
-        <Text role="paragraph-s" color="accent">
-          <strong>Import:</strong>{" "}
-          <code style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
-            import {"{ ... }"} from &quot;../components/patterns&quot;;
-          </code>
-        </Text>
-      </Callout>
-
-      {/* Pattern list */}
-      <Stack gap={2}>
-        {cat.patterns.map((p) => (
-          <Inline key={p.exportName} gap={2} align="center">
-            <PlatformBadge platform={p.platform} />
-            <Text role="label-m">{p.exportName}</Text>
-            <Text role="caption" color="tertiary">
-              {p.name}
-            </Text>
-          </Inline>
-        ))}
-      </Stack>
-
-      <Divider spacing={2} />
-
-      {/* Detailed pattern specs */}
-      {cat.patterns.map((p, idx) => (
-        <Stack key={p.exportName} gap={3}>
-          <Inline gap={3} align="center">
-            <Inline
-              gap={0}
-              justify="center"
-              style={{
-                width: "var(--ref-frame-doc-badge-sm)",
-                height: "var(--ref-frame-doc-badge-sm)",
-                borderRadius: "var(--ref-frame-radius-2)",
-                background: "var(--sys-energy-surface-sunken)",
-              }}
-            >
-              <Text role="heading-m" color="tertiary">
-                &#11042;
+            <Callout>
+              <Text variant="paragraph-s" color="accent">
+                <strong>Import:</strong>{" "}
+                <code style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+                  import {"{ ... }"} from &quot;../components/patterns&quot;;
+                </code>
               </Text>
-            </Inline>
-            <Stack gap={1}>
-              <Inline gap={2} align="center">
-                <Text role="heading-l">{p.name}</Text>
-                <PlatformBadge platform={p.platform} />
-              </Inline>
-              <Inline gap={2}>
-                <FlowChip variant="accent" size="sm">
-                  PATTERN
-                </FlowChip>
-                <Text role="code">{p.exportName}</Text>
-              </Inline>
-            </Stack>
-          </Inline>
+            </Callout>
 
-          {/* Purpose */}
-          <Surface
-            padding="control"
-            className="flow-doc-accent"
-          >
+            {/* Pattern list */}
             <Stack gap={2}>
-              <Text role="overline">Purpose</Text>
-              <Text role="paragraph-s">{p.purpose}</Text>
-            </Stack>
-          </Surface>
-
-          {/* View Details Button */}
-          <Link
-            to={`/patterns/${category}/${p.exportName
-              .replace(/^Flow/, "")
-              .replace(/([a-z])([A-Z])/g, "$1-$2")
-              .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-              .toLowerCase()}`}
-          >
-            <FlowButton variant="outline" size="sm">
-              View Documentation & Demos
-            </FlowButton>
-          </Link>
-
-          {/* Composes + Orchestrates */}
-          <Grid minItemWidth="280px" gap={3}>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline" color="accent">
-                  Composes (L3)
-                </Text>
-                <Inline gap={2} wrap>
-                  {p.composesL3.map((c) => (
-                    <FlowChip key={c} size="sm">
-                      {c}
-                    </FlowChip>
-                  ))}
-                </Inline>
-              </Stack>
-            </Surface>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline" color="success">
-                  Orchestrates
-                </Text>
-                <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
-                  {p.orchestrates.map((o, i) => (
-                    <li key={i}>
-                      <Text role="paragraph-s" as="span">
-                        {o}
-                      </Text>
-                    </li>
-                  ))}
-                </ul>
-              </Stack>
-            </Surface>
-          </Grid>
-
-          {/* Source + Redundancy */}
-          <Inline gap={3} wrap>
-            <Surface padding="control" style={{ flex: 1 }}>
-              <Stack gap={2}>
-                <Text role="overline">Source</Text>
-                <Text role="code">{p.source}</Text>
-              </Stack>
-            </Surface>
-            {p.redundancyNote && (
-              <Surface
-                padding="control"
-                className="flow-doc-accent flow-doc-accent--warning"
-                style={{ flex: 2 }}
-              >
-                <Stack gap={2}>
-                  <Text role="overline" color="warning">
-                    Redundancy Resolution
+              {cat.patterns.map((p) => (
+                <Inline key={p.exportName} gap={2} align="center">
+                  <PlatformBadge platform={p.platform} />
+                  <Text variant="label-m">{p.exportName}</Text>
+                  <Text variant="caption" color="tertiary">
+                    {p.name}
                   </Text>
-                  <Text role="paragraph-s">{p.redundancyNote}</Text>
-                </Stack>
-              </Surface>
-            )}
-          </Inline>
+                </Inline>
+              ))}
+            </Stack>
 
-          {idx < cat.patterns.length - 1 && <Divider spacing={2} />}
-        </Stack>
-      ))}
+            <Divider spacing={2} />
 
-      {/* Live Demos */}
-      {category && PATTERN_DEMO_MAP[category] && (
-        <>
-          <Divider spacing={2} />
-          <Section title="Live Demos">
-            {(() => {
-              const DemoComponent = PATTERN_DEMO_MAP[category];
-              return <DemoComponent />;
-            })()}
-          </Section>
-        </>
-      )}
+            {/* Detailed pattern specs */}
+            {cat.patterns.map((p, idx) => (
+              <Stack key={p.exportName} gap={3}>
+                <Inline gap={3} align="center">
+                  <Inline
+                    gap={0}
+                    justify="center"
+                    style={{
+                      width: "var(--ref-frame-doc-badge-sm)",
+                      height: "var(--ref-frame-doc-badge-sm)",
+                      borderRadius: "var(--ref-frame-radius-2)",
+                      background: "var(--sys-energy-surface-sunken)",
+                    }}
+                  >
+                    <Text variant="heading-m" color="tertiary">
+                      &#11042;
+                    </Text>
+                  </Inline>
+                  <Stack gap={1}>
+                    <Inline gap={2} align="center">
+                      <Text variant="heading-l">{p.name}</Text>
+                      <PlatformBadge platform={p.platform} />
+                    </Inline>
+                    <Inline gap={2}>
+                      <FlowChip variant="filled" status="info" size="sm">
+                        PATTERN
+                      </FlowChip>
+                      <Text variant="code">{p.exportName}</Text>
+                    </Inline>
+                  </Stack>
+                </Inline>
 
-      {/* Back to Patterns */}
-      <Link to="/patterns">
-        <FlowButton variant="ghost" size="sm">
-          <Text role="label-m">Back to Patterns</Text>
-        </FlowButton>
-      </Link>
-    </Stack>
+                {/* Purpose */}
+                <Surface padding="control" className="flow-doc-accent">
+                  <Stack gap={2}>
+                    <Text variant="overline">Purpose</Text>
+                    <Text variant="paragraph-s">{p.purpose}</Text>
+                  </Stack>
+                </Surface>
+
+                {/* View Details Button */}
+                <Link
+                  to={`/patterns/${category}/${p.exportName
+                    .replace(/^Flow/, "")
+                    .replace(/([a-z])([A-Z])/g, "$1-$2")
+                    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+                    .toLowerCase()}`}
+                >
+                  <FlowButton variant="outlined" size="sm">
+                    View Documentation & Demos
+                  </FlowButton>
+                </Link>
+
+                {/* Composes + Orchestrates */}
+                <Grid minItemWidth="280px" gap={3}>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="accent">
+                        Composes (L3)
+                      </Text>
+                      <Inline gap={2} wrap>
+                        {p.composesL3.map((c) => (
+                          <FlowChip key={c} size="sm">
+                            {c}
+                          </FlowChip>
+                        ))}
+                      </Inline>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="success">
+                        Orchestrates
+                      </Text>
+                      <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
+                        {p.orchestrates.map((o, i) => (
+                          <li key={i}>
+                            <Text variant="paragraph-s" as="span">
+                              {o}
+                            </Text>
+                          </li>
+                        ))}
+                      </ul>
+                    </Stack>
+                  </Surface>
+                </Grid>
+
+                {/* Source + Redundancy */}
+                <Inline gap={3} wrap>
+                  <Surface padding="control" style={{ flex: 1 }}>
+                    <Stack gap={2}>
+                      <Text variant="overline">Source</Text>
+                      <Text variant="code">{p.source}</Text>
+                    </Stack>
+                  </Surface>
+                  {p.redundancyNote && (
+                    <Surface
+                      padding="control"
+                      className="flow-doc-accent flow-doc-accent--warning"
+                      style={{ flex: 2 }}
+                    >
+                      <Stack gap={2}>
+                        <Text variant="overline" color="warning">
+                          Redundancy Resolution
+                        </Text>
+                        <Text variant="paragraph-s">{p.redundancyNote}</Text>
+                      </Stack>
+                    </Surface>
+                  )}
+                </Inline>
+
+                {idx < cat.patterns.length - 1 && <Divider spacing={2} />}
+              </Stack>
+            ))}
+
+            {/* Back to Patterns */}
+            <Link to="/patterns">
+              <FlowButton variant="ghost" size="sm">
+                <Text variant="label-m">Back to Patterns</Text>
+              </FlowButton>
+            </Link>
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }
 

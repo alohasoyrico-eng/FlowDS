@@ -7,7 +7,7 @@
  */
 import { useState } from "react";
 
-import { Inline, Stack, Surface, Text } from "../primitives";
+import { Inline, Stack, Surface, Text } from "@flow/primitives";
 
 type Density = "compact" | "default" | "comfortable";
 
@@ -291,7 +291,13 @@ function CategoryBadge({ cat }: { cat: (typeof CATEGORIES)[number] }) {
       }}
     >
       <span
-        style={{ width: "var(--ref-frame-space-2)", height: "var(--ref-frame-space-2)", borderRadius: "50%", background: cat.color, flexShrink: 0 }}
+        style={{
+          width: "var(--ref-frame-space-2)",
+          height: "var(--ref-frame-space-2)",
+          borderRadius: "50%",
+          background: cat.color,
+          flexShrink: 0,
+        }}
       />
       {cat.label}
     </span>
@@ -351,7 +357,10 @@ function StyleRow({
           </span>
           <span
             className="flow-label-s"
-            style={{ minWidth: "var(--ref-frame-space-24)", color: "var(--sys-energy-text-primary)" }}
+            style={{
+              minWidth: "var(--ref-frame-space-24)",
+              color: "var(--sys-energy-text-primary)",
+            }}
           >
             {style.name}
           </span>
@@ -509,7 +518,7 @@ function FamilyShowcase() {
       ].map((f) => (
         <Surface key={f.name} variant="secondary" padding={4} radius="md" border>
           <Stack gap={2}>
-            <Text role="overline">{f.role}</Text>
+            <Text variant="overline">{f.role}</Text>
             <span
               style={{
                 fontFamily: `var(${f.varName})`,
@@ -553,8 +562,8 @@ export function VoiceExplorer() {
     <Stack gap="subsection">
       {/* Section 1: Font Families */}
       <Stack gap={3}>
-        <Text role="heading-l">Font Families</Text>
-        <Text role="paragraph-m">
+        <Text variant="heading-l">Font Families</Text>
+        <Text variant="paragraph-m">
           Three font families form the typographic identity: Edenred (brand) for display and heading
           styles, Ubuntu (sans) for labels and body text, and JetBrains Mono for code and token
           references.
@@ -564,8 +573,8 @@ export function VoiceExplorer() {
 
       {/* Section 2: Size Scale */}
       <Stack gap={3}>
-        <Text role="heading-l">Size Scale</Text>
-        <Text role="paragraph-m">
+        <Text variant="heading-l">Size Scale</Text>
+        <Text variant="paragraph-m">
           14 integer steps from 10px to 72px, aligned 1:1 with the Figma Edenred design spec. PHASE
           A grid 4×4: no overlaps between Display/Heading/Label/Paragraph hierarchies.
         </Text>
@@ -595,10 +604,10 @@ export function VoiceExplorer() {
       {/* Section 3: Composite Styles Explorer */}
       <Stack gap={3}>
         <Inline gap={4} align="center" justify="between" wrap>
-          <Text role="heading-l">Composite Styles</Text>
+          <Text variant="heading-l">Composite Styles</Text>
           <DensityToggle value={density} onChange={setDensity} />
         </Inline>
-        <Text role="paragraph-m">
+        <Text variant="paragraph-m">
           18 composite styles: 4×4 grid (Display/Heading/Label/Paragraph × xl/l/m/s) + 2 utilities.
           All categories are now density-responsive, shifting ±1 step with density changes. Click
           any row to reveal the token trace.
@@ -701,8 +710,8 @@ export function VoiceExplorer() {
 
       {/* Section 4: Density comparison table */}
       <Stack gap={3}>
-        <Text role="heading-l">Density Impact</Text>
-        <Text role="paragraph-m">
+        <Text variant="heading-l">Density Impact</Text>
+        <Text variant="paragraph-m">
           PHASE A: All categories (Display, Heading, Label, Paragraph, utilities) shift ±1 step with
           density changes. This creates a unified, predictable system where every typographic
           element responds to context.

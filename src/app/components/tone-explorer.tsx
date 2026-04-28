@@ -11,7 +11,7 @@
  */
 import { useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Types ──
 type ToneContext = "error" | "success" | "empty" | "loading" | "warning";
@@ -246,12 +246,15 @@ function AnatomyRow({
         }}
       />
       <div style={{ flex: 1 }}>
-        <Text role="label-l" style={{ color }}>
+        <Text variant="label-l" style={{ color }}>
           {label}
         </Text>
         <Text
-          role="paragraph-s"
-          style={{ color: "var(--sys-energy-text-secondary)", marginTop: "var(--ref-frame-space-micro)" }}
+          variant="paragraph-s"
+          style={{
+            color: "var(--sys-energy-text-secondary)",
+            marginTop: "var(--ref-frame-space-micro)",
+          }}
         >
           {description}
         </Text>
@@ -286,7 +289,7 @@ function MessageCard({ message, context }: { message: Message; context: ToneCont
       }}
     >
       <Text
-        role="label-s"
+        variant="label-s"
         style={{
           color: "var(--sys-energy-text-tertiary)",
           marginBottom: "var(--ref-frame-space-2)",
@@ -294,12 +297,12 @@ function MessageCard({ message, context }: { message: Message; context: ToneCont
       >
         {message.label}
       </Text>
-      <Text role="label-l" style={{ color: "var(--sys-energy-text-primary)" }}>
+      <Text variant="label-l" style={{ color: "var(--sys-energy-text-primary)" }}>
         {message.title}
       </Text>
       {message.body && (
         <Text
-          role="paragraph-s"
+          variant="paragraph-s"
           style={{
             color: "var(--sys-energy-text-secondary)",
             marginTop: "var(--ref-frame-space-1)",
@@ -355,8 +358,8 @@ export function ToneExplorer() {
     <Stack gap={12}>
       {/* Section 1: Message Anatomy */}
       <Stack gap={6}>
-        <Text role="display-l">Message Anatomy</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
+        <Text variant="display-l">Message Anatomy</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
           Every message in FLOW follows a consistent structure. Each part has a specific job.
         </Text>
         <Surface
@@ -400,8 +403,8 @@ export function ToneExplorer() {
 
       {/* Section 2: Tone by Context */}
       <Stack gap={6}>
-        <Text role="display-l">Tone by Context</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
+        <Text variant="display-l">Tone by Context</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
           Select a context to see example messages and how tone adapts.
         </Text>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--ref-frame-space-2)" }}>
@@ -431,8 +434,8 @@ export function ToneExplorer() {
 
       {/* Section 3: Do / Don't */}
       <Stack gap={6}>
-        <Text role="display-l">Do / Don&apos;t</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
+        <Text variant="display-l">Do / Don&apos;t</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
           Side-by-side comparisons of common microcopy patterns.
         </Text>
         <Stack gap={3}>
@@ -454,7 +457,7 @@ export function ToneExplorer() {
                 }}
               >
                 <Text
-                  role="label-s"
+                  variant="label-s"
                   style={{
                     color: "var(--ref-energy-coral-700)",
                     marginBottom: "var(--ref-frame-space-2)",
@@ -462,7 +465,7 @@ export function ToneExplorer() {
                 >
                   Don&apos;t ✗
                 </Text>
-                <Text role="paragraph-m" style={{ color: "var(--ref-energy-coral-700)" }}>
+                <Text variant="paragraph-m" style={{ color: "var(--ref-energy-coral-700)" }}>
                   {pair.dont}
                 </Text>
               </div>
@@ -475,7 +478,7 @@ export function ToneExplorer() {
                 }}
               >
                 <Text
-                  role="label-s"
+                  variant="label-s"
                   style={{
                     color: "var(--ref-energy-jade-700)",
                     marginBottom: "var(--ref-frame-space-2)",
@@ -483,7 +486,7 @@ export function ToneExplorer() {
                 >
                   Do ✓
                 </Text>
-                <Text role="paragraph-m" style={{ color: "var(--ref-energy-jade-700)" }}>
+                <Text variant="paragraph-m" style={{ color: "var(--ref-energy-jade-700)" }}>
                   {pair.doText}
                 </Text>
               </div>
@@ -496,8 +499,8 @@ export function ToneExplorer() {
 
       {/* Section 4: Tone Principles */}
       <Stack gap={6}>
-        <Text role="display-l">Tone Principles</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
+        <Text variant="display-l">Tone Principles</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-text-secondary)" }}>
           Five rules that guide every piece of microcopy in FLOW.
         </Text>
         <div
@@ -534,8 +537,8 @@ export function ToneExplorer() {
                 >
                   {p.icon}
                 </div>
-                <Text role="label-l">{p.name}</Text>
-                <Text role="paragraph-s" style={{ color: "var(--sys-energy-text-secondary)" }}>
+                <Text variant="label-l">{p.name}</Text>
+                <Text variant="paragraph-s" style={{ color: "var(--sys-energy-text-secondary)" }}>
                   {p.description}
                 </Text>
               </Stack>

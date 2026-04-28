@@ -1,0 +1,103 @@
+/* ─── Tone integration for L3/L4 components ─── */
+
+/* Card */
+.flow-card {
+  background: var(--comp-card-bg-elevated);
+  border-radius: var(--comp-card-radius);
+  box-shadow: var(--comp-card-shadow);
+  transition:
+    box-shadow var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-default);
+  text-align: start;
+}
+
+.flow-card[data-elevation="0"] {
+  background: var(--comp-card-bg-outlined);
+  box-shadow: none;
+}
+
+.flow-card[data-border] {
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+.flow-card[data-accent] {
+  background: transparent;
+  box-shadow: none;
+}
+
+.flow-card[data-interactive] {
+  cursor: pointer;
+}
+
+.flow-card[data-interactive]:hover {
+  box-shadow: var(--comp-card-shadow-hover);
+}
+
+.flow-card[data-state="selected"] {
+  outline: var(--sys-frame-border-medium) solid var(--sys-energy-border-focus);
+  outline-offset: var(--sys-state-focus-ring-offset);
+}
+
+/* ── Tone: color-only components ── */
+:is(
+  .flow-snackbar,
+  .flow-empty-state,
+  .flow-tooltip,
+  .flow-notification-panel,
+  .flow-timeline
+)[data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+}
+
+:is(
+  .flow-snackbar,
+  .flow-empty-state,
+  .flow-tooltip,
+  .flow-notification-panel,
+  .flow-timeline
+)[data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+}
+
+:is(
+  .flow-snackbar,
+  .flow-empty-state,
+  .flow-tooltip,
+  .flow-notification-panel,
+  .flow-timeline
+)[data-tone="system"] {
+  color: var(--sys-tone-system-text);
+}
+
+:is(
+  .flow-snackbar,
+  .flow-empty-state,
+  .flow-tooltip,
+  .flow-notification-panel,
+  .flow-timeline
+)[data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+}
+
+/* ── Tone: color + weight components ── */
+:is(.flow-card, .flow-section-header, .flow-hover-card)[data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+:is(.flow-card, .flow-section-header, .flow-hover-card)[data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+:is(.flow-card, .flow-section-header, .flow-hover-card)[data-tone="system"] {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+:is(.flow-card, .flow-section-header, .flow-hover-card)[data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+/* Dialog */

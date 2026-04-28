@@ -1,0 +1,37 @@
+/* ── Dialog ── */
+.flow-dialog-positioner {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sys-frame-padding-container);
+  z-index: var(--sys-depth-layer-modal);
+}
+
+/* Override Surface defaults — dialog panel defined in input-surface.css loads before primitives.css */
+.flow-dialog-panel {
+  background: var(--comp-dialog-bg);
+  border-radius: var(--comp-dialog-radius);
+  padding: var(--sys-size-inset);
+}
+
+.flow-dialog-panel[data-tone="brand"] .flow-dialog-title {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+.flow-dialog-panel[data-tone="marketing"] .flow-dialog-title {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+.flow-dialog-panel[data-tone="system"] .flow-dialog-title {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}
+
+.flow-dialog-panel[data-tone="neutral"] .flow-dialog-title {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}

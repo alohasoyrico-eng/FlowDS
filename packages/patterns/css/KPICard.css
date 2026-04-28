@@ -1,0 +1,13 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   KPI CARD — Key performance indicator display (L4)
+   Base structural styles (tone overrides below)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-frame-gap-component);
+  transition:
+    box-shadow var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}

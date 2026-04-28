@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowColumnConfigurator } from "../app/components/patterns";
+import { FlowColumnConfigurator } from "@flow/patterns";
 
 const sampleColumns = [
   { key: "name", label: "Name", visible: true },
@@ -25,24 +25,18 @@ const sampleColumns = [
 
 describe("FlowColumnConfigurator — rendering", () => {
   it("renders the configure columns trigger button", () => {
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />);
     expect(screen.getByRole("button", { name: "Configure columns" })).toBeInTheDocument();
   });
 
   it("does not show the column list when closed", () => {
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />);
     expect(screen.queryByText("Name")).not.toBeInTheDocument();
     expect(screen.queryByText("Email")).not.toBeInTheDocument();
   });
 
   it("shows the column list when the trigger is clicked", async () => {
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />);
     await userEvent.click(screen.getByRole("button", { name: "Configure columns" }));
     expect(screen.getByText("Name")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
@@ -56,9 +50,7 @@ describe("FlowColumnConfigurator — rendering", () => {
 
 describe("FlowColumnConfigurator — interaction", () => {
   it("sets aria-expanded on the trigger button", async () => {
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={vi.fn()} />);
     const trigger = screen.getByRole("button", { name: "Configure columns" });
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     await userEvent.click(trigger);
@@ -67,9 +59,7 @@ describe("FlowColumnConfigurator — interaction", () => {
 
   it("calls onColumnsChange when toggling column visibility", async () => {
     const onColumnsChange = vi.fn();
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />);
     await userEvent.click(screen.getByRole("button", { name: "Configure columns" }));
 
     // Click the checkbox for "Role" (visible: false -> true)
@@ -83,9 +73,7 @@ describe("FlowColumnConfigurator — interaction", () => {
 
   it("calls onColumnsChange when moving a column up", async () => {
     const onColumnsChange = vi.fn();
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />);
     await userEvent.click(screen.getByRole("button", { name: "Configure columns" }));
 
     const moveUpBtn = screen.getByRole("button", { name: "Move Email up" });
@@ -99,9 +87,7 @@ describe("FlowColumnConfigurator — interaction", () => {
 
   it("calls onColumnsChange when moving a column down", async () => {
     const onColumnsChange = vi.fn();
-    render(
-      <FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />,
-    );
+    render(<FlowColumnConfigurator columns={sampleColumns} onColumnsChange={onColumnsChange} />);
     await userEvent.click(screen.getByRole("button", { name: "Configure columns" }));
 
     const moveDownBtn = screen.getByRole("button", { name: "Move Name down" });

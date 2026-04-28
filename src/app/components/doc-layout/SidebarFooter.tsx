@@ -4,7 +4,7 @@
  * The "View" section at the bottom of the sidebar:
  * theme toggle (light/dark) and column-grid overlay toggle.
  */
-import { Text } from "../../primitives";
+import { Text } from "@flow/primitives";
 
 export interface SidebarFooterProps {
   collapsed: boolean;
@@ -38,7 +38,7 @@ export function SidebarFooter({
       {/* Section label — hidden when collapsed */}
       {!collapsed && (
         <Text
-          role="overline"
+          variant="overline"
           style={{
             padding: "var(--ref-frame-space-1) var(--ref-frame-space-2)",
             marginBottom: "var(--ref-frame-space-1)",
@@ -129,9 +129,7 @@ export function SidebarFooter({
 
         {!collapsed && (
           <>
-            <span
-              style={{ flex: 1, textAlign: "left", color: "var(--sys-energy-text-secondary)" }}
-            >
+            <span style={{ flex: 1, textAlign: "left", color: "var(--sys-energy-text-secondary)" }}>
               {theme === "light" ? "Light mode" : "Dark mode"}
             </span>
             {/* Pill — dark mode = on (dark track), light mode = off (grey track) */}
@@ -142,7 +140,10 @@ export function SidebarFooter({
                 width: "var(--comp-toggle-track-width)",
                 height: "var(--comp-toggle-track-height)",
                 borderRadius: "var(--ref-frame-radius-full)",
-                background: theme === "dark" ? "var(--sys-energy-surface-inverse)" : "var(--sys-energy-text-disabled)",
+                background:
+                  theme === "dark"
+                    ? "var(--sys-energy-surface-inverse)"
+                    : "var(--sys-energy-text-disabled)",
                 position: "relative",
                 flexShrink: 0,
                 transition: "background var(--sys-momentum-transition-fast)",
@@ -156,7 +157,10 @@ export function SidebarFooter({
                   height: "var(--comp-toggle-knob-size)",
                   borderRadius: "50%",
                   background: "var(--sys-energy-surface-primary)",
-                  left: theme === "light" ? "var(--comp-toggle-knob-inset)" : "var(--comp-toggle-knob-active-left)",
+                  left:
+                    theme === "light"
+                      ? "var(--comp-toggle-knob-inset)"
+                      : "var(--comp-toggle-knob-active-left)",
                   transition: "left var(--sys-momentum-transition-fast)",
                   boxShadow: "var(--ref-depth-shadow-1)",
                 }}
@@ -289,7 +293,9 @@ export function SidebarFooter({
                   height: "var(--comp-toggle-knob-size)",
                   borderRadius: "50%",
                   background: "var(--sys-energy-surface-primary)",
-                  left: showGrid ? "var(--comp-toggle-knob-active-left)" : "var(--comp-toggle-knob-inset)",
+                  left: showGrid
+                    ? "var(--comp-toggle-knob-active-left)"
+                    : "var(--comp-toggle-knob-inset)",
                   transition: "left var(--sys-momentum-transition-fast)",
                 }}
               />

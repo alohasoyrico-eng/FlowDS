@@ -14,9 +14,14 @@ const DEMO_COMPACT_MAX_WIDTH = "400px";
 import { useState } from "react";
 
 import {
-  FlowCircularProgress, FlowInlineValidationMessage,
-  FlowProgressBar, FlowSkeleton, Inline, Stack, Text,
-} from "../../../../lib";
+  FlowCircularProgress,
+  FlowInlineValidationMessage,
+  FlowProgressBar,
+  FlowSkeleton,
+  Inline,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { SIZES } from "../types";
 import { DurationComparisonDemo } from "../../../components/motion-demo-section";
@@ -51,13 +56,13 @@ export function FlowSkeletonOverview() {
       >
         <DemoGroup>
           <Stack gap="subsection" style={{ maxWidth: "var(--sys-frame-content-prose)" }}>
-            <Text role="caption">Text (single line)</Text>
+            <Text variant="caption">Text (single line)</Text>
             <FlowSkeleton variant="text" width="100%" />
 
-            <Text role="caption">Circular (avatar)</Text>
+            <Text variant="caption">Circular (avatar)</Text>
             <FlowSkeleton variant="circular" width={48} height={48} />
 
-            <Text role="caption">Rectangular (card/image)</Text>
+            <Text variant="caption">Rectangular (card/image)</Text>
             <FlowSkeleton variant="rectangular" width="100%" height={150} />
           </Stack>
         </DemoGroup>
@@ -96,7 +101,7 @@ export function FlowSkeletonVariants() {
         <DemoGroup>
           <Stack gap="subsection" style={{ maxWidth: DEMO_PANEL_MAX_WIDTH }}>
             <div>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Text Lines
               </Text>
               <Stack gap={2}>
@@ -107,7 +112,7 @@ export function FlowSkeletonVariants() {
             </div>
 
             <div>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Circular
               </Text>
               <Inline gap={2}>
@@ -118,7 +123,7 @@ export function FlowSkeletonVariants() {
             </div>
 
             <div>
-              <Text role="caption" color="secondary">
+              <Text variant="caption" color="secondary">
                 Rectangular
               </Text>
               <Stack gap={2}>
@@ -157,7 +162,7 @@ export function FlowProgressBarOverview() {
               onChange={(e) => setProgress(Number(e.target.value))}
               style={{ width: "100%" }}
             />
-            <Text role="caption">Current: {progress}%</Text>
+            <Text variant="caption">Current: {progress}%</Text>
           </Stack>
         </DemoGroup>
       </DemoSection>
@@ -175,7 +180,7 @@ export function FlowProgressBarOverview() {
           <Stack gap="component-lg" style={{ maxWidth: DEMO_PANEL_MAX_WIDTH }}>
             {SIZES.map((size) => (
               <div key={size}>
-                <Text role="caption" color="secondary">
+                <Text variant="caption" color="secondary">
                   {size}
                 </Text>
                 <FlowProgressBar size={size} value={60} />
@@ -297,11 +302,11 @@ export function FlowInlineValidationMessageOverview() {
       >
         <DemoGroup>
           <Stack gap="component-lg" style={{ maxWidth: DEMO_COMPACT_MAX_WIDTH }}>
-            <FlowInlineValidationMessage variant="error" message="This field is required" />
-            <FlowInlineValidationMessage variant="warning" message="This action cannot be undone" />
-            <FlowInlineValidationMessage variant="success" message="Changes saved successfully" />
+            <FlowInlineValidationMessage status="error" message="This field is required" />
+            <FlowInlineValidationMessage status="warning" message="This action cannot be undone" />
+            <FlowInlineValidationMessage status="success" message="Changes saved successfully" />
             <FlowInlineValidationMessage
-              variant="info"
+              status="info"
               message="Password must be at least 8 characters"
             />
           </Stack>
@@ -311,8 +316,8 @@ export function FlowInlineValidationMessageOverview() {
       <DemoSection title="With/Without Icons" description="Icons can be hidden if needed.">
         <DemoGroup>
           <Stack gap="component-lg" style={{ maxWidth: DEMO_COMPACT_MAX_WIDTH }}>
-            <FlowInlineValidationMessage variant="error" message="With icon (default)" icon />
-            <FlowInlineValidationMessage variant="error" message="Without icon" icon={false} />
+            <FlowInlineValidationMessage status="error" message="With icon (default)" icon />
+            <FlowInlineValidationMessage status="error" message="Without icon" icon={false} />
           </Stack>
         </DemoGroup>
       </DemoSection>
@@ -326,13 +331,13 @@ export function FlowInlineValidationMessageVariants() {
       <DemoSection title="All Variants" description="Four semantic variants with icons.">
         <DemoGroup>
           <Stack gap="component" style={{ maxWidth: DEMO_COMPACT_MAX_WIDTH }}>
-            <FlowInlineValidationMessage variant="error" message="Error: Invalid email format" />
+            <FlowInlineValidationMessage status="error" message="Error: Invalid email format" />
             <FlowInlineValidationMessage
-              variant="warning"
+              status="warning"
               message="Warning: This will delete all data"
             />
-            <FlowInlineValidationMessage variant="success" message="Success: Profile updated" />
-            <FlowInlineValidationMessage variant="info" message="Info: This feature is in beta" />
+            <FlowInlineValidationMessage status="success" message="Success: Profile updated" />
+            <FlowInlineValidationMessage status="info" message="Info: This feature is in beta" />
           </Stack>
         </DemoGroup>
       </DemoSection>

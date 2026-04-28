@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowIconButton } from "../app/components/controls";
+import { FlowIconButton } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -29,14 +29,14 @@ describe("FlowIconButton — rendering", () => {
     expect(screen.getByRole("button")).toHaveClass("flow-icon-button");
   });
 
-  it("sets data-variant to 'low' by default", () => {
+  it("sets data-variant to 'tertiary' by default", () => {
     render(<FlowIconButton icon="close" aria-label="Close" />);
-    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "low");
+    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "tertiary");
   });
 
-  it("sets custom variant via prop", () => {
-    render(<FlowIconButton icon="delete" variant="danger" aria-label="Delete" />);
-    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "danger");
+  it("sets custom intent via prop", () => {
+    render(<FlowIconButton icon="delete" intent="danger" aria-label="Delete" />);
+    expect(screen.getByRole("button")).toHaveAttribute("data-intent", "danger");
   });
 
   it("sets button type to 'button' by default", () => {

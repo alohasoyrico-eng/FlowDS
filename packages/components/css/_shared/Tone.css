@@ -1,0 +1,27 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TONE — Brand voice/personality variants
+   Manual override classes to enforce specific tones
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Specificity boost via [class] attribute selector (0,2,0)
+   beats .flow-text[data-color] (0,2,0) by source order,
+   removing the need for !important. */
+[class].flow-tone-neutral {
+  color: var(--sys-tone-neutral-text);
+  font-weight: var(--sys-tone-neutral-weight);
+}
+
+[class].flow-tone-brand {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+[class].flow-tone-marketing {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+[class].flow-tone-system {
+  color: var(--sys-tone-system-text);
+  font-weight: var(--sys-tone-system-weight);
+}

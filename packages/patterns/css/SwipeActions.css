@@ -1,0 +1,69 @@
+/* ── SwipeActions ── */
+
+.flow-swipe-actions {
+  position: relative;
+  overflow: hidden;
+  background: var(--comp-swipe-actions-bg);
+}
+
+.flow-swipe-actions-content {
+  position: relative;
+  z-index: var(--sys-depth-layer-content);
+  background: var(--comp-swipe-actions-bg);
+  touch-action: pan-y;
+  transition: transform var(--sys-momentum-transition-default) ease-out;
+}
+
+.flow-swipe-actions-content[data-swiping="true"] {
+  transition: none;
+}
+
+.flow-swipe-actions-panel {
+  position: absolute;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  display: flex;
+  align-items: stretch;
+}
+
+.flow-swipe-actions-panel[data-side="left"] {
+  inset-inline-start: 0;
+}
+
+.flow-swipe-actions-panel[data-side="right"] {
+  inset-inline-end: 0;
+}
+
+.flow-swipe-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+  padding: 0 var(--comp-swipe-actions-action-padding);
+  border: none;
+  cursor: pointer;
+  font-size: var(--comp-swipe-actions-action-font);
+  font-family: inherit;
+  min-width: var(--comp-swipe-action-min-width);
+}
+
+.flow-swipe-action-btn[data-intent="danger"] {
+  background: var(--comp-swipe-actions-danger-bg);
+  color: var(--comp-swipe-actions-danger-text);
+}
+
+.flow-swipe-action-btn[data-intent="success"] {
+  background: var(--comp-swipe-actions-success-bg);
+  color: var(--comp-swipe-actions-success-text);
+}
+
+.flow-swipe-action-btn[data-intent="warning"] {
+  background: var(--comp-swipe-actions-warning-bg);
+  color: var(--comp-swipe-actions-warning-text);
+}
+
+.flow-swipe-action-btn[data-intent="default"] {
+  background: var(--comp-swipe-actions-default-bg);
+  color: var(--comp-swipe-actions-default-text);
+}

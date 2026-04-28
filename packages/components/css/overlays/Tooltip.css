@@ -1,0 +1,24 @@
+/* ── Tooltip ── */
+.flow-tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+}
+
+/* KPICard — special: system/neutral have no weight */
+.flow-kpi-card[data-tone="brand"] {
+  color: var(--sys-tone-brand-text);
+  font-weight: var(--sys-tone-brand-weight);
+}
+
+.flow-kpi-card[data-tone="marketing"] {
+  color: var(--sys-tone-marketing-text);
+  font-weight: var(--sys-tone-marketing-weight);
+}
+
+.flow-kpi-card[data-tone="system"] {
+  color: var(--sys-tone-system-text);
+}
+
+.flow-kpi-card[data-tone="neutral"] {
+  color: var(--sys-tone-neutral-text);
+}

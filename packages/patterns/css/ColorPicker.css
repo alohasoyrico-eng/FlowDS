@@ -1,0 +1,81 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COLOR PICKER — Color selection with HSL sliders
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-color-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-3);
+}
+
+.flow-color-picker[data-state~="disabled"] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--sys-energy-text-tertiary);
+}
+
+.flow-color-picker-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-3);
+}
+
+.flow-color-picker-swatch-preview {
+  width: var(--ref-frame-space-12);
+  height: var(--ref-frame-space-12);
+  border-radius: var(--sys-frame-radius-control);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  flex-shrink: 0;
+}
+
+.flow-color-picker-hex-input {
+  width: var(--comp-color-picker-hex-width);
+  padding: var(--ref-frame-space-1) var(--ref-frame-space-2);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--ref-frame-radius-1);
+  background: var(--sys-energy-surface-primary);
+  color: var(--sys-energy-text-primary);
+  font-size: var(--sys-voice-paragraph-l-size);
+  font-family: var(--sys-voice-family-mono, monospace);
+  outline: none;
+}
+
+.flow-color-picker-hex-input:focus {
+  border-color: var(--sys-energy-border-focus);
+}
+
+.flow-color-picker-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-1);
+}
+
+.flow-color-picker-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-color-picker-swatch {
+  border-radius: var(--ref-frame-radius-1);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  cursor: pointer;
+  padding: 0;
+  transition: transform var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+}
+
+.flow-color-picker-swatch:hover {
+  transform: scale(1.15);
+}
+
+.flow-color-picker-swatch[data-selected] {
+  box-shadow: 0 0 0 var(--sys-frame-border-medium) var(--sys-energy-border-focus);
+}
+
+/* WHCM: box-shadow selection indicator invisible; use outline */
+@media (forced-colors: active) {
+  .flow-color-picker-swatch[data-selected] {
+    outline: var(--sys-frame-border-medium) solid CanvasText;
+    box-shadow: none;
+  }
+}

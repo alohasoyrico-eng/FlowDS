@@ -12,12 +12,13 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowMenu } from "../app/components/overlays";
+import { FlowMenu } from "@flow/components";
+import type { MenuItem } from "@flow/components";
 
-const DEFAULT_ITEMS = [
-  { key: "edit", label: "Edit" },
-  { key: "duplicate", label: "Duplicate" },
-  { key: "delete", label: "Delete", danger: true },
+const DEFAULT_ITEMS: MenuItem[] = [
+  { id: "edit", label: "Edit" },
+  { id: "duplicate", label: "Duplicate" },
+  { id: "delete", label: "Delete", danger: true },
 ];
 
 // ─────────────────────────────────────────────
@@ -26,23 +27,17 @@ const DEFAULT_ITEMS = [
 
 describe("FlowMenu — rendering", () => {
   it("renders the trigger element", () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     expect(screen.getByText("Open Menu")).toBeInTheDocument();
   });
 
   it("does not show menu items by default", () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
   it("shows menu items when trigger is clicked", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("menu")).toBeInTheDocument();
     expect(screen.getByRole("menuitem", { name: /Edit/ })).toBeInTheDocument();
@@ -51,9 +46,7 @@ describe("FlowMenu — rendering", () => {
   });
 
   it("renders the correct number of menu items", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getAllByRole("menuitem")).toHaveLength(3);
   });
@@ -66,27 +59,21 @@ describe("FlowMenu — rendering", () => {
 describe("FlowMenu — interaction", () => {
   it("calls onSelect with the item key when clicked", async () => {
     const onSelect = vi.fn();
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={onSelect} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={onSelect} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     await userEvent.click(screen.getByRole("menuitem", { name: /Duplicate/ }));
     expect(onSelect).toHaveBeenCalledWith("duplicate");
   });
 
   it("closes menu after selecting an item", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     await userEvent.click(screen.getByRole("menuitem", { name: /Edit/ }));
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
   it("closes menu on Escape key", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("menu")).toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
@@ -94,9 +81,7 @@ describe("FlowMenu — interaction", () => {
   });
 
   it("toggles menu on subsequent trigger clicks", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     const trigger = screen.getByRole("button", { name: /Open Menu/ });
     await userEvent.click(trigger);
     expect(screen.getByRole("menu")).toBeInTheDocument();
@@ -112,26 +97,22 @@ describe("FlowMenu — interaction", () => {
 describe("FlowMenu — states", () => {
   it("does not fire onSelect for disabled items", async () => {
     const onSelect = vi.fn();
-    const items = [
-      { key: "edit", label: "Edit", disabled: true },
-      { key: "delete", label: "Delete" },
+    const items: MenuItem[] = [
+      { id: "edit", label: "Edit", disabled: true },
+      { id: "delete", label: "Delete" },
     ];
-    render(
-      <FlowMenu items={items} onSelect={onSelect} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={items} onSelect={onSelect} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     await userEvent.click(screen.getByRole("menuitem", { name: /Edit/ }));
     expect(onSelect).not.toHaveBeenCalled();
   });
 
   it("renders separator after items with separator=true", async () => {
-    const items = [
-      { key: "edit", label: "Edit", separator: true },
-      { key: "delete", label: "Delete" },
+    const items: MenuItem[] = [
+      { id: "edit", label: "Edit", separator: true },
+      { id: "delete", label: "Delete" },
     ];
-    render(
-      <FlowMenu items={items} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={items} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("separator")).toBeInTheDocument();
   });
@@ -155,31 +136,23 @@ describe("FlowMenu — states", () => {
 
 describe("FlowMenu — accessibility", () => {
   it("trigger has aria-haspopup='menu'", () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     expect(screen.getByRole("button")).toHaveAttribute("aria-haspopup", "menu");
   });
 
   it("trigger has aria-expanded='false' when closed", () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     expect(screen.getByRole("button")).toHaveAttribute("aria-expanded", "false");
   });
 
   it("trigger has aria-expanded='true' when open", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("button")).toHaveAttribute("aria-expanded", "true");
   });
 
   it("menu has default aria-label 'Menu'", async () => {
-    render(
-      <FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />,
-    );
+    render(<FlowMenu items={DEFAULT_ITEMS} onSelect={vi.fn()} trigger={<span>Open Menu</span>} />);
     await userEvent.click(screen.getByRole("button", { name: /Open Menu/ }));
     expect(screen.getByRole("menu")).toHaveAttribute("aria-label", "Menu");
   });

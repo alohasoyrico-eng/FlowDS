@@ -1,7 +1,17 @@
 import { Link } from "react-router";
 
-import { CodeBlock, Divider, FlowChip, Grid, Inline, Stack, Surface, Text } from "../../lib";
+import {
+  CodeBlock,
+  Divider,
+  FlowChip,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import { Callout, PAGE_GAP, PageHeader, Section } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 export function PatternsPage() {
   const patterns = [
@@ -199,183 +209,195 @@ export function PatternsPage() {
   ];
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 11 — Layer 4" title="Patterns">
-        Patterns are behavioral orchestrations at Layer 4. They compose components into workflows
-        but <strong>do not define visuals</strong>. A pattern owns logic (validation sequencing,
-        navigation switching, data lifecycle), while the visual representation is fully delegated to
-        components and primitives below.
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 11 — Layer 4" title="Patterns">
+              Patterns are behavioral orchestrations at Layer 4. They compose components into
+              workflows but <strong>do not define visuals</strong>. A pattern owns logic (validation
+              sequencing, navigation switching, data lifecycle), while the visual representation is
+              fully delegated to components and primitives below.
+            </PageHeader>
 
-      {/* ── Concrete Pattern Categories (L4 components) ── */}
-      <Section
-        title="Concrete Pattern Components"
-        description="40+ pattern components organized by sub-category. These are the actual exported components that compose L3 building blocks into higher-order widgets."
-      >
-        <Grid minItemWidth="200px" gap={3}>
-          {[
-            { path: "/patterns/input-patterns", name: "Input", count: 11, icon: "edit" },
-            { path: "/patterns/feedback", name: "Feedback", count: 4, icon: "message-circle" },
-            { path: "/patterns/content", name: "Content", count: 4, icon: "file-text" },
-            { path: "/patterns/display-patterns", name: "Display", count: 2, icon: "eye" },
-            { path: "/patterns/overlay", name: "Overlay", count: 4, icon: "maximize-2" },
-            { path: "/patterns/layout-patterns", name: "Layout", count: 4, icon: "grid" },
-            {
-              path: "/patterns/navigation-patterns",
-              name: "Navigation",
-              count: 2,
-              icon: "compass",
-            },
-            { path: "/patterns/data-patterns", name: "Data", count: 8, icon: "database" },
-          ].map((cat) => (
-            <Link key={cat.path} to={cat.path} style={{ textDecoration: "none", color: "inherit" }}>
-              <Surface
-                padding="control"
-                style={{ cursor: "pointer", transition: "all var(--sys-momentum-transition-fast)" }}
+            {/* ── Concrete Pattern Categories (L4 components) ── */}
+            <Section
+              title="Concrete Pattern Components"
+              description="40+ pattern components organized by sub-category. These are the actual exported components that compose L3 building blocks into higher-order widgets."
+            >
+              <Grid minItemWidth="200px" gap={3}>
+                {[
+                  { path: "/patterns/input-patterns", name: "Input", count: 11, icon: "edit" },
+                  {
+                    path: "/patterns/feedback",
+                    name: "Feedback",
+                    count: 4,
+                    icon: "message-circle",
+                  },
+                  { path: "/patterns/content", name: "Content", count: 4, icon: "file-text" },
+                  { path: "/patterns/display-patterns", name: "Display", count: 2, icon: "eye" },
+                  { path: "/patterns/overlay", name: "Overlay", count: 4, icon: "maximize-2" },
+                  { path: "/patterns/layout-patterns", name: "Layout", count: 4, icon: "grid" },
+                  {
+                    path: "/patterns/navigation-patterns",
+                    name: "Navigation",
+                    count: 2,
+                    icon: "compass",
+                  },
+                  { path: "/patterns/data-patterns", name: "Data", count: 8, icon: "database" },
+                ].map((cat) => (
+                  <Link
+                    key={cat.path}
+                    to={cat.path}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Surface
+                      padding="control"
+                      style={{
+                        cursor: "pointer",
+                        transition: "all var(--sys-momentum-transition-fast)",
+                      }}
+                    >
+                      <Stack gap={2}>
+                        <Text variant="label-m">{cat.name}</Text>
+                        <Text variant="caption" color="tertiary">
+                          {cat.count} pattern{cat.count !== 1 ? "s" : ""}
+                        </Text>
+                      </Stack>
+                    </Surface>
+                  </Link>
+                ))}
+              </Grid>
+            </Section>
+
+            <Divider spacing={2} />
+
+            {/* ── Behavioral Patterns (conceptual) ── */}
+            <Section
+              title="Behavioral Orchestration Patterns"
+              description="These conceptual patterns define how L3 components should be orchestrated. They are architectural blueprints, not concrete component exports."
+            >
+              <Text
+                variant="paragraph-s"
+                color="secondary"
+                style={{ maxWidth: "var(--sys-frame-content-prose)" }}
               >
-                <Stack gap={2}>
-                  <Text role="label-m">{cat.name}</Text>
-                  <Text role="caption" color="tertiary">
-                    {cat.count} pattern{cat.count !== 1 ? "s" : ""}
-                  </Text>
-                </Stack>
-              </Surface>
-            </Link>
-          ))}
-        </Grid>
-      </Section>
-
-      <Divider spacing={2} />
-
-      {/* ── Behavioral Patterns (conceptual) ── */}
-      <Section
-        title="Behavioral Orchestration Patterns"
-        description="These conceptual patterns define how L3 components should be orchestrated. They are architectural blueprints, not concrete component exports."
-      >
-        <Text
-          role="paragraph-s"
-          color="secondary"
-          style={{ maxWidth: "var(--sys-frame-content-prose)" }}
-        >
-          The patterns below describe behavioral orchestration logic — how components should be
-          composed and coordinated in real applications. They complement the concrete pattern
-          components above.
-        </Text>
-      </Section>
-
-      <Callout>
-        <Text role="paragraph-s" color="accent">
-          <strong>Layer Rule:</strong> Patterns orchestrate behavior, not visuals. They compose
-          components into flows but never define colors, spacing, typography, or any visual property
-          directly. All visual decisions are delegated to Components (Layer 3) which consume
-          Primitives (Layer 2) which consume Tokens (Layer 1).
-        </Text>
-      </Callout>
-
-      {patterns.map((p, idx) => (
-        <Stack key={p.name} gap={3}>
-          <Inline gap={3}>
-            <Inline
-              gap={0}
-              justify="center"
-              style={{
-                width: "var(--ref-frame-doc-badge-sm)",
-                height: "var(--ref-frame-doc-badge-sm)",
-                borderRadius: "var(--ref-frame-radius-2)",
-                background: "var(--sys-energy-surface-sunken)",
-              }}
-            >
-              <Text role="heading-m" color="tertiary">
-                &#11042;
+                The patterns below describe behavioral orchestration logic — how components should
+                be composed and coordinated in real applications. They complement the concrete
+                pattern components above.
               </Text>
-            </Inline>
-            <Stack gap={1}>
-              <Text role="heading-l">{p.name}</Text>
-              <FlowChip variant="accent" size="sm">
-                PATTERN
-              </FlowChip>
-            </Stack>
-          </Inline>
+            </Section>
 
-          <Surface
-            padding="control"
-            className="flow-doc-accent"
-          >
-            <Stack gap={2}>
-              <Text role="overline">Purpose</Text>
-              <Text role="paragraph-s">{p.purpose}</Text>
-            </Stack>
-          </Surface>
+            <Callout>
+              <Text variant="paragraph-s" color="accent">
+                <strong>Layer Rule:</strong> Patterns orchestrate behavior, not visuals. They
+                compose components into flows but never define colors, spacing, typography, or any
+                visual property directly. All visual decisions are delegated to Components (Layer 3)
+                which consume Primitives (Layer 2) which consume Tokens (Layer 1).
+              </Text>
+            </Callout>
 
-          <Grid minItemWidth="280px" gap={3}>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline" color="success">
-                  Orchestrates
-                </Text>
-                <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
-                  {p.orchestrates.map((o, i) => (
-                    <li key={i}>
-                      <Text role="paragraph-s" as="span">
-                        {o}
-                      </Text>
-                    </li>
-                  ))}
-                </ul>
-              </Stack>
-            </Surface>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline" color="danger">
-                  Does NOT Own
-                </Text>
-                <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
-                  {p.doesNotOwn.map((d, i) => (
-                    <li key={i}>
-                      <Text role="paragraph-s" as="span">
-                        {d}
-                      </Text>
-                    </li>
-                  ))}
-                </ul>
-              </Stack>
-            </Surface>
-          </Grid>
-
-          <Stack gap={2}>
-            <Text role="overline">Conceptual API</Text>
-            <CodeBlock>{p.api}</CodeBlock>
-          </Stack>
-
-          <Grid minItemWidth="280px" gap={3}>
-            <Surface padding="control">
-              <Stack gap={2}>
-                <Text role="overline">Components Composed</Text>
-                <Inline gap={2} wrap>
-                  {p.components.map((c) => (
-                    <FlowChip key={c} size="sm">
-                      {c}
+            {patterns.map((p, idx) => (
+              <Stack key={p.name} gap={3}>
+                <Inline gap={3}>
+                  <Inline
+                    gap={0}
+                    justify="center"
+                    style={{
+                      width: "var(--ref-frame-doc-badge-sm)",
+                      height: "var(--ref-frame-doc-badge-sm)",
+                      borderRadius: "var(--ref-frame-radius-2)",
+                      background: "var(--sys-energy-surface-sunken)",
+                    }}
+                  >
+                    <Text variant="heading-m" color="tertiary">
+                      &#11042;
+                    </Text>
+                  </Inline>
+                  <Stack gap={1}>
+                    <Text variant="heading-l">{p.name}</Text>
+                    <FlowChip variant="filled" status="info" size="sm">
+                      PATTERN
                     </FlowChip>
-                  ))}
+                  </Stack>
                 </Inline>
-              </Stack>
-            </Surface>
-            <Surface
-              padding="control"
-              className="flow-doc-accent"
-            >
-              <Stack gap={2}>
-                <Text role="overline" color="accent">
-                  Growth Signals
-                </Text>
-                <Text role="paragraph-s">{p.growth}</Text>
-              </Stack>
-            </Surface>
-          </Grid>
 
-          {idx < patterns.length - 1 && <Divider spacing={2} />}
-        </Stack>
-      ))}
-    </Stack>
+                <Surface padding="control" className="flow-doc-accent">
+                  <Stack gap={2}>
+                    <Text variant="overline">Purpose</Text>
+                    <Text variant="paragraph-s">{p.purpose}</Text>
+                  </Stack>
+                </Surface>
+
+                <Grid minItemWidth="280px" gap={3}>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="success">
+                        Orchestrates
+                      </Text>
+                      <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
+                        {p.orchestrates.map((o, i) => (
+                          <li key={i}>
+                            <Text variant="paragraph-s" as="span">
+                              {o}
+                            </Text>
+                          </li>
+                        ))}
+                      </ul>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="danger">
+                        Does NOT Own
+                      </Text>
+                      <ul style={{ margin: 0, padding: "0 0 0 var(--ref-frame-space-4)" }}>
+                        {p.doesNotOwn.map((d, i) => (
+                          <li key={i}>
+                            <Text variant="paragraph-s" as="span">
+                              {d}
+                            </Text>
+                          </li>
+                        ))}
+                      </ul>
+                    </Stack>
+                  </Surface>
+                </Grid>
+
+                <Stack gap={2}>
+                  <Text variant="overline">Conceptual API</Text>
+                  <CodeBlock>{p.api}</CodeBlock>
+                </Stack>
+
+                <Grid minItemWidth="280px" gap={3}>
+                  <Surface padding="control">
+                    <Stack gap={2}>
+                      <Text variant="overline">Components Composed</Text>
+                      <Inline gap={2} wrap>
+                        {p.components.map((c) => (
+                          <FlowChip key={c} size="sm">
+                            {c}
+                          </FlowChip>
+                        ))}
+                      </Inline>
+                    </Stack>
+                  </Surface>
+                  <Surface padding="control" className="flow-doc-accent">
+                    <Stack gap={2}>
+                      <Text variant="overline" color="accent">
+                        Growth Signals
+                      </Text>
+                      <Text variant="paragraph-s">{p.growth}</Text>
+                    </Stack>
+                  </Surface>
+                </Grid>
+
+                {idx < patterns.length - 1 && <Divider spacing={2} />}
+              </Stack>
+            ))}
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }

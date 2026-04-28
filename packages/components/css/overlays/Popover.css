@@ -1,0 +1,29 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   POPOVER — Floating positioned content (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-popover-trigger {
+  display: inline-flex;
+}
+
+.flow-popover-content {
+  background: var(--comp-popover-bg);
+  border: var(--ref-frame-border-thin) solid var(--comp-popover-border);
+  border-radius: var(--comp-popover-radius);
+  box-shadow: var(--comp-popover-shadow);
+  padding: var(--comp-popover-padding);
+  max-width: var(--comp-popover-max-width);
+  animation: flow-popover-in var(--sys-momentum-transition-default) ease-out;
+}
+
+@keyframes flow-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

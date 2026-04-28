@@ -5,10 +5,18 @@
 import { useState } from "react";
 
 import {
-  FlowBottomNav, FlowBreadcrumbs, FlowButton, FlowPagination,
-  FlowSidebar, FlowStepper, FlowTable, FlowTabs,
-  Inline, Stack, Text,
-} from "../../../../lib";
+  FlowBottomNav,
+  FlowBreadcrumbs,
+  FlowButton,
+  FlowPagination,
+  FlowSidebar,
+  FlowStepper,
+  FlowTable,
+  FlowTabs,
+  Inline,
+  Stack,
+  Text,
+} from "@flow/design-system";
 import { DemoGroup, DemoSection } from "../../../components/demo-helpers";
 import { Callout } from "../../../components/doc-primitives";
 import { StaggerDemo } from "../../../components/motion-demo-section";
@@ -43,7 +51,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 With onClick (SPA navigation)
               </Text>
               <FlowBreadcrumbs
@@ -55,7 +63,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 With href (semantic links)
               </Text>
               <FlowBreadcrumbs
@@ -77,7 +85,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Default home icon
               </Text>
               <FlowBreadcrumbs
@@ -90,7 +98,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Custom icon
               </Text>
               <FlowBreadcrumbs
@@ -129,7 +137,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 maxItems=3 (6 total items)
               </Text>
               <FlowBreadcrumbs
@@ -145,7 +153,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 maxItems=4 (7 total items)
               </Text>
               <FlowBreadcrumbs
@@ -172,7 +180,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 2 items (minimal)
               </Text>
               <FlowBreadcrumbs
@@ -180,7 +188,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 3 items (common)
               </Text>
               <FlowBreadcrumbs
@@ -192,7 +200,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 4 items
               </Text>
               <FlowBreadcrumbs
@@ -205,7 +213,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 5 items (recommend maxItems)
               </Text>
               <FlowBreadcrumbs
@@ -229,7 +237,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 E-commerce category navigation
               </Text>
               <FlowBreadcrumbs
@@ -243,7 +251,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Documentation hierarchy
               </Text>
               <FlowBreadcrumbs
@@ -256,7 +264,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Dashboard settings
               </Text>
               <FlowBreadcrumbs
@@ -269,7 +277,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 File system path
               </Text>
               <FlowBreadcrumbs
@@ -295,13 +303,13 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Single item (current page only)
               </Text>
               <FlowBreadcrumbs items={[{ label: "Dashboard" }]} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Two items (minimal back navigation)
               </Text>
               <FlowBreadcrumbs
@@ -319,7 +327,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Default chevron separator
               </Text>
               <FlowBreadcrumbs
@@ -331,7 +339,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="caption" color="tertiary">
+              <Text variant="caption" color="tertiary">
                 Separators are purely decorative - screen readers skip them and announce links in
                 sequence.
               </Text>
@@ -347,7 +355,7 @@ export function FlowBreadcrumbsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Icon-root + collapsed + icons
               </Text>
               <FlowBreadcrumbs
@@ -364,7 +372,7 @@ export function FlowBreadcrumbsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Deep hierarchy with href + maxItems
               </Text>
               <FlowBreadcrumbs
@@ -391,8 +399,9 @@ export function FlowBreadcrumbsOverview() {
           <Callout intent="info">
             FlowBreadcrumbs automatically handles: semantic &lt;nav&gt; wrapper with
             aria-label=&apos;Breadcrumb&apos;, ordered list (&lt;ol&gt;) for trail structure,
-            aria-current=&apos;page&apos; on the last item, aria-hidden separators, and keyboard navigation
-            (Tab + Enter). Interactive items are focusable via Tab and clickable via Enter/Space.
+            aria-current=&apos;page&apos; on the last item, aria-hidden separators, and keyboard
+            navigation (Tab + Enter). Interactive items are focusable via Tab and clickable via
+            Enter/Space.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -441,7 +450,7 @@ export function FlowBreadcrumbsVariants() {
         description="When items exceed maxItems, intermediate items collapse into an ellipsis button. Click '…' to expand."
       >
         <DemoGroup>
-          <Text role="overline" color="tertiary">
+          <Text variant="overline" color="tertiary">
             maxItems=3 (6 items)
           </Text>
           <FlowBreadcrumbs
@@ -464,7 +473,7 @@ export function FlowBreadcrumbsVariants() {
       >
         <DemoGroup>
           <Stack gap="component">
-            <Text role="overline" color="tertiary">
+            <Text variant="overline" color="tertiary">
               Single Item
             </Text>
             <FlowBreadcrumbs items={[{ label: "Dashboard" }]} />
@@ -528,7 +537,7 @@ export function FlowTabsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Product details page
               </Text>
               <FlowTabs
@@ -543,7 +552,7 @@ export function FlowTabsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Settings panel
               </Text>
               <FlowTabs
@@ -558,7 +567,7 @@ export function FlowTabsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Dashboard analytics
               </Text>
               <FlowTabs
@@ -583,7 +592,7 @@ export function FlowTabsOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 2 tabs (minimal)
               </Text>
               <FlowTabs
@@ -596,7 +605,7 @@ export function FlowTabsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 5 tabs (optimal)
               </Text>
               <FlowTabs
@@ -612,7 +621,7 @@ export function FlowTabsOverview() {
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 6 tabs (maximum recommended)
               </Text>
               <FlowTabs
@@ -638,10 +647,10 @@ export function FlowTabsOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowTabs renders with role=&apos;tablist&apos; on container and role=&apos;tab&apos; on each button. Active
-            tab has aria-selected=&apos;true&apos;. Keyboard navigation: Arrow Left/Right to navigate tabs,
-            Tab to focus tab list, Enter/Space to activate. Each tab should have a unique value for
-            proper state management.
+            FlowTabs renders with role=&apos;tablist&apos; on container and role=&apos;tab&apos; on
+            each button. Active tab has aria-selected=&apos;true&apos;. Keyboard navigation: Arrow
+            Left/Right to navigate tabs, Tab to focus tab list, Enter/Space to activate. Each tab
+            should have a unique value for proper state management.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -698,7 +707,7 @@ export function FlowPaginationOverview() {
       >
         <DemoGroup>
           <FlowPagination page={currentPage} totalPages={10} onChange={setCurrentPage} />
-          <Text className="demo-spacing-top-md" role="caption">
+          <Text className="demo-spacing-top-md" variant="caption">
             Current page: {currentPage}
           </Text>
         </DemoGroup>
@@ -723,7 +732,7 @@ export function FlowPaginationOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 User directory table
               </Text>
               <Stack gap={2}>
@@ -773,7 +782,7 @@ export function FlowPaginationOverview() {
               </Stack>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Product catalog
               </Text>
               <Stack gap={2}>
@@ -822,7 +831,7 @@ export function FlowPaginationOverview() {
               </Stack>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Transaction history
               </Text>
               <Stack gap={2}>
@@ -881,8 +890,9 @@ export function FlowPaginationOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowPagination renders with role=&apos;navigation&apos; and aria-label=&apos;Pagination&apos;. Current page
-            button has aria-current=&apos;page&apos;. Previous/Next buttons have descriptive aria-labels and
+            FlowPagination renders with role=&apos;navigation&apos; and
+            aria-label=&apos;Pagination&apos;. Current page button has
+            aria-current=&apos;page&apos;. Previous/Next buttons have descriptive aria-labels and
             disable automatically at first/last page. Keyboard: Tab to focus buttons, Enter/Space to
             activate.
           </Callout>
@@ -902,25 +912,25 @@ export function FlowPaginationVariants() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 1 page (no navigation needed)
               </Text>
               <FlowPagination page={1} totalPages={1} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 2 pages
               </Text>
               <FlowPagination page={1} totalPages={2} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 3 pages
               </Text>
               <FlowPagination page={2} totalPages={3} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 100+ pages (heavy ellipsis)
               </Text>
               <FlowPagination page={50} totalPages={100} onChange={() => {}} />
@@ -936,25 +946,25 @@ export function FlowPaginationVariants() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 siblingCount=0 (minimal)
               </Text>
               <FlowPagination page={10} totalPages={20} siblingCount={0} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 siblingCount=1 (default)
               </Text>
               <FlowPagination page={10} totalPages={20} siblingCount={1} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 siblingCount=2 (expanded)
               </Text>
               <FlowPagination page={10} totalPages={20} siblingCount={2} onChange={() => {}} />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 siblingCount=3 (maximum recommended)
               </Text>
               <FlowPagination page={10} totalPages={20} siblingCount={3} onChange={() => {}} />
@@ -969,12 +979,12 @@ export function FlowPaginationVariants() {
       >
         <DemoGroup>
           <Stack gap="component">
-            <Text role="overline" color="tertiary">
+            <Text variant="overline" color="tertiary">
               3 pages
             </Text>
             <FlowPagination page={2} totalPages={3} onChange={() => {}} />
 
-            <Text role="overline" color="tertiary">
+            <Text variant="overline" color="tertiary">
               50 pages (collapsed)
             </Text>
             <FlowPagination page={25} totalPages={50} onChange={() => {}} />
@@ -1002,9 +1012,9 @@ export function FlowStepperOverview() {
           <FlowStepper
             activeStep={currentStep}
             steps={[
-              { key: "account", label: "Account Info", description: "Enter your details" },
-              { key: "preferences", label: "Preferences", description: "Choose your settings" },
-              { key: "confirmation", label: "Confirmation", description: "Review and confirm" },
+              { id: "account", label: "Account Info", description: "Enter your details" },
+              { id: "preferences", label: "Preferences", description: "Choose your settings" },
+              { id: "confirmation", label: "Confirmation", description: "Review and confirm" },
             ]}
           />
           <Inline gap={2} className="demo-spacing-top-lg">
@@ -1025,43 +1035,43 @@ export function FlowStepperOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 E-commerce checkout
               </Text>
               <FlowStepper
                 activeStep={1}
                 steps={[
-                  { key: "cart", label: "Cart", description: "Review items" },
-                  { key: "shipping", label: "Shipping", description: "Delivery address" },
-                  { key: "payment", label: "Payment", description: "Billing details" },
-                  { key: "confirm", label: "Confirm", description: "Place order" },
+                  { id: "cart", label: "Cart", description: "Review items" },
+                  { id: "shipping", label: "Shipping", description: "Delivery address" },
+                  { id: "payment", label: "Payment", description: "Billing details" },
+                  { id: "confirm", label: "Confirm", description: "Place order" },
                 ]}
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 User onboarding
               </Text>
               <FlowStepper
                 activeStep={0}
                 steps={[
-                  { key: "welcome", label: "Welcome", description: "Get started" },
-                  { key: "profile", label: "Profile", description: "Tell us about you" },
-                  { key: "preferences", label: "Preferences", description: "Customize experience" },
-                  { key: "complete", label: "Complete", description: "You're all set!" },
+                  { id: "welcome", label: "Welcome", description: "Get started" },
+                  { id: "profile", label: "Profile", description: "Tell us about you" },
+                  { id: "preferences", label: "Preferences", description: "Customize experience" },
+                  { id: "complete", label: "Complete", description: "You're all set!" },
                 ]}
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Project setup wizard
               </Text>
               <FlowStepper
                 activeStep={2}
                 steps={[
-                  { key: "details", label: "Details", description: "Name and description" },
-                  { key: "team", label: "Team", description: "Add collaborators" },
-                  { key: "settings", label: "Settings", description: "Configure options" },
+                  { id: "details", label: "Details", description: "Name and description" },
+                  { id: "team", label: "Team", description: "Add collaborators" },
+                  { id: "settings", label: "Settings", description: "Configure options" },
                 ]}
               />
             </Stack>
@@ -1076,44 +1086,44 @@ export function FlowStepperOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Step 1 of 4 (start)
               </Text>
               <FlowStepper
                 activeStep={0}
                 steps={[
-                  { key: "account", label: "Account" },
-                  { key: "verification", label: "Verification" },
-                  { key: "payment", label: "Payment" },
-                  { key: "done", label: "Done" },
+                  { id: "account", label: "Account" },
+                  { id: "verification", label: "Verification" },
+                  { id: "payment", label: "Payment" },
+                  { id: "done", label: "Done" },
                 ]}
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Step 3 of 4 (mid-flow)
               </Text>
               <FlowStepper
                 activeStep={2}
                 steps={[
-                  { key: "account", label: "Account" },
-                  { key: "verification", label: "Verification" },
-                  { key: "payment", label: "Payment" },
-                  { key: "done", label: "Done" },
+                  { id: "account", label: "Account" },
+                  { id: "verification", label: "Verification" },
+                  { id: "payment", label: "Payment" },
+                  { id: "done", label: "Done" },
                 ]}
               />
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Step 4 of 4 (complete)
               </Text>
               <FlowStepper
                 activeStep={3}
                 steps={[
-                  { key: "account", label: "Account" },
-                  { key: "verification", label: "Verification" },
-                  { key: "payment", label: "Payment" },
-                  { key: "done", label: "Done" },
+                  { id: "account", label: "Account" },
+                  { id: "verification", label: "Verification" },
+                  { id: "payment", label: "Payment" },
+                  { id: "done", label: "Done" },
                 ]}
               />
             </Stack>
@@ -1127,10 +1137,11 @@ export function FlowStepperOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowStepper renders with role=&apos;navigation&apos; and aria-label=&apos;Progress&apos;. Current step has
-            aria-current=&apos;step&apos;. Step numbers are announced for screen readers. Completed steps show
-            checkmarks, current step is highlighted with accent color, upcoming steps are dimmed.
-            Stepper is non-interactive (use buttons like Previous/Next to control flow).
+            FlowStepper renders with role=&apos;navigation&apos; and
+            aria-label=&apos;Progress&apos;. Current step has aria-current=&apos;step&apos;. Step
+            numbers are announced for screen readers. Completed steps show checkmarks, current step
+            is highlighted with accent color, upcoming steps are dimmed. Stepper is non-interactive
+            (use buttons like Previous/Next to control flow).
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1147,10 +1158,10 @@ export function FlowStepperVariants() {
             <FlowStepper
               activeStep={1}
               steps={[
-                { key: "step1", label: "Step 1" },
-                { key: "step2", label: "Step 2" },
-                { key: "step3", label: "Step 3" },
-                { key: "step4", label: "Step 4" },
+                { id: "step1", label: "Step 1" },
+                { id: "step2", label: "Step 2" },
+                { id: "step3", label: "Step 3" },
+                { id: "step4", label: "Step 4" },
               ]}
             />
           </Stack>
@@ -1196,7 +1207,7 @@ export function FlowBottomNavOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Social media app
               </Text>
               <div className="demo-mobile-frame">
@@ -1214,7 +1225,7 @@ export function FlowBottomNavOverview() {
               </div>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 E-commerce app
               </Text>
               <div className="demo-mobile-frame">
@@ -1231,7 +1242,7 @@ export function FlowBottomNavOverview() {
               </div>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Content streaming app
               </Text>
               <div className="demo-mobile-frame">
@@ -1257,7 +1268,7 @@ export function FlowBottomNavOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 3 items (minimal)
               </Text>
               <div className="demo-mobile-frame">
@@ -1273,7 +1284,7 @@ export function FlowBottomNavOverview() {
               </div>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 4 items (common)
               </Text>
               <div className="demo-mobile-frame">
@@ -1290,7 +1301,7 @@ export function FlowBottomNavOverview() {
               </div>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 5 items (maximum recommended)
               </Text>
               <div className="demo-mobile-frame">
@@ -1317,10 +1328,10 @@ export function FlowBottomNavOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowBottomNav renders with role=&apos;navigation&apos; and aria-label=&apos;Main navigation&apos;. Active
-            item has aria-current=&apos;page&apos;. Each item must have an icon and label for clarity. Fixed
-            to viewport bottom with safe area insets on mobile devices. Desktop users should use
-            FlowSidebar or FlowTabs instead.
+            FlowBottomNav renders with role=&apos;navigation&apos; and aria-label=&apos;Main
+            navigation&apos;. Active item has aria-current=&apos;page&apos;. Each item must have an
+            icon and label for clarity. Fixed to viewport bottom with safe area insets on mobile
+            devices. Desktop users should use FlowSidebar or FlowTabs instead.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1355,10 +1366,10 @@ export function FlowBottomNavVariants() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowBottomNav renders with role=&apos;navigation&apos; and aria-label=&apos;Main navigation&apos;. Active
-            item has aria-current=&apos;page&apos;. Each item must have an icon and label for clarity. Fixed
-            to viewport bottom with safe area insets on mobile devices. Desktop users should use
-            FlowSidebar or FlowTabs instead.
+            FlowBottomNav renders with role=&apos;navigation&apos; and aria-label=&apos;Main
+            navigation&apos;. Active item has aria-current=&apos;page&apos;. Each item must have an
+            icon and label for clarity. Fixed to viewport bottom with safe area insets on mobile
+            devices. Desktop users should use FlowSidebar or FlowTabs instead.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1402,7 +1413,7 @@ export function FlowSidebarOverview() {
         <DemoGroup>
           <Stack gap="component">
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Project management dashboard
               </Text>
               <div className="demo-sidebar-frame">
@@ -1431,7 +1442,7 @@ export function FlowSidebarOverview() {
               </div>
             </Stack>
             <Stack gap="component">
-              <Text role="overline" color="tertiary">
+              <Text variant="overline" color="tertiary">
                 Admin panel
               </Text>
               <div className="demo-sidebar-frame">
@@ -1475,10 +1486,10 @@ export function FlowSidebarOverview() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowSidebar renders with role=&apos;navigation&apos; and aria-label=&apos;Sidebar&apos;. Active item has
-            aria-current=&apos;page&apos;. Section headers use proper heading levels for structure. Keyboard
-            navigation: Tab to focus items, Enter/Space to activate, Arrow Up/Down to navigate
-            between items. Desktop-only — mobile users should use FlowBottomNav.
+            FlowSidebar renders with role=&apos;navigation&apos; and aria-label=&apos;Sidebar&apos;.
+            Active item has aria-current=&apos;page&apos;. Section headers use proper heading levels
+            for structure. Keyboard navigation: Tab to focus items, Enter/Space to activate, Arrow
+            Up/Down to navigate between items. Desktop-only — mobile users should use FlowBottomNav.
           </Callout>
         </DemoGroup>
       </DemoSection>
@@ -1525,10 +1536,10 @@ export function FlowSidebarVariants() {
       >
         <DemoGroup>
           <Callout intent="info">
-            FlowSidebar renders with role=&apos;navigation&apos; and aria-label=&apos;Sidebar&apos;. Active item has
-            aria-current=&apos;page&apos;. Section headers use proper heading levels for structure. Keyboard
-            navigation: Tab to focus items, Enter/Space to activate, Arrow Up/Down to navigate
-            between items. Desktop-only — mobile users should use FlowBottomNav.
+            FlowSidebar renders with role=&apos;navigation&apos; and aria-label=&apos;Sidebar&apos;.
+            Active item has aria-current=&apos;page&apos;. Section headers use proper heading levels
+            for structure. Keyboard navigation: Tab to focus items, Enter/Space to activate, Arrow
+            Up/Down to navigate between items. Desktop-only — mobile users should use FlowBottomNav.
           </Callout>
         </DemoGroup>
       </DemoSection>

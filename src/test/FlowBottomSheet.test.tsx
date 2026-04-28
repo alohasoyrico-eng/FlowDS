@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowBottomSheet } from "../app/components/overlays";
+import { FlowBottomSheet } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Open / closed state

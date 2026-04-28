@@ -10,7 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowProgressBar } from "../app/components/feedback";
+import { FlowProgressBar } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -27,14 +27,14 @@ describe("FlowProgressBar — rendering", () => {
     expect(screen.getByRole("progressbar")).toHaveClass("flow-progress-track");
   });
 
-  it("applies data-variant='default' by default", () => {
+  it("does not set data-status by default (no status prop)", () => {
     render(<FlowProgressBar value={40} />);
-    expect(screen.getByRole("progressbar")).toHaveAttribute("data-variant", "default");
+    expect(screen.getByRole("progressbar")).not.toHaveAttribute("data-status");
   });
 
-  it("applies a custom variant via prop", () => {
-    render(<FlowProgressBar value={80} variant="success" />);
-    expect(screen.getByRole("progressbar")).toHaveAttribute("data-variant", "success");
+  it("applies a custom status via prop", () => {
+    render(<FlowProgressBar value={80} status="success" />);
+    expect(screen.getByRole("progressbar")).toHaveAttribute("data-status", "success");
   });
 });
 

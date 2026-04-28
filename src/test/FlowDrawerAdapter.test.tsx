@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { FlowDrawerAdapter } from "../app/components/patterns";
+import { FlowDrawerAdapter } from "@flow/patterns";
 
 // jsdom default innerWidth is 1024, so the drawer renders in desktop (inline) mode.
 

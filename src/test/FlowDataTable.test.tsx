@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowDataTable } from "../app/components/patterns";
+import { FlowDataTable } from "@flow/patterns";
 
 const columns = [
   { key: "name" as const, header: "Name", sortable: true },
@@ -43,7 +43,14 @@ describe("FlowDataTable — rendering", () => {
   });
 
   it("renders caption when provided", () => {
-    render(<FlowDataTable columns={columns} data={data} caption="Employee data" aria-label="Test table" />);
+    render(
+      <FlowDataTable
+        columns={columns}
+        data={data}
+        caption="Employee data"
+        aria-label="Test table"
+      />,
+    );
     expect(screen.getByText("Employee data")).toBeInTheDocument();
   });
 });
@@ -69,7 +76,15 @@ describe("FlowDataTable — sorting", () => {
 describe("FlowDataTable — filtering", () => {
   it("typing in search box filters rows", async () => {
     const user = userEvent.setup();
-    render(<FlowDataTable columns={columns} data={data} searchable pageSize={0} aria-label="Test table" />);
+    render(
+      <FlowDataTable
+        columns={columns}
+        data={data}
+        searchable
+        pageSize={0}
+        aria-label="Test table"
+      />,
+    );
     await user.type(screen.getByLabelText("Filter table"), "Alice");
     expect(screen.getByText("Alice")).toBeInTheDocument();
     expect(screen.queryByText("Bob")).not.toBeInTheDocument();
@@ -96,13 +111,21 @@ describe("FlowDataTable — empty/error/loading", () => {
     const { container } = render(
       <FlowDataTable columns={columns} data={data} loading aria-label="Test table" />,
     );
-    const root = container.firstElementChild as HTMLElement;
+    const root = container.querySelector(".flow-data-table") as HTMLElement;
     expect(root).toHaveAttribute("data-state", "loading");
     expect(root).toHaveAttribute("aria-busy", "true");
   });
 
   it("shows custom error message", () => {
-    render(<FlowDataTable columns={columns} data={data} error errorMessage="DB timeout" aria-label="Test table" />);
+    render(
+      <FlowDataTable
+        columns={columns}
+        data={data}
+        error
+        errorMessage="DB timeout"
+        aria-label="Test table"
+      />,
+    );
     expect(screen.getByText("DB timeout")).toBeInTheDocument();
   });
 

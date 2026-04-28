@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowList, FlowListItem } from "../app/components/display";
+import { FlowList, FlowListItem } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -134,13 +134,13 @@ describe("FlowListItem — interaction", () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  it("sets role='option' on interactive items", () => {
-    render(
+  it("marks interactive items with data-interactive", () => {
+    const { container } = render(
       <FlowList aria-label="Items">
         <FlowListItem primary="Selectable" onClick={() => {}} />
       </FlowList>,
     );
-    expect(screen.getByRole("option")).toBeInTheDocument();
+    expect(container.querySelector("[data-interactive]")).toBeInTheDocument();
   });
 });
 
@@ -151,8 +151,8 @@ describe("FlowListItem — interaction", () => {
 describe("FlowListItem — accessibility", () => {
   it("sets aria-selected when selected", () => {
     render(
-      <FlowList aria-label="Items">
-        <FlowListItem primary="Selected" onClick={() => {}} selected />
+      <FlowList aria-label="Items" selectable>
+        <FlowListItem primary="Selected" selected />
       </FlowList>,
     );
     expect(screen.getByRole("option")).toHaveAttribute("aria-selected", "true");
@@ -160,8 +160,8 @@ describe("FlowListItem — accessibility", () => {
 
   it("sets aria-disabled when disabled", () => {
     render(
-      <FlowList aria-label="Items">
-        <FlowListItem primary="Disabled" onClick={() => {}} disabled />
+      <FlowList aria-label="Items" selectable>
+        <FlowListItem primary="Disabled" selected disabled />
       </FlowList>,
     );
     expect(screen.getByRole("option")).toHaveAttribute("aria-disabled", "true");

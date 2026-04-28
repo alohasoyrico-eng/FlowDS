@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowAutocomplete } from "../app/components/patterns";
+import { FlowAutocomplete } from "@flow/patterns";
 
 // jsdom does not implement scrollIntoView — stub it to prevent runtime errors
 Element.prototype.scrollIntoView = vi.fn();
@@ -34,7 +34,9 @@ describe("FlowAutocomplete — rendering", () => {
   });
 
   it("shows the placeholder text", () => {
-    render(<FlowAutocomplete options={sampleOptions} placeholder="Search fruits" aria-label="Fruit" />);
+    render(
+      <FlowAutocomplete options={sampleOptions} placeholder="Search fruits" aria-label="Fruit" />,
+    );
     expect(screen.getByPlaceholderText("Search fruits")).toBeInTheDocument();
   });
 
@@ -82,7 +84,9 @@ describe("FlowAutocomplete — interaction", () => {
   });
 
   it("shows empty text when no options match", async () => {
-    render(<FlowAutocomplete options={sampleOptions} emptyText="Nothing here" aria-label="Fruit" />);
+    render(
+      <FlowAutocomplete options={sampleOptions} emptyText="Nothing here" aria-label="Fruit" />,
+    );
     await userEvent.type(screen.getByRole("combobox"), "zzz");
     expect(screen.getByText("Nothing here")).toBeInTheDocument();
   });

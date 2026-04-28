@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowButton } from "../app/components/controls";
+import { FlowButton } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -33,14 +33,14 @@ describe("FlowButton — rendering", () => {
     expect(screen.getByRole("button")).toHaveClass("flow-btn-v2");
   });
 
-  it("sets data-variant='high' by default", () => {
+  it("sets data-variant='primary' by default", () => {
     render(<FlowButton>Test</FlowButton>);
-    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "high");
+    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "primary");
   });
 
   it("sets custom variant via prop", () => {
-    render(<FlowButton variant="medium">Secondary</FlowButton>);
-    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "medium");
+    render(<FlowButton variant="secondary">Secondary</FlowButton>);
+    expect(screen.getByRole("button")).toHaveAttribute("data-variant", "secondary");
   });
 
   it("renders a leading icon when leadingIcon is provided", () => {

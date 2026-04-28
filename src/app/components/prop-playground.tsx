@@ -2,14 +2,14 @@
  * FLOW Docs — PropPlayground
  * Interactive prop editor that renders a live component preview alongside auto-generated controls.
  */
-import { useCallback, useMemo, useReducer } from "react";
+import { useCallback, useMemo, useReducer, useState } from "react";
 
-import { Grid, Stack, Surface, Text } from "../primitives";
+import { Grid, Stack, Surface, Text } from "@flow/primitives";
 import type { PropEntry } from "./doc-primitives";
 import { CodeBlock } from "./doc-primitives";
-import { FlowSwitch } from "./selection/FlowSwitch";
-import { FlowTextInput } from "./inputs/FlowTextInput";
-import { FlowSelect } from "./selection/FlowSelect";
+import { FlowButton, FlowSwitch } from "@flow/components";
+import { FlowTextInput } from "@flow/components";
+import { FlowSelect } from "@flow/components";
 import { type ControlDescriptor, inferControl } from "./prop-playground-controls";
 
 import type { ReactNode } from "react";
@@ -17,7 +17,9 @@ import type { ReactNode } from "react";
 // ── State ──
 
 type PropState = Record<string, unknown>;
-type PropAction = { type: "SET"; name: string; value: unknown } | { type: "RESET"; defaults: PropState };
+type PropAction =
+  | { type: "SET"; name: string; value: unknown }
+  | { type: "RESET"; defaults: PropState };
 
 function propReducer(state: PropState, action: PropAction): PropState {
   switch (action.type) {
@@ -30,22 +32,29 @@ function propReducer(state: PropState, action: PropAction): PropState {
 
 // ── Code generation ──
 
-function generateCode(componentName: string, props: PropState, defaults: PropState): string {
+function generateCode(
+  componentName: string,
+  props: PropState,
+  defaults: PropState,
+  fixtureKeys: Set<string>,
+): string {
   const entries = Object.entries(props)
-    .filter(([key, val]) => val !== defaults[key] && val !== undefined && val !== "")
+    .filter(([key, val]) => !fixtureKeys.has(key) && val !== defaults[key] && val !== undefined && val !== "")
     .map(([key, val]) => {
       if (typeof val === "boolean") return val ? key : `${key}={false}`;
       if (typeof val === "string") return `${key}="${val}"`;
       return `${key}={${JSON.stringify(val)}}`;
     });
 
+  // Fixture keys rendered as variable references
+  const fixtureEntries = [...fixtureKeys].map((key) => `${key}={${key}}`);
+  const allEntries = [...entries, ...fixtureEntries];
+
   const hasChildren = "children" in props && props.children && props.children !== defaults.children;
-  const propsStr = entries
-    .filter(([_key]) => true)
-    .join("\n  ");
+  const propsStr = allEntries.join("\n  ");
 
   if (hasChildren) {
-    const childEntries = entries.filter((e) => !e.startsWith("children"));
+    const childEntries = allEntries.filter((e) => !e.startsWith("children"));
     return `<${componentName}${childEntries.length ? "\n  " + childEntries.join("\n  ") : ""}>\n  ${props.children}\n</${componentName}>`;
   }
   return `<${componentName}${propsStr ? "\n  " + propsStr : ""}\n/>`;
@@ -56,6 +65,9 @@ function generateCode(componentName: string, props: PropState, defaults: PropSta
 export interface PlaygroundConfig {
   renderPreview: (props: Record<string, unknown>) => ReactNode;
   defaults?: Record<string, unknown>;
+  fixtures?: Record<string, unknown>;
+  excludeControls?: string[];
+  overlay?: boolean;
 }
 
 interface PropPlaygroundProps {
@@ -83,8 +95,15 @@ function PlaygroundControl({
   switch (control.kind) {
     case "boolean":
       return (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--ref-frame-space-3)" }}>
-          <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "var(--ref-frame-space-3)",
+          }}
+        >
+          <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
             {prop.name}
           </Text>
           <FlowSwitch
@@ -99,7 +118,7 @@ function PlaygroundControl({
     case "enum":
       return (
         <Stack gap={1}>
-          <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+          <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
             {prop.name}
           </Text>
           <FlowSelect
@@ -117,7 +136,7 @@ function PlaygroundControl({
     case "reactnode":
       return (
         <Stack gap={1}>
-          <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+          <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
             {prop.name}
           </Text>
           <FlowTextInput
@@ -132,7 +151,7 @@ function PlaygroundControl({
     case "number":
       return (
         <Stack gap={1}>
-          <Text role="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
+          <Text variant="label-s" style={{ fontFamily: "var(--ref-voice-family-mono)" }}>
             {prop.name}
           </Text>
           <FlowTextInput
@@ -153,26 +172,49 @@ function PlaygroundControl({
 
 export function PropPlayground({ componentName, propDefs, playground }: PropPlaygroundProps) {
   const defaults = playground.defaults ?? {};
+  const fixtures = playground.fixtures ?? {};
+  const excludeSet = useMemo(
+    () => new Set(playground.excludeControls ?? []),
+    [playground.excludeControls],
+  );
+  const fixtureKeys = useMemo(() => new Set(Object.keys(fixtures)), [fixtures]);
 
   const [state, dispatch] = useReducer(propReducer, defaults);
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
   const controls = useMemo<{ prop: PropEntry; control: ControlDescriptor }[]>(
     () =>
       propDefs
         .map((prop) => ({ prop, control: inferControl(prop.type) }))
-        .filter(({ control }) => control.kind !== "unknown"),
-    [propDefs],
+        .filter(
+          ({ prop, control }) =>
+            control.kind !== "unknown" &&
+            control.kind !== "fixture" &&
+            control.kind !== "callback" &&
+            !excludeSet.has(prop.name),
+        ),
+    [propDefs, excludeSet],
   );
 
   const handleChange = useCallback((name: string, value: unknown) => {
     dispatch({ type: "SET", name, value });
   }, []);
 
-  const code = generateCode(componentName, state, defaults);
+  // Merge fixtures + editable state for preview
+  const previewProps = useMemo(() => {
+    const merged = { ...fixtures, ...state };
+    if (playground.overlay) {
+      merged.open = overlayOpen;
+      merged.onClose = () => setOverlayOpen(false);
+    }
+    return merged;
+  }, [fixtures, state, playground.overlay, overlayOpen]);
+
+  const code = generateCode(componentName, state, defaults, fixtureKeys);
 
   return (
     <Stack gap={3}>
-      <Text role="overline">Interactive Playground</Text>
+      <Text variant="overline">Interactive Playground</Text>
       <div
         style={{
           display: "grid",
@@ -192,15 +234,28 @@ export function PropPlayground({ componentName, propDefs, playground }: PropPlay
             justifyContent: "center",
           }}
         >
-          {playground.renderPreview(state)}
+          <Stack gap={3} align="center">
+            {playground.overlay && (
+              <FlowButton
+                variant="secondary"
+                size="sm"
+                onClick={() => setOverlayOpen(!overlayOpen)}
+              >
+                {overlayOpen ? "Hide Preview" : "Show Preview"}
+              </FlowButton>
+            )}
+            {(!playground.overlay || overlayOpen) && playground.renderPreview(previewProps)}
+          </Stack>
         </Surface>
 
         {/* Controls panel */}
         {controls.length > 0 && (
           <Surface variant="secondary" padding="container" radius="container">
             <Stack gap={3}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Text role="label-m">Props</Text>
+              <div
+                style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Text variant="label-m">Props</Text>
                 <button
                   onClick={() => dispatch({ type: "RESET", defaults })}
                   style={{

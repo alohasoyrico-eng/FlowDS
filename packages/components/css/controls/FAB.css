@@ -1,0 +1,156 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FAB — Floating Action Button (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-fab {
+  --fab-size: var(--comp-fab-size-md);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border: none;
+  border-radius: var(--comp-fab-radius);
+  font-family: var(--comp-fab-font-family);
+  font-size: var(--comp-fab-label-font);
+  font-weight: var(--comp-fab-font-weight);
+  cursor: pointer;
+  box-shadow: var(--comp-fab-shadow);
+  transition:
+    background var(--comp-fab-transition),
+    box-shadow var(--comp-fab-transition),
+    transform var(--comp-fab-transition);
+}
+
+.flow-fab[data-size="sm"] {
+  --fab-size: var(--comp-fab-size-sm);
+}
+
+.flow-fab[data-size="lg"] {
+  --fab-size: var(--comp-fab-size-lg);
+}
+
+/* Extended (pill shape) */
+.flow-fab[data-extended] {
+  width: auto;
+  padding: 0 var(--comp-fab-padding-x);
+  gap: var(--comp-fab-gap);
+  border-radius: var(--comp-fab-radius-extended);
+}
+
+/* Variant: primary */
+.flow-fab[data-variant="primary"] {
+  background: var(--comp-fab-bg-primary);
+  color: var(--comp-fab-text-primary);
+}
+
+.flow-fab[data-variant="primary"]:hover:not(:disabled, [data-state="disabled"]) {
+  background: var(--comp-fab-bg-primary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="primary"]:active {
+  background: var(--comp-fab-bg-primary-active);
+}
+
+/* Variant: secondary */
+.flow-fab[data-variant="secondary"] {
+  background: var(--comp-fab-bg-secondary);
+  color: var(--comp-fab-text-secondary);
+}
+
+.flow-fab[data-variant="secondary"]:hover:not(:disabled, [data-state="disabled"]) {
+  background: var(--comp-fab-bg-secondary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="secondary"]:active {
+  background: var(--comp-fab-bg-secondary-active);
+}
+
+/* Variant: tertiary */
+.flow-fab[data-variant="tertiary"] {
+  background: var(--comp-fab-bg-tertiary);
+  color: var(--comp-fab-text-tertiary);
+}
+
+.flow-fab[data-variant="tertiary"]:hover:not(:disabled, [data-state="disabled"]) {
+  background: var(--comp-fab-bg-tertiary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="tertiary"]:active {
+  background: var(--comp-fab-bg-tertiary-active);
+}
+
+/* Positioning */
+.flow-fab[data-position="bottom-right"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-end: var(--comp-fab-offset);
+}
+
+.flow-fab[data-position="bottom-left"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-start: var(--comp-fab-offset);
+}
+
+.flow-fab[data-position="bottom-center"] {
+  position: fixed;
+  inset-block-end: var(--comp-fab-offset);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+}
+
+.flow-fab:disabled,
+.flow-fab[data-state="disabled"] {
+  background: var(--comp-fab-bg-disabled);
+  color: var(--comp-fab-text-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 1;
+}
+
+.flow-fab[data-state="loading"] {
+  cursor: wait;
+  pointer-events: none;
+}
+
+.flow-fab:is(:focus-visible, [data-demo-state="focus"]:not(:disabled)) {
+  outline: var(--comp-fab-focus-ring-width) solid var(--comp-fab-focus-ring-color);
+  outline-offset: var(--comp-fab-focus-ring-offset);
+}
+
+.flow-fab-label {
+  white-space: nowrap;
+}
+
+/* ── Demo-only: Force visual states without interaction (for documentation) ── */
+.flow-fab[data-variant="primary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-primary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="secondary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-secondary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="tertiary"][data-demo-state="hover"]:not(:disabled) {
+  background: var(--comp-fab-bg-tertiary-hover);
+  box-shadow: var(--comp-fab-shadow-hover);
+}
+
+.flow-fab[data-variant="primary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-primary-active);
+}
+
+.flow-fab[data-variant="secondary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-secondary-active);
+}
+
+.flow-fab[data-variant="tertiary"][data-demo-state="pressed"]:not(:disabled) {
+  background: var(--comp-fab-bg-tertiary-active);
+}

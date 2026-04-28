@@ -1,0 +1,84 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OTP INPUT — One-time password cells
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-otp-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-otp-gap);
+}
+
+.flow-otp-input-label {
+  display: block;
+  font-size: var(--sys-size-voice-label);
+  font-family: var(--sys-voice-family);
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-otp-input[data-state~="error"] .flow-otp-input-label {
+  color: var(--sys-energy-status-error);
+}
+
+.flow-otp-input-group {
+  display: flex;
+  gap: var(--comp-otp-input-gap);
+}
+
+.flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-md);
+  height: var(--comp-otp-cell-size-md);
+  text-align: center;
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  border-radius: var(--sys-frame-radius-control);
+  background: var(--sys-energy-surface-primary);
+  font-family: var(--sys-voice-family-mono);
+  font-size: var(--sys-voice-heading-xl-size);
+  font-weight: var(--sys-voice-weight-semibold);
+  color: var(--sys-energy-text-primary);
+  outline: none;
+  transition:
+    border-color var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard),
+    box-shadow var(--sys-momentum-duration-fast) var(--sys-momentum-easing-standard);
+  caret-color: var(--sys-energy-border-focus);
+}
+
+.flow-otp-input-cell[data-filled] {
+  border-color: var(--sys-energy-border-focus);
+}
+
+.flow-otp-input-cell:focus {
+  border-color: var(--sys-energy-border-focus);
+  box-shadow: 0 0 0 var(--sys-frame-border-thin) var(--sys-energy-border-focus);
+}
+
+.flow-otp-input[data-state~="error"] .flow-otp-input-cell {
+  border-color: var(--sys-energy-status-error);
+}
+
+.flow-otp-input[data-state~="disabled"] .flow-otp-input-cell {
+  border-color: var(--comp-otp-border-disabled);
+  background: var(--comp-otp-bg-disabled);
+  color: var(--comp-otp-text-disabled);
+  cursor: not-allowed;
+}
+
+.flow-otp-input[data-size="sm"] .flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-sm);
+  height: var(--comp-otp-cell-size-sm);
+  font-size: var(--sys-voice-heading-m-size);
+}
+
+.flow-otp-input[data-size="lg"] .flow-otp-input-cell {
+  width: var(--comp-otp-cell-size-lg);
+  height: var(--comp-otp-cell-size-lg);
+  font-size: var(--sys-voice-display-s-size);
+}
+
+/* WHCM: box-shadow focus ring invisible; add outline fallback */
+@media (forced-colors: active) {
+  .flow-otp-input-cell:focus {
+    outline: var(--sys-state-focus-ring-width) solid CanvasText;
+    outline-offset: var(--sys-state-focus-ring-offset);
+    box-shadow: none;
+  }
+}

@@ -11,11 +11,17 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowAdvancedFilters } from "../app/components/patterns";
+import { FlowAdvancedFilters } from "@flow/patterns";
+import type { FilterField } from "@flow/patterns";
 
-const fields = [
+const fields: FilterField[] = [
   { key: "name", label: "Name", type: "text" },
-  { key: "status", label: "Status", type: "select", options: [{ value: "active", label: "Active" }] },
+  {
+    key: "status",
+    label: "Status",
+    type: "select",
+    options: [{ value: "active", label: "Active" }],
+  },
 ];
 
 const filters = [{ id: "f-1", field: "name", operator: "contains", value: "test" }];
@@ -26,23 +32,17 @@ const filters = [{ id: "f-1", field: "name", operator: "contains", value: "test"
 
 describe("FlowAdvancedFilters — rendering", () => {
   it("renders Filters header", () => {
-    render(
-      <FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} />,
-    );
+    render(<FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} />);
     expect(screen.getByText("Filters")).toBeInTheDocument();
   });
 
   it("renders Add filter button", () => {
-    render(
-      <FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} />,
-    );
+    render(<FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} />);
     expect(screen.getByText("Add filter")).toBeInTheDocument();
   });
 
   it("renders filter rows with labels", () => {
-    render(
-      <FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={vi.fn()} />,
-    );
+    render(<FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={vi.fn()} />);
     expect(screen.getByText("Where")).toBeInTheDocument();
   });
 });
@@ -55,9 +55,7 @@ describe("FlowAdvancedFilters — interaction", () => {
   it("Add filter calls onFiltersChange with a new array", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
-    render(
-      <FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={onChange} />,
-    );
+    render(<FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={onChange} />);
     await user.click(screen.getByText("Add filter"));
     expect(onChange).toHaveBeenCalledTimes(1);
     const newFilters = onChange.mock.calls[0][0];
@@ -68,9 +66,7 @@ describe("FlowAdvancedFilters — interaction", () => {
   it("remove button calls onFiltersChange without that row", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
-    render(
-      <FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={onChange} />,
-    );
+    render(<FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={onChange} />);
     await user.click(screen.getByLabelText("Remove filter"));
     expect(onChange).toHaveBeenCalledWith([]);
   });
@@ -80,7 +76,12 @@ describe("FlowAdvancedFilters — interaction", () => {
     const onChange = vi.fn();
     const onClear = vi.fn();
     render(
-      <FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={onChange} onClear={onClear} />,
+      <FlowAdvancedFilters
+        fields={fields}
+        filters={filters}
+        onFiltersChange={onChange}
+        onClear={onClear}
+      />,
     );
     await user.click(screen.getByText("Clear all"));
     expect(onChange).toHaveBeenCalledWith([]);
@@ -97,7 +98,7 @@ describe("FlowAdvancedFilters — states", () => {
     const { container } = render(
       <FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} error />,
     );
-    const root = container.firstElementChild as HTMLElement;
+    const root = container.querySelector(".flow-advanced-filters") as HTMLElement;
     expect(root).toHaveAttribute("data-state", "error");
     expect(root).toHaveAttribute("aria-invalid", "true");
   });
@@ -106,14 +107,19 @@ describe("FlowAdvancedFilters — states", () => {
     const { container } = render(
       <FlowAdvancedFilters fields={fields} filters={[]} onFiltersChange={vi.fn()} loading />,
     );
-    const root = container.firstElementChild as HTMLElement;
+    const root = container.querySelector(".flow-advanced-filters") as HTMLElement;
     expect(root).toHaveAttribute("data-state", "loading");
     expect(root).toHaveAttribute("aria-busy", "true");
   });
 
   it("maxFilters disables add button when reached", () => {
     render(
-      <FlowAdvancedFilters fields={fields} filters={filters} onFiltersChange={vi.fn()} maxFilters={1} />,
+      <FlowAdvancedFilters
+        fields={fields}
+        filters={filters}
+        onFiltersChange={vi.fn()}
+        maxFilters={1}
+      />,
     );
     expect(screen.getByText("Add filter").closest("button")).toBeDisabled();
   });

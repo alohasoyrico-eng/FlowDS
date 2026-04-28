@@ -1,0 +1,11 @@
+/* ── SKELETON PULSE — loading shimmer animation ── */
+@keyframes flow-skeleton-pulse {
+  0%,
+  100% {
+    opacity: var(--comp-skeleton-pulse-opacity);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}

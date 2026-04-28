@@ -12,12 +12,13 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowStepper } from "../app/components/navigation";
+import { FlowStepper } from "@flow/components";
+import type { StepperStep } from "@flow/components";
 
-const DEFAULT_STEPS = [
-  { key: "account", label: "Account" },
-  { key: "details", label: "Details" },
-  { key: "review", label: "Review" },
+const DEFAULT_STEPS: StepperStep[] = [
+  { id: "account", label: "Account" },
+  { id: "details", label: "Details" },
+  { id: "review", label: "Review" },
 ];
 
 // ─────────────────────────────────────────────
@@ -44,9 +45,9 @@ describe("FlowStepper — rendering", () => {
   });
 
   it("renders step descriptions when provided", () => {
-    const steps = [
-      { key: "account", label: "Account", description: "Create your account" },
-      { key: "details", label: "Details" },
+    const steps: StepperStep[] = [
+      { id: "account", label: "Account", description: "Create your account" },
+      { id: "details", label: "Details" },
     ];
     render(<FlowStepper steps={steps} activeStep={0} />);
     expect(screen.getByText("Create your account")).toBeInTheDocument();
@@ -87,9 +88,9 @@ describe("FlowStepper — states", () => {
   });
 
   it("marks steps with error=true as data-status='error'", () => {
-    const steps = [
-      { key: "account", label: "Account" },
-      { key: "details", label: "Details", error: true },
+    const steps: StepperStep[] = [
+      { id: "account", label: "Account" },
+      { id: "details", label: "Details", error: true },
     ];
     render(<FlowStepper steps={steps} activeStep={1} />);
     const detailsStep = screen.getByText("Details").closest("li");
@@ -105,29 +106,17 @@ describe("FlowStepper — interaction", () => {
   it("calls onStepClick for completed steps when clickable=true", async () => {
     const onStepClick = vi.fn();
     render(
-      <FlowStepper
-        steps={DEFAULT_STEPS}
-        activeStep={2}
-        clickable
-        onStepClick={onStepClick}
-      />,
+      <FlowStepper steps={DEFAULT_STEPS} activeStep={2} clickable onStepClick={onStepClick} />,
     );
     // Step 0 (Account) is completed, should be clickable
-    await userEvent.click(
-      screen.getByRole("button", { name: /Step 1: Account \(completed\)/ }),
-    );
+    await userEvent.click(screen.getByRole("button", { name: /Step 1: Account \(completed\)/ }));
     expect(onStepClick).toHaveBeenCalledWith(0);
   });
 
   it("does not call onStepClick for upcoming steps", async () => {
     const onStepClick = vi.fn();
     render(
-      <FlowStepper
-        steps={DEFAULT_STEPS}
-        activeStep={0}
-        clickable
-        onStepClick={onStepClick}
-      />,
+      <FlowStepper steps={DEFAULT_STEPS} activeStep={0} clickable onStepClick={onStepClick} />,
     );
     // Steps 1 and 2 are upcoming, should not be clickable
     const upcomingBtns = screen

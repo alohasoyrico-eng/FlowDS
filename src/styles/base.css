@@ -1,0 +1,107 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FLOW Design System — Base Reset
+   Minimal, opinionated CSS reset for Flow apps.
+   Replaces Tailwind preflight — every rule is intentional.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Box model: border-box everywhere avoids padding/border surprises */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins — Flow components control their own spacing */
+* {
+  margin: 0;
+}
+
+/* Root text rendering */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: var(--ref-voice-family-sans, system-ui, sans-serif);
+}
+
+/* Inherit font for form elements — browser defaults override this */
+button,
+input,
+select,
+optgroup,
+textarea {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+/* Button reset — no chrome by default, Flow components add their own */
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Media defaults — prevent overflow, preserve aspect ratio */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Table border collapse */
+table {
+  border-collapse: collapse;
+}
+
+/* List reset — Flow components manage list styling */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* Anchor reset */
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* Heading reset — Flow Text primitive controls typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* HR */
+hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+
+/* Code font */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--ref-voice-family-mono, ui-monospace, monospace);
+  font-size: 1em;
+}
+
+/* Focus visible — only show focus ring for keyboard users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* end base reset */

@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowVirtualDataTable } from "../app/components/patterns";
+import { FlowVirtualDataTable } from "@flow/patterns";
 
 // jsdom does not implement scrollIntoView — stub it to prevent runtime errors
 Element.prototype.scrollIntoView = vi.fn();
@@ -81,7 +81,14 @@ describe("FlowVirtualDataTable — interaction", () => {
   });
 
   it("shows empty message when data is empty", () => {
-    render(<FlowVirtualDataTable columns={columns} data={[]} rowKey={rowKey} emptyMessage="No records found" />);
+    render(
+      <FlowVirtualDataTable
+        columns={columns}
+        data={[]}
+        rowKey={rowKey}
+        emptyMessage="No records found"
+      />,
+    );
     expect(screen.getByText("No records found")).toBeInTheDocument();
   });
 
@@ -97,7 +104,14 @@ describe("FlowVirtualDataTable — interaction", () => {
 
 describe("FlowVirtualDataTable — accessibility", () => {
   it("has aria-label on the table", () => {
-    render(<FlowVirtualDataTable columns={columns} data={data} rowKey={rowKey} aria-label="Users table" />);
+    render(
+      <FlowVirtualDataTable
+        columns={columns}
+        data={data}
+        rowKey={rowKey}
+        aria-label="Users table"
+      />,
+    );
     expect(screen.getByRole("table")).toHaveAttribute("aria-label", "Users table");
   });
 
@@ -118,9 +132,10 @@ describe("FlowVirtualDataTable — accessibility", () => {
     expect(screen.getAllByRole("cell").length).toBeGreaterThan(0);
   });
 
-  // TODO: role="table" requires rowgroup/row children — fix FlowVirtualDataTable structure
-  it.skip("has no axe violations", async () => {
-    const { container } = render(<FlowVirtualDataTable columns={columns} data={data} rowKey={rowKey} />);
+  it("has no axe violations", async () => {
+    const { container } = render(
+      <FlowVirtualDataTable columns={columns} data={data} rowKey={rowKey} />,
+    );
     expect(await axe(container)).toHaveNoViolations();
   });
 });

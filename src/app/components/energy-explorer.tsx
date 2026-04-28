@@ -5,8 +5,8 @@
  */
 import { useCallback, useEffect, useState } from "react";
 
-import { Divider, Inline, Stack, Text } from "../primitives";
-import { FlowAccordion } from "./layout";
+import { Divider, Inline, Stack, Text } from "@flow/primitives";
+import { FlowAccordion } from "@flow/components";
 
 // ── Contrast helpers ──────────────────────────────────
 function hexToLinear(hex: string): [number, number, number] {
@@ -973,7 +973,9 @@ const extendedSemanticMappings: SemanticEntry[] = [
 // ── Responsive helper ─────────────────────────────────
 function useIsMobile(breakpoint = 768) {
   const [mobile, setMobile] = useState(
-    () => typeof window !== "undefined" && window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches,
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches,
   );
   useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
@@ -1020,7 +1022,8 @@ function Swatch({ hex, label, onClick }: { hex: string; label: string; onClick: 
         gap: "var(--ref-frame-space-micro)",
         minHeight: "var(--ref-frame-space-14)",
         minWidth: 0,
-        transition: "transform var(--ref-momentum-duration-fast) var(--ref-momentum-easing-standard)",
+        transition:
+          "transform var(--ref-momentum-duration-fast) var(--ref-momentum-easing-standard)",
         flex: "1 1 0",
       }}
       onMouseEnter={(e) => {
@@ -1088,7 +1091,9 @@ function PaletteSteps({
 }) {
   if (compact) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-micro)" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", gap: "var(--ref-frame-space-micro)" }}
+      >
         {steps.map((s) => (
           <SwatchRow key={s.step} hex={s.hex} label={s.step} onClick={() => copy(s.hex)} />
         ))}
@@ -1259,7 +1264,7 @@ function SemanticRow({
 // ── Content sections ──────────────────────────────────
 const refPaletteIntro = (
   <>
-    <Text role="paragraph-s" color="secondary">
+    <Text variant="paragraph-s" color="secondary">
       Click any swatch to copy its hex value. All values sourced from the canonical{" "}
       <code>ref.energy</code> palette aligned with Figma Edenred.
     </Text>
@@ -1268,7 +1273,7 @@ const refPaletteIntro = (
 
 const sysMappingsIntro = (
   <>
-    <Text role="paragraph-s" color="secondary">
+    <Text variant="paragraph-s" color="secondary">
       Each sys.energy token maps to a ref step. Light and dark themes remap to different steps.
     </Text>
   </>
@@ -1285,7 +1290,7 @@ function RefPaletteSection({ copy, isMobile }: { copy: (t: string) => void; isMo
           size="sm"
           aria-label="Ref palette scales"
           items={palettes.map((pal) => ({
-            key: pal.key,
+            id: pal.key,
             label: `${pal.name} (${pal.steps.length})`,
             content: <PaletteSteps steps={pal.steps} copy={copy} compact />,
           }))}
@@ -1299,7 +1304,7 @@ function RefPaletteSection({ copy, isMobile }: { copy: (t: string) => void; isMo
       {refPaletteIntro}
       {palettes.map((pal) => (
         <Stack key={pal.key} gap={3}>
-          <Text role="display-s" as="h4">
+          <Text variant="display-s" as="h4">
             {pal.name}
           </Text>
           <PaletteSteps steps={pal.steps} copy={copy} compact={false} />
@@ -1331,7 +1336,9 @@ function SysMappingsSection({ copy, isMobile }: { copy: (t: string) => void; isM
   const compact = isMobile;
 
   const renderEntries = (entries: SemanticEntry[]) => (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "var(--ref-frame-space-micro)" }}>
+    <div
+      style={{ display: "grid", gridTemplateColumns: "1fr", gap: "var(--ref-frame-space-micro)" }}
+    >
       {entries.map((entry) => (
         <SemanticRow key={entry.token} entry={entry} copy={copy} compact={compact} />
       ))}
@@ -1343,14 +1350,14 @@ function SysMappingsSection({ copy, isMobile }: { copy: (t: string) => void; isM
       <Stack gap="component">
         {sysMappingsIntro}
 
-        <Text role="label-l">Core Semantic Mappings</Text>
+        <Text variant="label-l">Core Semantic Mappings</Text>
         <FlowAccordion
           multiple
           bordered={false}
           size="sm"
           aria-label="Core semantic categories"
           items={coreCategories.map((cat) => ({
-            key: cat.key,
+            id: cat.key,
             label: `${cat.label.charAt(0).toUpperCase() + cat.label.slice(1)} (${cat.entries.length})`,
             content: renderEntries(cat.entries),
           }))}
@@ -1358,14 +1365,14 @@ function SysMappingsSection({ copy, isMobile }: { copy: (t: string) => void; isM
 
         <Divider spacing={0} />
 
-        <Text role="label-l">Extended Palette Mappings</Text>
+        <Text variant="label-l">Extended Palette Mappings</Text>
         <FlowAccordion
           multiple
           bordered={false}
           size="sm"
           aria-label="Extended semantic categories"
           items={extendedCategories.map((cat) => ({
-            key: cat.key,
+            id: cat.key,
             label: `${cat.label.charAt(0).toUpperCase() + cat.label.slice(1)} (${cat.entries.length})`,
             content: renderEntries(cat.entries),
           }))}
@@ -1378,10 +1385,10 @@ function SysMappingsSection({ copy, isMobile }: { copy: (t: string) => void; isM
     <Stack gap="component">
       {sysMappingsIntro}
 
-      <Text role="display-s">Core Semantic Mappings</Text>
+      <Text variant="display-s">Core Semantic Mappings</Text>
       {coreCategories.map((cat) => (
         <Stack key={cat.key} gap={3}>
-          <Text role="heading-xl" className="flow-text-capitalize">
+          <Text variant="heading-xl" className="flow-text-capitalize">
             {cat.label}
           </Text>
           {renderEntries(cat.entries)}
@@ -1390,10 +1397,10 @@ function SysMappingsSection({ copy, isMobile }: { copy: (t: string) => void; isM
 
       <Divider spacing={0} />
 
-      <Text role="display-s">Extended Palette Mappings</Text>
+      <Text variant="display-s">Extended Palette Mappings</Text>
       {extendedCategories.map((cat) => (
         <Stack key={cat.key} gap={3}>
-          <Text role="heading-xl" className="flow-text-capitalize">
+          <Text variant="heading-xl" className="flow-text-capitalize">
             {cat.label}
           </Text>
           {renderEntries(cat.entries)}
@@ -1433,7 +1440,7 @@ export function EnergyExplorer() {
 
       {/* ── Ref Palette ── */}
       <Stack gap="component">
-        <Text role="display-m">Ref Palette</Text>
+        <Text variant="display-m">Ref Palette</Text>
         <RefPaletteSection copy={copy} isMobile={isMobile} />
       </Stack>
 
@@ -1441,7 +1448,7 @@ export function EnergyExplorer() {
 
       {/* ── Sys Mappings ── */}
       <Stack gap="component">
-        <Text role="display-m">Sys Mappings</Text>
+        <Text variant="display-m">Sys Mappings</Text>
         <SysMappingsSection copy={copy} isMobile={isMobile} />
       </Stack>
     </Stack>

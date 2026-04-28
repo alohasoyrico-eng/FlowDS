@@ -1,0 +1,29 @@
+{
+  "name": "@flow/icons",
+  "version": "1.0.0-rc.3",
+  "description": "Flow Design System — icon registry (SVG path data)",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ER-Mobility-MX/flow.git",
+    "directory": "packages/icons"
+  }
+}

@@ -5,9 +5,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
-import { Stack, Surface, Text } from "../primitives";
-import { FlowSearch } from "../components/patterns/FlowSearch";
-import { FlowTag } from "../components/display/FlowTag";
+import { Stack, Surface, Text } from "@flow/primitives";
+import { FlowSearch } from "@flow/patterns";
+import { FlowTag } from "@flow/components";
 import { useDocSearch } from "../search/use-doc-search";
 import type { SearchResult } from "../search/search";
 
@@ -103,7 +103,16 @@ export function DocSearch({
             borderRadius: "var(--ref-frame-radius-2)",
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
@@ -123,7 +132,16 @@ export function DocSearch({
   let flatIdx = 0;
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }} role="combobox" tabIndex={-1} aria-expanded={isOpen && results.length > 0} aria-haspopup="listbox" aria-controls="doc-search-listbox" onKeyDown={handleKeyDown}>
+    <div
+      ref={containerRef}
+      style={{ position: "relative" }}
+      role="combobox"
+      tabIndex={-1}
+      aria-expanded={isOpen && results.length > 0}
+      aria-haspopup="listbox"
+      aria-controls="doc-search-listbox"
+      onKeyDown={handleKeyDown}
+    >
       <div style={{ padding: "0 var(--ref-frame-space-4) var(--ref-frame-space-2)" }}>
         <FlowSearch
           ref={inputRef}
@@ -138,91 +156,95 @@ export function DocSearch({
 
       {isOpen && results.length > 0 && (
         <div id="doc-search-listbox" role="listbox">
-        <Surface
-          elevation={3}
-          radius="container"
-          padding={0}
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: "var(--ref-frame-space-2)",
-            right: "var(--ref-frame-space-2)",
-            zIndex: "var(--ref-depth-zIndex-dropdown)" as unknown as number,
-            maxHeight: "360px",
-            overflowY: "auto",
-          }}
-        >
-          <Stack gap={0}>
-            {Object.entries(grouped).map(([category, items]) => (
-              <div key={category}>
-                {/* Category header */}
-                <div
-                  style={{
-                    padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
-                    borderBottom: "1px solid var(--sys-energy-border-default)",
-                  }}
-                >
-                  <Text role="overline" color="tertiary">
-                    {category}s
-                  </Text>
-                </div>
-                {/* Items */}
-                {items.map((result) => {
-                  const idx = flatIdx++;
-                  const isSelected = idx === selectedIdx;
-                  return (
-                    <button
-                      key={result.entry.path + result.entry.title}
-                      onClick={() => handleSelect(result)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "var(--ref-frame-space-3)",
-                        width: "100%",
-                        padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
-                        border: "none",
-                        cursor: "pointer",
-                        textAlign: "left",
-                        fontFamily: "var(--ref-voice-family-sans)",
-                        background: isSelected ? "var(--sys-energy-surface-tertiary)" : "transparent",
-                        borderBottom: "1px solid var(--sys-energy-border-default)",
-                      }}
-                    >
-                      <FlowTag
-                        size="sm"
+          <Surface
+            elevation={3}
+            radius="container"
+            padding={0}
+            style={{
+              position: "absolute",
+              top: "100%",
+              left: "var(--ref-frame-space-2)",
+              right: "var(--ref-frame-space-2)",
+              zIndex: "var(--ref-depth-zIndex-dropdown)" as unknown as number,
+              maxHeight: "360px",
+              overflowY: "auto",
+            }}
+          >
+            <Stack gap={0}>
+              {Object.entries(grouped).map(([category, items]) => (
+                <div key={category}>
+                  {/* Category header */}
+                  <div
+                    style={{
+                      padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                      borderBottom: "1px solid var(--sys-energy-border-default)",
+                    }}
+                  >
+                    <Text variant="overline" color="tertiary">
+                      {category}s
+                    </Text>
+                  </div>
+                  {/* Items */}
+                  {items.map((result) => {
+                    const idx = flatIdx++;
+                    const isSelected = idx === selectedIdx;
+                    return (
+                      <button
+                        key={result.entry.path + result.entry.title}
+                        onClick={() => handleSelect(result)}
                         style={{
-                          flexShrink: 0,
-                          background: CATEGORY_COLOR[result.entry.category] ?? "var(--sys-energy-surface-accent)",
-                          color: "white",
-                          fontSize: "var(--ref-voice-size-1)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "var(--ref-frame-space-3)",
+                          width: "100%",
+                          padding: "var(--ref-frame-space-2) var(--ref-frame-space-3)",
+                          border: "none",
+                          cursor: "pointer",
+                          textAlign: "left",
+                          fontFamily: "var(--ref-voice-family-sans)",
+                          background: isSelected
+                            ? "var(--sys-energy-surface-tertiary)"
+                            : "transparent",
+                          borderBottom: "1px solid var(--sys-energy-border-default)",
                         }}
                       >
-                        {result.entry.category.slice(0, 4)}
-                      </FlowTag>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <Text role="label-s" style={{ display: "block" }}>
-                          {result.entry.title}
-                        </Text>
-                        <Text
-                          role="caption"
-                          color="tertiary"
+                        <FlowTag
+                          size="sm"
                           style={{
-                            display: "block",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
+                            flexShrink: 0,
+                            background:
+                              CATEGORY_COLOR[result.entry.category] ??
+                              "var(--sys-energy-surface-accent)",
+                            color: "white",
+                            fontSize: "var(--ref-voice-size-1)",
                           }}
                         >
-                          {result.entry.description}
-                        </Text>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </Stack>
-        </Surface>
+                          {result.entry.category.slice(0, 4)}
+                        </FlowTag>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <Text variant="label-s" style={{ display: "block" }}>
+                            {result.entry.title}
+                          </Text>
+                          <Text
+                            variant="caption"
+                            color="tertiary"
+                            style={{
+                              display: "block",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {result.entry.description}
+                          </Text>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </Stack>
+          </Surface>
         </div>
       )}
     </div>

@@ -186,7 +186,7 @@ const demoSize = useDemoSize();
 
 ### 6. Full Width (if component has `fullWidth` prop)
 
-**3 subsections with `<Text role="overline">`**
+**3 subsections with `<Text variant="overline">`**
 
 ```tsx
 <DemoSection
@@ -195,7 +195,7 @@ const demoSize = useDemoSize();
 >
   <DemoGroup>
     <Stack gap={4}>
-      <Text role="overline">Without fullWidth (natural width)</Text>
+      <Text variant="overline">Without fullWidth (natural width)</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
           <Stack gap={2}>
@@ -205,7 +205,7 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">With fullWidth — all emphasis variants</Text>
+      <Text variant="overline">With fullWidth — all emphasis variants</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
           <Stack gap={2}>
@@ -214,10 +214,10 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">Responsive containers — adapts to parent width</Text>
+      <Text variant="overline">Responsive containers — adapts to parent width</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
-          <Text role="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>
+          <Text variant="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>
             12 columns (full width)
           </Text>
           <FlowButton fullWidth emphasis="high" leadingIcon="plus">Create New Project</FlowButton>
@@ -235,7 +235,7 @@ const demoSize = useDemoSize();
 
 ### 7. Responsive Grid Layout (for layout demonstrations)
 
-**Real-world compositions with `<Text role="overline">`**
+**Real-world compositions with `<Text variant="overline">`**
 
 ```tsx
 <DemoSection
@@ -244,7 +244,7 @@ const demoSize = useDemoSize();
 >
   <DemoGroup>
     <Stack gap={4}>
-      <Text role="overline">Action row — span 4 + 4 + 4</Text>
+      <Text variant="overline">Action row — span 4 + 4 + 4</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={4}>
           <FlowButton fullWidth emphasis="high" leadingIcon="plus">Create New</FlowButton>
@@ -252,10 +252,10 @@ const demoSize = useDemoSize();
         {/* ... more buttons */}
       </LayoutGrid>
 
-      <Text role="overline">Primary + secondary — span 8 + 4</Text>
+      <Text variant="overline">Primary + secondary — span 8 + 4</Text>
       {/* ... */}
 
-      <Text role="overline">Danger zone — span 6 + 6</Text>
+      <Text variant="overline">Danger zone — span 6 + 6</Text>
       {/* ... */}
     </Stack>
   </DemoGroup>
@@ -270,9 +270,9 @@ FlowButton establishes the semantic typography pattern:
 
 | Role | Use Case | Example from FlowButton |
 |------|----------|-------------------------|
-| `<Text role="overline">` | Subsection separators | "Without fullWidth (natural width)", "Action row — span 4 + 4 + 4" |
-| `<Text role="label-s" color="tertiary">` | Individual element labels | "sm", "md", "12 columns (full width)" |
-| `<Text role="label-m" color="secondary">` | Matrix row labels | "high", "medium", "low" (in EmphasisMatrix) |
+| `<Text variant="overline">` | Subsection separators | "Without fullWidth (natural width)", "Action row — span 4 + 4 + 4" |
+| `<Text variant="label-s" color="tertiary">` | Individual element labels | "sm", "md", "12 columns (full width)" |
+| `<Text variant="label-m" color="secondary">` | Matrix row labels | "high", "medium", "low" (in EmphasisMatrix) |
 
 **Rule:** Use `overline` to create **narrative flow** between subsections, not as a replacement for section titles.
 
@@ -320,7 +320,7 @@ FlowButton establishes the semantic typography pattern:
   <div />
   {sizes.map((size) => (
     <div key={size}>
-      <Text role="label-s" color="tertiary">{size}</Text>
+      <Text variant="label-s" color="tertiary">{size}</Text>
     </div>
   ))}
   
@@ -328,7 +328,7 @@ FlowButton establishes the semantic typography pattern:
   {emphasisLevels.map((emphasis) => (
     <div key={emphasis} style={{ display: "contents" }}>
       <div>
-        <Text role="label-m" color="secondary">{emphasis}</Text>
+        <Text variant="label-m" color="secondary">{emphasis}</Text>
       </div>
       {sizes.map((size) => (
         <div key={size}>
@@ -419,7 +419,7 @@ To align existing component docs with FlowButton standard:
 4. Replace local implementations with template helpers
 5. Update typography roles to match FlowButton
 6. Verify layout patterns (LayoutGrid spans, CSS Grid structure)
-7. Add `<Text role="overline">` for subsections where appropriate
+7. Add `<Text variant="overline">` for subsections where appropriate
 
 **Use the checklist in `/src/app/templates/README.md`**
 

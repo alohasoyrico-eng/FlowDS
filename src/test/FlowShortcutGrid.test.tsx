@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowShortcutGrid } from "../app/components/layout";
+import { FlowShortcutGrid } from "@flow/components";
 
 const sampleActions = [
   { icon: "send", label: "Send" },
@@ -46,9 +46,7 @@ describe("FlowShortcutGrid — rendering", () => {
   });
 
   it("applies custom column count via columns prop", () => {
-    const { container } = render(
-      <FlowShortcutGrid actions={sampleActions} columns={2} />,
-    );
+    const { container } = render(<FlowShortcutGrid actions={sampleActions} columns={2} />);
     const grid = container.querySelector(".flow-shortcut-grid")!;
     expect(grid).toHaveStyle({ gridTemplateColumns: "repeat(2, 1fr)" });
   });

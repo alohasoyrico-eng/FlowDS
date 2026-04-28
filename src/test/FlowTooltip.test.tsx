@@ -11,7 +11,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowTooltip } from "../app/components/overlays";
+import { FlowTooltip } from "@flow/components";
 
 // Helper: hover trigger, advance fake timers, and return the trigger span
 function hoverAndAdvance(triggerText: string, delayMs: number) {
@@ -178,7 +178,9 @@ describe("FlowTooltip — accessibility", () => {
 
   it("has no axe violations", async () => {
     const { container } = render(
-      <FlowTooltip content="Tooltip text"><button type="button">Hover me</button></FlowTooltip>,
+      <FlowTooltip content="Tooltip text">
+        <button type="button">Hover me</button>
+      </FlowTooltip>,
     );
     expect(await axe(container)).toHaveNoViolations();
   });

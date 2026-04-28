@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowPagination } from "../app/components/navigation";
+import { FlowPagination } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -21,10 +21,7 @@ import { FlowPagination } from "../app/components/navigation";
 describe("FlowPagination — rendering", () => {
   it("renders the current page button with aria-current='page'", () => {
     render(<FlowPagination page={3} totalPages={10} onChange={vi.fn()} />);
-    expect(screen.getByRole("button", { name: "Page 3" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    expect(screen.getByRole("button", { name: "Page 3" })).toHaveAttribute("aria-current", "page");
   });
 
   it("renders previous and next navigation buttons", () => {

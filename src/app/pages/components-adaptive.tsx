@@ -9,9 +9,10 @@ import {
   Stack,
   Surface,
   Text,
-} from "../../lib";
-import { FlowIcon } from "../primitives";
+} from "@flow/design-system";
+import { FlowIcon } from "@flow/primitives";
 import { Callout, DocList, PAGE_GAP, PageHeader } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 const adaptiveComponents = [
   {
@@ -182,160 +183,165 @@ export function ComponentsAdaptivePage() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 05 — Adaptive" title="Adaptive Components">
-        Adaptive components share the same semantic API across platforms but fundamentally change
-        their rendering and interaction model based on the platform and viewport. They are the
-        bridge between desktop and mobile paradigms.
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 05 — Adaptive" title="Adaptive Components">
+              Adaptive components share the same semantic API across platforms but fundamentally
+              change their rendering and interaction model based on the platform and viewport. They
+              are the bridge between desktop and mobile paradigms.
+            </PageHeader>
 
-      <Callout>
-        <Text role="paragraph-s" color="accent">
-          <strong>Key principle:</strong> Adaptive components maintain semantic parity (same data
-          model, same events, same accessibility contract) while diverging in presentation and
-          interaction. A Menu that opens as a dropdown on desktop and a bottom sheet on mobile is
-          the <em>same component</em> to the consuming developer.
-        </Text>
-      </Callout>
+            <Callout>
+              <Text variant="paragraph-s" color="accent">
+                <strong>Key principle:</strong> Adaptive components maintain semantic parity (same
+                data model, same events, same accessibility contract) while diverging in
+                presentation and interaction. A Menu that opens as a dropdown on desktop and a
+                bottom sheet on mobile is the <em>same component</em> to the consuming developer.
+              </Text>
+            </Callout>
 
-      {adaptiveComponents.map((c) => {
-        const isExpanded = expanded === c.name;
-        return (
-          <Stack key={c.name} gap={0}>
-            <ActionSurface
-              onPress={() => setExpanded(isExpanded ? null : c.name)}
-              aria-label={`${isExpanded ? "Collapse" : "Expand"} ${c.name}`}
-              aria-expanded={isExpanded}
-              style={{
-                background: "var(--sys-energy-surface-primary)",
-                border: "1px solid var(--sys-energy-status-info-muted)",
-                borderRadius: isExpanded
-                  ? "var(--ref-frame-radius-2) var(--ref-frame-radius-2) 0 0"
-                  : "var(--ref-frame-radius-2)",
-                padding: "var(--ref-frame-space-4) var(--ref-frame-space-5)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Inline gap={3}>
-                <FlowChip variant="accent">ADAPTIVE</FlowChip>
-                <Text role="heading-m">{c.name}</Text>
-              </Inline>
-              <FlowIcon
-                name="chevron-down"
-                size="sm"
-                color="var(--sys-energy-text-tertiary)"
-                style={{
-                  transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: `transform var(--sys-momentum-transition-default)`,
-                }}
-              />
-            </ActionSurface>
-
-            <MotionContainer visible={isExpanded}>
-              <Surface
-                radius="none"
-                padding="container"
-                style={{
-                  borderLeft: "1px solid var(--sys-energy-status-info-muted)",
-                  borderRight: "1px solid var(--sys-energy-status-info-muted)",
-                  borderBottom: "1px solid var(--sys-energy-status-info-muted)",
-                  borderRadius: "0 0 var(--ref-frame-radius-2) var(--ref-frame-radius-2)",
-                  borderTop: "none",
-                }}
-              >
-                <Stack gap="component">
-                  <Text>{c.purpose}</Text>
-                  <Stack gap={2}>
-                    <Text role="overline">Anatomy</Text>
-                    <Inline gap={2} wrap>
-                      {c.anatomy.map((a, i) => (
-                        <FlowChip key={i}>{a}</FlowChip>
-                      ))}
+            {adaptiveComponents.map((c) => {
+              const isExpanded = expanded === c.name;
+              return (
+                <Stack key={c.name} gap={0}>
+                  <ActionSurface
+                    onPress={() => setExpanded(isExpanded ? null : c.name)}
+                    aria-label={`${isExpanded ? "Collapse" : "Expand"} ${c.name}`}
+                    aria-expanded={isExpanded}
+                    style={{
+                      background: "var(--sys-energy-surface-primary)",
+                      border: "1px solid var(--sys-energy-status-info-muted)",
+                      borderRadius: isExpanded
+                        ? "var(--ref-frame-radius-2) var(--ref-frame-radius-2) 0 0"
+                        : "var(--ref-frame-radius-2)",
+                      padding: "var(--ref-frame-space-4) var(--ref-frame-space-5)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Inline gap={3}>
+                      <FlowChip variant="filled" status="info">
+                        ADAPTIVE
+                      </FlowChip>
+                      <Text variant="heading-m">{c.name}</Text>
                     </Inline>
-                  </Stack>
-                  <Stack gap={2}>
-                    <Text role="overline">Variants</Text>
-                    <Grid minItemWidth="180px" gap={3}>
-                      <Surface padding="control">
+                    <FlowIcon
+                      name="chevron-down"
+                      size="sm"
+                      color="var(--sys-energy-text-tertiary)"
+                      style={{
+                        transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: `transform var(--sys-momentum-transition-default)`,
+                      }}
+                    />
+                  </ActionSurface>
+
+                  <MotionContainer visible={isExpanded}>
+                    <Surface
+                      radius="none"
+                      padding="container"
+                      style={{
+                        borderLeft: "1px solid var(--sys-energy-status-info-muted)",
+                        borderRight: "1px solid var(--sys-energy-status-info-muted)",
+                        borderBottom: "1px solid var(--sys-energy-status-info-muted)",
+                        borderRadius: "0 0 var(--ref-frame-radius-2) var(--ref-frame-radius-2)",
+                        borderTop: "none",
+                      }}
+                    >
+                      <Stack gap="component">
+                        <Text>{c.purpose}</Text>
                         <Stack gap={2}>
-                          <Text role="caption" color="success">
-                            Shared
-                          </Text>
-                          <DocList items={c.variants.shared} />
+                          <Text variant="overline">Anatomy</Text>
+                          <Inline gap={2} wrap>
+                            {c.anatomy.map((a, i) => (
+                              <FlowChip key={i}>{a}</FlowChip>
+                            ))}
+                          </Inline>
                         </Stack>
-                      </Surface>
-                      <Surface padding="control">
                         <Stack gap={2}>
-                          <Text role="caption">Desktop</Text>
-                          <DocList items={c.variants.desktop} />
+                          <Text variant="overline">Variants</Text>
+                          <Grid minItemWidth="180px" gap={3}>
+                            <Surface padding="control">
+                              <Stack gap={2}>
+                                <Text variant="caption" color="success">
+                                  Shared
+                                </Text>
+                                <DocList items={c.variants.shared} />
+                              </Stack>
+                            </Surface>
+                            <Surface padding="control">
+                              <Stack gap={2}>
+                                <Text variant="caption">Desktop</Text>
+                                <DocList items={c.variants.desktop} />
+                              </Stack>
+                            </Surface>
+                            <Surface padding="control">
+                              <Stack gap={2}>
+                                <Text variant="caption">Mobile</Text>
+                                <DocList items={c.variants.mobile} />
+                              </Stack>
+                            </Surface>
+                          </Grid>
                         </Stack>
-                      </Surface>
-                      <Surface padding="control">
+                        <Grid minItemWidth="280px" gap={3}>
+                          <Surface padding="control">
+                            <Stack gap={2}>
+                              <Text variant="overline">States</Text>
+                              <Inline gap={1} wrap>
+                                {c.states.map((s) => (
+                                  <FlowChip key={s}>{s}</FlowChip>
+                                ))}
+                              </Inline>
+                            </Stack>
+                          </Surface>
+                          <Surface padding="control">
+                            <Stack gap={2}>
+                              <Text variant="overline">Tokens</Text>
+                              <Inline gap={1} wrap>
+                                {c.tokens.map((t) => (
+                                  <code key={t} className="flow-inline-code-xs">
+                                    {t}
+                                  </code>
+                                ))}
+                              </Inline>
+                            </Stack>
+                          </Surface>
+                        </Grid>
+                        <Surface padding="control">
+                          <Stack gap={2}>
+                            <Text variant="overline">Accessibility (Shared Contract)</Text>
+                            <DocList items={c.accessibility} />
+                          </Stack>
+                        </Surface>
                         <Stack gap={2}>
-                          <Text role="caption">Mobile</Text>
-                          <DocList items={c.variants.mobile} />
+                          <Text variant="overline">Platform Behavior</Text>
+                          <Grid minItemWidth="280px" gap={3}>
+                            <Surface padding="control">
+                              <Stack gap={2}>
+                                <Text variant="overline">Desktop Behavior</Text>
+                                <Text variant="paragraph-s">{c.platformBehavior.desktop}</Text>
+                              </Stack>
+                            </Surface>
+                            <Surface padding="control" className="flow-doc-accent">
+                              <Stack gap={2}>
+                                <Text variant="overline">Mobile Behavior</Text>
+                                <Text variant="paragraph-s">{c.platformBehavior.mobile}</Text>
+                              </Stack>
+                            </Surface>
+                          </Grid>
                         </Stack>
-                      </Surface>
-                    </Grid>
-                  </Stack>
-                  <Grid minItemWidth="280px" gap={3}>
-                    <Surface padding="control">
-                      <Stack gap={2}>
-                        <Text role="overline">States</Text>
-                        <Inline gap={1} wrap>
-                          {c.states.map((s) => (
-                            <FlowChip key={s}>{s}</FlowChip>
-                          ))}
-                        </Inline>
                       </Stack>
                     </Surface>
-                    <Surface padding="control">
-                      <Stack gap={2}>
-                        <Text role="overline">Tokens</Text>
-                        <Inline gap={1} wrap>
-                          {c.tokens.map((t) => (
-                            <code key={t} className="flow-inline-code-xs">
-                              {t}
-                            </code>
-                          ))}
-                        </Inline>
-                      </Stack>
-                    </Surface>
-                  </Grid>
-                  <Surface padding="control">
-                    <Stack gap={2}>
-                      <Text role="overline">Accessibility (Shared Contract)</Text>
-                      <DocList items={c.accessibility} />
-                    </Stack>
-                  </Surface>
-                  <Stack gap={2}>
-                    <Text role="overline">Platform Behavior</Text>
-                    <Grid minItemWidth="280px" gap={3}>
-                      <Surface padding="control">
-                        <Stack gap={2}>
-                          <Text role="overline">Desktop Behavior</Text>
-                          <Text role="paragraph-s">{c.platformBehavior.desktop}</Text>
-                        </Stack>
-                      </Surface>
-                      <Surface
-                        padding="control"
-                        className="flow-doc-accent"
-                      >
-                        <Stack gap={2}>
-                          <Text role="overline">Mobile Behavior</Text>
-                          <Text role="paragraph-s">{c.platformBehavior.mobile}</Text>
-                        </Stack>
-                      </Surface>
-                    </Grid>
-                  </Stack>
+                  </MotionContainer>
                 </Stack>
-              </Surface>
-            </MotionContainer>
+              );
+            })}
           </Stack>
-        );
-      })}
-    </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }

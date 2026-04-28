@@ -1,0 +1,2331 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Density × Viewport compound overrides
+   ─────────────────────────────────────────────────
+   Without these, [data-density] (specificity 0,1,0,0)
+   beats :root inside @media (0,0,1,0), so density
+   values override viewport values — breaking composition.
+   Fix: compound selectors @media + [data-density] placed
+   AFTER base density blocks so same-specificity source
+   order wins.  Combined shift = viewport + density.
+   Overline clamps at size-1 (10 px floor).
+   Line-heights stay as set by base density (ratio-based,
+   scale automatically with font-size).
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Tablet + Compact  (−1 viewport −1 density = −2 total) ── */
+@media (width <= 991px) {
+  [data-density="compact"] {
+    /* display */
+    --sys-voice-display-xl-size: var(--ref-voice-size-12); /* 48px (64 −1vp −1d) */
+    --sys-voice-display-l-size: var(--ref-voice-size-11); /* 40px (56 −1vp −1d) */
+    --sys-voice-display-m-size: var(--ref-voice-size-10); /* 32px (48 −1vp −1d) */
+    --sys-voice-display-s-size: var(--ref-voice-size-9); /* 24px (40 −1vp −1d) */
+    --sys-voice-display-xs-size: var(--ref-voice-size-8); /* 20px (32 −1vp −1d) */
+
+    /* heading */
+    --sys-voice-heading-l-size: var(--ref-voice-size-7); /* 18px (24 −1vp −1d) */
+    --sys-voice-heading-m-size: var(--ref-voice-size-6); /* 16px (20 −1vp −1d) */
+
+    /* label */
+    --sys-voice-label-xl-size: var(--ref-voice-size-7); /* 18px ← 24 −2 */
+    --sys-voice-label-l-size: var(--ref-voice-size-6); /* 16px ← 20 −2 */
+    --sys-voice-label-m-size: var(--ref-voice-size-5); /* 14px ← 18 −2 */
+    --sys-voice-label-s-size: var(--ref-voice-size-4); /* 13px ← 16 −2 */
+    --sys-voice-label-xs-size: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-voice-paragraph-xl-size: var(--ref-voice-size-6); /* 16px ← 20 −2 */
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-5); /* 14px ← 18 −2 */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-4); /* 13px ← 16 −2 */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-voice-caption-size: var(--ref-voice-size-2); /* 11px ← 13 −2 */
+    --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+
+    /* code: −1vp −1d = −2 total */
+    --sys-voice-code-size: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+    --sys-size-voice-headline: var(--ref-voice-size-6); /* 16px ← 20 −2 */
+    --sys-size-voice-body: var(--ref-voice-size-4); /* 13px ← 16 −2 */
+    --sys-size-voice-label: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-size-voice-caption: var(--ref-voice-size-1); /* 10px ← 12 −2 */
+    --sys-size-label-font: var(--ref-voice-size-4); /* 13px ← 16 −2 */
+    --sys-size-table-font: var(--ref-voice-size-3); /* 12px ← 14 −2 */
+    --sys-size-table-header-font: var(--ref-voice-size-1); /* 10px ← 12 −2 (floor) */
+  }
+}
+
+/* ── Tablet + Comfortable  (−1 viewport +1 density = 0 net) ── */
+@media (width <= 991px) {
+  [data-density="comfortable"] {
+    /* display: −1 viewport +1 density = desktop baseline */
+    --sys-voice-display-xl-size: var(--ref-voice-size-14); /* 64px (desktop baseline) */
+    --sys-voice-display-l-size: var(--ref-voice-size-13); /* 56px (desktop baseline) */
+    --sys-voice-display-m-size: var(--ref-voice-size-12); /* 48px (desktop baseline) */
+    --sys-voice-display-s-size: var(--ref-voice-size-11); /* 40px (desktop baseline) */
+    --sys-voice-display-xs-size: var(--ref-voice-size-10); /* 32px (desktop baseline) */
+
+    /* heading: −1 viewport +1 density = desktop baseline */
+    --sys-voice-heading-l-size: var(--ref-voice-size-9); /* 24px (desktop baseline) */
+    --sys-voice-heading-m-size: var(--ref-voice-size-8); /* 20px (desktop baseline) */
+
+    /* label-xl/l: comfortable caps at baseline → tablet baseline */
+    --sys-voice-label-xl-size: var(--ref-voice-size-8); /* 20px (tablet base, comfortable cap) */
+    --sys-voice-label-l-size: var(--ref-voice-size-7); /* 18px (tablet base, comfortable cap) */
+    --sys-voice-label-m-size: var(--ref-voice-size-7); /* 18px ← tab(16)+1 = desktop default */
+    --sys-voice-label-s-size: var(--ref-voice-size-6); /* 16px ← tab(14)+1 = desktop default */
+    --sys-voice-label-xs-size: var(--ref-voice-size-5); /* 14px ← tab(13)+1 = desktop default */
+    --sys-voice-paragraph-xl-size: var(--ref-voice-size-8); /* 20px ← tab(18)+1 = desktop default */
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-7); /* 18px ← tab(16)+1 = desktop default */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-6); /* 16px ← tab(14)+1 = desktop default */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-5); /* 14px ← tab(13)+1 = desktop default */
+    --sys-voice-caption-size: var(--ref-voice-size-4); /* 13px ← tab(12)+1 = desktop default */
+    --sys-voice-overline-size: var(--ref-voice-size-2); /* 11px ← tab(10)+1 */
+
+    /* code: −1vp +1d = 0 net (desktop default) */
+    --sys-voice-code-size: var(--ref-voice-size-5); /* 14px (desktop baseline) */
+    --sys-voice-code-xs-size: var(--ref-voice-size-2); /* 11px (desktop baseline) */
+    --sys-size-voice-headline: var(--ref-voice-size-8); /* 20px (net 0 = desktop default) */
+    --sys-size-voice-body: var(--ref-voice-size-6); /* 16px (net 0) */
+    --sys-size-voice-label: var(--ref-voice-size-5); /* 14px (net 0) */
+    --sys-size-voice-caption: var(--ref-voice-size-3); /* 12px (net 0) */
+    --sys-size-label-font: var(--ref-voice-size-6); /* 16px (net 0) */
+    --sys-size-table-font: var(--ref-voice-size-5); /* 14px (net 0) */
+    --sys-size-table-header-font: var(--ref-voice-size-3); /* 12px (net 0) */
+  }
+}
+
+/* ── Phone + Compact  (−2 viewport −1 density = −3 total) ── */
+@media (width <= 575px) {
+  [data-density="compact"] {
+    /* display */
+    --sys-voice-display-xl-size: var(--ref-voice-size-11); /* 40px (64 −2vp −1d) */
+    --sys-voice-display-l-size: var(--ref-voice-size-10); /* 32px (56 −2vp −1d) */
+    --sys-voice-display-m-size: var(--ref-voice-size-9); /* 24px (48 −2vp −1d) */
+    --sys-voice-display-s-size: var(--ref-voice-size-8); /* 20px (40 −2vp −1d) */
+    --sys-voice-display-xs-size: var(--ref-voice-size-7); /* 18px (32 −2vp −1d) */
+
+    /* heading */
+    --sys-voice-heading-l-size: var(--ref-voice-size-6); /* 16px (24 −2vp −1d) */
+    --sys-voice-heading-m-size: var(--ref-voice-size-5); /* 14px (20 −2vp −1d) */
+
+    /* label */
+    --sys-voice-label-xl-size: var(--ref-voice-size-6); /* 16px ← 24 −3 */
+    --sys-voice-label-l-size: var(--ref-voice-size-5); /* 14px ← 20 −3 */
+    --sys-voice-label-m-size: var(--ref-voice-size-4); /* 13px ← 18 −3 */
+    --sys-voice-label-s-size: var(--ref-voice-size-3); /* 12px �� 16 −3 */
+    --sys-voice-label-xs-size: var(--ref-voice-size-2); /* 11px ← 14 −3 */
+    --sys-voice-paragraph-xl-size: var(--ref-voice-size-5); /* 14px ← 20 −3 */
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-4); /* 13px ← 18 −3 */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-3); /* 12px ← 16 −3 */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-2); /* 11px ← 14 −3 */
+    --sys-voice-caption-size: var(--ref-voice-size-1); /* 10px ← 13 −3 (floor) */
+    --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+
+    /* code: −2vp −1d = −3 total */
+    --sys-voice-code-size: var(--ref-voice-size-2); /* 11px ← 14 −3 */
+    --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+    --sys-size-voice-headline: var(--ref-voice-size-5); /* 14px ← 20 −3 */
+    --sys-size-voice-body: var(--ref-voice-size-3); /* 12px ← 16 −3 */
+    --sys-size-voice-label: var(--ref-voice-size-2); /* 11px ← 14 −3 */
+    --sys-size-voice-caption: var(--ref-voice-size-1); /* 10px ← 12 −3 (floor) */
+    --sys-size-label-font: var(--ref-voice-size-3); /* 12px ← 16 −3 */
+    --sys-size-table-font: var(--ref-voice-size-2); /* 11px ← 14 −3 */
+    --sys-size-table-header-font: var(--ref-voice-size-1); /* 10px (floor) */
+
+    /* radius: +1vp −1d = 0 net (phone compensates compact) */
+    --sys-frame-radius-control: var(--ref-frame-radius-3); /* 12px (phone+compact: 8→12) */
+    --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px (phone+compact: 8→12) */
+    --sys-frame-radius-surface: var(--ref-frame-radius-4); /* 16px (phone+compact: 12→16) */
+
+    /* breadcrumbs: −2 viewport −1 density = −3 total (floor at size-1) */
+    --comp-breadcrumbs-font: var(--ref-voice-size-1); /* 10px (floor) */
+    --comp-breadcrumbs-separator-font: var(--ref-voice-size-1); /* 10px (floor) */
+    --comp-breadcrumbs-gap: var(--ref-frame-space-micro); /* 2px (floor) */
+    --comp-breadcrumbs-item-padding-x: var(--ref-frame-space-micro); /* 2px (floor) */
+    --comp-breadcrumbs-item-padding-y: var(--ref-frame-space-micro); /* 2px (floor) */
+    --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-5); /* 20px −3 */
+  }
+}
+
+/* ── Phone + Comfortable  (−2 viewport +1 density = −1 net) ── */
+@media (width <= 575px) {
+  [data-density="comfortable"] {
+    /* display: −2 viewport +1 density = −1 net (tablet baseline) */
+    --sys-voice-display-xl-size: var(--ref-voice-size-13); /* 56px (−1 from desktop) */
+    --sys-voice-display-l-size: var(--ref-voice-size-12); /* 48px (−1 from desktop) */
+    --sys-voice-display-m-size: var(--ref-voice-size-11); /* 40px (−1 from desktop) */
+    --sys-voice-display-s-size: var(--ref-voice-size-10); /* 32px (−1 from desktop) */
+    --sys-voice-display-xs-size: var(--ref-voice-size-9); /* 24px (−1 from desktop) */
+
+    /* heading: −2 viewport +1 density = −1 net (tablet baseline) */
+    --sys-voice-heading-l-size: var(--ref-voice-size-8); /* 20px (−1 from desktop) */
+    --sys-voice-heading-m-size: var(--ref-voice-size-7); /* 18px (−1 from desktop) */
+
+    /* label-xl/l: comfortable caps at baseline → phone baseline */
+    --sys-voice-label-xl-size: var(--ref-voice-size-7); /* 18px (phone base, comfortable cap) */
+    --sys-voice-label-l-size: var(--ref-voice-size-6); /* 16px (phone base, comfortable cap) */
+    --sys-voice-label-m-size: var(--ref-voice-size-6); /* 16px ← phone(14)+1 = tablet default */
+    --sys-voice-label-s-size: var(--ref-voice-size-5); /* 14px ← phone(13)+1 = tablet default */
+    --sys-voice-label-xs-size: var(--ref-voice-size-4); /* 13px ← phone(12)+1 = tablet default */
+    --sys-voice-paragraph-xl-size: var(
+      --ref-voice-size-7
+    ); /* 18px ← phone(16)+1 = tablet default */
+
+    --sys-voice-paragraph-l-size: var(--ref-voice-size-6); /* 16px ← phone(14)+1 = tablet default */
+    --sys-voice-paragraph-m-size: var(--ref-voice-size-5); /* 14px ← phone(13)+1 = tablet default */
+    --sys-voice-paragraph-s-size: var(--ref-voice-size-4); /* 13px ← phone(12)+1 = tablet default */
+    --sys-voice-caption-size: var(--ref-voice-size-3); /* 12px ← phone(11)+1 = tablet default */
+    --sys-voice-overline-size: var(--ref-voice-size-1); /* 10px (floor) */
+
+    /* code: −2vp +1d = −1 net (tablet baseline) */
+    --sys-voice-code-size: var(--ref-voice-size-4); /* 13px ← phone(12)+1 = tablet default */
+    --sys-voice-code-xs-size: var(--ref-voice-size-1); /* 10px (floor) */
+    --sys-size-voice-headline: var(--ref-voice-size-7); /* 18px (net −1 = tablet default) */
+    --sys-size-voice-body: var(--ref-voice-size-5); /* 14px (net −1) */
+    --sys-size-voice-label: var(--ref-voice-size-4); /* 13px (net −1) */
+    --sys-size-voice-caption: var(--ref-voice-size-2); /* 11px (net −1) */
+    --sys-size-label-font: var(--ref-voice-size-5); /* 14px (net −1) */
+    --sys-size-table-font: var(--ref-voice-size-4); /* 13px (net −1) */
+    --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px (net −1) */
+
+    /* radius: +1vp +1d = +2 net (phone + comfortable = generous) */
+    --sys-frame-radius-control: var(--ref-frame-radius-5); /* 20px (phone+comfortable: 16→20) */
+    --sys-frame-radius-container: var(--ref-frame-radius-5); /* 20px (phone+comfortable: 16→20) */
+    --sys-frame-radius-surface: var(--ref-frame-radius-6); /* 24px (phone+comfortable: 20→24) */
+
+    /* breadcrumbs: −2 viewport +1 density = −1 net (same as tablet default) */
+    --comp-breadcrumbs-font: var(--ref-voice-size-3); /* 12px (default 13px −1) */
+    --comp-breadcrumbs-separator-font: var(--ref-voice-size-3); /* 12px */
+    --comp-breadcrumbs-gap: var(--ref-frame-space-1); /* 4px (default 8px −1) */
+    --comp-breadcrumbs-item-padding-x: var(--ref-frame-space-micro); /* 2px */
+    --comp-breadcrumbs-item-padding-y: var(--ref-frame-space-micro); /* 2px */
+    --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-7); /* 28px (default 32px −1) */
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   sys.size — Centralized size tokens (L2)
+   ──────────────────────���────────────���─────────────
+   Functional categories shared across multiple components.
+   Components consume these via comp token aliases (lazy resolution).
+   [data-size] on any element overrides the active tier
+   for itself and all descendants (same cascade as density).
+   Default = md. 4 tiers: sm / md / lg / xl.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Size: sm ── */
+[data-size="sm"] {
+  /* sys.size.voice — semantic typographic scale (sm tier) */
+  --sys-size-voice-headline: var(--ref-voice-size-7); /* 18px — +3 above body(13) */
+  --sys-size-voice-body: var(--ref-voice-size-4); /* 13px */
+  --sys-size-voice-label: var(--ref-voice-size-3); /* 12px */
+  --sys-size-voice-caption: var(--ref-voice-size-1); /* 10px */
+
+  /* sys.size.gap — compositional spacing (sm tier) */
+  --sys-size-gap-field: var(--ref-frame-space-2); /* 8px */
+  --sys-size-gap-section: var(--ref-frame-space-4); /* 16px */
+  --sys-size-inset: var(--ref-frame-space-4); /* 16px */
+
+  /* Inline controls (Button, Chip, IconButton, TextInput) */
+  --sys-size-control-height: var(--ref-frame-height-control-sm); /* 48px */
+  --sys-frame-radius-control: var(--ref-frame-radius-2); /* 8px — proportional to 48px height */
+
+  /* Selection indicators (Radio, Checkbox) */
+  --sys-size-indicator: 18px;
+  --sys-size-indicator-state-layer: 32px;
+
+  /* Icons in controls */
+  --sys-size-icon: var(--ref-icon-size-sm); /* 16px */
+
+  /* Label text on indicator controls — now routed through sys.size.voice */
+  --sys-size-label-font: var(--ref-voice-size-4); /* 13px */
+
+  /* Data display (Table) */
+  --sys-size-table-cell-py: var(--ref-frame-space-2); /* 8px */
+  --sys-size-table-cell-px: var(--ref-frame-space-3); /* 12px */
+  --sys-size-table-font: var(--ref-voice-size-3); /* 12px */
+  --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px */
+
+  /* Button, Chip — padding (font now via sys.size.voice) */
+  --comp-button-padding-x: var(--ref-frame-space-4); /* 16px — accelerated scale, Δ+4 */
+  --comp-chip-padding-x: var(--ref-frame-space-4); /* 16px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-micro); /* 2px — sm compact vertical */
+
+  /* Card, Dialog */
+  --comp-card-padding: var(--ref-frame-space-3); /* 12px */
+  --sys-frame-radius-container: var(--ref-frame-radius-2); /* 8px — sm containers */
+  --comp-dialog-max-width: 360px;
+
+  /* TextInput family */
+  --comp-textinput-height: var(--comp-textinput-height-sm);
+  --comp-textinput-padding: var(--comp-textinput-padding-sm);
+  --comp-textinput-label-scale: 1.3; /* body(13)/caption(10) */
+
+  /* Switch */
+  --comp-switch-track-width: 40px;
+  --comp-switch-track-height: 24px;
+  --comp-switch-thumb-size: 12px;
+  --comp-switch-thumb-size-pressed: 14px;
+  --comp-switch-thumb-inset: 6px;
+  --comp-switch-state-layer-size: 32px;
+  --comp-switch-icon-size: 6px;
+  --comp-switch-gap: var(--ref-frame-space-2); /* 8px */
+
+  /* Selection control supporting props (Checkbox, Radio) */
+  --comp-checkbox-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-checkbox-group-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-radio-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-radio-group-gap: var(--ref-frame-space-1); /* 4px */
+  --comp-checkbox-radius: var(--ref-frame-radius-1); /* 4px */
+  --comp-checkbox-touch-target: 40px;
+  --comp-radio-touch-target: 40px;
+  --comp-checkbox-border-width: var(--sys-frame-border-thin); /* 1px */
+  --comp-checkbox-border-width-hover: var(--sys-frame-border-control); /* 1.5px */
+  --comp-radio-border-width: var(--sys-frame-border-thin); /* 1px */
+  --comp-radio-border-width-hover: var(--sys-frame-border-control); /* 1.5px */
+
+  /* Tooltip */
+  --comp-tooltip-padding-y: var(--ref-frame-space-1);
+  --comp-tooltip-padding-x: var(--ref-frame-space-1);
+
+  /* Snackbar */
+  --comp-snackbar-padding-y: var(--ref-frame-space-2);
+  --comp-snackbar-padding-x: var(--ref-frame-space-3);
+
+  /* ProgressBar */
+  --comp-progress-track-height: var(--ref-frame-space-1); /* 4px */
+
+  /* Skeleton */
+  --comp-skeleton-text-height: 0.75em;
+
+  /* EmptyState */
+  --comp-emptystate-padding-y: var(--ref-frame-space-6);
+  --comp-emptystate-padding-x: var(--ref-frame-space-4);
+  --comp-emptystate-gap: var(--ref-frame-space-3);
+  --comp-emptystate-icon-size: var(--ref-frame-space-12); /* 48px */
+}
+
+/* ── Size: md (explicit reset — ensures child md overrides ancestor sm/lg/xl) ── */
+[data-size="md"] {
+  /* sys.size.voice — semantic typographic scale (md tier — geometric, same as :root defaults) */
+  --sys-size-voice-headline: var(--ref-voice-size-8); /* 20px — title hierarchy */
+  --sys-size-voice-body: var(--ref-voice-size-6); /* 16px — H:F=3.75 */
+  --sys-size-voice-label: var(--ref-voice-size-5); /* 14px */
+  --sys-size-voice-caption: var(--ref-voice-size-3); /* 12px */
+  --sys-size-gap-field: var(--ref-frame-space-3); /* 12px */
+  --sys-size-gap-section: var(--ref-frame-space-5); /* 20px */
+  --sys-size-inset: var(--ref-frame-space-5); /* 20px */
+  --sys-size-control-height: var(--ref-frame-height-control-md); /* 60px */
+  --sys-frame-radius-control: var(--ref-frame-radius-3); /* 12px — explicit reset */
+  --sys-size-indicator: 24px;
+  --sys-size-indicator-state-layer: 40px;
+  --sys-size-icon: var(--ref-icon-size-md); /* 20px */
+  --sys-size-label-font: var(--ref-voice-size-6); /* 16px — ≡ voice.body */
+  --sys-size-table-cell-py: var(--ref-frame-space-3);
+  --sys-size-table-cell-px: var(--ref-frame-space-4);
+  --sys-size-table-font: var(--ref-voice-size-5); /* 14px — ≡ voice.label */
+  --sys-size-table-header-font: var(--ref-voice-size-3);
+  --comp-button-padding-x: var(--ref-frame-space-5); /* 20px — accelerated scale, Δ+8 */
+  --comp-chip-padding-x: var(--ref-frame-space-5); /* 20px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-1); /* 4px — md default vertical */
+  --comp-card-padding: var(--ref-frame-space-5);
+  --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px — md containers */
+  --comp-dialog-max-width: var(--sys-frame-content-dialog);
+  --comp-textinput-height: var(--comp-textinput-height-md);
+  --comp-textinput-padding: var(--comp-textinput-padding-md);
+  --comp-textinput-label-scale: 1.333; /* body(16)/caption(12) */
+  --comp-switch-track-width: 52px;
+  --comp-switch-track-height: 32px;
+  --comp-switch-thumb-size: 16px;
+  --comp-switch-thumb-size-pressed: 18px;
+  --comp-switch-thumb-inset: 8px;
+  --comp-switch-state-layer-size: 40px;
+  --comp-switch-icon-size: 10px;
+  --comp-switch-gap: var(--ref-frame-space-3); /* 12px */
+
+  /* Selection control supporting props (Checkbox, Radio) — md explicit reset */
+  --comp-checkbox-gap: var(--ref-frame-space-3); /* 12px — consistent with Switch */
+  --comp-checkbox-group-gap: var(--ref-frame-space-2); /* 8px */
+  --comp-radio-gap: var(--ref-frame-space-3); /* 12px — consistent with Switch */
+  --comp-radio-group-gap: var(--ref-frame-space-2); /* 8px */
+  --comp-checkbox-radius: var(--sys-frame-radius-sm); /* 4px — explicit reset */
+  --comp-checkbox-touch-target: 48px;
+  --comp-radio-touch-target: 48px;
+  --comp-checkbox-border-width: var(--sys-frame-border-control); /* 1.5px */
+  --comp-checkbox-border-width-hover: var(--sys-frame-border-medium); /* 2px */
+  --comp-radio-border-width: var(--sys-frame-border-control); /* 1.5px */
+  --comp-radio-border-width-hover: var(--sys-frame-border-medium); /* 2px */
+  --comp-tooltip-padding-y: var(--ref-frame-space-1);
+  --comp-tooltip-padding-x: var(--ref-frame-space-2);
+  --comp-snackbar-padding-y: var(--ref-frame-space-3);
+  --comp-snackbar-padding-x: var(--ref-frame-space-4);
+  --comp-progress-track-height: var(--ref-frame-space-2);
+  --comp-skeleton-text-height: 1em;
+  --comp-emptystate-padding-y: var(--ref-frame-space-12);
+  --comp-emptystate-padding-x: var(--ref-frame-space-6);
+  --comp-emptystate-gap: var(--ref-frame-space-4);
+  --comp-emptystate-icon-size: var(--ref-frame-space-16);
+}
+
+/* ── Size: lg ── */
+[data-size="lg"] {
+  /* sys.size.voice — semantic typographic scale (lg tier — geometric) */
+  --sys-size-voice-headline: var(--ref-voice-size-9); /* 24px — title hierarchy */
+  --sys-size-voice-body: var(--ref-voice-size-8); /* 20px — H:F=3.60 */
+  --sys-size-voice-label: var(--ref-voice-size-7); /* 18px */
+  --sys-size-voice-caption: var(--ref-voice-size-5); /* 14px */
+  --sys-size-gap-field: var(--ref-frame-space-4); /* 16px */
+  --sys-size-gap-section: var(--ref-frame-space-6); /* 24px */
+  --sys-size-inset: var(--ref-frame-space-6); /* 24px */
+  --sys-size-control-height: var(--ref-frame-height-control-lg); /* 72px */
+  --sys-frame-radius-control: var(--ref-frame-radius-3); /* 12px — explicit reset */
+  --sys-size-indicator: 30px;
+  --sys-size-indicator-state-layer: 48px;
+  --sys-size-icon: var(--ref-icon-size-lg); /* 24px */
+  --sys-size-label-font: var(--ref-voice-size-8); /* 20px — ≡ voice.body */
+  --sys-size-table-cell-py: var(--ref-frame-space-4);
+  --sys-size-table-cell-px: var(--ref-frame-space-5);
+  --sys-size-table-font: var(--ref-voice-size-7); /* 18px — ≡ voice.label */
+  --sys-size-table-header-font: var(--ref-voice-size-3);
+  --comp-button-padding-x: var(--ref-frame-space-7); /* 28px — accelerated scale, Δ+8 */
+  --comp-chip-padding-x: var(--ref-frame-space-7); /* 28px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-1); /* 4px — lg vertical */
+  --comp-card-padding: var(--ref-frame-space-6);
+  --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px — lg containers */
+  --comp-dialog-max-width: 640px;
+  --comp-textinput-height: var(--comp-textinput-height-lg);
+  --comp-textinput-padding: var(--comp-textinput-padding-lg);
+  --comp-textinput-label-scale: 1.429; /* body(20)/caption(14) */
+  --comp-textinput-icon-size: var(--ref-icon-size-md); /* 20px — lg maps to FlowIcon md */
+  --comp-switch-track-width: 64px;
+  --comp-switch-track-height: 40px;
+  --comp-switch-thumb-size: 22px;
+  --comp-switch-thumb-size-pressed: 24px;
+  --comp-switch-thumb-inset: 9px;
+  --comp-switch-state-layer-size: 48px;
+  --comp-switch-icon-size: 12px;
+  --comp-switch-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-checkbox-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-checkbox-group-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-radio-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-radio-group-gap: var(--ref-frame-space-3); /* 12px */
+  --comp-checkbox-radius: var(--ref-frame-radius-2); /* 8px */
+  --comp-checkbox-touch-target: 56px;
+  --comp-radio-touch-target: 56px;
+  --comp-checkbox-border-width: var(--sys-frame-border-medium); /* 2px */
+  --comp-checkbox-border-width-hover: calc(var(--sys-frame-border-medium) + 0.5px); /* 2.5px */
+  --comp-radio-border-width: var(--sys-frame-border-medium); /* 2px */
+  --comp-radio-border-width-hover: calc(var(--sys-frame-border-medium) + 0.5px); /* 2.5px */
+  --comp-tooltip-padding-y: var(--ref-frame-space-2);
+  --comp-tooltip-padding-x: var(--ref-frame-space-3);
+  --comp-snackbar-padding-y: var(--ref-frame-space-4);
+  --comp-snackbar-padding-x: var(--ref-frame-space-5);
+  --comp-progress-track-height: var(--ref-frame-space-3);
+  --comp-skeleton-text-height: 1.5em;
+  --comp-emptystate-padding-y: var(--ref-frame-space-16);
+  --comp-emptystate-padding-x: var(--ref-frame-space-8);
+  --comp-emptystate-gap: var(--ref-frame-space-5);
+  --comp-emptystate-icon-size: var(--ref-frame-space-20);
+}
+
+/* ── Size: xl ─��� */
+[data-size="xl"] {
+  /* sys.size.voice — semantic typographic scale (xl tier — geometric) */
+  --sys-size-voice-headline: var(--ref-voice-size-10); /* 32px — title hierarchy */
+  --sys-size-voice-body: var(--ref-voice-size-9); /* 24px — H:F=3.67 */
+  --sys-size-voice-label: var(--ref-voice-size-8); /* 20px */
+  --sys-size-voice-caption: var(--ref-voice-size-7); /* 18px */
+  --sys-size-gap-field: var(--ref-frame-space-5); /* 20px */
+  --sys-size-gap-section: var(--ref-frame-space-8); /* 32px */
+  --sys-size-inset: var(--ref-frame-space-8); /* 32px */
+  --sys-size-control-height: var(--ref-frame-height-control-xl); /* 88px */
+  --sys-frame-radius-control: var(--ref-frame-radius-4); /* 16px — proportional to 88px height */
+  --sys-size-indicator: 36px;
+  --sys-size-indicator-state-layer: 56px;
+  --sys-size-icon: var(--ref-icon-size-xl); /* 32px */
+  --sys-size-label-font: var(--ref-voice-size-9); /* 24px — ≡ voice.body */
+  --sys-size-table-cell-py: var(--ref-frame-space-5);
+  --sys-size-table-cell-px: var(--ref-frame-space-6);
+  --sys-size-table-font: var(--ref-voice-size-8); /* 20px — ≡ voice.label */
+  --sys-size-table-header-font: var(--ref-voice-size-3);
+  --comp-button-padding-x: var(--ref-frame-space-10); /* 40px — accelerated scale, Δ+12 */
+  --comp-chip-padding-x: var(--ref-frame-space-10); /* 40px — bumped +1 step */
+  --comp-chip-padding-y: var(--ref-frame-space-2); /* 8px — xl spacious vertical */
+  --comp-card-padding: var(--ref-frame-space-8);
+  --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px — xl containers */
+  --comp-dialog-max-width: 800px;
+  --comp-textinput-height: var(--comp-textinput-height-xl);
+  --comp-textinput-padding: var(--comp-textinput-padding-xl);
+  --comp-textinput-label-scale: 1.333; /* body(24)/caption(18) */
+  --comp-textinput-icon-size: var(--ref-icon-size-lg); /* 24px — xl maps to FlowIcon lg */
+  --comp-switch-track-width: 78px;
+  --comp-switch-track-height: 48px;
+  --comp-switch-thumb-size: 28px;
+  --comp-switch-thumb-size-pressed: 30px;
+  --comp-switch-thumb-inset: 10px;
+  --comp-switch-state-layer-size: 56px;
+  --comp-switch-icon-size: 14px;
+  --comp-switch-gap: var(--ref-frame-space-4); /* 16px */
+  --comp-checkbox-gap: var(--ref-frame-space-4); /* 16px */
+  --comp-checkbox-group-gap: var(--ref-frame-space-4); /* 16px */
+  --comp-radio-gap: var(--ref-frame-space-4); /* 16px */
+  --comp-radio-group-gap: var(--ref-frame-space-4); /* 16px */
+  --comp-checkbox-radius: var(--ref-frame-radius-2); /* 8px */
+  --comp-checkbox-touch-target: 64px;
+  --comp-radio-touch-target: 64px;
+  --comp-checkbox-border-width: calc(var(--sys-frame-border-medium) + 0.5px); /* 2.5px */
+  --comp-checkbox-border-width-hover: var(--sys-frame-border-indicator); /* 3px */
+  --comp-radio-border-width: calc(var(--sys-frame-border-medium) + 0.5px); /* 2.5px */
+  --comp-radio-border-width-hover: var(--sys-frame-border-indicator); /* 3px */
+  --comp-tooltip-padding-y: var(--ref-frame-space-2);
+  --comp-tooltip-padding-x: var(--ref-frame-space-4);
+  --comp-snackbar-padding-y: var(--ref-frame-space-5);
+  --comp-snackbar-padding-x: var(--ref-frame-space-6);
+  --comp-progress-track-height: var(--ref-frame-space-4);
+  --comp-skeleton-text-height: 2em;
+  --comp-emptystate-padding-y: var(--ref-frame-space-20);
+  --comp-emptystate-padding-x: var(--ref-frame-space-10);
+  --comp-emptystate-gap: var(--ref-frame-space-6);
+  --comp-emptystate-icon-size: 6rem;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━━━━━━━━━━━━━━
+   Compound selectors: density × size
+   ─────────────────────────────────────────────────
+   Resolves the cascade conflict where [data-density]
+   and [data-size] both set --sys-size-label-font,
+   --sys-size-table-font, --sys-size-table-header-font.
+   Without these, the last block in source order wins
+   (size), silently discarding the density shift.
+   Specificity 0,2,0 beats both single-attr selectors.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━━ */
+
+/* ── compact × sm ── */
+[data-density="compact"][data-size="sm"] {
+  --sys-size-voice-headline: var(--ref-voice-size-6); /* 16px (sm 18 −1) */
+  --sys-size-voice-body: var(--ref-voice-size-3); /* 12px (sm 13 −1) */
+  --sys-size-voice-label: var(--ref-voice-size-2); /* 11px (sm 12 −1) */
+  --sys-size-voice-caption: var(--ref-voice-size-1); /* 10px (sm 10 −0 floor) */
+  --sys-size-label-font: var(
+    --ref-voice-size-3
+  ); /* 12px (sm 13 −1 step) — deprecated, use voice.body */
+
+  --sys-size-table-font: var(
+    --ref-voice-size-2
+  ); /* 11px (sm 12 −1 step) — deprecated, use voice.label */
+
+  --sys-size-table-header-font: var(--ref-voice-size-1); /* 10px (sm 11 −1 step) */
+  --comp-textinput-label-scale: 1.2; /* compact sm: body(12)/caption(10) */
+  --sys-frame-radius-control: var(--ref-frame-radius-1); /* 4px — compact×sm (8 ÷ 1.2 → 4 snap) */
+  --sys-frame-radius-container: var(--ref-frame-radius-1); /* 4px — compact×sm */
+}
+
+/* ── compact × md ── */
+[data-density="compact"][data-size="md"] {
+  --sys-size-voice-headline: var(--ref-voice-size-7); /* 18px (md 20 −1) */
+  --sys-size-voice-body: var(--ref-voice-size-5); /* 14px (md 16 −1) */
+  --sys-size-voice-label: var(--ref-voice-size-4); /* 13px (md 14 −1) */
+  --sys-size-voice-caption: var(--ref-voice-size-2); /* 11px (md 12 −1) */
+  --sys-size-label-font: var(--ref-voice-size-5); /* 14px (md 16 −1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-4); /* 13px (md 14 −1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px (md 12 −1 step) */
+  --comp-textinput-label-scale: 1.273; /* compact md: body(14)/caption(11) */
+  --sys-frame-radius-control: var(--ref-frame-radius-2); /* 8px — compact×md (12 ÷ 1.2 → 8 snap) */
+  --sys-frame-radius-container: var(--ref-frame-radius-2); /* 8px — compact×md */
+}
+
+/* ── compact × lg ── */
+[data-density="compact"][data-size="lg"] {
+  --sys-size-voice-headline: var(--ref-voice-size-8); /* 20px (lg 24 −1) */
+  --sys-size-voice-body: var(--ref-voice-size-7); /* 18px (lg 20 −1) */
+  --sys-size-voice-label: var(--ref-voice-size-6); /* 16px (lg 18 −1) */
+  --sys-size-voice-caption: var(--ref-voice-size-4); /* 13px (lg 14 −1) */
+  --sys-size-label-font: var(--ref-voice-size-7); /* 18px (lg 20 −1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-6); /* 16px (lg 18 −1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px (lg 12 −1 step, floor) */
+  --comp-textinput-label-scale: 1.385; /* compact lg: body(18)/caption(13) */
+  --sys-frame-radius-control: var(--ref-frame-radius-2); /* 8px — compact×lg (12 ÷ 1.2 → 8 snap) */
+  --sys-frame-radius-container: var(--ref-frame-radius-2); /* 8px — compact×lg */
+}
+
+/* ── compact × xl ── */
+[data-density="compact"][data-size="xl"] {
+  --sys-size-voice-headline: var(--ref-voice-size-9); /* 24px (xl 32 −1) */
+  --sys-size-voice-body: var(--ref-voice-size-8); /* 20px (xl 24 −1) */
+  --sys-size-voice-label: var(--ref-voice-size-7); /* 18px (xl 20 −1) */
+  --sys-size-voice-caption: var(--ref-voice-size-6); /* 16px (xl 18 −1) */
+  --sys-size-label-font: var(--ref-voice-size-8); /* 20px (xl 24 −1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-7); /* 18px (xl 20 −1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-2); /* 11px (xl 12 −1 step, floor) */
+  --comp-textinput-label-scale: 1.25; /* compact xl: body(20)/caption(16) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-3
+  ); /* 12px — compact×xl (16 ÷ 1.2 → 12 snap) */
+
+  --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px — compact×xl */
+}
+
+/* ── comfortable × sm ── */
+[data-density="comfortable"][data-size="sm"] {
+  --sys-size-voice-headline: var(--ref-voice-size-8); /* 20px (sm 18 +1) */
+  --sys-size-voice-body: var(--ref-voice-size-5); /* 14px (sm 13 +1) */
+  --sys-size-voice-label: var(--ref-voice-size-4); /* 13px (sm 12 +1) */
+  --sys-size-voice-caption: var(--ref-voice-size-2); /* 11px (sm 10 +1) */
+  --sys-size-label-font: var(--ref-voice-size-5); /* 14px (sm 13 +1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-4); /* 13px (sm 12 +1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-3); /* 12px (sm 11 +1 step) */
+  --comp-textinput-label-scale: 1.273; /* comfortable sm: body(14)/caption(11) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-3
+  ); /* 12px — comfortable×sm (8 × 1.2 → 12 snap) */
+
+  --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px — comfortable×sm */
+}
+
+/* ── comfortable × md ── */
+[data-density="comfortable"][data-size="md"] {
+  --sys-size-voice-headline: var(--ref-voice-size-9); /* 24px (md 20 +1) */
+  --sys-size-voice-body: var(--ref-voice-size-7); /* 18px (md 16 +1) */
+  --sys-size-voice-label: var(--ref-voice-size-6); /* 16px (md 14 +1) */
+  --sys-size-voice-caption: var(--ref-voice-size-4); /* 13px (md 12 +1) */
+  --sys-size-label-font: var(--ref-voice-size-7); /* 18px (md 16 +1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-6); /* 16px (md 14 +1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-4); /* 13px (md 12 +1 step) */
+  --comp-textinput-label-scale: 1.385; /* comfortable md: body(18)/caption(13) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-4
+  ); /* 16px — comfortable×md (12 × 1.2 → 16 snap) */
+
+  --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px — comfortable×md */
+}
+
+/* ── comfortable × lg ── */
+[data-density="comfortable"][data-size="lg"] {
+  --sys-size-voice-headline: var(--ref-voice-size-10); /* 32px (lg 24 +1) */
+  --sys-size-voice-body: var(--ref-voice-size-9); /* 24px (lg 20 +1) */
+  --sys-size-voice-label: var(--ref-voice-size-8); /* 20px (lg 18 +1) */
+  --sys-size-voice-caption: var(--ref-voice-size-6); /* 16px (lg 14 +1) */
+  --sys-size-label-font: var(--ref-voice-size-9); /* 24px (lg 20 +1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-8); /* 20px (lg 18 +1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-4); /* 13px (lg 12 +1 step) */
+  --comp-textinput-label-scale: 1.5; /* comfortable lg: body(24)/caption(16) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-4
+  ); /* 16px — comfortable×lg (12 × 1.2 → 16 snap) */
+
+  --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px — comfortable×lg */
+}
+
+/* ── comfortable × xl ── */
+[data-density="comfortable"][data-size="xl"] {
+  --sys-size-voice-headline: var(--ref-voice-size-11); /* 40px (xl 32 +1) */
+  --sys-size-voice-body: var(--ref-voice-size-10); /* 32px (xl 24 +1) */
+  --sys-size-voice-label: var(--ref-voice-size-9); /* 24px (xl 20 +1) */
+  --sys-size-voice-caption: var(--ref-voice-size-8); /* 20px (xl 18 +1) */
+  --sys-size-label-font: var(--ref-voice-size-10); /* 32px (xl 24 +1 step) — deprecated */
+  --sys-size-table-font: var(--ref-voice-size-9); /* 24px (xl 20 +1 step) — deprecated */
+  --sys-size-table-header-font: var(--ref-voice-size-4); /* 13px (xl 12 +1 step) */
+  --comp-textinput-label-scale: 1.6; /* comfortable xl: body(32)/caption(20) */
+  --sys-frame-radius-control: var(
+    --ref-frame-radius-5
+  ); /* 20px — comfortable×xl (16 × 1.2 → 20 snap) */
+
+  --sys-frame-radius-container: var(--ref-frame-radius-5); /* 20px — comfortable×xl */
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Compound selectors: phone viewport × size
+   ─────────────────────────────────────────────────
+   [data-size] on elements (e.g. FlowButton) sets
+   --sys-frame-radius-control directly, beating the
+   inherited :root phone override. These compounds
+   restore the +1 viewport step for sized elements.
+   Placed AFTER base [data-size] blocks → same
+   specificity (0,1,0,0), source order wins.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Phone × sm ── */
+@media (width <= 575px) {
+  [data-size="sm"] {
+    --sys-frame-radius-control: var(--ref-frame-radius-3); /* 12px ← 8px (+1 phone step) */
+    --sys-frame-radius-container: var(--ref-frame-radius-3); /* 12px ← 8px (+1 phone step) */
+  }
+}
+
+/* ── Phone × md ── */
+@media (width <= 575px) {
+  [data-size="md"] {
+    --sys-frame-radius-control: var(--ref-frame-radius-4); /* 16px ← 12px (+1 phone step) */
+    --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px ← 12px (+1 phone step) */
+  }
+}
+
+/* ── Phone × lg ── */
+@media (width <= 575px) {
+  [data-size="lg"] {
+    --sys-frame-radius-control: var(--ref-frame-radius-4); /* 16px ← 12px (+1 phone step) */
+    --sys-frame-radius-container: var(--ref-frame-radius-4); /* 16px ← 12px (+1 phone step) */
+  }
+}
+
+/* ── Phone × xl ── */
+@media (width <= 575px) {
+  [data-size="xl"] {
+    --sys-frame-radius-control: var(--ref-frame-radius-5); /* 20px ← 16px (+1 phone step) */
+    --sys-frame-radius-container: var(--ref-frame-radius-5); /* 20px ← 16px (+1 phone step) */
+  }
+}
+
+/* ── Density transitions — smooth morphing when density changes ── */
+[data-density-animate] {
+  transition:
+    gap var(--sys-momentum-transition-default),
+    padding var(--sys-momentum-transition-default),
+    margin var(--sys-momentum-transition-default),
+    font-size var(--sys-momentum-transition-default),
+    line-height var(--sys-momentum-transition-default),
+    height var(--sys-momentum-transition-default);
+}
+
+[data-density-animate] *,
+[data-density-animate] .flow-layout-grid {
+  transition:
+    gap var(--sys-momentum-transition-default),
+    padding var(--sys-momentum-transition-default),
+    margin var(--sys-momentum-transition-default),
+    font-size var(--sys-momentum-transition-default),
+    line-height var(--sys-momentum-transition-default),
+    height var(--sys-momentum-transition-default),
+    border-color var(--sys-momentum-transition-fast);
+}
+
+/* ── SYS: Dark theme auto-detect (OS preference fallback) ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sys-energy-surface-primary: var(--ref-energy-neutral-950);
+    --sys-energy-surface-secondary: var(--ref-energy-neutral-900);
+    --sys-energy-surface-tertiary: var(--ref-energy-neutral-800);
+    --sys-energy-surface-sunken: var(--ref-energy-neutral-700);
+    --sys-energy-surface-inverse: var(--ref-energy-neutral-100);
+
+    color-scheme: dark;
+  }
+}
+
+/* ── SYS: Dark theme (remaps sys to different ref) ── */
+[data-theme="dark"] {
+  --sys-energy-surface-primary: var(--ref-energy-neutral-950);
+  --sys-energy-surface-secondary: var(--ref-energy-neutral-900);
+  --sys-energy-surface-tertiary: var(--ref-energy-neutral-800);
+  --sys-energy-surface-sunken: var(--ref-energy-neutral-700);
+  --sys-energy-surface-inverse: var(--ref-energy-neutral-100);
+  --sys-energy-surface-cold-white: var(--ref-energy-neutral-900);
+  --sys-energy-surface-accent: var(--ref-energy-blue-900);
+  --sys-energy-surface-accent-subtle: var(--ref-energy-blue-900);
+  --sys-energy-surface-danger: var(--ref-energy-red-900);
+  --sys-energy-surface-success: var(--ref-energy-green-900);
+  --sys-energy-surface-warning: var(--ref-energy-yellow-900);
+  --sys-energy-text-primary: var(--ref-energy-neutral-100);
+  --sys-energy-text-secondary: var(--ref-energy-neutral-400);
+  --sys-energy-text-tertiary: var(--ref-energy-neutral-500);
+  --sys-energy-text-inverse: var(--ref-energy-neutral-900);
+  --sys-energy-text-on-action: var(--ref-energy-neutral-900);
+  --sys-energy-text-link: var(--ref-energy-blue-200);
+  --sys-energy-text-accent: var(--ref-energy-blue-200);
+  --sys-energy-text-danger: var(--ref-energy-red-200);
+  --sys-energy-text-success: var(--ref-energy-green-200);
+  --sys-energy-text-warning: var(--ref-energy-yellow-200);
+  --sys-energy-text-disabled: var(--ref-energy-neutral-600);
+  --sys-energy-border-default: rgb(
+    var(--ref-state-border-dark-base),
+    var(--ref-state-border-default-alpha)
+  );
+  --sys-energy-border-strong: rgb(
+    var(--ref-state-border-dark-base),
+    var(--ref-state-border-strong-alpha)
+  );
+  --sys-energy-border-focus: var(--ref-energy-blue-200);
+  --sys-energy-border-accent: var(--ref-energy-blue-700);
+  --sys-energy-border-danger: var(--ref-energy-red-700);
+  --sys-energy-border-success: var(--ref-energy-green-700);
+  --sys-energy-border-warning: var(--ref-energy-yellow-700);
+  --sys-energy-border-subtle: rgb(var(--ref-state-border-dark-base), 0.08);
+
+  /* sys.energy.border.control — dark remapping */
+  --sys-energy-border-control: var(--ref-energy-neutral-400);
+  --sys-energy-border-control-error: var(--ref-energy-red-300);
+  --sys-energy-border-control-disabled: var(--ref-energy-neutral-700);
+  --sys-energy-action-primary: var(--ref-energy-blue-200);
+  --sys-energy-action-primary-hover: var(--ref-energy-blue-100);
+  --sys-energy-action-primary-active: var(--ref-energy-blue-300);
+  --sys-energy-action-secondary: var(--ref-energy-neutral-800);
+  --sys-energy-action-secondary-hover: var(--ref-energy-neutral-700);
+  --sys-energy-action-ghost: transparent;
+  --sys-energy-action-ghost-hover: var(--ref-energy-neutral-800);
+  --sys-energy-action-destructive: var(--ref-energy-red-200);
+  --sys-energy-action-destructive-hover: var(--ref-energy-red-100);
+
+  /* Figma Edenred emphasis model (dark remapping) */
+  --sys-energy-action-high: var(--ref-energy-neutral-100);
+  --sys-energy-action-high-hover: var(--ref-energy-neutral-300);
+  --sys-energy-action-high-active: var(--ref-energy-neutral-200);
+  --sys-energy-action-medium-border: var(--ref-energy-neutral-100);
+  --sys-energy-action-medium-active: var(--ref-energy-neutral-600);
+  --sys-energy-action-low-active: var(--ref-energy-blue-300);
+  --sys-energy-action-destructive-subtle: var(--ref-energy-red-900);
+  --sys-energy-action-destructive-active: var(--ref-energy-red-300);
+
+  /* sys.energy.state — explicit disabled (dark) */
+  --sys-energy-state-hover: rgb(255 255 255 / 8%);
+  --sys-energy-state-disabled-bg: var(--ref-energy-neutral-600);
+  --sys-energy-state-disabled-text: var(--ref-energy-neutral-400);
+  --sys-energy-state-disabled-border: var(--ref-energy-neutral-600);
+  --sys-energy-status-success: var(--ref-energy-green-200);
+  --sys-energy-status-success-subtle: var(--ref-energy-green-900);
+  --sys-energy-status-success-muted: var(--ref-energy-green-800);
+  --sys-energy-status-warning: var(--ref-energy-yellow-200);
+  --sys-energy-status-warning-subtle: var(--ref-energy-yellow-900);
+  --sys-energy-status-warning-muted: var(--ref-energy-yellow-800);
+  --sys-energy-status-error: var(--ref-energy-red-200);
+  --sys-energy-status-error-subtle: var(--ref-energy-red-900);
+  --sys-energy-status-error-muted: var(--ref-energy-red-800);
+  --sys-energy-status-info: var(--ref-energy-blue-200);
+  --sys-energy-status-info-subtle: var(--ref-energy-blue-900);
+  --sys-energy-status-info-muted: var(--ref-energy-blue-800);
+
+  /* sys.energy.extended — dark theme remapping */
+  --sys-energy-surface-purple: var(--ref-energy-purple-900);
+  --sys-energy-text-purple: var(--ref-energy-purple-200);
+  --sys-energy-border-purple: var(--ref-energy-purple-700);
+  --sys-energy-status-purple: var(--ref-energy-purple-200);
+  --sys-energy-status-purple-subtle: var(--ref-energy-purple-900);
+  --sys-energy-status-purple-muted: var(--ref-energy-purple-800);
+  --sys-energy-surface-teal: var(--ref-energy-teal-900);
+  --sys-energy-text-teal: var(--ref-energy-teal-200);
+  --sys-energy-border-teal: var(--ref-energy-teal-700);
+  --sys-energy-status-teal: var(--ref-energy-teal-200);
+  --sys-energy-status-teal-subtle: var(--ref-energy-teal-900);
+  --sys-energy-status-teal-muted: var(--ref-energy-teal-800);
+  --sys-energy-surface-yellow: var(--ref-energy-yellow-900);
+  --sys-energy-text-yellow: var(--ref-energy-yellow-200);
+  --sys-energy-border-yellow: var(--ref-energy-yellow-700);
+  --sys-energy-status-yellow: var(--ref-energy-yellow-200);
+  --sys-energy-status-yellow-subtle: var(--ref-energy-yellow-900);
+  --sys-energy-status-yellow-muted: var(--ref-energy-yellow-800);
+  --sys-energy-surface-pink: var(--ref-energy-pink-900);
+  --sys-energy-text-pink: var(--ref-energy-pink-200);
+  --sys-energy-border-pink: var(--ref-energy-pink-700);
+  --sys-energy-status-pink: var(--ref-energy-pink-200);
+  --sys-energy-status-pink-subtle: var(--ref-energy-pink-900);
+  --sys-energy-status-pink-muted: var(--ref-energy-pink-800);
+
+  /* sys.energy.icon — dark theme icon color roles */
+  --sys-energy-icon-default: var(--ref-energy-neutral-100);
+  --sys-energy-icon-secondary: var(--ref-energy-neutral-400);
+  --sys-energy-icon-tertiary: var(--ref-energy-neutral-500);
+  --sys-energy-icon-action: var(--ref-energy-blue-200);
+  --sys-energy-icon-inverse: var(--ref-energy-neutral-900);
+  --sys-energy-icon-on-action: var(--ref-energy-neutral-900);
+  --sys-energy-icon-disabled: var(--ref-energy-neutral-600);
+  --sys-energy-icon-success: var(--ref-energy-green-200);
+  --sys-energy-icon-warning: var(--ref-energy-yellow-200);
+  --sys-energy-icon-error: var(--ref-energy-red-200);
+  --sys-energy-icon-info: var(--ref-energy-blue-200);
+
+  /* sys.tone — dark theme remapping */
+  --sys-tone-neutral-text: var(--ref-energy-neutral-50);
+  --sys-tone-neutral-text-subtle: var(--ref-energy-neutral-400);
+  --sys-tone-neutral-weight: var(--ref-voice-weight-regular);
+  --sys-tone-brand-text: var(--ref-energy-blue-300);
+  --sys-tone-brand-text-subtle: var(--ref-energy-blue-400);
+  --sys-tone-brand-weight: var(--ref-voice-weight-medium);
+  --sys-tone-marketing-text: var(--ref-energy-orange-300);
+  --sys-tone-marketing-text-subtle: var(--ref-energy-orange-400);
+  --sys-tone-marketing-weight: var(--ref-voice-weight-medium);
+  --sys-tone-system-text: var(--ref-energy-neutral-300);
+  --sys-tone-system-text-subtle: var(--ref-energy-neutral-500);
+  --sys-tone-system-weight: var(--ref-voice-weight-regular);
+  --sys-depth-elevation-0: var(--ref-depth-shadow-0);
+  --sys-depth-elevation-1: var(--ref-depth-shadow-dark-1);
+  --sys-depth-elevation-2: var(--ref-depth-shadow-dark-2);
+  --sys-depth-elevation-3: var(--ref-depth-shadow-dark-3);
+  --sys-depth-elevation-4: var(--ref-depth-shadow-dark-4);
+  --sys-depth-elevation-light: var(--ref-depth-shadow-dark-1);
+  --sys-depth-elevation-medium: var(--ref-depth-shadow-dark-2);
+  --sys-depth-elevation-high: var(--ref-depth-shadow-dark-3);
+  --sys-depth-overlay: var(--ref-depth-overlay-dark);
+  --sys-state-hover-overlay: rgb(var(--ref-state-border-dark-base), var(--ref-state-opacity-hover));
+  --sys-state-pressed-overlay: rgb(
+    var(--ref-state-border-dark-base),
+    var(--ref-state-opacity-pressed)
+  );
+  --sys-state-selected-overlay: rgb(
+    var(--ref-energy-blue-200-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --sys-state-focus-ring-color: var(--ref-energy-blue-200);
+
+  /* sys.energy.control — dark remapping */
+  --sys-energy-control-border-inactive: var(--ref-energy-neutral-400);
+  --sys-energy-control-border-inactive-pressed: var(--ref-energy-neutral-300);
+  --sys-energy-control-border-disabled: var(--ref-energy-neutral-700);
+  --sys-energy-control-fill-pressed: var(--ref-energy-blue-300);
+  --sys-energy-control-fill-disabled: var(--ref-energy-neutral-600);
+  --sys-energy-control-dot: var(--ref-energy-neutral-900);
+  --sys-energy-control-state-layer-inactive: var(--ref-energy-neutral-400);
+
+  /* sys.energy.switch — dark remapping */
+  --sys-energy-switch-track-off: var(--ref-energy-neutral-600);
+  --sys-energy-switch-track-off-hover: var(--ref-energy-neutral-500);
+  --sys-energy-switch-track-disabled: var(--ref-energy-neutral-800);
+  --sys-energy-switch-thumb-off: var(--ref-energy-neutral-200);
+  --sys-energy-switch-thumb-on: var(--ref-energy-neutral-900);
+  --sys-energy-switch-thumb-disabled: var(--ref-energy-neutral-700);
+  --sys-energy-switch-thumb-icon-disabled: var(--ref-energy-neutral-600);
+
+  /* ── COMP: Dark theme overrides (theme-specific compositing) ── */
+
+  /* chip/sidebar use blue-200-rgb instead of blue-500-rgb in dark */
+  --comp-chip-bg-selected: rgb(var(--ref-energy-blue-200-rgb), var(--ref-state-opacity-selected));
+  --comp-sidebar-item-bg-active: rgb(
+    var(--ref-energy-blue-200-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --comp-bottom-nav-indicator-bg: rgb(
+    var(--ref-energy-blue-200-rgb),
+    var(--ref-state-opacity-selected)
+  );
+
+  /* IconButton selected — solid dark-blue scale values in dark */
+  --comp-icon-button-bg-selected-low: var(--ref-energy-blue-900);
+  --comp-icon-button-bg-selected-low-hover: var(--ref-energy-blue-800);
+  --comp-icon-button-bg-selected-medium: var(--ref-energy-blue-800);
+  --comp-icon-button-bg-selected-medium-hover: var(--ref-energy-blue-700);
+  --comp-icon-button-bg-selected-outline: transparent;
+  --comp-icon-button-bg-selected-outline-hover: var(--ref-energy-blue-900);
+  --comp-icon-button-bg-selected-ghost: transparent;
+  --comp-icon-button-bg-selected-ghost-hover: var(--sys-energy-surface-secondary);
+
+  /* List selected — blue-200-rgb in dark */
+  --comp-list-item-bg-selected: rgb(
+    var(--ref-energy-blue-200-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --comp-list-divider: rgb(var(--ref-state-border-dark-base), 0.22);
+  --comp-bottom-sheet-overlay: rgb(0 0 0 / 65%);
+
+  /* Button/IconButton — per-emphasis disabled (dark remaps) */
+  --comp-button-bg-disabled-high: var(--ref-energy-neutral-500);
+  --comp-button-text-disabled-high: var(--ref-energy-neutral-900);
+  --comp-button-border-disabled-medium: var(--ref-energy-neutral-600);
+  --comp-button-border-disabled-outline: var(--ref-energy-neutral-700);
+  --comp-button-bg-disabled-danger: var(--ref-energy-red-900);
+  --comp-button-text-disabled-danger: var(--ref-energy-neutral-500);
+  --comp-icon-button-bg-disabled-high: var(--ref-energy-neutral-500);
+  --comp-icon-button-icon-disabled-high: var(--ref-energy-neutral-900);
+  --comp-icon-button-border-disabled-medium: var(--ref-energy-neutral-600);
+  --comp-icon-button-border-disabled-outline: var(--ref-energy-neutral-700);
+  --comp-icon-button-bg-disabled-danger: var(--ref-energy-red-900);
+  --comp-icon-button-icon-disabled-danger: var(--ref-energy-neutral-500);
+}
+
+/* ── COMP: Component-level aliases ────────────────── */
+:root {
+  /* comp.button — emphasis model (high/medium/low/danger) */
+
+  /* HIGH */
+  --comp-button-bg-high: var(--sys-energy-action-high);
+  --comp-button-bg-high-hover: var(--sys-energy-action-high-hover);
+  --comp-button-bg-high-active: var(--sys-energy-action-high-active);
+  --comp-button-text-high: var(--sys-energy-text-inverse);
+
+  /* MEDIUM */
+  --comp-button-bg-medium: var(--sys-energy-action-ghost);
+  --comp-button-bg-medium-hover: var(--sys-energy-action-secondary-hover);
+  --comp-button-bg-medium-active: var(--sys-energy-action-medium-active);
+  --comp-button-text-medium: var(--sys-energy-text-primary);
+  --comp-button-border-medium: var(--sys-energy-action-medium-border);
+
+  /* LOW */
+  --comp-button-bg-low: var(--sys-energy-action-ghost);
+  --comp-button-text-low: var(--sys-energy-text-accent);
+  --comp-button-text-low-hover: var(--sys-energy-text-link);
+  --comp-button-text-low-active: var(--sys-energy-action-low-active);
+
+  /* OUTLINE */
+  --comp-button-bg-outline: var(--sys-energy-action-ghost);
+  --comp-button-bg-outline-hover: var(--sys-energy-action-secondary-hover);
+  --comp-button-bg-outline-active: var(--sys-energy-action-medium-active);
+  --comp-button-text-outline: var(--sys-energy-text-accent);
+  --comp-button-border-outline: var(--sys-energy-border-strong);
+
+  /* DANGER */
+  --comp-button-bg-danger-subtle: var(--sys-energy-action-destructive-subtle);
+  --comp-button-bg-danger-hover: var(--sys-energy-action-destructive);
+  --comp-button-bg-danger-active: var(--sys-energy-action-destructive-active);
+  --comp-button-text-danger-subtle: var(--sys-energy-text-danger);
+  --comp-button-text-danger-on-filled: var(--sys-energy-text-on-action);
+
+  /* WARNING — subtle→filled paradigm (mirrors danger) */
+  --comp-button-bg-warning-subtle: var(--sys-energy-surface-warning);
+  --comp-button-bg-warning-hover: var(--sys-energy-status-warning);
+  --comp-button-bg-warning-active: var(--ref-energy-yellow-700);
+  --comp-button-text-warning-subtle: var(--sys-energy-text-warning);
+  --comp-button-text-warning-on-filled: var(--ref-energy-neutral-0);
+  --comp-button-bg-disabled-warning: var(--ref-energy-yellow-50);
+  --comp-button-text-disabled-warning: var(--ref-energy-neutral-400);
+
+  /* DISABLED — base (fallback for all emphases) */
+  --comp-button-bg-disabled: var(--sys-energy-state-disabled-bg);
+  --comp-button-text-disabled: var(--sys-energy-state-disabled-text);
+  --comp-button-border-disabled: var(--sys-energy-state-disabled-border);
+
+  /* DISABLED — per-emphasis overrides (preserve visual identity) */
+
+  /* HIGH: slightly darker fill than generic disabled → reads as "dimmed filled button" */
+  --comp-button-bg-disabled-high: var(--ref-energy-neutral-400);
+  --comp-button-text-disabled-high: var(--ref-energy-neutral-0);
+
+  /* MEDIUM: transparent bg + faded border → reads as "dimmed bordered button" */
+  --comp-button-bg-disabled-medium: transparent;
+  --comp-button-text-disabled-medium: var(--sys-energy-state-disabled-text);
+  --comp-button-border-disabled-medium: var(--ref-energy-neutral-400);
+
+  /* OUTLINE: transparent bg + lighter faded border → reads as "dimmed outlined button" */
+  --comp-button-bg-disabled-outline: transparent;
+  --comp-button-text-disabled-outline: var(--sys-energy-state-disabled-text);
+  --comp-button-border-disabled-outline: var(--ref-energy-neutral-300);
+
+  /* DANGER: faint red tint → preserves semantic "danger" identity */
+  --comp-button-bg-disabled-danger: var(--ref-energy-red-subtle-tint);
+  --comp-button-text-disabled-danger: var(--ref-energy-neutral-400);
+
+  /* comp.button — structural
+     NOTE: --comp-button-radius is declared on .flow-btn-v2 (not :root)
+     so it resolves per-element using the local --sys-frame-radius-control
+     value, which varies by [data-size], @media, and [data-density]. */
+  --comp-button-border-width: var(--sys-frame-border-control);
+
+  /* comp.button — size tokens (DEPRECATED: use sys-alias pattern instead)
+     These specific tokens (--comp-button-*-sm/md/lg/xl) are NOT consumed.
+     FlowButton uses sys-alias pattern: comp tokens → sys tokens → ref tokens.
+     The [data-size] attribute on elements triggers global selectors that
+     redefine sys tokens contextually. No per-component selectors needed. */
+
+  /* comp.iconButton — aligned 1:1 with Button v2 emphasis model */
+
+  /* HIGH — same sys tokens as comp.button.high */
+  --comp-icon-button-bg-high: var(--sys-energy-action-high);
+  --comp-icon-button-bg-high-hover: var(--sys-energy-action-high-hover);
+  --comp-icon-button-bg-high-active: var(--sys-energy-action-high-active);
+  --comp-icon-button-icon-high: var(--sys-energy-text-inverse);
+
+  /* MEDIUM — same sys tokens as comp.button.medium */
+  --comp-icon-button-bg-medium: var(--sys-energy-action-ghost);
+  --comp-icon-button-bg-medium-hover: var(--sys-energy-action-secondary-hover);
+  --comp-icon-button-bg-medium-active: var(--sys-energy-action-medium-active);
+  --comp-icon-button-icon-medium: var(--sys-energy-text-primary);
+  --comp-icon-button-border-medium: var(--sys-energy-action-medium-border);
+
+  /* LOW — ghost bg, accent icon (aligned with comp.button.low) */
+  --comp-icon-button-bg-low: var(--sys-energy-action-ghost);
+  --comp-icon-button-bg-low-hover: var(--sys-energy-action-ghost-hover);
+  --comp-icon-button-bg-low-active: var(--sys-energy-action-secondary-hover);
+  --comp-icon-button-icon-low: var(--sys-energy-text-accent);
+
+  /* GHOST — transparent, secondary icon, hover chrome aligned with comp.button.ghost */
+  --comp-icon-button-bg-ghost: transparent;
+  --comp-icon-button-bg-ghost-hover: var(--sys-energy-surface-secondary);
+  --comp-icon-button-bg-ghost-active: var(--sys-energy-surface-tertiary);
+  --comp-icon-button-icon-ghost: var(--sys-energy-text-secondary);
+  --comp-icon-button-icon-ghost-hover: var(--sys-energy-text-primary);
+
+  /* OUTLINE — transparent bg, accent icon, strong border */
+  --comp-icon-button-bg-outline: var(--sys-energy-action-ghost);
+  --comp-icon-button-bg-outline-hover: var(--sys-energy-action-secondary-hover);
+  --comp-icon-button-bg-outline-active: var(--sys-energy-action-medium-active);
+  --comp-icon-button-icon-outline: var(--sys-energy-text-accent);
+  --comp-icon-button-border-outline: var(--sys-energy-border-strong);
+
+  /* DANGER — same sys tokens as comp.button.danger */
+  --comp-icon-button-bg-danger-subtle: var(--sys-energy-action-destructive-subtle);
+  --comp-icon-button-bg-danger-hover: var(--sys-energy-action-destructive);
+  --comp-icon-button-bg-danger-active: var(--sys-energy-action-destructive-active);
+  --comp-icon-button-icon-danger: var(--sys-energy-text-danger);
+  --comp-icon-button-icon-danger-on-filled: var(--sys-energy-text-on-action);
+
+  /* DISABLED — base */
+  --comp-icon-button-bg-disabled: var(--sys-energy-state-disabled-bg);
+  --comp-icon-button-icon-disabled: var(--sys-energy-state-disabled-text);
+  --comp-icon-button-border-disabled: var(--sys-energy-state-disabled-border);
+
+  /* DISABLED — per-emphasis overrides (mirror FlowButton pattern) */
+  --comp-icon-button-bg-disabled-high: var(--ref-energy-neutral-400);
+  --comp-icon-button-icon-disabled-high: var(--ref-energy-neutral-0);
+  --comp-icon-button-bg-disabled-medium: transparent;
+  --comp-icon-button-icon-disabled-medium: var(--sys-energy-state-disabled-text);
+  --comp-icon-button-border-disabled-medium: var(--ref-energy-neutral-400);
+  --comp-icon-button-bg-disabled-outline: transparent;
+  --comp-icon-button-icon-disabled-outline: var(--sys-energy-state-disabled-text);
+  --comp-icon-button-border-disabled-outline: var(--ref-energy-neutral-300);
+  --comp-icon-button-bg-disabled-danger: var(--ref-energy-red-subtle-tint);
+  --comp-icon-button-icon-disabled-danger: var(--ref-energy-neutral-400);
+
+  /* SELECTED — toggle/toolbar active
+     Uses solid blue-scale values instead of rgba tints for clear visual distinction.
+     Intensity graduates with emphasis: high > medium > low ≈ outline > ghost */
+  --comp-icon-button-bg-selected-low: var(--ref-energy-blue-50);
+  --comp-icon-button-bg-selected-low-hover: var(--ref-energy-blue-100);
+  --comp-icon-button-icon-selected-low: var(--sys-energy-text-accent);
+
+  /* MEDIUM selected: stronger accent fill + accent border — proportional shift from bordered-neutral */
+  --comp-icon-button-bg-selected-medium: var(--ref-energy-blue-100);
+  --comp-icon-button-bg-selected-medium-hover: var(--ref-energy-blue-200);
+  --comp-icon-button-icon-selected-medium: var(--sys-energy-text-accent);
+  --comp-icon-button-border-selected-medium: var(--sys-energy-text-accent);
+
+  /* HIGH selected: accent-primary fill — hue shift from neutral-dark to accent-blue */
+  --comp-icon-button-bg-selected-high: var(--sys-energy-action-primary);
+  --comp-icon-button-bg-selected-high-hover: var(--sys-energy-action-primary-hover);
+  --comp-icon-button-icon-selected-high: var(--sys-energy-text-on-action);
+
+  /* OUTLINE selected: border carries accent — bg stays neutral, preserving outline's border-defined identity */
+  --comp-icon-button-bg-selected-outline: transparent;
+  --comp-icon-button-bg-selected-outline-hover: var(--ref-energy-blue-50);
+  --comp-icon-button-icon-selected-outline: var(--sys-energy-text-accent);
+  --comp-icon-button-border-selected-outline: var(--sys-energy-text-accent);
+
+  /* DANGER selected: filled destructive — toggle for destructive actions (spam, flag) */
+  --comp-icon-button-bg-selected-danger: var(--sys-energy-action-destructive);
+  --comp-icon-button-bg-selected-danger-hover: var(--sys-energy-action-destructive-active);
+  --comp-icon-button-icon-selected-danger: var(--sys-energy-text-on-action);
+
+  /* GHOST selected: no chrome, accent icon only — preserves ghost's invisible-at-rest identity */
+  --comp-icon-button-bg-selected-ghost: transparent;
+  --comp-icon-button-bg-selected-ghost-hover: var(--sys-energy-surface-secondary);
+  --comp-icon-button-icon-selected-ghost: var(--sys-energy-text-accent);
+
+  /* Structural */
+  --comp-icon-button-radius: var(--sys-frame-radius-control);
+  --comp-icon-button-border-width: var(--sys-frame-border-control);
+  --comp-icon-button-size-sm: var(--sys-frame-height-control-sm);
+  --comp-icon-button-size-md: var(--sys-frame-height-control-md);
+  --comp-icon-button-size-lg: var(--sys-frame-height-control-lg);
+  --comp-icon-button-size-xl: var(--sys-frame-height-control-xl);
+  --comp-icon-button-icon-size-sm: var(--sys-icon-size-sm);
+  --comp-icon-button-icon-size-md: var(--sys-icon-size-md);
+  --comp-icon-button-icon-size-lg: var(--sys-icon-size-lg);
+  --comp-icon-button-icon-size-xl: var(--sys-icon-size-xl);
+  --comp-icon-button-size: var(
+    --sys-frame-height-control-md
+  ); /* default md, density-shifted via sys layer */
+
+  --comp-icon-button-transition: var(--sys-momentum-transition-fast);
+
+  /* Focus ring */
+  --comp-icon-button-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-icon-button-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-icon-button-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-icon-button-focus-ring-shadow-color: var(--sys-energy-surface-primary);
+
+  /* Tooltip — delegated to FlowTooltip component (comp.tooltip tokens) */
+
+  /* comp.textinput — Figma Edenred floating-label input */
+  --comp-textinput-bg: var(--sys-energy-surface-primary);
+  --comp-textinput-bg-pressed: var(--sys-energy-surface-tertiary);
+  --comp-textinput-bg-disabled: var(--sys-energy-surface-secondary);
+  --comp-textinput-border: var(--sys-energy-border-control);
+  --comp-textinput-border-focus: var(--sys-energy-border-focus);
+  --comp-textinput-border-error: var(--sys-energy-border-control-error);
+  --comp-textinput-border-success: var(--sys-energy-status-success);
+  --comp-textinput-border-disabled: var(--sys-energy-border-control-disabled);
+  --comp-textinput-border-width: var(--sys-frame-border-control);
+  --comp-textinput-border-width-active: var(--sys-frame-border-medium);
+  --comp-textinput-text: var(--sys-energy-text-primary);
+  --comp-textinput-label: var(
+    --sys-energy-text-secondary
+  ); /* semantic fix: label IS text, not border */
+
+  --comp-textinput-label-disabled: var(
+    --sys-energy-text-tertiary
+  ); /* disabled label: de-emphasized but still legible */
+
+  --comp-textinput-text-disabled: var(
+    --sys-energy-text-tertiary
+  ); /* disabled value text: matches label-disabled */
+
+  --comp-textinput-label-error: var(--sys-energy-text-danger); /* label color in error state */
+  --comp-textinput-label-focus: var(
+    --sys-energy-text-accent
+  ); /* label color when focused — matches border-focus intent */
+
+  --comp-textinput-placeholder: var(--sys-energy-text-tertiary);
+  --comp-textinput-hint: var(
+    --sys-energy-text-secondary
+  ); /* semantic fix: hint IS text, not border */
+
+  --comp-textinput-hint-error: var(
+    --sys-energy-text-danger
+  ); /* semantic fix: error hint IS text, not border */
+
+  --comp-textinput-hint-success: var(--sys-energy-text-success); /* hint color in success state */
+
+  /* doc-only: --comp-textinput-label-size → CSS uses var(--sys-size-voice-body) via scale
+     doc-only: --comp-textinput-label-size-float → CSS uses var(--sys-size-voice-caption)
+     doc-only: --comp-textinput-value-size → CSS uses var(--sys-size-voice-body)
+     doc-only: --comp-textinput-hint-size → CSS uses var(--sys-size-voice-caption) */
+  --comp-textinput-width: var(--sys-frame-width-control); /* 100% — fill parent */
+  --comp-textinput-max-width: var(
+    --sys-frame-max-width-control
+  ); /* none — unconstrained by default */
+
+  --comp-textinput-min-width: var(--sys-frame-min-width-control); /* 0 — flex-safe shrink */
+  --comp-textinput-height: var(--ref-frame-height-input-xl); /* 104px — base=xl, input-specific */
+  --comp-textinput-radius: var(
+    --ref-frame-radius-2
+  ); /* 8px — flat per density, decoupled from size-scaled sys-frame-radius-control. Inputs go 100% width on mobile so size-varying radius creates visual inconsistency; flat value keeps corners uniform across all sizes. */
+
+  --comp-textinput-padding: var(--ref-frame-space-5); /* 20px — base=xl */
+  --comp-textinput-padding-x: calc(
+    var(--comp-textinput-padding) + var(--comp-textinput-border-width)
+  ); /* horizontal inset — compensates inset box-shadow border so visual gap = padding */
+
+  --comp-textinput-gap: var(--ref-frame-space-1);
+  --comp-textinput-icon-size: var(--ref-icon-size-sm); /* 16px — icon inside input controls */
+  --comp-textinput-leading-offset: calc(
+    var(--comp-textinput-padding-x) + var(--comp-textinput-icon-size) + var(--comp-textinput-gap)
+  ); /* label left when leading icon is present */
+
+  --comp-textinput-content-gap: var(--sys-frame-space-micro);
+  --comp-textinput-transition: var(
+    --sys-momentum-transition-default
+  ); /* container border/bg transitions — matches sys default (inputs are slower than buttons) */
+
+  /* Focus ring comp tokens — alias sys tokens so context can override
+     (e.g. input on dark surface, or custom ring for compound components).
+     Mirrors FlowButton's --comp-button-focus-ring-* pattern exactly. */
+  --comp-textinput-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-textinput-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-textinput-focus-ring-color: var(--sys-state-focus-ring-color);
+  --comp-textinput-focus-gap-color: var(--sys-energy-surface-primary);
+  --comp-textinput-label-scale: 1.333; /* resting scale: body(24) / caption(18) — derived from sys.size.voice (geometric) */
+  --comp-textinput-clear-size: var(--ref-frame-space-12);
+
+  /* Per-size height tokens — input-specific (decoupled from control heights) */
+  --comp-textinput-height-sm: var(--ref-frame-height-input-sm); /* 56px */
+  --comp-textinput-height-md: var(--ref-frame-height-input-md); /* 72px */
+  --comp-textinput-height-lg: var(--ref-frame-height-input-lg); /* 88px */
+  --comp-textinput-height-xl: var(--ref-frame-height-input-xl); /* 104px */
+
+  /* Per-size padding tokens — escalated spread */
+  --comp-textinput-padding-sm: var(--ref-frame-space-2); /* 8px */
+  --comp-textinput-padding-md: var(--ref-frame-space-3); /* 12px */
+  --comp-textinput-padding-lg: var(--ref-frame-space-4); /* 16px */
+  --comp-textinput-padding-xl: var(--ref-frame-space-5); /* 20px */
+
+  /* Per-size typography — +2 ref steps per size for exaggerated spread (12→14→18→24) */
+  --comp-textinput-label-size-sm: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-label-size-md: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-label-size-lg: var(--ref-voice-size-7); /* 18px */
+  --comp-textinput-label-size-xl: var(--ref-voice-size-9); /* 24px */
+  --comp-textinput-value-size-sm: var(
+    --ref-voice-size-3
+  ); /* 12px — value uses moderate +1 step curve */
+
+  --comp-textinput-value-size-md: var(--ref-voice-size-4); /* 13px */
+  --comp-textinput-value-size-lg: var(--ref-voice-size-5); /* 14px */
+  --comp-textinput-value-size-xl: var(--ref-voice-size-6); /* 16px */
+  --comp-textinput-label-size-float-sm: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-label-size-float-md: var(--ref-voice-size-2); /* 11px */
+  --comp-textinput-label-size-float-lg: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-label-size-float-xl: var(--ref-voice-size-4); /* 13px */
+  --comp-textinput-hint-size-sm: var(--ref-voice-size-1); /* 10px */
+  --comp-textinput-hint-size-md: var(--ref-voice-size-2); /* 11px */
+  --comp-textinput-hint-size-lg: var(--ref-voice-size-3); /* 12px */
+  --comp-textinput-hint-size-xl: var(--ref-voice-size-4); /* 13px */
+
+  /* Per-size label scale — body/caption ratio from sys.size.voice (geometric) */
+  --comp-textinput-label-scale-sm: 1.3; /* body(13)/caption(10) — unchanged */
+  --comp-textinput-label-scale-md: 1.333; /* body(16)/caption(12) */
+  --comp-textinput-label-scale-lg: 1.429; /* body(20)/caption(14) */
+  --comp-textinput-label-scale-xl: 1.333; /* body(24)/caption(18) */
+
+  /* ── TextInput / PhoneInput / CountrySelect: data-size overrides ──
+     Setting data-size on the root element locally overrides the
+     base textinput tokens so all child elements (container, label,
+     field, hint) inherit the correct per-size geometry. */
+
+  /* comp.phoneinput — extends textinput with prefix area */
+  --comp-phoneinput-prefix-gap: var(--ref-frame-space-2);
+  --comp-phoneinput-flag-size: 20px;
+  --comp-phoneinput-divider-width: 2px;
+  --comp-phoneinput-divider-height: 22px;
+  --comp-phoneinput-divider-color: var(--sys-energy-border-default);
+  --comp-phoneinput-divider-radius: var(--sys-frame-radius-full);
+  --comp-phoneinput-chevron-color: var(--sys-energy-action-primary);
+  --comp-phoneinput-prefix-text: var(--sys-energy-text-secondary);
+
+  /* comp.countryselect — Figma-aligned country picker */
+  --comp-countryselect-body-inset: var(
+    --ref-frame-space-2
+  ); /* 8px — internal gap between flag prefix and label/field body */
+
+  --comp-countryselect-chevron-color: var(--sys-energy-action-primary);
+  --comp-countryselect-chevron-disabled: var(--sys-energy-text-tertiary);
+
+  /* comp.radio — Figma Edenred selection control */
+  --comp-radio-border-inactive: var(--sys-energy-control-border-inactive);
+  --comp-radio-border-inactive-pressed: var(--sys-energy-control-border-inactive-pressed);
+  --comp-radio-border-disabled: var(--sys-energy-control-border-disabled);
+  --comp-radio-fill-active: var(--sys-energy-action-primary);
+  --comp-radio-fill-active-pressed: var(--sys-energy-control-fill-pressed);
+  --comp-radio-fill-disabled: var(--sys-energy-control-fill-disabled);
+  --comp-radio-dot-color: var(--sys-energy-control-dot);
+  --comp-radio-state-layer-inactive: var(--sys-energy-control-state-layer-inactive);
+  --comp-radio-state-layer-active: var(--sys-energy-action-primary);
+
+  /* NOTE: These comp aliases are doc-only; CSS classes consume sys tokens directly
+     because passthrough aliases in :root resolve at declaration site, not lazily. */
+  --comp-radio-size: var(--sys-size-indicator);
+  --comp-radio-dot-size: calc(var(--sys-size-indicator) / 3);
+  --comp-radio-state-layer-size: var(--sys-size-indicator-state-layer);
+  --comp-radio-touch-target: 48px;
+  --comp-radio-border-width: var(--sys-frame-border-control);
+  --comp-radio-border-width-hover: var(--sys-frame-border-medium);
+  --comp-radio-state-layer-opacity: 0.2;
+  --comp-radio-label-font-size: var(
+    --sys-size-voice-body
+  ); /* doc-only: migrated from sys-size-label-font */
+
+  /* comp.checkbox — Figma Edenred selection control */
+  --comp-checkbox-border-inactive: var(--sys-energy-control-border-inactive);
+  --comp-checkbox-border-inactive-pressed: var(--sys-energy-control-border-inactive-pressed);
+  --comp-checkbox-border-disabled: var(--sys-energy-control-border-disabled);
+  --comp-checkbox-fill-active: var(--sys-energy-action-primary);
+  --comp-checkbox-fill-active-pressed: var(--sys-energy-control-fill-pressed);
+  --comp-checkbox-fill-disabled: var(--sys-energy-control-fill-disabled);
+  --comp-checkbox-icon-color: var(--sys-energy-control-dot);
+  --comp-checkbox-state-layer-inactive: var(--sys-energy-control-state-layer-inactive);
+  --comp-checkbox-state-layer-active: var(--sys-energy-action-primary);
+
+  /* NOTE: These comp aliases are doc-only; CSS classes consume sys tokens directly. */
+  --comp-checkbox-size: var(--sys-size-indicator);
+  --comp-checkbox-icon-size: calc(var(--sys-size-indicator) * 2 / 3);
+  --comp-checkbox-radius: var(--sys-frame-radius-sm);
+  --comp-checkbox-state-layer-size: var(--sys-size-indicator-state-layer);
+  --comp-checkbox-touch-target: 48px;
+  --comp-checkbox-border-width: var(--sys-frame-border-control);
+  --comp-checkbox-border-width-hover: var(--sys-frame-border-medium);
+  --comp-checkbox-state-layer-opacity: 0.2;
+  --comp-checkbox-label-font-size: var(
+    --sys-size-voice-body
+  ); /* doc-only: migrated from sys-size-label-font */
+
+  /* comp.switch — Figma Edenred toggle control */
+  --comp-switch-track-off: var(--sys-energy-switch-track-off);
+  --comp-switch-track-off-hover: var(--sys-energy-switch-track-off-hover);
+  --comp-switch-track-on: var(--sys-energy-action-primary);
+  --comp-switch-track-on-hover: var(--sys-energy-action-primary-hover);
+  --comp-switch-track-on-pressed: var(--sys-energy-control-fill-pressed);
+  --comp-switch-track-disabled: var(--sys-energy-switch-track-disabled);
+  --comp-switch-thumb-off: var(--sys-energy-switch-thumb-off);
+  --comp-switch-thumb-on: var(--sys-energy-switch-thumb-on);
+  --comp-switch-thumb-disabled: var(--sys-energy-switch-thumb-disabled);
+  --comp-switch-thumb-icon-off: var(--sys-energy-control-border-inactive);
+  --comp-switch-thumb-icon-on: var(--sys-energy-action-primary);
+  --comp-switch-thumb-icon-disabled: var(--sys-energy-switch-thumb-icon-disabled);
+  --comp-switch-state-layer-off: var(--sys-energy-control-state-layer-inactive);
+  --comp-switch-state-layer-on: var(--sys-energy-action-primary);
+  --comp-switch-track-width: 52px;
+  --comp-switch-track-height: 32px;
+  --comp-switch-thumb-size: 16px;
+  --comp-switch-thumb-size-pressed: 18px;
+  --comp-switch-thumb-inset: 8px;
+  --comp-switch-state-layer-size: 40px;
+  --comp-switch-state-layer-opacity: 0.2;
+  --comp-switch-track-radius: var(--sys-frame-radius-full);
+  --comp-switch-thumb-shadow: var(--sys-depth-elevation-light);
+
+  /* Shared country dropdown tokens (PhoneInput + CountrySelect) */
+  --comp-country-dropdown-bg: var(--sys-energy-surface-primary);
+  --comp-country-dropdown-shadow: var(--sys-depth-elevation-high);
+  --comp-country-dropdown-radius: var(--sys-frame-radius-container);
+  --comp-country-dropdown-max-height: 320px;
+  --comp-country-dropdown-item-hover: var(--sys-state-hover-overlay);
+  --comp-country-dropdown-item-height: 44px;
+
+  /* comp.card — all bindings from compLight */
+  --comp-card-bg-elevated: var(--sys-energy-surface-primary);
+  --comp-card-bg-outlined: var(--sys-energy-surface-primary);
+  --comp-card-bg-filled: var(--sys-energy-surface-secondary);
+  --comp-card-border: var(--sys-energy-border-default);
+  --comp-card-shadow: var(--sys-depth-elevation-light);
+  --comp-card-shadow-hover: var(--sys-depth-elevation-medium);
+  --comp-card-radius: var(
+    --sys-frame-radius-container
+  ); /* routed through sys — density-responsive */
+
+  --comp-card-padding: var(--sys-frame-padding-container);
+  --comp-card-accent-width: var(
+    --sys-frame-border-thin
+  ); /* accent border width — aligns with sys border */
+
+  /* comp.table — cell dimensions + font scale (consumes sys.size) */
+  --comp-table-cell-padding-y: var(--sys-size-table-cell-py);
+  --comp-table-cell-padding-x: var(--sys-size-table-cell-px);
+  --comp-table-font-size: var(
+    --sys-size-voice-label
+  ); /* doc-only: migrated from sys-size-table-font */
+
+  --comp-table-header-font-size: var(--sys-size-table-header-font);
+
+  /* comp.chip — all bindings from compLight */
+  --comp-chip-bg: var(--sys-energy-surface-tertiary);
+  --comp-chip-bg-selected: rgb(var(--ref-energy-blue-500-rgb), var(--ref-state-opacity-selected));
+  --comp-chip-text: var(--sys-energy-text-primary);
+  --comp-chip-text-selected: var(--sys-energy-text-accent);
+  --comp-chip-radius: var(--sys-frame-radius-full);
+  --comp-chip-padding-x: var(
+    --ref-frame-space-5
+  ); /* 20px — bumped +1 step for pill breathing room */
+
+  --comp-chip-padding-y: var(--ref-frame-space-1); /* 4px — tight vertical, content-driven sizing */
+  --comp-chip-gap: var(--ref-frame-space-2);
+  --comp-chip-font-sm: var(--ref-voice-size-3); /* 12px — ±2 steps in density */
+  --comp-chip-font-md: var(--ref-voice-size-4); /* 13px — ±2 steps in density */
+  --comp-chip-font-lg: var(--ref-voice-size-5); /* 14px ��� ±2 steps in density */
+  --comp-chip-font-xl: var(--ref-voice-size-6); /* 16px — ±2 steps in density */
+
+  /* comp.dialog — all bindings from compLight */
+  --comp-dialog-bg: var(--sys-energy-surface-primary);
+  --comp-dialog-radius: var(
+    --sys-frame-radius-container
+  ); /* routed through sys — density-responsive */
+
+  --comp-dialog-padding: var(--sys-size-inset);
+  --comp-dialog-max-width: var(--sys-frame-content-dialog);
+  --comp-dialog-overlay: var(--sys-depth-overlay);
+  --comp-dialog-shadow: var(--sys-depth-elevation-high);
+
+  /* doc-only: --comp-dialog-title-size → CSS uses var(--sys-size-voice-headline) */
+
+  /* doc-only: --comp-dialog-desc-size → CSS uses var(--sys-size-voice-label) */
+
+  /* doc-only: --comp-dialog-gap → CSS uses var(--sys-size-gap-field) */
+
+  /* comp.panel — all bindings from compLight */
+  --comp-panel-bg: var(--sys-energy-surface-primary);
+  --comp-panel-border: var(--sys-energy-border-default);
+  --comp-panel-shadow: none;
+  --comp-panel-shadow-floating: var(--sys-depth-elevation-medium);
+  --comp-panel-radius: var(--sys-frame-radius-container);
+  --comp-panel-padding: var(--sys-frame-padding-container);
+
+  /* comp.tag — base tokens (shared by both label + code variants) */
+  --comp-tag-font: var(--sys-size-voice-caption); /* size+density responsive via sys cascade */
+  --comp-tag-weight: var(--ref-voice-weight-semibold);
+  --comp-tag-letter-spacing: var(--ref-voice-letter-spacing-wide);
+
+  /* comp.tag.label — sans-serif variant (default): squared-off, NOT pill (that's Chip) */
+  --comp-tag-bg: var(--sys-energy-surface-tertiary);
+  --comp-tag-color: var(--sys-energy-text-primary);
+  --comp-tag-radius: var(--ref-frame-radius-2);
+  --comp-tag-padding-x: var(--ref-frame-space-2);
+  --comp-tag-padding-y: var(--ref-frame-space-1);
+
+  /* comp.tag.code — monospace variant overrides */
+  --comp-tag-code-font-family: var(--ref-voice-family-mono);
+  --comp-tag-code-bg: var(--sys-energy-surface-tertiary);
+  --comp-tag-code-color: var(--sys-energy-text-accent);
+  --comp-tag-code-radius: var(--ref-frame-radius-1);
+  --comp-tag-code-padding-y: var(--ref-frame-space-1);
+  --comp-tag-code-padding-x: var(--ref-frame-space-2);
+
+  /* comp.layoutGrid — consumes sys.frame.grid (density-switchable via sys) */
+  --comp-layout-grid-lg-columns: var(--sys-frame-grid-lg-columns);
+  --comp-layout-grid-lg-gutter: var(--sys-frame-grid-lg-gutter);
+  --comp-layout-grid-lg-margin: var(--sys-frame-grid-lg-margin);
+  --comp-layout-grid-lg-max-width: var(--sys-frame-grid-lg-max-width);
+  --comp-layout-grid-md-columns: var(--sys-frame-grid-md-columns);
+  --comp-layout-grid-md-gutter: var(--sys-frame-grid-md-gutter);
+  --comp-layout-grid-md-margin: var(--sys-frame-grid-md-margin);
+  --comp-layout-grid-sm-columns: var(--sys-frame-grid-sm-columns);
+  --comp-layout-grid-sm-gutter: var(--sys-frame-grid-sm-gutter);
+  --comp-layout-grid-sm-margin: var(--sys-frame-grid-sm-margin);
+  --comp-layout-grid-z-index: var(--sys-depth-layer-content);
+
+  /* comp.button — sizing tokens (density-responsive, redefined in [data-density] blocks)
+     Button consumes these comp tokens exclusively. Height, font, padding-x, and gap
+     are redefined per density context (compact/default/comfortable).
+     Per-size tokens (-sm/-md/-lg/-xl) are consumed by .flow-btn-v2[data-size] selectors.
+     Height per-size references sys-frame-height-control which auto-shifts with density. */
+  --comp-button-height: var(--sys-frame-height-control-md); /* 60px — default baseline (md) */
+  --comp-button-font: var(--ref-voice-size-5); /* 14px — default baseline (md) */
+  --comp-button-padding-x: var(--ref-frame-space-5); /* 20px — default baseline (md) */
+  --comp-button-gap: var(--ref-frame-space-2); /* 8px — default baseline (md) */
+
+  /* comp.button — per-size tokens (height auto-shifts via sys layer with density) */
+  --comp-button-height-sm: var(--sys-frame-height-control-sm); /* 48px */
+  --comp-button-height-md: var(--sys-frame-height-control-md); /* 60px */
+  --comp-button-height-lg: var(--sys-frame-height-control-lg); /* 72px */
+  --comp-button-height-xl: var(--sys-frame-height-control-xl); /* 88px */
+  --comp-button-font-sm: var(
+    --sys-voice-label-s-size
+  ); /* 12px — routes through sys, density-responsive */
+
+  --comp-button-font-md: var(--sys-voice-label-l-size); /* 14px */
+  --comp-button-font-lg: var(--sys-voice-label-xl-size); /* 16px */
+  --comp-button-font-xl: var(--ref-voice-size-7); /* 18px — no sys-voice-label tier above xl */
+  --comp-button-padding-x-sm: var(--ref-frame-space-4); /* 16px */
+  --comp-button-padding-x-md: var(--ref-frame-space-5); /* 20px */
+  --comp-button-padding-x-lg: var(--ref-frame-space-6); /* 24px */
+  --comp-button-padding-x-xl: var(--ref-frame-space-7); /* 28px */
+  --comp-button-gap-sm: var(--ref-frame-space-1); /* 4px */
+  --comp-button-gap-md: var(--ref-frame-space-2); /* 8px */
+  --comp-button-gap-lg: var(--ref-frame-space-2); /* 8px */
+  --comp-button-gap-xl: var(--ref-frame-space-3); /* 12px */
+  --comp-button-font-family: var(--sys-voice-family-control);
+  --comp-button-font-weight: var(--sys-voice-weight-control);
+  --comp-button-transition: var(--sys-momentum-transition-fast);
+  --comp-button-line-height: var(--sys-voice-line-height-control);
+  --comp-button-letter-spacing: var(--sys-voice-letter-spacing-control);
+
+  /* comp.button.ghost — emphasis variant colors */
+  --comp-button-text-ghost: var(--sys-energy-text-secondary);
+  --comp-button-bg-ghost-hover: var(--sys-energy-surface-secondary);
+  --comp-button-bg-ghost-active: var(--sys-energy-surface-tertiary);
+  --comp-button-text-ghost-hover: var(--sys-energy-text-primary);
+
+  /* comp.chip — size-driven tokens (set per [data-size])
+     CSS custom properties resolve var() lazily at computed-value time,
+     so :root aliases correctly track [data-size] / [data-density] overrides.
+     Chip uses padding-driven sizing (no height token) — size tier shifts
+     padding-y, padding-x, gap, and font. */
+  --comp-chip-font: var(--sys-size-voice-label);
+  --comp-chip-font-family: var(--ref-voice-family-sans);
+  --comp-chip-font-weight: var(--ref-voice-weight-semibold);
+  --comp-chip-transition: var(--sys-momentum-transition-fast);
+  --comp-chip-border-width: var(--ref-frame-border-thin);
+  --comp-chip-disabled-opacity: var(--sys-state-disabled-opacity);
+  --comp-chip-bg-disabled: var(--sys-energy-surface-sunken);
+  --comp-chip-text-disabled: var(--sys-energy-text-tertiary);
+  --comp-chip-border-disabled: transparent;
+
+  /* comp.chip.focus — focus ring tokens (mirrors Button pattern) */
+  --comp-chip-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-chip-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-chip-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-chip-focus-gap-color: var(--sys-energy-surface-primary);
+
+  /* comp.chip.remove — remove button dimensions */
+  --comp-chip-remove-size: var(--ref-frame-space-4);
+  --comp-chip-remove-radius: var(--sys-frame-radius-full);
+
+  /* comp.switch — size-driven tokens (icon + label consumed by child selectors) */
+  --comp-switch-icon-size: 10px;
+  --comp-switch-gap: var(--ref-frame-space-3); /* 12px — default (md) */
+
+  /* doc-only: --comp-switch-label-font → CSS uses var(--sys-size-voice-body) */
+
+  /* comp.tooltip — size-driven tokens */
+  --comp-tooltip-padding-y: var(--ref-frame-space-1);
+  --comp-tooltip-padding-x: var(--ref-frame-space-2);
+
+  /* doc-only: --comp-tooltip-font → CSS uses var(--sys-size-voice-caption) */
+
+  /* comp.snackbar — size-driven tokens */
+  --comp-snackbar-padding-y: var(--ref-frame-space-3);
+  --comp-snackbar-padding-x: var(--ref-frame-space-4);
+
+  /* doc-only: --comp-snackbar-font → CSS uses var(--sys-size-voice-body) */
+
+  /* comp.progress — size-driven tokens */
+  --comp-progress-track-height: var(--ref-frame-space-2);
+
+  /* comp.skeleton — size-driven tokens (text variant) */
+  --comp-skeleton-text-height: 1em;
+
+  /* comp.emptystate — size-driven tokens */
+  --comp-emptystate-padding-y: var(--ref-frame-space-12);
+  --comp-emptystate-padding-x: var(--ref-frame-space-6);
+  --comp-emptystate-gap: var(--ref-frame-space-4);
+  --comp-emptystate-icon-size: var(--ref-frame-space-16);
+
+  /* comp.avatar — profile image / initials */
+  --comp-avatar-bg: var(--sys-energy-surface-tertiary);
+  --comp-avatar-text: var(--sys-energy-text-primary);
+  --comp-avatar-border: var(--sys-energy-border-default);
+  --comp-avatar-radius: var(--ref-frame-radius-full);
+  --comp-avatar-radius-square: var(--sys-frame-radius-control);
+  --comp-avatar-size-sm: 32px;
+  --comp-avatar-size-md: 40px;
+  --comp-avatar-size-lg: 48px;
+  --comp-avatar-size-xl: 64px;
+  --comp-avatar-font-sm: var(--ref-voice-size-3);
+  --comp-avatar-font-md: var(--ref-voice-size-5);
+  --comp-avatar-font-lg: var(--ref-voice-size-6);
+  --comp-avatar-font-xl: var(--ref-voice-size-8);
+  --comp-avatar-status-size-sm: 8px;
+  --comp-avatar-status-size-md: 10px;
+  --comp-avatar-status-size-lg: 12px;
+  --comp-avatar-status-size-xl: 16px;
+  --comp-avatar-status-ring-width: var(--ref-frame-border-medium);
+  --comp-avatar-status-ring: var(--sys-energy-surface-primary);
+  --comp-avatar-status-online: var(--sys-energy-status-success);
+  --comp-avatar-status-offline: var(--sys-energy-text-tertiary);
+  --comp-avatar-status-busy: var(--sys-energy-status-error);
+  --comp-avatar-status-away: var(--sys-energy-status-warning);
+
+  /* comp.badge — notification dot / count */
+  --comp-badge-bg-default: var(--sys-energy-status-error);
+  --comp-badge-bg-accent: var(--sys-energy-action-primary);
+  --comp-badge-bg-success: var(--sys-energy-status-success);
+  --comp-badge-bg-warning: var(--sys-energy-status-warning);
+  --comp-badge-text: var(--sys-energy-text-on-action);
+  --comp-badge-font: var(--ref-voice-size-1);
+  --comp-badge-font-weight: var(--ref-voice-weight-bold);
+  --comp-badge-radius: var(--ref-frame-radius-full);
+  --comp-badge-min-size: 8px;
+  --comp-badge-height: 18px;
+  --comp-badge-padding-x: var(--ref-frame-space-1);
+  --comp-badge-ring: var(--sys-energy-surface-primary);
+  --comp-badge-ring-width: var(--ref-frame-border-medium);
+
+  /* comp.tabs — adaptive tab navigation */
+  --comp-tabs-border-default: var(--sys-energy-border-default);
+  --comp-tabs-text-default: var(--sys-energy-text-secondary);
+  --comp-tabs-text-disabled: var(--sys-energy-text-tertiary);
+  --comp-tabs-text-active: var(--sys-energy-text-accent);
+  --comp-tabs-text-hover: var(--sys-energy-text-primary);
+  --comp-tabs-indicator: var(--sys-energy-action-primary);
+  --comp-tabs-indicator-height: var(--ref-frame-border-indicator);
+  --comp-tabs-filled-bg: var(--sys-energy-surface-secondary);
+  --comp-tabs-filled-active-bg: var(--sys-energy-surface-primary);
+  --comp-tabs-filled-active-shadow: var(--sys-depth-elevation-light);
+  --comp-tabs-filled-radius: var(--sys-frame-radius-control);
+  --comp-tabs-filled-padding: var(--ref-frame-space-1);
+  --comp-tabs-filled-gap: var(--ref-frame-space-1);
+  --comp-tabs-filled-tab-radius-inset: var(--ref-frame-space-1); /* subtract from filled-radius */
+
+  /* heights — navigation scale (distinct from sys-size-control-height) */
+  --comp-tabs-height-sm: var(--ref-frame-space-10); /* 40px */
+  --comp-tabs-height-md: var(--ref-frame-space-11); /* 44px */
+  --comp-tabs-height-lg: var(--ref-frame-space-12); /* 48px */
+  --comp-tabs-height-xl: var(--ref-frame-space-14); /* 56px */
+  --comp-tabs-padding-x-sm: var(--ref-frame-space-3);
+  --comp-tabs-padding-x-md: var(--ref-frame-space-4);
+  --comp-tabs-padding-x-lg: var(--ref-frame-space-5);
+  --comp-tabs-padding-x-xl: var(--ref-frame-space-6);
+
+  /* gap — icon-to-label spacing inside each tab */
+  --comp-tabs-gap: var(--ref-frame-space-2); /* 8px baseline */
+
+  /* font — routed through sys.voice for density + viewport responsiveness */
+  --comp-tabs-font-sm: var(--sys-voice-caption-size); /* 13px baseline */
+  --comp-tabs-font-md: var(--sys-voice-label-xs-size); /* 14px baseline */
+  --comp-tabs-font-lg: var(--sys-voice-label-s-size); /* 16px baseline */
+  --comp-tabs-font-xl: var(--sys-voice-label-m-size); /* 18px baseline */
+
+  /* focus — double box-shadow pattern (aligned with FlowButton) */
+  --comp-tabs-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-tabs-focus-gap-color: var(--sys-energy-surface-primary);
+  --comp-tabs-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-tabs-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-tabs-focus-radius: var(--ref-frame-radius-1);
+
+  /* comp.list — content display */
+  --comp-list-item-bg: transparent;
+  --comp-list-item-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-list-item-bg-selected: rgb(
+    var(--ref-energy-blue-500-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --comp-list-item-bg-active: var(--sys-energy-surface-tertiary);
+  --comp-list-text-primary: var(--sys-energy-text-primary);
+  --comp-list-text-secondary: var(--sys-energy-text-secondary);
+  --comp-list-text-tertiary: var(--sys-energy-text-tertiary);
+  --comp-list-divider: rgb(var(--ref-state-border-light-base), 0.22);
+  --comp-list-item-padding-y: var(--ref-frame-space-3);
+  --comp-list-item-padding-x: var(--ref-frame-space-4);
+  --comp-list-item-gap: var(--ref-frame-space-3);
+  --comp-list-item-min-height: var(--ref-frame-space-12);
+  --comp-list-item-transition: var(--sys-momentum-transition-default);
+  --comp-list-item-disabled-opacity: var(--sys-state-disabled-opacity);
+  --comp-list-item-text-disabled: var(--sys-energy-text-tertiary);
+  --comp-list-content-gap: var(--ref-frame-space-micro);
+  --comp-list-font-family: var(--ref-voice-family-sans);
+  --comp-list-font-primary: var(--sys-size-voice-label);
+  --comp-list-font-secondary: var(--sys-size-voice-caption);
+  --comp-list-radius: var(--sys-frame-radius-control);
+
+  /* comp.slider — range input */
+  --comp-slider-track-bg: var(--sys-energy-surface-tertiary);
+  --comp-slider-track-fill: var(--sys-energy-action-primary);
+  --comp-slider-track-fill-hover: var(--sys-energy-action-primary-hover);
+  --comp-slider-track-disabled: var(--sys-energy-state-disabled-bg);
+  --comp-slider-thumb-bg: var(--sys-energy-surface-primary);
+  --comp-slider-thumb-border: var(--sys-energy-action-primary);
+  --comp-slider-thumb-border-hover: var(--sys-energy-action-primary-hover);
+  --comp-slider-thumb-border-disabled: var(--sys-energy-state-disabled-border);
+  --comp-slider-thumb-shadow: var(--sys-depth-elevation-light);
+  --comp-slider-label: var(--sys-energy-text-secondary);
+  --comp-slider-value: var(--sys-energy-text-primary);
+  --comp-slider-track-height: 4px;
+  --comp-slider-track-radius: var(--ref-frame-radius-full);
+  --comp-slider-thumb-size: 20px;
+  --comp-slider-thumb-radius: var(--ref-frame-radius-full);
+  --comp-slider-thumb-border-width: var(--ref-frame-border-medium);
+  --comp-slider-focus-ring-size: 36px;
+  --comp-slider-focus-ring-opacity: 0.2;
+
+  /* comp.circularProgress — circular loading indicator */
+  --comp-circular-progress-track-color: var(--sys-energy-surface-tertiary);
+  --comp-circular-progress-fill-default: var(--sys-energy-action-primary);
+  --comp-circular-progress-fill-success: var(--sys-energy-status-success);
+  --comp-circular-progress-fill-warning: var(--sys-energy-status-warning);
+  --comp-circular-progress-fill-error: var(--sys-energy-status-error);
+  --comp-circular-progress-label: var(--sys-energy-text-primary);
+  --comp-circular-progress-size-sm: 24px;
+  --comp-circular-progress-size-md: 40px;
+  --comp-circular-progress-size-lg: 56px;
+  --comp-circular-progress-size-xl: 80px;
+  --comp-circular-progress-stroke-width: 4px;
+  --comp-circular-progress-font-sm: var(--ref-voice-size-1);
+  --comp-circular-progress-font-md: var(--ref-voice-size-3);
+  --comp-circular-progress-font-lg: var(--ref-voice-size-5);
+  --comp-circular-progress-font-xl: var(--ref-voice-size-7);
+  --comp-circular-progress-transition: var(--sys-momentum-transition-default);
+  --comp-circular-progress-spin-duration: var(--ref-momentum-duration-cycle);
+  --comp-circular-progress-spin-easing-rotate: var(--ref-momentum-easing-linear);
+  --comp-circular-progress-spin-easing-dash: var(--ref-momentum-easing-standard);
+  --comp-circular-progress-label-family: var(--ref-voice-family-sans);
+  --comp-circular-progress-label-weight: var(--ref-voice-weight-semibold);
+
+  /* comp.accordion — expandable content sections */
+  --comp-accordion-bg: var(--sys-energy-surface-primary);
+  --comp-accordion-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-accordion-bg-content: transparent;
+  --comp-accordion-border: var(--sys-energy-border-default);
+  --comp-accordion-border-expanded: var(--sys-energy-action-primary);
+  --comp-accordion-text: var(--sys-energy-text-primary);
+  --comp-accordion-text-secondary: var(--sys-energy-text-secondary);
+  --comp-accordion-text-disabled: var(--sys-energy-text-tertiary);
+  --comp-accordion-icon: var(--sys-energy-text-tertiary);
+  --comp-accordion-radius: var(--sys-frame-radius-control);
+  --comp-accordion-padding-x: var(--ref-frame-space-5);
+  --comp-accordion-padding-y: var(--ref-frame-space-4);
+  --comp-accordion-content-padding-x: var(--ref-frame-space-5);
+  --comp-accordion-content-padding-y: var(--ref-frame-space-4);
+  --comp-accordion-height-sm: 40px;
+  --comp-accordion-height-md: 44px;
+  --comp-accordion-height-lg: 48px;
+  --comp-accordion-height-xl: 56px;
+  --comp-accordion-font-sm: var(--ref-voice-size-4);
+  --comp-accordion-font-md: var(--ref-voice-size-5);
+  --comp-accordion-font-lg: var(--ref-voice-size-6);
+  --comp-accordion-font-xl: var(--ref-voice-size-7);
+
+  /* comp.breadcrumbs — navigation trail (density-aware: ±1 step in compact/comfortable) */
+  --comp-breadcrumbs-text: var(--sys-energy-text-secondary);
+  --comp-breadcrumbs-text-hover: var(--sys-energy-text-primary);
+  --comp-breadcrumbs-text-active: var(--sys-energy-text-primary);
+  --comp-breadcrumbs-separator: var(--sys-energy-text-tertiary);
+  --comp-breadcrumbs-font: var(--ref-voice-size-4); /* 13px — ±1 step in density */
+  --comp-breadcrumbs-font-family: var(--ref-voice-family-sans);
+  --comp-breadcrumbs-font-weight: var(--ref-voice-weight-medium);
+  --comp-breadcrumbs-separator-font: var(--ref-voice-size-4); /* 13px — ±1 step in density */
+  --comp-breadcrumbs-gap: var(--ref-frame-space-2); /* 8px — ±1 step in density */
+  --comp-breadcrumbs-item-gap: var(--ref-frame-space-1);
+  --comp-breadcrumbs-item-padding-x: var(--ref-frame-space-1); /* 4px — ±1 step in density */
+  --comp-breadcrumbs-item-padding-y: var(--ref-frame-space-1); /* 4px — ±1 step in density */
+  --comp-breadcrumbs-item-radius: var(--ref-frame-radius-1);
+  --comp-breadcrumbs-transition: var(--sys-momentum-transition-default);
+  --comp-breadcrumbs-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-breadcrumbs-focus-ring-offset: var(--sys-state-focus-ring-offset);
+  --comp-breadcrumbs-icon-only-size: var(--ref-frame-space-8); /* 32px — ±1 step in density */
+
+  /* comp.pagination — page navigation */
+  --comp-pagination-bg: transparent;
+  --comp-pagination-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-pagination-bg-active: var(--sys-energy-action-primary);
+  --comp-pagination-text: var(--sys-energy-text-secondary);
+  --comp-pagination-text-hover: var(--sys-energy-text-primary);
+  --comp-pagination-text-active: var(--sys-energy-text-on-action);
+  --comp-pagination-text-disabled: var(--sys-energy-state-disabled-text);
+  --comp-pagination-border: var(--sys-energy-border-default);
+  --comp-pagination-radius: var(--sys-frame-radius-control);
+  --comp-pagination-height: 36px;
+  --comp-pagination-min-width: 36px;
+  --comp-pagination-gap: var(--ref-frame-space-1);
+  --comp-pagination-font: var(--ref-voice-size-4);
+  --comp-pagination-font-weight: var(--ref-voice-weight-medium);
+  --comp-pagination-nav-icon: var(--sys-energy-text-secondary);
+  --comp-pagination-nav-icon-disabled: var(--sys-energy-state-disabled-text);
+
+  /* comp.segmentedControl — mutually exclusive option selector */
+  --comp-segmented-bg: var(--sys-energy-surface-secondary);
+  --comp-segmented-bg-active: var(--sys-energy-surface-primary);
+  --comp-segmented-bg-hover: var(--sys-energy-surface-tertiary);
+  --comp-segmented-text: var(--sys-energy-text-secondary);
+  --comp-segmented-text-active: var(--sys-energy-text-primary);
+  --comp-segmented-shadow: var(--sys-depth-elevation-light);
+  --comp-segmented-border: var(--sys-energy-border-default);
+  --comp-segmented-radius: var(--sys-frame-radius-control);
+  --comp-segmented-padding: var(--ref-frame-space-1);
+  --comp-segmented-gap: var(--ref-frame-space-1);
+  --comp-segmented-height-sm: 40px;
+  --comp-segmented-height-md: 44px;
+  --comp-segmented-height-lg: 48px;
+  --comp-segmented-height-xl: 56px;
+  --comp-segmented-font-sm: var(--ref-voice-size-4);
+  --comp-segmented-font-md: var(--ref-voice-size-5);
+  --comp-segmented-font-lg: var(--ref-voice-size-6);
+  --comp-segmented-font-xl: var(--ref-voice-size-7);
+  --comp-segmented-segment-padding-x: var(--ref-frame-space-4);
+  --comp-segmented-segment-gap: var(--ref-frame-space-2);
+  --comp-segmented-font-family: var(--ref-voice-family-sans);
+  --comp-segmented-font-weight: var(--ref-voice-weight-medium);
+  --comp-segmented-font-weight-active: var(--ref-voice-weight-semibold);
+  --comp-segmented-transition: var(--sys-momentum-transition-default);
+  --comp-segmented-disabled-opacity: var(--sys-state-disabled-opacity);
+  --comp-segmented-bg-disabled: var(--sys-energy-surface-sunken);
+  --comp-segmented-text-disabled: var(--sys-energy-text-tertiary);
+
+  /* Focus ring */
+  --comp-segmented-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-segmented-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-segmented-focus-ring-offset: var(--sys-state-focus-ring-offset);
+
+  /* comp.stepper — multi-step wizard navigation */
+  --comp-stepper-indicator-bg: var(--sys-energy-surface-secondary);
+  --comp-stepper-indicator-bg-current: var(--sys-energy-action-primary);
+  --comp-stepper-indicator-bg-complete: var(--sys-energy-action-primary);
+  --comp-stepper-indicator-bg-error: var(--sys-energy-status-error);
+  --comp-stepper-indicator-bg-upcoming: var(--sys-energy-surface-tertiary);
+  --comp-stepper-indicator-text: var(--sys-energy-text-secondary);
+  --comp-stepper-indicator-text-active: var(--sys-energy-text-on-action);
+  --comp-stepper-indicator-text-error: var(--sys-energy-text-on-action);
+  --comp-stepper-label-text: var(--sys-energy-text-primary);
+  --comp-stepper-label-text-secondary: var(--sys-energy-text-secondary);
+  --comp-stepper-label-text-upcoming: var(--sys-energy-text-tertiary);
+  --comp-stepper-connector-default: var(--sys-energy-border-default);
+  --comp-stepper-connector-complete: var(--sys-energy-action-primary);
+  --comp-stepper-indicator-size-sm: 28px;
+  --comp-stepper-indicator-size-md: 32px;
+  --comp-stepper-indicator-size-lg: 40px;
+  --comp-stepper-indicator-size-xl: 48px;
+  --comp-stepper-connector-height: var(--ref-frame-border-medium);
+  --comp-stepper-font-sm: var(--ref-voice-size-3);
+  --comp-stepper-font-md: var(--ref-voice-size-4);
+  --comp-stepper-font-lg: var(--ref-voice-size-5);
+  --comp-stepper-font-xl: var(--ref-voice-size-6);
+  --comp-stepper-label-font-sm: var(--ref-voice-size-3);
+  --comp-stepper-label-font-md: var(--ref-voice-size-4);
+  --comp-stepper-label-font-lg: var(--ref-voice-size-5);
+  --comp-stepper-label-font-xl: var(--ref-voice-size-6);
+  --comp-stepper-desc-font-sm: var(--ref-voice-size-1);
+  --comp-stepper-desc-font-md: var(--ref-voice-size-2);
+  --comp-stepper-desc-font-lg: var(--ref-voice-size-3);
+  --comp-stepper-desc-font-xl: var(--ref-voice-size-4);
+  --comp-stepper-gap: var(--ref-frame-space-3);
+
+  /* comp.bottomNav — mobile bottom navigation */
+  --comp-bottom-nav-bg: var(--sys-energy-surface-primary);
+  --comp-bottom-nav-border: var(--sys-energy-border-default);
+  --comp-bottom-nav-shadow: var(--sys-depth-elevation-medium);
+  --comp-bottom-nav-text-default: var(--sys-energy-text-tertiary);
+  --comp-bottom-nav-text-active: var(--sys-energy-action-primary);
+  --comp-bottom-nav-icon-default: var(--sys-energy-text-tertiary);
+  --comp-bottom-nav-icon-active: var(--sys-energy-action-primary);
+  --comp-bottom-nav-indicator-bg: rgb(
+    var(--ref-energy-blue-500-rgb),
+    var(--ref-state-opacity-selected)
+  );
+  --comp-bottom-nav-badge-bg: var(--sys-energy-status-error);
+  --comp-bottom-nav-badge-text: var(--sys-energy-text-on-action);
+  --comp-bottom-nav-height: 64px;
+  --comp-bottom-nav-label-font: var(--ref-voice-size-1);
+  --comp-bottom-nav-icon-size: var(--sys-icon-size-md);
+  --comp-bottom-nav-item-gap: var(--ref-frame-space-1);
+  --comp-bottom-nav-badge-size: 18px;
+  --comp-bottom-nav-badge-dot-size: 8px;
+  --comp-bottom-nav-badge-font: var(--ref-voice-size-1);
+
+  /* comp.fab — floating action button */
+  --comp-fab-bg-primary: var(--sys-energy-action-high);
+  --comp-fab-bg-primary-hover: var(--sys-energy-action-high-hover);
+  --comp-fab-bg-primary-active: var(--sys-energy-action-high-active);
+  --comp-fab-text-primary: var(--sys-energy-text-inverse);
+  --comp-fab-bg-secondary: var(--sys-energy-surface-secondary);
+  --comp-fab-bg-secondary-hover: var(--sys-energy-surface-tertiary);
+  --comp-fab-bg-secondary-active: var(--sys-energy-surface-sunken);
+  --comp-fab-text-secondary: var(--sys-energy-text-primary);
+  --comp-fab-bg-tertiary: var(--sys-energy-surface-primary);
+  --comp-fab-bg-tertiary-hover: var(--sys-energy-surface-secondary);
+  --comp-fab-bg-tertiary-active: var(--sys-energy-surface-tertiary);
+  --comp-fab-text-tertiary: var(--sys-energy-action-primary);
+  --comp-fab-shadow: var(--sys-depth-elevation-medium);
+  --comp-fab-shadow-hover: var(--sys-depth-elevation-high);
+  --comp-fab-radius: var(--sys-frame-radius-control);
+  --comp-fab-size-sm: 40px;
+  --comp-fab-size-md: 56px;
+  --comp-fab-size-lg: 72px;
+  --comp-fab-padding-x: var(--ref-frame-space-4);
+  --comp-fab-gap: var(--ref-frame-space-2);
+  --comp-fab-label-font: var(--ref-voice-size-5);
+  --comp-fab-font-family: var(--ref-voice-family-sans);
+  --comp-fab-font-weight: var(--ref-voice-weight-medium);
+  --comp-fab-transition: var(--sys-momentum-transition-default);
+  --comp-fab-radius-extended: var(--ref-frame-radius-round);
+  --comp-fab-disabled-opacity: var(--sys-state-disabled-opacity);
+  --comp-fab-bg-disabled: var(--sys-energy-surface-sunken);
+  --comp-fab-text-disabled: var(--sys-energy-text-tertiary);
+  --comp-fab-offset: var(--ref-frame-space-4);
+
+  /* Focus ring */
+  --comp-fab-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-fab-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-fab-focus-ring-offset: var(--sys-state-focus-ring-offset);
+
+  /* comp.toolbar — desktop action bar */
+  --comp-toolbar-bg: var(--sys-energy-surface-primary);
+  --comp-toolbar-border: var(--sys-energy-border-default);
+  --comp-toolbar-radius: var(--sys-frame-radius-control);
+  --comp-toolbar-padding: var(--ref-frame-space-2);
+  --comp-toolbar-gap: var(--ref-frame-space-1);
+  --comp-toolbar-divider-color: var(--sys-energy-border-default);
+  --comp-toolbar-divider-width: var(--ref-frame-border-thin);
+  --comp-toolbar-height-sm: 40px;
+  --comp-toolbar-height-md: 44px;
+  --comp-toolbar-height-lg: 48px;
+
+  /* comp.popover — floating positioned content */
+  --comp-popover-bg: var(--sys-energy-surface-primary);
+  --comp-popover-border: var(--sys-energy-border-default);
+  --comp-popover-shadow: var(--sys-depth-elevation-high);
+  --comp-popover-radius: var(--sys-frame-radius-container);
+  --comp-popover-padding: var(--ref-frame-space-4);
+  --comp-popover-max-width: 360px;
+
+  /* comp.bottomSheet — mobile modal from bottom edge */
+  --comp-bottom-sheet-bg: var(--sys-energy-surface-primary);
+  --comp-bottom-sheet-border: var(--sys-energy-border-default);
+  --comp-bottom-sheet-shadow: var(--sys-depth-elevation-high);
+  --comp-bottom-sheet-radius: 16px;
+  --comp-bottom-sheet-handle-bg: var(--sys-energy-text-tertiary);
+  --comp-bottom-sheet-handle-width: 40px;
+  --comp-bottom-sheet-handle-height: 4px;
+  --comp-bottom-sheet-handle-margin: var(--ref-frame-space-3);
+  --comp-bottom-sheet-overlay: rgb(10 10 15 / 50%);
+  --comp-bottom-sheet-max-height: 90vh;
+  --comp-bottom-sheet-padding: var(--ref-frame-space-5);
+  --comp-bottom-sheet-header-font: var(--ref-voice-size-6);
+  --comp-bottom-sheet-z-index: 1001;
+
+  /* comp.contextMenu — right-click positioned menu */
+  --comp-context-menu-bg: var(--sys-energy-surface-primary);
+  --comp-context-menu-border: var(--sys-energy-border-default);
+  --comp-context-menu-shadow: var(--sys-depth-elevation-high);
+  --comp-context-menu-radius: var(--sys-frame-radius-container);
+  --comp-context-menu-padding: var(--ref-frame-space-1);
+  --comp-context-menu-item-padding-x: var(--ref-frame-space-3);
+  --comp-context-menu-item-padding-y: var(--ref-frame-space-2);
+  --comp-context-menu-item-radius: var(--ref-frame-radius-1);
+  --comp-context-menu-item-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-context-menu-item-bg-active: var(--sys-energy-surface-tertiary);
+  --comp-context-menu-text: var(--sys-energy-text-primary);
+  --comp-context-menu-text-secondary: var(--sys-energy-text-secondary);
+  --comp-context-menu-text-danger: var(--sys-energy-text-danger);
+  --comp-context-menu-text-disabled: var(--sys-state-disabled-text);
+  --comp-context-menu-separator: var(--sys-energy-border-default);
+  --comp-context-menu-shortcut-font: var(--ref-voice-size-2);
+  --comp-context-menu-font: var(--ref-voice-size-4);
+  --comp-context-menu-icon-size: var(--sys-icon-size-sm);
+  --comp-context-menu-min-width: 180px;
+  --comp-context-menu-max-width: 320px;
+  --comp-context-menu-z-index: 100;
+
+  /* comp.menu — dropdown menu */
+  --comp-menu-bg: var(--sys-energy-surface-primary);
+  --comp-menu-border: var(--sys-energy-border-default);
+  --comp-menu-shadow: var(--sys-depth-elevation-medium);
+  --comp-menu-radius: var(--sys-frame-radius-container);
+  --comp-menu-padding: var(--ref-frame-space-1);
+  --comp-menu-item-padding-x: var(--ref-frame-space-3);
+  --comp-menu-item-padding-y: var(--ref-frame-space-2);
+  --comp-menu-item-radius: var(--ref-frame-radius-1);
+  --comp-menu-item-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-menu-item-bg-active: var(--sys-energy-surface-tertiary);
+  --comp-menu-text: var(--sys-energy-text-primary);
+  --comp-menu-text-secondary: var(--sys-energy-text-secondary);
+  --comp-menu-text-danger: var(--sys-energy-text-danger);
+  --comp-menu-text-disabled: var(--sys-state-disabled-text);
+  --comp-menu-separator: var(--sys-energy-border-default);
+  --comp-menu-font: var(--ref-voice-size-4);
+  --comp-menu-icon-size: var(--sys-icon-size-sm);
+  --comp-menu-check-size: var(--sys-icon-size-sm);
+  --comp-menu-min-width: 160px;
+  --comp-menu-max-width: 320px;
+  --comp-menu-z-index: 100;
+
+  /* comp.toggleButton — toggle on/off button */
+  --comp-toggle-button-bg-off: var(--sys-energy-surface-secondary);
+  --comp-toggle-button-bg-off-hover: var(--sys-energy-surface-tertiary);
+  --comp-toggle-button-bg-on: var(--sys-energy-action-primary);
+  --comp-toggle-button-bg-on-hover: var(--sys-energy-action-primary-hover);
+  --comp-toggle-button-text-off: var(--sys-energy-text-primary);
+  --comp-toggle-button-text-on: var(--sys-energy-text-on-action);
+  --comp-toggle-button-border: var(--sys-energy-border-default);
+  --comp-toggle-button-border-on: var(--sys-energy-action-primary);
+  --comp-toggle-button-bg-disabled: var(--sys-state-disabled-bg);
+  --comp-toggle-button-text-disabled: var(--sys-state-disabled-text);
+  --comp-toggle-button-border-disabled: var(--sys-state-disabled-border);
+  --comp-toggle-button-radius: var(--sys-frame-radius-control);
+  --comp-toggle-button-border-width: var(--sys-frame-border-control);
+  --comp-toggle-button-height-sm: var(--sys-frame-height-control-sm);
+  --comp-toggle-button-height-md: var(--sys-frame-height-control-md);
+  --comp-toggle-button-height-lg: var(--sys-frame-height-control-lg);
+  --comp-toggle-button-height-xl: var(--sys-frame-height-control-xl);
+  --comp-toggle-button-padding-x: var(--ref-frame-space-4);
+  --comp-toggle-button-gap: var(--ref-frame-space-2);
+  --comp-toggle-button-font-sm: var(--ref-voice-size-4);
+  --comp-toggle-button-font-md: var(--ref-voice-size-5);
+  --comp-toggle-button-font-lg: var(--ref-voice-size-6);
+  --comp-toggle-button-font-xl: var(--ref-voice-size-7);
+  --comp-toggle-button-font-family: var(--ref-voice-family-sans);
+  --comp-toggle-button-font-weight: var(--ref-voice-weight-medium);
+  --comp-toggle-button-transition: var(--sys-momentum-transition-default);
+
+  /* Focus ring */
+  --comp-toggle-button-focus-ring-width: var(--sys-state-focus-ring-width);
+  --comp-toggle-button-focus-ring-color: var(--sys-energy-border-focus);
+  --comp-toggle-button-focus-ring-offset: var(--sys-state-focus-ring-offset);
+
+  /* Group */
+  --comp-toggle-button-group-gap: var(--ref-frame-space-0);
+  --comp-toggle-button-group-radius: var(--sys-frame-radius-control);
+
+  /* comp.search — desktop search input */
+  --comp-search-bg: var(--sys-energy-surface-secondary);
+  --comp-search-bg-focus: var(--sys-energy-surface-primary);
+  --comp-search-border: var(--sys-energy-border-default);
+  --comp-search-border-focus: var(--sys-energy-border-focus);
+  --comp-search-text: var(--sys-energy-text-primary);
+  --comp-search-placeholder: var(--sys-energy-text-tertiary);
+  --comp-search-icon: var(--sys-energy-text-secondary);
+  --comp-search-clear-icon: var(--sys-energy-text-tertiary);
+  --comp-search-clear-icon-hover: var(--sys-energy-text-primary);
+  --comp-search-radius: var(--sys-frame-radius-full);
+  --comp-search-height: var(--sys-frame-height-control-md);
+  --comp-search-height-sm: var(--sys-frame-height-control-sm);
+  --comp-search-height-lg: var(--sys-frame-height-control-lg);
+  --comp-search-padding-x: var(--ref-frame-space-4);
+  --comp-search-font: var(--ref-voice-size-5);
+  --comp-search-font-sm: var(--ref-voice-size-4);
+  --comp-search-font-lg: var(--ref-voice-size-6);
+  --comp-search-icon-size: var(--sys-icon-size-sm);
+  --comp-search-shortcut-font: var(--ref-voice-size-2);
+  --comp-search-shortcut-bg: var(--sys-energy-surface-tertiary);
+  --comp-search-shortcut-border: var(--sys-energy-border-default);
+  --comp-search-shortcut-text: var(--sys-energy-text-tertiary);
+  --comp-search-shortcut-radius: var(--ref-frame-radius-1);
+
+  /* comp.pullToRefresh — mobile pull-to-refresh gesture */
+  --comp-pull-to-refresh-bg: var(--sys-energy-surface-primary);
+  --comp-pull-to-refresh-spinner-color: var(--sys-energy-action-primary);
+  --comp-pull-to-refresh-spinner-size: 24px;
+  --comp-pull-to-refresh-spinner-track: var(--sys-energy-border-default);
+  --comp-pull-to-refresh-text: var(--sys-energy-text-secondary);
+  --comp-pull-to-refresh-font: var(--ref-voice-size-3);
+  --comp-pull-to-refresh-pull-max-height: 80px;
+  --comp-pull-to-refresh-threshold: 64px;
+  --comp-pull-to-refresh-padding: var(--ref-frame-space-4);
+
+  /* comp.swipeActions — swipeable list item actions */
+  --comp-swipe-actions-bg: var(--sys-energy-surface-primary);
+  --comp-swipe-actions-action-padding: var(--ref-frame-space-4);
+  --comp-swipe-actions-action-font: var(--ref-voice-size-3);
+  --comp-swipe-actions-action-icon-size: var(--sys-icon-size-sm);
+  --comp-swipe-actions-danger-bg: var(--sys-energy-status-error);
+  --comp-swipe-actions-danger-text: var(--sys-energy-text-inverse);
+  --comp-swipe-actions-success-bg: var(--sys-energy-status-success);
+  --comp-swipe-actions-success-text: var(--sys-energy-text-inverse);
+  --comp-swipe-actions-warning-bg: var(--sys-energy-status-warning);
+  --comp-swipe-actions-warning-text: var(--sys-energy-text-primary);
+  --comp-swipe-actions-default-bg: var(--sys-energy-surface-tertiary);
+  --comp-swipe-actions-default-text: var(--sys-energy-text-primary);
+  --comp-swipe-actions-threshold: 80px;
+  --comp-swipe-actions-max-swipe: 200px;
+
+  /* comp.sidebar — desktop collapsible navigation */
+  --comp-sidebar-bg: var(--sys-energy-surface-primary);
+  --comp-sidebar-border: var(--sys-energy-border-default);
+  --comp-sidebar-width: var(--sys-frame-sidebar-expanded);
+  --comp-sidebar-width-expanded: var(--sys-frame-sidebar-expanded);
+  --comp-sidebar-width-collapsed: var(--sys-frame-sidebar-collapsed);
+  --comp-sidebar-padding: var(--ref-frame-space-3);
+  --comp-sidebar-header-height: 56px;
+  --comp-sidebar-item-padding-x: var(--ref-frame-space-3);
+  --comp-sidebar-item-padding-y: var(--ref-frame-space-2);
+  --comp-sidebar-item-radius: var(--ref-frame-radius-2);
+  --comp-sidebar-item-bg: transparent;
+  --comp-sidebar-item-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-sidebar-item-bg-active: var(--sys-energy-surface-tertiary);
+  --comp-sidebar-item-text: var(--sys-energy-text-secondary);
+  --comp-sidebar-item-text-active: var(--sys-energy-text-primary);
+  --comp-sidebar-item-text-hover: var(--sys-energy-text-primary);
+  --comp-sidebar-item-icon-size: var(--sys-icon-size-sm);
+  --comp-sidebar-item-font: var(--ref-voice-size-4);
+  --comp-sidebar-group-label-font: var(--ref-voice-size-2);
+  --comp-sidebar-group-label-color: var(--sys-energy-text-tertiary);
+  --comp-sidebar-group-margin-top: var(--ref-frame-space-4);
+  --comp-sidebar-divider: var(--sys-energy-border-default);
+  --comp-sidebar-shadow: var(--sys-depth-elevation-low);
+  --comp-sidebar-z-index: var(--sys-depth-layer-overlay);
+  --comp-sidebar-toggle-size: 32px;
+  --comp-sidebar-toggle-bg: var(--sys-energy-surface-primary);
+  --comp-sidebar-toggle-border: var(--sys-energy-border-default);
+  --comp-sidebar-toggle-icon: var(--sys-energy-text-secondary);
+
+  /* comp.topbar — desktop application top bar */
+  --comp-topbar-bg: var(--sys-energy-surface-primary);
+  --comp-topbar-border: var(--sys-energy-border-default);
+  --comp-topbar-height: 56px;
+  --comp-topbar-padding-x: var(--ref-frame-space-5);
+  --comp-topbar-text: var(--sys-energy-text-primary);
+  --comp-topbar-text-secondary: var(--sys-energy-text-secondary);
+  --comp-topbar-title-font: var(--ref-voice-size-6);
+  --comp-topbar-shadow: var(--sys-depth-elevation-low);
+  --comp-topbar-z-index: var(--sys-depth-layer-sticky);
+  --comp-topbar-icon-size: var(--sys-icon-size-md);
+  --comp-topbar-gap: var(--ref-frame-space-3);
+  --comp-topbar-action-gap: var(--ref-frame-space-2);
+
+  /* comp.autocomplete — search with suggestions */
+  --comp-autocomplete-bg: var(--sys-energy-surface-primary);
+  --comp-autocomplete-border: var(--sys-energy-border-default);
+  --comp-autocomplete-border-focus: var(--sys-energy-border-focus);
+  --comp-autocomplete-border-error: var(--sys-energy-status-error);
+  --comp-autocomplete-text: var(--sys-energy-text-primary);
+  --comp-autocomplete-placeholder: var(--sys-energy-text-tertiary);
+  --comp-autocomplete-label-text: var(--sys-energy-text-secondary);
+  --comp-autocomplete-label-font: var(--ref-voice-size-3);
+  --comp-autocomplete-font: var(--ref-voice-size-5);
+  --comp-autocomplete-radius: var(--sys-frame-radius-control);
+  --comp-autocomplete-height: var(--sys-frame-height-control-md);
+  --comp-autocomplete-height-sm: var(--sys-frame-height-control-sm);
+  --comp-autocomplete-height-lg: var(--sys-frame-height-control-lg);
+  --comp-autocomplete-padding-x: var(--ref-frame-space-3);
+  --comp-autocomplete-icon-size: var(--sys-icon-size-sm);
+  --comp-autocomplete-clear-icon: var(--sys-energy-text-tertiary);
+  --comp-autocomplete-clear-icon-hover: var(--sys-energy-text-primary);
+  --comp-autocomplete-dropdown-bg: var(--sys-energy-surface-primary);
+  --comp-autocomplete-dropdown-border: var(--sys-energy-border-default);
+  --comp-autocomplete-dropdown-shadow: var(--sys-depth-elevation-medium);
+  --comp-autocomplete-dropdown-radius: var(--sys-frame-radius-container);
+  --comp-autocomplete-dropdown-max-height: 240px;
+  --comp-autocomplete-dropdown-padding: var(--ref-frame-space-1);
+  --comp-autocomplete-item-padding-x: var(--ref-frame-space-3);
+  --comp-autocomplete-item-padding-y: var(--ref-frame-space-2);
+  --comp-autocomplete-item-radius: var(--ref-frame-radius-1);
+  --comp-autocomplete-item-bg-hover: var(--sys-energy-surface-secondary);
+  --comp-autocomplete-item-bg-selected: var(--sys-energy-surface-tertiary);
+  --comp-autocomplete-item-font: var(--ref-voice-size-4);
+  --comp-autocomplete-item-text: var(--sys-energy-text-primary);
+  --comp-autocomplete-item-text-secondary: var(--sys-energy-text-secondary);
+  --comp-autocomplete-highlight-bg: transparent;
+  --comp-autocomplete-highlight-text: var(--sys-energy-action-primary);
+  --comp-autocomplete-empty-text: var(--sys-energy-text-tertiary);
+  --comp-autocomplete-empty-font: var(--ref-voice-size-4);
+  --comp-autocomplete-z-index: var(--sys-depth-layer-dropdown);
+
+  /* comp.datePicker — calendar layout constraints */
+  --comp-date-picker-min-width: 280px;
+  --comp-date-picker-cell-size: var(--ref-frame-space-9); /* 36px */
+  --comp-date-picker-grid-gap: var(--sys-frame-border-thin); /* 1px */
+
+  /* comp.otpInput — one-time password cell sizes */
+  --comp-otp-cell-size-sm: var(--ref-frame-space-10); /* 40px */
+  --comp-otp-cell-size-md: var(--ref-frame-space-12); /* 48px */
+  --comp-otp-cell-size-lg: calc(var(--ref-frame-space-12) + var(--ref-frame-space-2)); /* 56px */
+  --comp-otp-gap: var(--ref-frame-space-2); /* gap between label and input group */
+  --comp-otp-input-gap: var(--ref-frame-space-2); /* gap between cells */
+  --comp-otp-border-disabled: var(--sys-energy-control-border-disabled);
+  --comp-otp-bg-disabled: var(--sys-energy-surface-sunken);
+  --comp-otp-text-disabled: var(--sys-energy-text-tertiary);
+
+  /* ── Sprint 4: Frame comp tokens for L3 components ── */
+
+  /* comp.sidebar — frame tokens */
+  --comp-sidebar-header-logo-gap: var(--ref-frame-space-2);
+  --comp-sidebar-group-label-padding-y: var(--ref-frame-space-1);
+  --comp-sidebar-item-gap: var(--ref-frame-space-2);
+
+  /* comp.stepper — frame tokens */
+  --comp-stepper-step-padding-block-end: var(--ref-frame-space-5);
+  --comp-stepper-connector-margin-block-start: var(--ref-frame-space-1);
+  --comp-stepper-content-margin-block-start: var(--ref-frame-space-2);
+  --comp-stepper-description-margin-block-start: var(--ref-frame-space-1);
+
+  /* comp.contextMenu — frame tokens */
+  --comp-context-menu-item-gap: var(--ref-frame-space-2);
+  --comp-context-menu-shortcut-padding-start: var(--ref-frame-space-4);
+  --comp-context-menu-separator-margin-y: var(--ref-frame-space-1);
+
+  /* comp.menu — frame tokens */
+  --comp-menu-item-gap: var(--ref-frame-space-2);
+  --comp-menu-trailing-padding-start: var(--ref-frame-space-4);
+  --comp-menu-separator-margin-y: var(--ref-frame-space-1);
+
+  /* comp.bottomNav — frame tokens */
+  --comp-bottom-nav-item-padding-y: var(--ref-frame-space-2);
+  --comp-bottom-nav-icon-wrap-width: var(--ref-frame-space-16);
+  --comp-bottom-nav-icon-wrap-height: var(--ref-frame-space-8);
+  --comp-bottom-nav-badge-padding-x: var(--ref-frame-space-1);
+
+  /* comp.accordion — frame tokens */
+  --comp-accordion-trigger-content-gap: var(--ref-frame-space-3);
+  --comp-accordion-subtitle-margin-start: var(--ref-frame-space-2);
+
+  /* comp.bottomSheet — frame tokens */
+  --comp-bottom-sheet-header-padding-block-end: var(--ref-frame-space-3);
+  --comp-bottom-sheet-close-padding: var(--ref-frame-space-1);
+
+  /* comp.treeView — frame tokens */
+  --comp-tree-item-row-gap: var(--ref-frame-space-1);
+  --comp-tree-item-row-padding-inline: var(--ref-frame-space-2);
+  --comp-tree-skeleton-margin-bottom: var(--ref-frame-space-micro);
+
+  /* comp.avatar — frame tokens */
+  --comp-avatar-group-overlap: var(--ref-frame-space-2);
+
+  /* comp.inlineValidation — frame tokens */
+  --comp-inline-validation-gap: var(--ref-frame-space-1);
+
+  /* comp.kpiTrend — frame tokens */
+  --comp-kpi-trend-gap: var(--ref-frame-space-1);
+
+  /* comp.loadingDots — frame tokens */
+  --comp-loading-padding-x: var(--ref-frame-space-2);
+
+  /* comp.slider — frame tokens */
+  --comp-slider-gap: var(--ref-frame-space-2);
+
+  /* comp.pagination — frame tokens */
+  --comp-pagination-btn-padding-x: var(--ref-frame-space-2);
+
+  /* comp.containerQueries — frame tokens */
+  --comp-card-compact-padding: var(--ref-frame-space-3);
+  --comp-toolbar-compact-gap: var(--ref-frame-space-2);
+
+  /* comp.button — frame tokens */
+  --comp-button-text-underline-offset: var(--ref-frame-space-micro);
+
+  /* comp.kpiCard — dashboard KPI display */
+  --comp-kpi-skeleton-label-height: var(--ref-frame-space-3); /* 12px */
+  --comp-kpi-skeleton-trend-height: calc(
+    var(--ref-frame-space-2) + var(--ref-frame-space-micro)
+  ); /* 10px */
+
+  --comp-kpi-trend-icon-size: var(--ref-icon-size-xs); /* 12px */
+
+  /* comp.quickActions — mobile action sheet */
+  --comp-quick-actions-max-width: 400px;
+
+  /* comp.advancedFilters — desktop filter builder */
+  --comp-advanced-filters-field-min-width: 120px;
+  --comp-advanced-filters-operator-min-width: 100px;
+  --comp-advanced-filters-label-width: var(--ref-frame-space-12); /* 48px */
+  --comp-advanced-filters-add-icon-size: calc(
+    var(--ref-icon-size-xs) + var(--ref-frame-space-micro)
+  ); /* 14px */
+
+  /* comp.hoverCard — hover-triggered popover */
+  --comp-hover-card-min-width: 200px;
+  --comp-hover-card-max-width: 320px;
+
+  /* comp.timeline — vertical timeline */
+  --comp-timeline-dot-size: calc(
+    var(--ref-frame-space-2) + var(--ref-frame-space-micro)
+  ); /* 10px */
+
+  --comp-timeline-line-width: var(--ref-frame-space-micro); /* 2px */
+  --comp-timeline-gutter-width: var(--ref-frame-space-6); /* 24px */
+  --comp-timeline-dot-offset: var(--ref-frame-space-1); /* 4px */
+  --comp-timeline-content-offset: var(--sys-frame-border-thin); /* 1px */
+
+  /* comp.filterChipGroup — filter chip collection */
+  --comp-filter-chip-icon-size: var(--ref-icon-size-xs); /* 12px */
+
+  /* comp.sortControl — column sort dropdown */
+  --comp-sort-control-gap: var(--ref-frame-space-micro); /* 2px */
+  --comp-sort-control-icon-size: var(--ref-icon-size-xs); /* 12px */
+  --comp-sort-control-reorder-padding: var(--ref-frame-space-micro); /* 2px */
+
+  /* comp.columnConfigurator — column visibility/reorder */
+  --comp-column-config-trigger-icon-size: calc(
+    var(--ref-icon-size-xs) + var(--ref-frame-space-micro)
+  ); /* 14px */
+
+  --comp-column-config-min-width: 200px;
+  --comp-column-config-reorder-icon-size: var(--ref-icon-size-xs); /* 12px */
+  --comp-column-config-reorder-padding: var(--ref-frame-space-micro); /* 2px */
+
+  /* comp.inlineValidation — validation message */
+  --comp-inline-validation-icon-size: calc(
+    var(--ref-icon-size-xs) + var(--ref-frame-space-micro)
+  ); /* 14px */
+
+  /* comp.inlineEditable — click-to-edit field */
+  --comp-inline-editable-border-editing: var(--sys-frame-border-medium); /* 2px solid */
+  --comp-inline-editable-border-hint: var(--sys-frame-border-thin); /* 1px dashed */
+
+  /* comp.drawer — mobile drawer panel */
+  --comp-drawer-max-width: 360px;
+  --comp-drawer-header-height: calc(
+    var(--ref-frame-space-12) + var(--ref-frame-space-2)
+  ); /* 56px */
+
+  /* comp.confirmationDialog — confirmation modal */
+  --comp-confirmation-dialog-max-width: 400px;
+
+  /* comp.fullscreenSheet — fullscreen modal header */
+  --comp-fullscreen-sheet-header-height: calc(
+    var(--ref-frame-space-12) + var(--ref-frame-space-2)
+  ); /* 56px */
+
+  /* comp.kpiTrendIndicator — trend display */
+  --comp-kpi-trend-indicator-icon-size: calc(
+    var(--ref-icon-size-xs) + var(--ref-frame-space-micro)
+  ); /* 14px */
+
+  /* comp.multiSelect — multi-value select with chips */
+  --comp-multi-select-chip-height: var(--ref-frame-space-6); /* 24px */
+  --comp-multi-select-dropdown-max-height: calc(var(--ref-frame-space-20) * 7.5); /* 300px */
+  --comp-multi-select-search-height: var(--ref-frame-space-9); /* 36px */
+
+  /* comp.dateRangePicker — two-month range calendar */
+  --comp-date-range-picker-preset-min-width: var(--ref-frame-space-20); /* 80px */
+  --comp-date-range-picker-calendar-gap: var(--ref-frame-space-4); /* 16px */
+
+  /* comp.virtualDataTable — windowed scroll table */
+  --comp-virtual-table-header-height: var(--ref-frame-space-10); /* 40px */
+  --comp-virtual-table-row-height-sm: var(--ref-frame-space-8); /* 32px */
+  --comp-virtual-table-row-height-md: var(--ref-frame-space-10); /* 40px */
+  --comp-virtual-table-row-height-lg: var(--ref-frame-space-12); /* 48px */
+  --comp-virtual-table-row-height-xl: calc(
+    var(--ref-frame-space-12) + var(--ref-frame-space-2)
+  ); /* 56px */
+
+  --comp-virtual-table-default-height: 480px;
+}
+
+/* ── Body baseline — connects document root to voice tokens ── */
+body {
+  font-family: var(--ref-voice-family-sans);
+  font-size: var(--sys-voice-paragraph-m-size);
+  line-height: var(--sys-voice-line-height-body);
+  color: var(--sys-energy-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* end density × viewport overrides */

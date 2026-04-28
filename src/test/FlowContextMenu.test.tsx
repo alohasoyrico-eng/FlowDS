@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowContextMenu } from "../app/components/overlays";
+import { FlowContextMenu } from "@flow/components";
 
 const DEFAULT_ITEMS = [
   { key: "cut", label: "Cut" },
@@ -44,9 +44,7 @@ describe("FlowContextMenu — rendering", () => {
   });
 
   it("renders with trigger prop instead of children", () => {
-    render(
-      <FlowContextMenu items={DEFAULT_ITEMS} trigger={<span>Trigger element</span>} />,
-    );
+    render(<FlowContextMenu items={DEFAULT_ITEMS} trigger={<span>Trigger element</span>} />);
     expect(screen.getByText("Trigger element")).toBeInTheDocument();
   });
 });

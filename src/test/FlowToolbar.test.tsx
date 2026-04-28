@@ -10,11 +10,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import {
-  FlowToolbar,
-  FlowToolbarDivider,
-  FlowToolbarGroup,
-} from "../app/components/patterns";
+import { FlowToolbar, FlowToolbarDivider, FlowToolbarGroup } from "@flow/patterns";
 
 // ─────────────────────────────────────────────
 // Rendering
@@ -37,10 +33,7 @@ describe("FlowToolbar — rendering", () => {
 
   it("renders left and right action slots", () => {
     render(
-      <FlowToolbar
-        leftActions={<button>Left</button>}
-        rightActions={<button>Right</button>}
-      />,
+      <FlowToolbar leftActions={<button>Left</button>} rightActions={<button>Right</button>} />,
     );
     expect(screen.getByRole("button", { name: "Left" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Right" })).toBeInTheDocument();

@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowBottomNav } from "../app/components/navigation";
+import { FlowBottomNav } from "@flow/components";
 
 const DEFAULT_ITEMS = [
   { key: "home", icon: "home", label: "Home" },
@@ -44,7 +44,12 @@ describe("FlowBottomNav — rendering", () => {
 
   it("hides labels when showLabels=false", () => {
     render(
-      <FlowBottomNav items={DEFAULT_ITEMS} activeKey="home" onChange={vi.fn()} showLabels={false} />,
+      <FlowBottomNav
+        items={DEFAULT_ITEMS}
+        activeKey="home"
+        onChange={vi.fn()}
+        showLabels={false}
+      />,
     );
     expect(screen.queryByText("Home")).not.toBeInTheDocument();
     expect(screen.queryByText("Search")).not.toBeInTheDocument();
@@ -132,7 +137,9 @@ describe("FlowBottomNav — accessibility", () => {
   });
 
   it("has no axe violations", async () => {
-    const { container } = render(<FlowBottomNav items={DEFAULT_ITEMS} activeKey="home" onChange={vi.fn()} />);
+    const { container } = render(
+      <FlowBottomNav items={DEFAULT_ITEMS} activeKey="home" onChange={vi.fn()} />,
+    );
     expect(await axe(container)).toHaveNoViolations();
   });
 });

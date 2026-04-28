@@ -3,7 +3,7 @@
  * Component metadata, demos, and developer guides for input components.
  */
 import React from "react";
-import { FlowTextInput } from "../../../../lib";
+import { FlowCountrySelect, FlowPhoneInput, FlowTextArea, FlowTextInput } from "@flow/design-system";
 import type { ComponentEntry } from "../types";
 import {
   FlowCountrySelectOverview,
@@ -137,7 +137,12 @@ export const INPUTS_REGISTRY: Record<string, ComponentEntry> = {
           "Disabled inputs get disabled attribute",
         ],
         required: ["Provide unique id for each input", "Use label prop for accessible field name"],
-        keyboard: ["Tab to focus input", "Type to enter text", "Escape to clear (when clearable)"],
+        keyboard: [
+          { key: "Tab", action: "Focus input" },
+          { key: "Any key", action: "Enter text" },
+          { key: "Escape", action: "Clear (when clearable)" },
+        ],
+        wcag: ["2.1.1", "3.3.1", "3.3.2", "4.1.2"],
       },
     },
     demos: {
@@ -461,7 +466,13 @@ FlowTextInput(
           value: props.value as string,
           onChange: () => {},
         } as React.ComponentProps<typeof FlowTextInput>),
-      defaults: { label: "Label", placeholder: "Type here...", size: "md", disabled: false, value: "" },
+      defaults: {
+        label: "Label",
+        placeholder: "Type here...",
+        size: "md",
+        disabled: false,
+        value: "",
+      },
     },
   },
   // ─── FlowTextArea ───
@@ -561,7 +572,12 @@ FlowTextInput(
           "Provide unique id for each textarea",
           "Use label prop for accessible field name",
         ],
-        keyboard: ["Tab to focus textarea", "Type to enter text", "Enter for new line"],
+        keyboard: [
+          { key: "Tab", action: "Focus textarea" },
+          { key: "Any key", action: "Enter text" },
+          { key: "Enter", action: "New line" },
+        ],
+        wcag: ["2.1.1", "3.3.1", "3.3.2", "4.1.2"],
       },
     },
     demos: {
@@ -819,6 +835,23 @@ FlowTextArea(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowTextArea, {
+          label: (props.label as string) || "Description",
+          placeholder: props.placeholder as string,
+          size: props.size,
+          disabled: !!props.disabled,
+          required: !!props.required,
+        } as React.ComponentProps<typeof FlowTextArea>),
+      defaults: {
+        label: "Description",
+        placeholder: "Enter description...",
+        size: "md",
+        disabled: false,
+        required: false,
+      },
+    },
   },
   // ─── FlowPhoneInput ───
   "inputs/flow-phone-input": {
@@ -920,12 +953,13 @@ FlowTextArea(
         ],
         required: ["Provide label prop for accessible field name"],
         keyboard: [
-          "Tab to focus input",
-          "Tab to prefix button for country selection",
-          "Arrow keys to navigate country dropdown",
-          "Enter to select country",
-          "Escape to close dropdown",
+          { key: "Tab", action: "Focus input" },
+          { key: "Tab", action: "Focus prefix button for country selection" },
+          { key: "↑ ↓ Arrow keys", action: "Navigate country dropdown" },
+          { key: "Enter", action: "Select country" },
+          { key: "Escape", action: "Close dropdown" },
         ],
+        wcag: ["2.1.1", "3.3.1", "3.3.2", "4.1.2"],
       },
     },
     demos: {
@@ -1115,6 +1149,16 @@ FlowPhoneInput(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowPhoneInput, {
+          label: (props.label as string) || "Phone number",
+          size: props.size,
+          disabled: !!props.disabled,
+        } as React.ComponentProps<typeof FlowPhoneInput>),
+      defaults: { label: "Phone number", size: "xl", disabled: false },
+      excludeControls: ["value", "defaultValue", "onChange", "country", "onCountryChange", "placeholder", "hint", "error", "success", "loading", "readOnly", "className"],
+    },
   },
   // ─── FlowCountrySelect ───
   "inputs/flow-country-select": {
@@ -1216,12 +1260,13 @@ FlowPhoneInput(
         ],
         required: ["Provide label prop for accessible field name"],
         keyboard: [
-          "Tab to focus input (opens dropdown)",
-          "Type to filter countries inline",
-          "Arrow keys to navigate dropdown",
-          "Enter to select highlighted country",
-          "Escape to close dropdown",
+          { key: "Tab", action: "Focus input (opens dropdown)" },
+          { key: "Any key", action: "Filter countries inline" },
+          { key: "↑ ↓ Arrow keys", action: "Navigate dropdown" },
+          { key: "Enter", action: "Select highlighted country" },
+          { key: "Escape", action: "Close dropdown" },
         ],
+        wcag: ["2.1.1", "3.3.1", "3.3.2", "4.1.2"],
       },
     },
     demos: {
@@ -1382,6 +1427,16 @@ FlowCountrySelect(
           text: "Density-aware: height, padding, flag/chevron sizes shift ±1 step in compact/comfortable.",
         },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowCountrySelect, {
+          label: (props.label as string) || "Country",
+          size: props.size,
+          disabled: !!props.disabled,
+        } as React.ComponentProps<typeof FlowCountrySelect>),
+      defaults: { label: "Country", size: "xl", disabled: false },
+      excludeControls: ["value", "defaultValue", "onChange", "hint", "error", "success", "loading", "readOnly", "required", "className"],
     },
   },
 };

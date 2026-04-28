@@ -1,0 +1,128 @@
+/* ━━━━━━━━━━━━━━━��━━━━━━━━━━━━━━━━━━━━━━━━━━━━���━━━━
+   BREADCRUMBS — Navigation trail (L3) — composes FlowButton
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.flow-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-gap);
+  flex-shrink: 0;
+}
+
+.flow-breadcrumb-item:last-child {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ── <a> and <button> items without href ── */
+.flow-breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-item-gap);
+  padding: var(--comp-breadcrumbs-item-padding-y) var(--comp-breadcrumbs-item-padding-x);
+  border: none;
+  background: transparent;
+  color: var(--comp-breadcrumbs-text);
+  font-family: var(--comp-breadcrumbs-font-family);
+  font-size: var(--comp-breadcrumbs-font);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--comp-breadcrumbs-item-radius);
+  transition:
+    color var(--comp-breadcrumbs-transition),
+    background var(--comp-breadcrumbs-transition);
+  white-space: nowrap;
+}
+
+.flow-breadcrumb-link:hover {
+  color: var(--comp-breadcrumbs-text-hover);
+  background: var(--sys-energy-surface-secondary);
+}
+
+.flow-breadcrumb-link:focus-visible {
+  outline: var(--comp-breadcrumbs-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--comp-breadcrumbs-focus-ring-offset);
+}
+
+/* ── Current page (non-interactive span) ── */
+.flow-breadcrumb-current {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-breadcrumbs-item-gap);
+  padding: var(--comp-breadcrumbs-item-padding-y) var(--comp-breadcrumbs-item-padding-x);
+  color: var(--comp-breadcrumbs-text-active);
+  font-family: var(--comp-breadcrumbs-font-family);
+  font-size: var(--comp-breadcrumbs-font);
+  font-weight: var(--comp-breadcrumbs-font-weight);
+  cursor: default;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.flow-breadcrumb-separator {
+  color: var(--comp-breadcrumbs-separator);
+  font-size: var(--comp-breadcrumbs-separator-font);
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* ── Icon-only root item (variant="icon-root") ── */
+.flow-breadcrumb-icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--comp-breadcrumbs-icon-only-size);
+  height: var(--comp-breadcrumbs-icon-only-size);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--comp-breadcrumbs-text);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--comp-breadcrumbs-item-radius);
+  transition:
+    color var(--comp-breadcrumbs-transition),
+    background var(--comp-breadcrumbs-transition);
+}
+
+.flow-breadcrumb-icon-only:hover {
+  color: var(--comp-breadcrumbs-text-hover);
+  background: var(--sys-energy-surface-secondary);
+}
+
+.flow-breadcrumb-icon-only:focus-visible {
+  outline: var(--comp-breadcrumbs-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: var(--comp-breadcrumbs-focus-ring-offset);
+}
+
+/* ── Screen-reader only utility ── */
+.flow-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

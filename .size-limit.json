@@ -1,0 +1,57 @@
+[
+  {
+    "name": "@flow/components (total JS)",
+    "path": "packages/components/dist/**/*.mjs",
+    "limit": "100 kB"
+  },
+  {
+    "name": "@flow/components (total CSS)",
+    "path": "packages/components/dist/css/**/*.css",
+    "limit": "30 kB"
+  },
+  {
+    "name": "FlowButton",
+    "path": "packages/components/dist/controls/FlowButton.mjs",
+    "limit": "2 kB"
+  },
+  {
+    "name": "FlowTextInput",
+    "path": "packages/components/dist/inputs/FlowTextInput.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "FlowSelect",
+    "path": "packages/components/dist/selection/FlowSelect.mjs",
+    "limit": "5 kB"
+  },
+  {
+    "name": "FlowDialog",
+    "path": "packages/components/dist/overlays/FlowDialog.mjs",
+    "limit": "2 kB"
+  },
+  {
+    "name": "FlowTabs",
+    "path": "packages/components/dist/navigation/FlowTabs.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "FlowTreeView",
+    "path": "packages/components/dist/display/FlowTreeView.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "FlowAccordion",
+    "path": "packages/components/dist/layout/FlowAccordion.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "FlowMenu",
+    "path": "packages/components/dist/overlays/FlowMenu.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "FlowSlider",
+    "path": "packages/components/dist/selection/FlowSlider.mjs",
+    "limit": "3 kB"
+  }
+]

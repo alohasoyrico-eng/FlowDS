@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowMultiSelect } from "../app/components/patterns";
+import { FlowMultiSelect } from "@flow/patterns";
 
 // jsdom does not implement scrollIntoView — stub it to prevent runtime errors
 Element.prototype.scrollIntoView = vi.fn();
@@ -46,7 +46,12 @@ describe("FlowMultiSelect — rendering", () => {
 
   it("displays chips for selected values", () => {
     render(
-      <FlowMultiSelect label="Colors" options={sampleOptions} value={["red", "blue"]} onChange={vi.fn()} />,
+      <FlowMultiSelect
+        label="Colors"
+        options={sampleOptions}
+        value={["red", "blue"]}
+        onChange={vi.fn()}
+      />,
     );
     expect(screen.getByText("Red")).toBeInTheDocument();
     expect(screen.getByText("Blue")).toBeInTheDocument();
@@ -84,7 +89,12 @@ describe("FlowMultiSelect — interaction", () => {
 
   it("shows selected count in the footer", async () => {
     render(
-      <FlowMultiSelect label="Colors" options={sampleOptions} value={["red", "green"]} onChange={vi.fn()} />,
+      <FlowMultiSelect
+        label="Colors"
+        options={sampleOptions}
+        value={["red", "green"]}
+        onChange={vi.fn()}
+      />,
     );
     await userEvent.click(screen.getByRole("combobox"));
     expect(screen.getByText("2 of 4 selected")).toBeInTheDocument();

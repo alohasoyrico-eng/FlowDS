@@ -7,7 +7,7 @@
 import { useState } from "react";
 import type React from "react";
 
-import { Code, Inline, Stack, Text } from "../primitives";
+import { Code, Inline, Stack, Text } from "@flow/primitives";
 
 type Density = "compact" | "default" | "comfortable";
 
@@ -19,7 +19,9 @@ export function DensityDemoWrapper({ children }: { children: React.ReactNode }) 
     <Stack gap="component">
       {/* Switcher row */}
       <Inline gap={2} align="center">
-        <Text role="caption" color="tertiary">Density:</Text>
+        <Text variant="caption" color="tertiary">
+          Density:
+        </Text>
         <div
           style={{
             display: "inline-flex",
@@ -60,17 +62,14 @@ export function DensityDemoWrapper({ children }: { children: React.ReactNode }) 
           ))}
         </div>
         {density !== "default" && (
-          <Text role="caption" color="accent">
+          <Text variant="caption" color="accent">
             <Code>{`data-density="${density}"`}</Code>
           </Text>
         )}
       </Inline>
 
       {/* Density-affected zone */}
-      <div
-        data-density={density !== "default" ? density : undefined}
-        data-density-animate=""
-      >
+      <div data-density={density !== "default" ? density : undefined} data-density-animate="">
         {children}
       </div>
     </Stack>

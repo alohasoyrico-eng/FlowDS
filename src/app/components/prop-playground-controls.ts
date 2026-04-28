@@ -9,6 +9,8 @@ export type ControlDescriptor =
   | { kind: "string" }
   | { kind: "number" }
   | { kind: "reactnode" }
+  | { kind: "fixture" }
+  | { kind: "callback" }
   | { kind: "unknown" };
 
 /**
@@ -22,6 +24,12 @@ export type ControlDescriptor =
  */
 export function inferControl(typeStr: string): ControlDescriptor {
   const t = typeStr.trim();
+
+  // Array / object props — fixture data, no control
+  if (t.includes("[]") || t.includes("Array<") || t.startsWith("{")) return { kind: "fixture" };
+
+  // Callback props — auto-wired as no-op
+  if (t.includes("=>") || t === "Function") return { kind: "callback" };
 
   // Boolean
   if (t === "boolean") return { kind: "boolean" };

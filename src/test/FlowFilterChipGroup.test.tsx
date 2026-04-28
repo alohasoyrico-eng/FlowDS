@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowFilterChipGroup } from "../app/components/patterns";
+import { FlowFilterChipGroup } from "@flow/patterns";
 
 const sampleChips = [
   { id: "a", label: "Alpha" },
@@ -26,11 +26,7 @@ const sampleChips = [
 describe("FlowFilterChipGroup — rendering", () => {
   it("renders all chip labels", () => {
     render(
-      <FlowFilterChipGroup
-        chips={sampleChips}
-        selected={new Set()}
-        onSelectionChange={vi.fn()}
-      />,
+      <FlowFilterChipGroup chips={sampleChips} selected={new Set()} onSelectionChange={vi.fn()} />,
     );
     expect(screen.getByText("Alpha")).toBeInTheDocument();
     expect(screen.getByText("Beta")).toBeInTheDocument();
@@ -39,22 +35,14 @@ describe("FlowFilterChipGroup — rendering", () => {
 
   it("has role='group'", () => {
     render(
-      <FlowFilterChipGroup
-        chips={sampleChips}
-        selected={new Set()}
-        onSelectionChange={vi.fn()}
-      />,
+      <FlowFilterChipGroup chips={sampleChips} selected={new Set()} onSelectionChange={vi.fn()} />,
     );
     expect(screen.getByRole("group")).toBeInTheDocument();
   });
 
   it("returns null for empty chips array", () => {
     const { container } = render(
-      <FlowFilterChipGroup
-        chips={[]}
-        selected={new Set()}
-        onSelectionChange={vi.fn()}
-      />,
+      <FlowFilterChipGroup chips={[]} selected={new Set()} onSelectionChange={vi.fn()} />,
     );
     expect(container.innerHTML).toBe("");
   });

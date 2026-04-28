@@ -11,7 +11,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
 
-import { FlowFullscreenSheet } from "../app/components/patterns";
+import { FlowFullscreenSheet } from "@flow/patterns";
 
 const defaultProps = {
   open: true,
@@ -32,9 +32,7 @@ describe("FlowFullscreenSheet — rendering", () => {
   });
 
   it("renders nothing when closed", () => {
-    const { container } = render(
-      <FlowFullscreenSheet {...defaultProps} open={false} />,
-    );
+    const { container } = render(<FlowFullscreenSheet {...defaultProps} open={false} />);
     expect(container.innerHTML).toBe("");
   });
 
@@ -49,12 +47,7 @@ describe("FlowFullscreenSheet — rendering", () => {
   });
 
   it("renders header actions when provided", () => {
-    render(
-      <FlowFullscreenSheet
-        {...defaultProps}
-        headerActions={<button>Save</button>}
-      />,
-    );
+    render(<FlowFullscreenSheet {...defaultProps} headerActions={<button>Save</button>} />);
     expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
   });
 });

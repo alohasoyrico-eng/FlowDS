@@ -12,7 +12,7 @@ import {
   FlowIconButtonOverview,
   FlowIconButtonVariants,
 } from "./demos";
-import { FlowButton, FlowIconButton } from "../../../../lib";
+import { FlowButton, FlowFAB, FlowIconButton } from "@flow/design-system";
 
 export const CONTROLS_REGISTRY: Record<string, ComponentEntry> = {
   // ─── FlowButton ───
@@ -80,7 +80,11 @@ export const CONTROLS_REGISTRY: Record<string, ComponentEntry> = {
           "Provide descriptive children text for screen readers",
           "Use type='submit' for form submission buttons",
         ],
-        keyboard: ["Tab to focus button", "Enter or Space to activate"],
+        keyboard: [
+          { key: "Tab", action: "Focus button" },
+          { key: "Enter / Space", action: "Activate" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -93,12 +97,12 @@ export const CONTROLS_REGISTRY: Record<string, ComponentEntry> = {
 <FlowButton>Click me</FlowButton>
 
 // All emphasis levels (canonical order)
-<FlowButton variant="high">Primary Action</FlowButton>
-<FlowButton variant="medium">Secondary</FlowButton>
-<FlowButton variant="low">Tertiary</FlowButton>
-<FlowButton variant="outline">Outlined</FlowButton>
-<FlowButton variant="danger">Delete</FlowButton>
-<FlowButton variant="warning">Caution</FlowButton>
+<FlowButton variant="primary">Primary Action</FlowButton>
+<FlowButton variant="secondary">Secondary</FlowButton>
+<FlowButton variant="tertiary">Tertiary</FlowButton>
+<FlowButton variant="outlined">Outlined</FlowButton>
+<FlowButton variant="primary" intent="danger">Delete</FlowButton>
+<FlowButton variant="primary" intent="warning">Caution</FlowButton>
 <FlowButton variant="ghost">Subtle</FlowButton>
 
 // All sizes
@@ -109,8 +113,8 @@ export const CONTROLS_REGISTRY: Record<string, ComponentEntry> = {
 
 // With leading icon
 <FlowButton leadingIcon="plus">Create New</FlowButton>
-<FlowButton leadingIcon="download" variant="medium">Download</FlowButton>
-<FlowButton leadingIcon="trash-2" variant="danger">Delete</FlowButton>
+<FlowButton leadingIcon="download" variant="secondary">Download</FlowButton>
+<FlowButton leadingIcon="trash-2" variant="primary" intent="danger">Delete</FlowButton>
 
 // Loading state
 const [loading, setLoading] = useState(false);
@@ -142,12 +146,12 @@ const [loading, setLoading] = useState(false);
 <FlowButton fullWidth>Sign In</FlowButton>
 
 // Form submission
-<FlowButton type="submit" variant="high">Submit</FlowButton>
+<FlowButton type="submit" variant="primary">Submit</FlowButton>
 
 // Common patterns
-<FlowButton variant="high" leadingIcon="check">Confirm</FlowButton>
-<FlowButton variant="outline" leadingIcon="x">Cancel</FlowButton>
-<FlowButton variant="danger" leadingIcon="trash-2">Delete Account</FlowButton>`,
+<FlowButton variant="primary" leadingIcon="check">Confirm</FlowButton>
+<FlowButton variant="outlined" leadingIcon="x">Cancel</FlowButton>
+<FlowButton variant="primary" intent="danger" leadingIcon="trash-2">Delete Account</FlowButton>`,
       flutterImport: `import 'package:flow_ds/controls.dart';`,
       flutterUsage: `FlowButton(
   onPressed: () => print('Clicked'),
@@ -192,9 +196,10 @@ FlowButton(
         },
         {
           name: "variant",
-          type: '"high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"',
-          default: '"high"',
-          description: "Visual variant — controls background, border, and text color. Warning variant uses subtle→filled paradigm (yellow palette) for cautionary actions.",
+          type: '"primary" | "secondary" | "tertiary" | "outlined" | "ghost"',
+          default: '"primary"',
+          description:
+            "Visual variant — controls background, border, and text color. Warning variant uses subtle→filled paradigm (yellow palette) for cautionary actions.",
         },
         {
           name: "size",
@@ -243,7 +248,8 @@ FlowButton(
           name: "fullWidth",
           type: "boolean",
           default: "false",
-          description: "Makes button stretch to 100% of container width via data-full-width attribute (CSS cascade compatible).",
+          description:
+            "Makes button stretch to 100% of container width via data-full-width attribute (CSS cascade compatible).",
         },
         {
           name: "className",
@@ -330,7 +336,14 @@ FlowButton(
           leadingIcon: props.leadingIcon,
           children: props.children ?? "Click me",
         } as React.ComponentProps<typeof FlowButton>),
-      defaults: { children: "Click me", variant: "high", size: "md", disabled: false, loading: false, fullWidth: false },
+      defaults: {
+        children: "Click me",
+        variant: "primary",
+        size: "md",
+        disabled: false,
+        loading: false,
+        fullWidth: false,
+      },
     },
   },
 
@@ -393,7 +406,11 @@ FlowButton(
           "ALWAYS provide aria-label — it's required for icon buttons",
           "Make aria-label descriptive (e.g., 'Delete item' not 'Trash icon')",
         ],
-        keyboard: ["Tab to focus button", "Enter or Space to activate"],
+        keyboard: [
+          { key: "Tab", action: "Focus button" },
+          { key: "Enter / Space", action: "Activate" },
+        ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -406,11 +423,11 @@ FlowButton(
 <FlowIconButton icon="heart" aria-label="Favorite" />
 
 // All emphasis levels
-<FlowIconButton icon="star" variant="high" aria-label="Star" />
-<FlowIconButton icon="bookmark" variant="medium" aria-label="Bookmark" />
-<FlowIconButton icon="share-2" variant="low" aria-label="Share" />
-<FlowIconButton icon="edit-2" variant="outline" aria-label="Edit" />
-<FlowIconButton icon="trash-2" variant="danger" aria-label="Delete" />
+<FlowIconButton icon="star" variant="primary" aria-label="Star" />
+<FlowIconButton icon="bookmark" variant="secondary" aria-label="Bookmark" />
+<FlowIconButton icon="share-2" variant="tertiary" aria-label="Share" />
+<FlowIconButton icon="edit-2" variant="outlined" aria-label="Edit" />
+<FlowIconButton icon="trash-2" variant="primary" intent="danger" aria-label="Delete" />
 <FlowIconButton icon="more-vertical" variant="ghost" aria-label="More options" />
 
 // All sizes
@@ -431,7 +448,7 @@ const [isBold, setIsBold] = useState(false);
 
 <FlowIconButton
   icon="bold"
-  variant="low"
+  variant="tertiary"
   selected={isBold}
   onClick={() => setIsBold(!isBold)}
   aria-label="Bold"
@@ -439,9 +456,9 @@ const [isBold, setIsBold] = useState(false);
 
 // Toolbar pattern
 <Inline gap={0.5}>
-  <FlowIconButton icon="bold" variant="low" aria-label="Bold" selected={bold} />
-  <FlowIconButton icon="italic" variant="low" aria-label="Italic" selected={italic} />
-  <FlowIconButton icon="underline" variant="low" aria-label="Underline" selected={underline} />
+  <FlowIconButton icon="bold" variant="tertiary" aria-label="Bold" selected={bold} />
+  <FlowIconButton icon="italic" variant="tertiary" aria-label="Italic" selected={italic} />
+  <FlowIconButton icon="underline" variant="tertiary" aria-label="Underline" selected={underline} />
 </Inline>
 
 // Loading state
@@ -496,8 +513,8 @@ FlowIconButton(
         },
         {
           name: "variant",
-          type: '"high" | "medium" | "low" | "outline" | "danger" | "warning" | "ghost"',
-          default: '"low"',
+          type: '"primary" | "secondary" | "tertiary" | "outlined" | "ghost"',
+          default: '"tertiary"',
           description: "Visual variant — controls background, border, and icon color.",
         },
         {
@@ -608,7 +625,13 @@ FlowIconButton(
           selected: !!props.selected,
           "aria-label": "Demo icon button",
         } as React.ComponentProps<typeof FlowIconButton>),
-      defaults: { icon: "edit", variant: "medium", size: "md", disabled: false, selected: false },
+      defaults: {
+        icon: "edit",
+        variant: "secondary",
+        size: "md",
+        disabled: false,
+        selected: false,
+      },
     },
   },
 
@@ -666,9 +689,10 @@ FlowIconButton(
           "Ensure FAB doesn't obstruct critical content",
         ],
         keyboard: [
-          "Tab to focus FAB (appears in DOM order, not visual position)",
-          "Enter or Space to activate",
+          { key: "Tab", action: "Focus FAB (appears in DOM order, not visual position)" },
+          { key: "Enter / Space", action: "Activate" },
         ],
+        wcag: ["2.1.1", "4.1.2"],
       },
     },
     demos: {
@@ -891,6 +915,27 @@ FlowFAB(
           text: "Primary variant is most common; use secondary/tertiary for less prominent floating actions.",
         },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(FlowFAB, {
+          icon: (props.icon as string) || "plus",
+          variant: props.variant,
+          size: props.size,
+          disabled: !!props.disabled,
+          loading: !!props.loading,
+          label: props.label,
+          position: "none",
+          "aria-label": "Demo FAB",
+        } as React.ComponentProps<typeof FlowFAB>),
+      defaults: {
+        icon: "plus",
+        variant: "primary",
+        size: "md",
+        disabled: false,
+        loading: false,
+        label: "",
+      },
     },
   },
 };

@@ -221,7 +221,7 @@ const demoSize = useDemoSize();
 
 #### 5. **Full Width Section** (for components with `fullWidth` prop)
 
-**Pattern:** Show 3 subsections with `<Text role="overline">`
+**Pattern:** Show 3 subsections with `<Text variant="overline">`
 
 ```tsx
 <DemoSection
@@ -230,7 +230,7 @@ const demoSize = useDemoSize();
 >
   <DemoGroup>
     <Stack gap={4}>
-      <Text role="overline">Without fullWidth (natural width)</Text>
+      <Text variant="overline">Without fullWidth (natural width)</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
           <Stack gap={2}>
@@ -240,7 +240,7 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">With fullWidth — all variant variants</Text>
+      <Text variant="overline">With fullWidth — all variant variants</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
           <Stack gap={2}>
@@ -253,22 +253,22 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">Responsive containers — adapts to parent width</Text>
+      <Text variant="overline">Responsive containers — adapts to parent width</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={12}>
-          <Text role="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>12 columns (full width)</Text>
+          <Text variant="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>12 columns (full width)</Text>
           <Component fullWidth variant="high">Full Width</Component>
         </LayoutGrid.Item>
         <LayoutGrid.Item span={8}>
-          <Text role="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>8 columns</Text>
+          <Text variant="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>8 columns</Text>
           <Component fullWidth variant="medium">8 columns</Component>
         </LayoutGrid.Item>
         <LayoutGrid.Item span={6}>
-          <Text role="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>6 columns</Text>
+          <Text variant="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>6 columns</Text>
           <Component fullWidth variant="outline">6 columns</Component>
         </LayoutGrid.Item>
         <LayoutGrid.Item span={4}>
-          <Text role="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>4 columns</Text>
+          <Text variant="label-s" color="tertiary" style={{ marginBottom: "0.5rem" }}>4 columns</Text>
           <Component fullWidth variant="low">4 columns</Component>
         </LayoutGrid.Item>
       </LayoutGrid>
@@ -283,7 +283,7 @@ const demoSize = useDemoSize();
 
 #### 6. **Responsive Grid Layout** (for layout demonstrations)
 
-**Pattern:** Show real-world grid compositions with `<Text role="overline">` subsections
+**Pattern:** Show real-world grid compositions with `<Text variant="overline">` subsections
 
 ```tsx
 <DemoSection
@@ -292,7 +292,7 @@ const demoSize = useDemoSize();
 >
   <DemoGroup>
     <Stack gap={4}>
-      <Text role="overline">Action row — span 4 + 4 + 4</Text>
+      <Text variant="overline">Action row — span 4 + 4 + 4</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={4}>
           <Component fullWidth variant="high">Create New</Component>
@@ -305,7 +305,7 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">Primary + secondary — span 8 + 4</Text>
+      <Text variant="overline">Primary + secondary — span 8 + 4</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={8}>
           <Component fullWidth variant="high">Confirm & Submit</Component>
@@ -315,7 +315,7 @@ const demoSize = useDemoSize();
         </LayoutGrid.Item>
       </LayoutGrid>
 
-      <Text role="overline">Danger zone — span 6 + 6</Text>
+      <Text variant="overline">Danger zone — span 6 + 6</Text>
       <LayoutGrid fullBleed>
         <LayoutGrid.Item span={6}>
           <Component fullWidth variant="danger">Delete Account</Component>
@@ -337,9 +337,9 @@ const demoSize = useDemoSize();
 
 | Role | Use Case | Example |
 |------|----------|---------|
-| `<Text role="overline">` | Subsection separators within `<DemoSection>` | "Without fullWidth", "Action row — span 4 + 4 + 4" |
-| `<Text role="label-s" color="tertiary">` | Individual element labels | "sm", "md", "12 columns", "high" |
-| `<Text role="label-m" color="secondary">` | Matrix row labels | "Unselected", "Selected", "primary", "medium" |
+| `<Text variant="overline">` | Subsection separators within `<DemoSection>` | "Without fullWidth", "Action row — span 4 + 4 + 4" |
+| `<Text variant="label-s" color="tertiary">` | Individual element labels | "sm", "md", "12 columns", "high" |
+| `<Text variant="label-m" color="secondary">` | Matrix row labels | "Unselected", "Selected", "primary", "medium" |
 
 **Rule:** `overline` creates **narrative flow** between subsections. `label-s tertiary` describes **individual items**. `label-m secondary` labels **rows in data grids**.
 
@@ -396,7 +396,7 @@ function DemoCell({
     >
       {children}
       {label && (
-        <Text role="label-s" color="tertiary" style={{ textAlign: align === "center" ? "center" : "left" }}>
+        <Text variant="label-s" color="tertiary" style={{ textAlign: align === "center" ? "center" : "left" }}>
           {label}
         </Text>
       )}
@@ -432,14 +432,14 @@ function EmphasisMatrix({
       <div />
       {sizes.map((size) => (
         <div key={size} style={{ display: "flex", justifyContent: "center", paddingBottom: "0.25rem" }}>
-          <Text role="label-s" color="tertiary">{size}</Text>
+          <Text variant="label-s" color="tertiary">{size}</Text>
         </div>
       ))}
       {/* Data rows */}
       {EMPHASIS.map((variant) => (
         <div key={variant} style={{ display: "contents" }}>
           <div style={MATRIX_LABEL_STYLE}>
-            <Text role="label-m" color="secondary" style={{ textTransform: "capitalize" }}>
+            <Text variant="label-m" color="secondary" style={{ textTransform: "capitalize" }}>
               {variant}
             </Text>
           </div>

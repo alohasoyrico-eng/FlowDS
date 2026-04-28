@@ -1,0 +1,95 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BOTTOM SHEET — Mobile modal from bottom edge (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━��━━━━━━━━━━━ */
+
+.flow-bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--comp-bottom-sheet-overlay);
+  z-index: var(--comp-bottom-sheet-z-index);
+  animation: flow-bottom-sheet-overlay-in var(--sys-momentum-transition-default) ease-out;
+}
+
+@keyframes flow-bottom-sheet-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.flow-bottom-sheet {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: calc(var(--comp-bottom-sheet-z-index) + 1);
+  background: var(--comp-bottom-sheet-bg);
+  border-top-left-radius: var(--comp-bottom-sheet-radius);
+  border-top-right-radius: var(--comp-bottom-sheet-radius);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: var(--comp-bottom-sheet-shadow);
+  padding: 0;
+  max-height: var(--comp-bottom-sheet-max-height);
+  display: flex;
+  flex-direction: column;
+  animation: flow-bottom-sheet-slide-in var(--sys-momentum-transition-default) ease-out;
+  touch-action: none;
+}
+
+@keyframes flow-bottom-sheet-slide-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.flow-bottom-sheet-handle {
+  display: flex;
+  justify-content: center;
+  padding: var(--comp-bottom-sheet-handle-margin) 0;
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.flow-bottom-sheet-handle::after {
+  content: "";
+  width: var(--comp-bottom-sheet-handle-width);
+  height: var(--comp-bottom-sheet-handle-height);
+  border-radius: var(--ref-frame-radius-round);
+  background: var(--comp-bottom-sheet-handle-bg);
+}
+
+.flow-bottom-sheet-handle:active {
+  cursor: grabbing;
+}
+
+.flow-bottom-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--comp-bottom-sheet-padding) var(--comp-bottom-sheet-header-padding-block-end);
+  font-family: var(--sys-voice-family);
+  font-size: var(--comp-bottom-sheet-header-font);
+  font-weight: var(--sys-voice-weight-semibold);
+  color: var(--sys-energy-text-primary);
+  flex-shrink: 0;
+}
+
+.flow-bottom-sheet-close.flow-action-surface {
+  padding: var(--comp-bottom-sheet-close-padding);
+  color: var(--sys-energy-text-secondary);
+}
+
+.flow-bottom-sheet-body {
+  padding: 0 var(--comp-bottom-sheet-padding) var(--comp-bottom-sheet-padding);
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,0 +1,11 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INLINE VALIDATION — Error/success/info helper (L3)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.flow-inline-validation {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--comp-inline-validation-gap);
+  font-size: var(--sys-voice-caption-size);
+  font-family: var(--sys-voice-family);
+}

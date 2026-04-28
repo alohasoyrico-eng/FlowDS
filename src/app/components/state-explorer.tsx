@@ -11,7 +11,7 @@
  */
 import { useState } from "react";
 
-import { Divider, Inline, Stack, Surface, Text } from "../primitives";
+import { Divider, Inline, Stack, Surface, Text } from "@flow/primitives";
 
 // ── Color constants ──
 const AZURE = "#2F64F5";
@@ -496,8 +496,8 @@ export function StateExplorer() {
     <Stack gap={10}>
       {/* ── Section 1: State Precedence ── */}
       <Stack gap={4}>
-        <Text role="display-l">State Precedence</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
+        <Text variant="display-l">State Precedence</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
           FLOW defines 9 mandatory interactive states resolved by strict precedence. When multiple
           states are active, the highest-ranked state determines the visual treatment.
         </Text>
@@ -528,7 +528,10 @@ export function StateExplorer() {
                       : i === STATE_LEVELS.length - 1
                         ? "var(--sys-energy-surface-secondary, #E0E0E0)"
                         : `color-mix(in srgb, ${AZURE} ${100 - i * 10}%, var(--sys-energy-surface-secondary, #E0E0E0))`,
-                  color: i < 3 ? "var(--ref-energy-neutral-0)" : "var(--sys-energy-content-primary, #1A1A1A)",
+                  color:
+                    i < 3
+                      ? "var(--ref-energy-neutral-0)"
+                      : "var(--sys-energy-content-primary, #1A1A1A)",
                   fontFamily: "var(--ref-voice-family-mono, monospace)",
                   fontSize: "var(--ref-voice-size-4, 12px)",
                   fontWeight: "var(--ref-voice-weight-bold)",
@@ -536,7 +539,10 @@ export function StateExplorer() {
               >
                 {level.rank}
               </span>
-              <Text role="label-l" style={{ minWidth: 64, fontWeight: "var(--ref-voice-weight-semibold)" }}>
+              <Text
+                variant="label-l"
+                style={{ minWidth: 64, fontWeight: "var(--ref-voice-weight-semibold)" }}
+              >
                 {level.name}
               </Text>
               <code
@@ -552,7 +558,7 @@ export function StateExplorer() {
                 {level.attribute}
               </code>
               <Text
-                role="paragraph-s"
+                variant="paragraph-s"
                 style={{
                   color: "var(--sys-energy-content-secondary, #666)",
                   flex: 1,
@@ -611,14 +617,20 @@ export function StateExplorer() {
 
       {/* ── Section 2: Interactive State Compositor ── */}
       <Stack gap={4}>
-        <Text role="display-l">Interactive State Compositor</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
+        <Text variant="display-l">Interactive State Compositor</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
           Toggle states to see how they resolve visually. The highest-precedence active state wins.
         </Text>
         <Divider />
         <Inline gap={8} style={{ alignItems: "flex-start", flexWrap: "wrap" }}>
           <Stack gap={3} style={{ minWidth: 240 }}>
-            <Text role="label-l" style={{ fontWeight: "var(--ref-voice-weight-semibold)", marginBottom: "var(--ref-frame-space-1)" }}>
+            <Text
+              variant="label-l"
+              style={{
+                fontWeight: "var(--ref-voice-weight-semibold)",
+                marginBottom: "var(--ref-frame-space-1)",
+              }}
+            >
               Active States
             </Text>
             {STATE_ORDER.map((state) => (
@@ -640,9 +652,17 @@ export function StateExplorer() {
                   type="checkbox"
                   checked={active[state]}
                   onChange={() => toggle(state)}
-                  style={{ accentColor: AZURE, width: "var(--ref-frame-space-4)", height: "var(--ref-frame-space-4)" }}
+                  style={{
+                    accentColor: AZURE,
+                    width: "var(--ref-frame-space-4)",
+                    height: "var(--ref-frame-space-4)",
+                  }}
                 />
-                <span style={{ fontWeight: active[state] ? "var(--ref-voice-weight-semibold)" : 400 }}>{state}</span>
+                <span
+                  style={{ fontWeight: active[state] ? "var(--ref-voice-weight-semibold)" : 400 }}
+                >
+                  {state}
+                </span>
               </label>
             ))}
           </Stack>
@@ -667,7 +687,10 @@ export function StateExplorer() {
               }}
             >
               <Inline gap={3} style={{ alignItems: "center", justifyContent: "center" }}>
-                <Text role="label-s" style={{ color: "var(--sys-energy-content-secondary, #888)" }}>
+                <Text
+                  variant="label-s"
+                  style={{ color: "var(--sys-energy-content-secondary, #888)" }}
+                >
                   Resolved State:
                 </Text>
                 <code
@@ -682,7 +705,7 @@ export function StateExplorer() {
                 </code>
               </Inline>
               <Text
-                role="paragraph-s"
+                variant="paragraph-s"
                 style={{
                   color: "var(--sys-energy-content-tertiary, #999)",
                   fontFamily: "var(--ref-voice-family-mono, monospace)",
@@ -698,8 +721,8 @@ export function StateExplorer() {
 
       {/* ── Section 3: Component State Coverage Matrix ── */}
       <Stack gap={4}>
-        <Text role="display-l">Component State Coverage Matrix</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
+        <Text variant="display-l">Component State Coverage Matrix</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
           Not every component implements all 9 states. This matrix shows which states each component
           supports.
         </Text>
@@ -771,7 +794,7 @@ export function StateExplorer() {
                         borderBottom: "1px solid var(--sys-energy-border-default, #F0F0F0)",
                         fontSize: "var(--ref-voice-size-5, 16px)",
                         color: row[col] ? JADE : "var(--sys-energy-content-tertiary, #CCC)",
-                      fontWeight: row[col] ? "var(--ref-voice-weight-bold)" : 400,
+                        fontWeight: row[col] ? "var(--ref-voice-weight-bold)" : 400,
                       }}
                     >
                       {row[col] ? "\u2713" : "\u2014"}
@@ -786,8 +809,8 @@ export function StateExplorer() {
 
       {/* ── Section 4: State Composition Rules ── */}
       <Stack gap={4}>
-        <Text role="display-l">State Composition Rules</Text>
-        <Text role="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
+        <Text variant="display-l">State Composition Rules</Text>
+        <Text variant="paragraph-l" style={{ color: "var(--sys-energy-content-secondary, #666)" }}>
           Some states compose additively, layering their visual treatments. Others are exclusive and
           suppress all lower-precedence states.
         </Text>
@@ -819,7 +842,10 @@ export function StateExplorer() {
                       {rule.states[0]}
                     </span>
                     <span
-                      style={{ color: "var(--sys-energy-content-tertiary, #999)", fontSize: "var(--ref-voice-size-3)" }}
+                      style={{
+                        color: "var(--sys-energy-content-tertiary, #999)",
+                        fontSize: "var(--ref-voice-size-3)",
+                      }}
                     >
                       +
                     </span>
@@ -857,12 +883,15 @@ export function StateExplorer() {
                     >
                       {rule.additive ? "Additive" : "Exclusive"}
                     </span>
-                    <Text role="label-l" style={{ fontWeight: "var(--ref-voice-weight-semibold)" }}>
+                    <Text
+                      variant="label-l"
+                      style={{ fontWeight: "var(--ref-voice-weight-semibold)" }}
+                    >
                       {rule.result}
                     </Text>
                   </Inline>
                   <Text
-                    role="paragraph-s"
+                    variant="paragraph-s"
                     style={{ color: "var(--sys-energy-content-secondary, #666)" }}
                   >
                     {rule.visual}

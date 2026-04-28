@@ -10,7 +10,7 @@ import { render } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import { describe, expect, it } from "vitest";
 
-import { FlowSkeleton } from "../app/components/feedback";
+import { FlowSkeleton } from "@flow/components";
 
 // ─────────────────────────────────────────────
 // Rendering

@@ -6,11 +6,26 @@
 import { useState } from "react";
 
 import {
-  type DateRange, type DateRangePreset, FlowButton, FlowCard, FlowChip,
-  FlowColorPicker, FlowDateRangePicker, FlowInlineEditable, FlowList,
-  FlowListItem, FlowOTPInput, FlowPhoneInput, FlowRichTextEditor,
-  FlowTextInput, Grid, Inline, Stack, Surface, Text,
-} from "../../lib";
+  type DateRange,
+  type DateRangePreset,
+  FlowButton,
+  FlowCard,
+  FlowChip,
+  FlowColorPicker,
+  FlowDateRangePicker,
+  FlowInlineEditable,
+  FlowList,
+  FlowListItem,
+  FlowOTPInput,
+  FlowPhoneInput,
+  FlowRichTextEditor,
+  FlowTextInput,
+  Grid,
+  Inline,
+  Stack,
+  Surface,
+  Text,
+} from "@flow/design-system";
 import { Callout } from "../components/doc-primitives";
 import { DemoSection } from "../components/demo-helpers"; // ✓ Correct import path
 
@@ -89,7 +104,7 @@ export function PhoneInputUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Contact Form</Text>
+          <Text variant="heading-m">Contact Form</Text>
           <FlowTextInput label="Full Name" placeholder="John Doe" />
           <FlowTextInput label="Email" placeholder="john@example.com" type="email" />
           <FlowPhoneInput
@@ -100,13 +115,13 @@ export function PhoneInputUseCasesDemo() {
             onCountryChange={(entry) => setCountry(entry.code)}
             hint="We'll use this to contact you"
           />
-          <FlowButton variant="high">Submit</FlowButton>
+          <FlowButton variant="primary">Submit</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">User Registration</Text>
+          <Text variant="heading-m">User Registration</Text>
           <FlowTextInput label="Username" placeholder="johndoe" />
           <FlowTextInput label="Email" placeholder="john@example.com" type="email" />
           <FlowPhoneInput
@@ -115,20 +130,20 @@ export function PhoneInputUseCasesDemo() {
             hint="For two-factor authentication"
           />
           <FlowTextInput label="Password" type="password" placeholder="••••••••" />
-          <FlowButton variant="high">Create Account</FlowButton>
+          <FlowButton variant="primary">Create Account</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Delivery Information</Text>
+          <Text variant="heading-m">Delivery Information</Text>
           <FlowTextInput label="Street Address" placeholder="123 Main St" />
           <Grid minItemWidth="200px" gap="component">
             <FlowTextInput label="City" placeholder="New York" />
             <FlowTextInput label="ZIP Code" placeholder="10001" />
           </Grid>
           <FlowPhoneInput label="Delivery Contact" country="US" hint="For delivery updates" />
-          <FlowButton variant="high">Continue to Payment</FlowButton>
+          <FlowButton variant="primary">Continue to Payment</FlowButton>
         </Stack>
       </Surface>
     </Stack>
@@ -273,7 +288,7 @@ export function DateRangePickerUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Hotel Booking</Text>
+          <Text variant="heading-m">Hotel Booking</Text>
           <FlowTextInput label="Guest Name" placeholder="Jane Smith" />
           <FlowDateRangePicker
             label="Check-in / Check-out"
@@ -284,13 +299,13 @@ export function DateRangePickerUseCasesDemo() {
             min={new Date().toISOString().split("T")[0]}
           />
           <FlowTextInput label="Number of Guests" type="number" defaultValue="2" />
-          <FlowButton variant="high">Check Availability</FlowButton>
+          <FlowButton variant="primary">Check Availability</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Analytics Dashboard</Text>
+          <Text variant="heading-m">Analytics Dashboard</Text>
           <FlowDateRangePicker
             label="Date Range"
             value={reportRange}
@@ -300,25 +315,25 @@ export function DateRangePickerUseCasesDemo() {
           />
           {reportRange && (
             <Callout>
-              <Text role="paragraph-s">
+              <Text variant="paragraph-s">
                 Showing data from <strong>{reportRange.start}</strong> to{" "}
                 <strong>{reportRange.end}</strong>
               </Text>
             </Callout>
           )}
           <Inline gap={2}>
-            <FlowButton variant="high">Generate Report</FlowButton>
-            <FlowButton variant="outline">Export CSV</FlowButton>
+            <FlowButton variant="primary">Generate Report</FlowButton>
+            <FlowButton variant="outlined">Export CSV</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Campaign Scheduler</Text>
+          <Text variant="heading-m">Campaign Scheduler</Text>
           <FlowTextInput label="Campaign Name" placeholder="Summer Sale 2026" />
           <FlowDateRangePicker label="Campaign Duration" presets={COMMON_PRESETS} />
-          <FlowButton variant="high">Schedule Campaign</FlowButton>
+          <FlowButton variant="primary">Schedule Campaign</FlowButton>
         </Stack>
       </Surface>
     </Stack>
@@ -380,7 +395,10 @@ export function ColorPickerOverviewDemo() {
             padding="container"
             style={{ backgroundColor: color1, minHeight: 80 }}
           >
-            <Text role="paragraph-s" style={{ color: "var(--ref-energy-neutral-0)", textAlign: "center" }}>
+            <Text
+              variant="paragraph-s"
+              style={{ color: "var(--ref-energy-neutral-0)", textAlign: "center" }}
+            >
               Preview: {color1}
             </Text>
           </Surface>
@@ -403,7 +421,7 @@ export function ColorPickerUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Brand Identity</Text>
+          <Text variant="heading-m">Brand Identity</Text>
           <FlowTextInput label="Company Name" placeholder="Acme Inc." />
           <FlowColorPicker
             label="Primary Brand Color"
@@ -411,13 +429,13 @@ export function ColorPickerUseCasesDemo() {
             onChange={setBrandColor}
           />
           <FlowColorPicker label="Secondary Color" defaultValue="#10b981" />
-          <FlowButton variant="high">Save Brand</FlowButton>
+          <FlowButton variant="primary">Save Brand</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Theme Customizer</Text>
+          <Text variant="heading-m">Theme Customizer</Text>
           <FlowColorPicker label="Background" value={bgColor} onChange={setBgColor} />
           <FlowColorPicker label="Text Color" value={textColor} onChange={setTextColor} />
           <Surface
@@ -425,21 +443,21 @@ export function ColorPickerUseCasesDemo() {
             padding="container"
             style={{ backgroundColor: bgColor, minHeight: 100 }}
           >
-            <Text role="paragraph-m" style={{ color: textColor }}>
+            <Text variant="paragraph-m" style={{ color: textColor }}>
               This is a preview of your theme settings
             </Text>
           </Surface>
           <Inline gap={2}>
-            <FlowButton variant="high">Apply Theme</FlowButton>
-            <FlowButton variant="outline">Reset</FlowButton>
+            <FlowButton variant="primary">Apply Theme</FlowButton>
+            <FlowButton variant="outlined">Reset</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Tag Colors</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Tag Colors</Text>
+          <Text variant="paragraph-s" color="secondary">
             Assign colors to project tags
           </Text>
           <Grid minItemWidth="250px" gap="component">
@@ -528,8 +546,8 @@ export function OTPInputUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Two-Factor Authentication</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Two-Factor Authentication</Text>
+          <Text variant="paragraph-s" color="secondary">
             Enter the 6-digit code from your authenticator app
           </Text>
           <FlowOTPInput
@@ -542,12 +560,12 @@ export function OTPInputUseCasesDemo() {
           />
           {verified && (
             <Callout>
-              <Text role="paragraph-s" color="accent">
+              <Text variant="paragraph-s" color="accent">
                 ✓ Code verified successfully!
               </Text>
             </Callout>
           )}
-          <FlowButton variant="high" disabled={verificationCode.length < 6}>
+          <FlowButton variant="primary" disabled={verificationCode.length < 6}>
             Verify & Continue
           </FlowButton>
         </Stack>
@@ -555,13 +573,13 @@ export function OTPInputUseCasesDemo() {
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Phone Verification</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Phone Verification</Text>
+          <Text variant="paragraph-s" color="secondary">
             We sent a code to +1 (555) 123-4567
           </Text>
           <FlowOTPInput label="SMS Code" length={4} type="numeric" size="lg" />
           <Inline gap={2}>
-            <FlowButton variant="high">Verify</FlowButton>
+            <FlowButton variant="primary">Verify</FlowButton>
             <FlowButton variant="ghost">Resend Code</FlowButton>
           </Inline>
         </Stack>
@@ -569,12 +587,12 @@ export function OTPInputUseCasesDemo() {
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Account Recovery</Text>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="heading-m">Account Recovery</Text>
+          <Text variant="paragraph-s" color="secondary">
             Enter the recovery code from your backup codes
           </Text>
           <FlowOTPInput label="Recovery Code" length={8} type="alphanumeric" />
-          <FlowButton variant="high">Recover Account</FlowButton>
+          <FlowButton variant="primary">Recover Account</FlowButton>
         </Stack>
       </Surface>
     </Stack>
@@ -615,11 +633,11 @@ export function InlineEditableOverviewDemo() {
               onChange={setTitle1}
               style={{ fontSize: "var(--ref-type-size-5)", fontWeight: 600 }}
             />
-            <Text role="paragraph-s" color="secondary">
+            <Text variant="paragraph-s" color="secondary">
               Product ID: #12345
             </Text>
             <Inline gap={2} align="center">
-              <Text role="paragraph-s">Price:</Text>
+              <Text variant="paragraph-s">Price:</Text>
               <FlowInlineEditable value={price} onChange={setPrice} />
             </Inline>
           </Stack>
@@ -662,23 +680,23 @@ export function InlineEditableUseCasesDemo() {
       <Surface variant="primary" padding="container">
         <Stack gap="component">
           <Inline gap={2} align="center">
-            <Text role="heading-s">Project:</Text>
+            <Text variant="heading-s">Project:</Text>
             <FlowInlineEditable
               value={projectName}
               onChange={setProjectName}
               style={{ fontSize: "var(--ref-type-size-4)", fontWeight: 600 }}
             />
           </Inline>
-          <Text role="paragraph-s" color="secondary">
+          <Text variant="paragraph-s" color="secondary">
             Click the project name to rename it
           </Text>
-          <FlowButton variant="outline">Project Settings</FlowButton>
+          <FlowButton variant="outlined">Project Settings</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Task Board</Text>
+          <Text variant="heading-m">Task Board</Text>
           <FlowCard padding="container">
             <Stack gap={2}>
               <FlowInlineEditable
@@ -686,11 +704,11 @@ export function InlineEditableUseCasesDemo() {
                 onChange={setTaskTitle}
                 style={{ fontSize: "var(--ref-type-size-4)", fontWeight: 500 }}
               />
-              <Text role="paragraph-s" color="secondary">
+              <Text variant="paragraph-s" color="secondary">
                 Assigned to: Alice Johnson
               </Text>
               <Inline gap={2} align="center">
-                <Text role="paragraph-s">Notes:</Text>
+                <Text variant="paragraph-s">Notes:</Text>
                 <FlowInlineEditable value={notes} onChange={setNotes} />
               </Inline>
             </Stack>
@@ -700,7 +718,7 @@ export function InlineEditableUseCasesDemo() {
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Product Catalog</Text>
+          <Text variant="heading-m">Product Catalog</Text>
           <Grid minItemWidth="280px" gap="component">
             <FlowCard padding="container">
               <Stack gap={2}>
@@ -710,7 +728,7 @@ export function InlineEditableUseCasesDemo() {
                   style={{ fontWeight: 600 }}
                 />
                 <FlowInlineEditable value="$149.99" onChange={() => {}} />
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="paragraph-s" color="secondary">
                   SKU: WDG-001
                 </Text>
               </Stack>
@@ -723,7 +741,7 @@ export function InlineEditableUseCasesDemo() {
                   style={{ fontWeight: 600 }}
                 />
                 <FlowInlineEditable value="$99.99" onChange={() => {}} />
-                <Text role="paragraph-s" color="secondary">
+                <Text variant="paragraph-s" color="secondary">
                   SKU: WDG-002
                 </Text>
               </Stack>
@@ -800,7 +818,7 @@ export function RichTextEditorUseCasesDemo() {
     <Stack gap="component-lg">
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Blog Post Editor</Text>
+          <Text variant="heading-m">Blog Post Editor</Text>
           <FlowTextInput label="Post Title" placeholder="Enter post title..." />
           <FlowRichTextEditor
             label="Content"
@@ -808,34 +826,34 @@ export function RichTextEditorUseCasesDemo() {
             placeholder="Write your blog post here..."
           />
           <Inline gap={2}>
-            <FlowButton variant="high">Publish</FlowButton>
-            <FlowButton variant="outline">Save Draft</FlowButton>
+            <FlowButton variant="primary">Publish</FlowButton>
+            <FlowButton variant="outlined">Save Draft</FlowButton>
           </Inline>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Product Description</Text>
+          <Text variant="heading-m">Product Description</Text>
           <FlowTextInput label="Product Name" placeholder="Premium Widget" />
           <FlowRichTextEditor
             label="Full Description"
             minHeight={200}
             placeholder="Describe your product features, benefits, specifications..."
           />
-          <FlowButton variant="high">Update Product</FlowButton>
+          <FlowButton variant="primary">Update Product</FlowButton>
         </Stack>
       </Surface>
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Email Composer</Text>
+          <Text variant="heading-m">Email Composer</Text>
           <FlowTextInput label="To" placeholder="recipient@example.com" />
           <FlowTextInput label="Subject" placeholder="Email subject" />
           <FlowRichTextEditor label="Message" minHeight={250} placeholder="Compose your email..." />
           <Inline gap={2}>
-            <FlowButton variant="high">Send</FlowButton>
-            <FlowButton variant="outline">Save Draft</FlowButton>
+            <FlowButton variant="primary">Send</FlowButton>
+            <FlowButton variant="outlined">Save Draft</FlowButton>
             <FlowButton variant="ghost">Discard</FlowButton>
           </Inline>
         </Stack>
@@ -843,14 +861,14 @@ export function RichTextEditorUseCasesDemo() {
 
       <Surface variant="primary" padding="container">
         <Stack gap="component">
-          <Text role="heading-m">Help Article</Text>
+          <Text variant="heading-m">Help Article</Text>
           <FlowTextInput label="Article Title" placeholder="How to..." />
           <FlowRichTextEditor
             label="Article Content"
             minHeight={350}
             placeholder="Write step-by-step instructions..."
           />
-          <FlowButton variant="high">Publish Article</FlowButton>
+          <FlowButton variant="primary">Publish Article</FlowButton>
         </Stack>
       </Surface>
     </Stack>

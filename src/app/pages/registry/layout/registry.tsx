@@ -2,6 +2,9 @@
  * FLOW - Layout Domain Registry
  * Component metadata, demos, and developer guides for layout components.
  */
+import React from "react";
+import { FlowAccordion, FlowFieldset, FlowSplitPane } from "@flow/design-system";
+import { Text } from "@flow/primitives";
 import type { ComponentEntry } from "../types";
 import {
   FlowAccordionOverview,
@@ -60,7 +63,11 @@ export const LAYOUT_REGISTRY: Record<string, ComponentEntry> = {
           "Disabled accordions get aria-disabled='true'",
         ],
         required: ["Provide descriptive title prop for screen reader context"],
-        keyboard: ["Tab to focus accordion header", "Enter or Space to toggle expansion"],
+        keyboard: [
+          { key: "Tab", action: "Focus accordion header" },
+          { key: "Enter / Space", action: "Toggle expansion" },
+        ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -255,6 +262,21 @@ FlowAccordion(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowAccordion,
+          {
+            title: (props.title as string) || "Accordion Title",
+            size: props.size,
+            disabled: !!props.disabled,
+            defaultExpanded: true,
+          } as React.ComponentProps<typeof FlowAccordion>,
+          React.createElement(Text, { variant: "paragraph-s", children: "Accordion content goes here. This is the expandable panel." } as React.ComponentProps<typeof Text>),
+        ),
+      defaults: { title: "Accordion Title", size: "md", disabled: false },
+      excludeControls: ["children", "expanded", "defaultExpanded", "onChange", "className", "style", "id"],
+    },
   },
 
   // ─── FlowSplitPane ───
@@ -310,16 +332,15 @@ FlowAccordion(
           "aria-disabled='true' when disabled",
           "Focus ring on separator for keyboard users",
         ],
-        required: [
-          "Provide meaningful content in both panes for screen reader context",
-        ],
+        required: ["Provide meaningful content in both panes for screen reader context"],
         keyboard: [
-          "Tab to focus separator",
-          "Arrow Left/Right (horizontal) or Arrow Up/Down (vertical) to resize by 2%",
-          "Shift + Arrow to resize by 10%",
-          "Home to collapse to minimum first pane",
-          "End to expand first pane to maximum",
+          { key: "Tab", action: "Focus separator" },
+          { key: "← → / ↑ ↓ Arrow keys", action: "Resize by 2%" },
+          { key: "Shift + Arrow", action: "Resize by 10%" },
+          { key: "Home", action: "Collapse to minimum first pane" },
+          { key: "End", action: "Expand first pane to maximum" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -387,15 +408,13 @@ FlowSplitPane(
         {
           name: "first",
           type: "ReactNode",
-          description:
-            "Content for the leading pane (left in horizontal, top in vertical).",
+          description: "Content for the leading pane (left in horizontal, top in vertical).",
           required: true,
         },
         {
           name: "second",
           type: "ReactNode",
-          description:
-            "Content for the trailing pane (right in horizontal, bottom in vertical).",
+          description: "Content for the trailing pane (right in horizontal, bottom in vertical).",
           required: true,
         },
         {
@@ -481,6 +500,22 @@ FlowSplitPane(
         },
       ],
     },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          "div",
+          { style: { height: "200px", width: "100%" } },
+          React.createElement(FlowSplitPane, {
+            direction: props.direction,
+            defaultSplit: (props.defaultSplit as number) ?? 50,
+            disabled: !!props.disabled,
+            first: React.createElement("div", { style: { padding: "16px" } }, "First pane"),
+            second: React.createElement("div", { style: { padding: "16px" } }, "Second pane"),
+          } as React.ComponentProps<typeof FlowSplitPane>),
+        ),
+      defaults: { direction: "horizontal", defaultSplit: 50, disabled: false },
+      excludeControls: ["first", "second", "minFirst", "minSecond", "className", "style"],
+    },
   },
 
   // ─── FlowFieldset ───
@@ -545,9 +580,10 @@ FlowSplitPane(
           "Use error prop with appropriate error messaging for validation",
         ],
         keyboard: [
-          "Tab navigates through child form controls normally",
-          "Disabled fieldset skips all child controls in tab order",
+          { key: "Tab", action: "Navigate through child form controls normally" },
+          { key: "Tab (disabled fieldset)", action: "Skip all child controls in tab order" },
         ],
+        wcag: ["2.1.1", "2.4.3", "4.1.2"],
       },
     },
     demos: {
@@ -664,8 +700,7 @@ FlowFieldset(
           name: "error",
           type: "boolean",
           default: "false",
-          description:
-            "Error state — turns border and legend text red using error status token.",
+          description: "Error state — turns border and legend text red using error status token.",
         },
         {
           name: "className",
@@ -718,6 +753,21 @@ FlowFieldset(
           text: "Error state changes border and legend color to sys-energy-status-error token.",
         },
       ],
+    },
+    playground: {
+      renderPreview: (props: Record<string, unknown>) =>
+        React.createElement(
+          FlowFieldset,
+          {
+            legend: (props.legend as string) || "Personal Information",
+            description: props.description as string,
+            disabled: !!props.disabled,
+            error: !!props.error,
+          } as React.ComponentProps<typeof FlowFieldset>,
+          React.createElement(Text, { variant: "paragraph-s", children: "Form controls go here" } as React.ComponentProps<typeof Text>),
+        ),
+      defaults: { legend: "Personal Information", description: "Fill in your details", disabled: false, error: false },
+      excludeControls: ["children", "className", "style"],
     },
   },
 };

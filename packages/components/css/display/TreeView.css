@@ -1,0 +1,99 @@
+/* ── TreeView ── */
+[role="tree"] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flow-tree-item {
+  list-style: none;
+  outline: none;
+}
+
+/* Focus ring for keyboard navigation */
+.flow-tree-item:focus-visible > .flow-tree-item-row {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(var(--sys-state-focus-ring-offset) * -1);
+}
+
+@media (forced-colors: active) {
+  .flow-tree-item:focus-visible > .flow-tree-item-row {
+    outline-color: CanvasText;
+  }
+}
+
+.flow-tree-item[aria-disabled="true"] {
+  cursor: default;
+}
+
+.flow-tree-item:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+.flow-tree-item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-tree-item-row-gap);
+  padding-inline: var(--comp-tree-item-row-padding-inline);
+  border-radius: var(--sys-frame-radius-sm);
+  color: var(--sys-energy-text-primary);
+  background: transparent;
+  transition: background var(--sys-momentum-transition-fast);
+  height: var(--comp-tree-item-height-md);
+  font-size: var(--sys-voice-paragraph-s-size);
+}
+
+[data-size="sm"] > .flow-tree-item .flow-tree-item-row,
+[data-size="sm"] > .flow-tree-item > .flow-tree-item-row {
+  height: var(--comp-tree-item-height-sm);
+  font-size: var(--sys-voice-caption-size);
+}
+
+[data-size="lg"] > .flow-tree-item .flow-tree-item-row,
+[data-size="lg"] > .flow-tree-item > .flow-tree-item-row {
+  height: var(--comp-tree-item-height-lg);
+  font-size: var(--sys-voice-heading-m-size);
+}
+
+.flow-tree-item[aria-disabled="true"] .flow-tree-item-row {
+  color: var(--sys-energy-text-disabled);
+}
+
+.flow-tree-item[aria-selected="true"] .flow-tree-item-row {
+  background: var(--sys-energy-surface-accent-subtle);
+}
+
+.flow-tree-item:not([aria-selected="true"], [aria-disabled="true"]) .flow-tree-item-row:hover {
+  background: var(--sys-energy-state-hover);
+}
+
+.flow-tree-item-chevron {
+  width: var(--ref-icon-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.flow-tree-item-group {
+  margin: 0;
+  padding: 0;
+}
+
+.flow-tree-skeleton {
+  list-style: none;
+}
+
+.flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-md);
+  border-radius: var(--sys-frame-radius-sm);
+  margin-bottom: var(--comp-tree-skeleton-margin-bottom);
+}
+
+[data-size="sm"] .flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-sm);
+}
+
+[data-size="lg"] .flow-tree-skeleton .flow-skeleton {
+  height: var(--comp-tree-item-height-lg);
+}

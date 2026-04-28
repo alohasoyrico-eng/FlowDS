@@ -11,7 +11,7 @@
 
 import React from "react";
 
-import { Stack, Text, useFlowTheme } from "../primitives";
+import { Stack, Text, useFlowTheme } from "@flow/primitives";
 import { DemoGroup, DemoSection } from "../components/demo-helpers";
 import { LayoutGrid } from "../components/layout-grid";
 
@@ -76,7 +76,7 @@ export function DemoCell({
     <div className={`flow-demo-cell${align === "start" ? " flow-demo-cell--start" : ""}`}>
       {children}
       {label && (
-        <Text role="label-s" color="tertiary" className="flow-demo-cell__label">
+        <Text variant="label-s" color="tertiary" className="flow-demo-cell__label">
           {label}
         </Text>
       )}
@@ -113,7 +113,7 @@ export function DemoCell({
  */
 export function VariantMatrix({
   sizes,
-  variantLevels = ["high", "medium", "low", "outline", "danger", "warning", "ghost"],
+  variantLevels = ["primary", "secondary", "tertiary", "outlined", "ghost"],
   children,
 }: {
   sizes: readonly string[];
@@ -150,7 +150,7 @@ export function VariantMatrix({
       <div />
       {visibleSizes.map((size) => (
         <div key={size} className="flow-matrix-header-cell">
-          <Text role="label-s" color="tertiary">
+          <Text variant="label-s" color="tertiary">
             {size}
           </Text>
         </div>
@@ -160,7 +160,7 @@ export function VariantMatrix({
       {variantLevels.map((variant) => (
         <div key={variant} className="flow-matrix-row">
           <div className="flow-matrix-label-cell">
-            <Text role="label-m" color="secondary" className="flow-matrix-label-text">
+            <Text variant="label-m" color="secondary" className="flow-matrix-label-text">
               {variant}
             </Text>
           </div>
@@ -328,7 +328,7 @@ export function StatesSection({
  * **Usage:**
  * ```tsx
  * <VariantLevelsSection
- *   variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+ *   variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
  *   render={(variant, size) => (
  *     <FlowButton variant={variant} size={size}>Button</FlowButton>
  *   )}
@@ -336,7 +336,7 @@ export function StatesSection({
  * ```
  */
 export function VariantLevelsSection({
-  variantLevels = ["high", "medium", "low", "outline", "danger", "warning", "ghost"],
+  variantLevels = ["primary", "secondary", "tertiary", "outlined", "ghost"],
   render,
   description,
 }: {
@@ -414,14 +414,14 @@ export function VariantSizeMatrixSection({
  * Template for "Full Width" section.
  *
  * **Pattern:**
- * - 3 subsections with <Text role="overline"> separators
+ * - 3 subsections with <Text variant="overline"> separators
  * - Shows comparison: without fullWidth vs with fullWidth
  * - Demonstrates responsive container behavior (12, 8, 6, 4 columns)
  *
  * **Usage:**
  * ```tsx
  * <FullWidthSection
- *   variantLevels={["high", "medium", "low", "outline", "danger", "warning", "ghost"]}
+ *   variantLevels={["primary", "secondary", "tertiary", "outlined", "ghost"]}
  *   renderNormal={(variant) => <Component variant={variant}>Normal</Component>}
  *   renderFullWidth={(variant) => <Component fullWidth variant={variant}>Full</Component>}
  *   renderResponsive={(variant, span) => <Component fullWidth variant={variant}>Span {span}</Component>}
@@ -429,7 +429,7 @@ export function VariantSizeMatrixSection({
  * ```
  */
 export function FullWidthSection({
-  variantLevels = ["high", "medium", "low", "outline", "danger", "warning", "ghost"],
+  variantLevels = ["primary", "secondary", "tertiary", "outlined", "ghost"],
   renderNormal,
   renderFullWidth,
   renderResponsive,
@@ -446,7 +446,7 @@ export function FullWidthSection({
     >
       <DemoGroup>
         <Stack gap={4}>
-          <Text role="overline">Without fullWidth (natural width)</Text>
+          <Text variant="overline">Without fullWidth (natural width)</Text>
           <LayoutGrid fullBleed>
             <LayoutGrid.Item span={12}>
               <Stack gap={2}>
@@ -456,7 +456,7 @@ export function FullWidthSection({
             </LayoutGrid.Item>
           </LayoutGrid>
 
-          <Text role="overline">With fullWidth — all variants</Text>
+          <Text variant="overline">With fullWidth — all variants</Text>
           <LayoutGrid fullBleed>
             <LayoutGrid.Item span={12}>
               <Stack gap={2}>
@@ -467,28 +467,28 @@ export function FullWidthSection({
             </LayoutGrid.Item>
           </LayoutGrid>
 
-          <Text role="overline">Responsive containers — adapts to parent width</Text>
+          <Text variant="overline">Responsive containers — adapts to parent width</Text>
           <LayoutGrid fullBleed>
             <LayoutGrid.Item span={12}>
-              <Text role="label-s" color="tertiary" className="flow-fullwidth-col-label">
+              <Text variant="label-s" color="tertiary" className="flow-fullwidth-col-label">
                 12 columns (full width)
               </Text>
               {renderResponsive(variantLevels[0] as string, 12)}
             </LayoutGrid.Item>
             <LayoutGrid.Item span={8}>
-              <Text role="label-s" color="tertiary" className="flow-fullwidth-col-label">
+              <Text variant="label-s" color="tertiary" className="flow-fullwidth-col-label">
                 8 columns
               </Text>
               {renderResponsive(variantLevels[1] as string, 8)}
             </LayoutGrid.Item>
             <LayoutGrid.Item span={6}>
-              <Text role="label-s" color="tertiary" className="flow-fullwidth-col-label">
+              <Text variant="label-s" color="tertiary" className="flow-fullwidth-col-label">
                 6 columns
               </Text>
               {renderResponsive(variantLevels[3] as string, 6)}
             </LayoutGrid.Item>
             <LayoutGrid.Item span={4}>
-              <Text role="label-s" color="tertiary" className="flow-fullwidth-col-label">
+              <Text variant="label-s" color="tertiary" className="flow-fullwidth-col-label">
                 4 columns
               </Text>
               {renderResponsive(variantLevels[2] as string, 4)}
@@ -507,17 +507,17 @@ export function FullWidthSection({
 /**
  * Typography semantic roles for component documentation:
  *
- * 1. <Text role="overline">
+ * 1. <Text variant="overline">
  *    - Subsection separators within DemoSection
  *    - Creates narrative flow between subsections
  *    - Example: "Without fullWidth (natural width)", "Action row — span 4 + 4 + 4"
  *
- * 2. <Text role="label-s" color="tertiary">
+ * 2. <Text variant="label-s" color="tertiary">
  *    - Individual element labels
  *    - Describes single items in grids
  *    - Example: "sm", "md", "12 columns", "high"
  *
- * 3. <Text role="label-m" color="secondary">
+ * 3. <Text variant="label-m" color="secondary">
  *    - Matrix row labels
  *    - Headers for data grid rows
  *    - Example: "Unselected", "Selected", "primary", "medium"

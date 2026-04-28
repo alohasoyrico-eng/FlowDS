@@ -1,76 +1,56 @@
 {
-  "name": "@flow/design-system",
-  "description": "Flow Design System — multiplatform component library for React and Flutter",
+  "name": "flow-monorepo",
+  "private": true,
+  "description": "Flow Design System — monorepo",
   "license": "MIT",
-  "keywords": ["design-system", "react", "flutter", "components", "tokens", "accessibility", "ui"],
-  "repository": { "type": "git", "url": "https://github.com/ER-Mobility-MX/flow.git" },
-  "homepage": "https://github.com/ER-Mobility-MX/flow",
-  "bugs": { "url": "https://github.com/ER-Mobility-MX/flow/issues" },
-  "version": "1.0.0-rc.3",
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./styles": "./dist/style.css",
-    "./styles/*": "./dist/styles/*"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ER-Mobility-MX/flow.git"
   },
-  "files": [
-    "dist"
-  ],
-  "sideEffects": [
-    "*.css"
+  "homepage": "https://github.com/ER-Mobility-MX/flow",
+  "bugs": {
+    "url": "https://github.com/ER-Mobility-MX/flow/issues"
+  },
+  "type": "module",
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "vite build",
-    "build:lib": "vite build --config vite.config.lib.ts && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build": "npm run build:tokens && npm run build:foundations && npm run build:primitives && npm run build:components && npm run build:patterns && npm run build:flow",
+    "build:tokens": "npm -w @flow/tokens run build",
+    "build:foundations": "npm -w @flow/icons run build & npm -w @flow/flags run build & wait",
+    "build:primitives": "npm -w @flow/primitives run build",
+    "build:components": "npm -w @flow/components run build",
+    "build:patterns": "npm -w @flow/patterns run build",
+    "build:flow": "npm -w @flow/design-system run build",
     "dev": "vite",
     "preview": "vite preview",
-    "lint": "eslint src/",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint packages/",
+    "format": "prettier --write \"packages/**/*.{ts,tsx,css,json}\"",
+    "format:check": "prettier --check \"packages/**/*.{ts,tsx,css,json}\"",
+    "typecheck": "npm --workspaces --if-present run typecheck",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:tokens": "node --test --import ./node_modules/jiti/dist/jiti.cjs src/test/node/tokens.test.ts src/test/node/semantic-tokens.test.ts src/test/node/momentum.test.ts",
+    "test:tokens": "node --test --import ./node_modules/jiti/dist/jiti.cjs src/test/node/tokens.test.ts src/test/node/semantic-tokens.test.ts src/test/node/momentum.test.ts src/test/node/contrast.test.ts src/test/node/a11y-media-queries.test.ts src/test/node/token-parity.test.ts",
     "test:components": "vitest run --config vitest.components.config.ts",
-    "test:components:coverage": "vitest run --config vitest.components.config.ts --coverage",
-    "ci": "npm run format:check && npm run typecheck && npm run typecheck:test && npm run test:tokens && npm run test:components && npm run lint && npm run build:lib",
-    "typecheck:test": "tsc --noEmit -p tsconfig.test.json",
-    "analyze": "ANALYZE=true vite build",
-    "prepublishOnly": "npm run build:lib",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test:visual": "playwright test",
-    "test:visual:update": "playwright test --update-snapshots",
-    "lint:css": "stylelint \"src/styles/**/*.css\"",
-    "lint:css:fix": "stylelint \"src/styles/**/*.css\" --fix",
-    "version:bump": "bash scripts/version-bump.sh",
-    "version:sync": "bash scripts/sync-version.sh",
+    "bench": "vitest bench src/test/bench/",
+    "bench:watch": "vitest bench src/test/bench/ --watch",
+    "typecheck:test": "tsc -p tsconfig.test.json --noEmit",
+    "build:lib": "turbo run build --filter=./packages/* --filter=!@flow/design-system",
+    "size": "size-limit",
+    "size:check": "size-limit --limit",
+    "ci": "npm run format:check && npm run typecheck && npm run test:tokens && npm run test:components && npm run lint && npm run build",
     "changeset": "changeset",
     "version:changeset": "changeset version",
-    "release": "npm run build:lib && changeset publish",
-    "docs:api": "typedoc",
-    "docs:api:watch": "typedoc --watch"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "release": "npm run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@eslint/js": "^9.39.4",
-    "@storybook/addon-a11y": "^10.3.3",
-    "@storybook/addon-docs": "^10.3.3",
-    "@storybook/addon-vitest": "^10.3.3",
-    "@storybook/react-vite": "^10.3.3",
+    "@size-limit/file": "^12.1.0",
     "@testing-library/jest-dom": "^6.6.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.0",
@@ -78,26 +58,25 @@
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react-swc": "^4.3.0",
-    "@vitest/browser": "^3.1.0",
     "@vitest/coverage-v8": "^3.1.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-storybook": "^10.3.3",
+    "jiti": "^2.6.1",
     "jsdom": "^26.1.0",
     "lucide-react": "0.487.0",
     "playwright": "^1.59.0",
     "prettier": "^3.8.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router": "7.13.0",
-    "rollup-plugin-visualizer": "^5.14.0",
-    "storybook": "^10.3.3",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "size-limit": "^12.1.0",
     "stylelint": "^17.6.0",
     "stylelint-config-standard": "^40.0.0",
     "tsc-alias": "^1.8.16",
+    "turbo": "^2.9.6",
     "typedoc": "^0.28.18",
     "typescript": "5.4.2",
     "typescript-eslint": "^8.58.0",
@@ -110,5 +89,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "react-router": "^7.13.0"
   }
 }

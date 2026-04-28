@@ -1,0 +1,883 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INPUT SURFACE — Shared CSS primitive for the input-family
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Phase C refactor: extracts the duplicated container/label/hint/
+   field CSS into composable base classes. Components add these
+   alongside their specific class:
+     <div class="flow-input-surface flow-text-input-container">
+   The component-specific class adds only overrides (align-items,
+   cursor, etc.). Private CSS vars use --_is-* prefix.
+
+   Applies to: TextInput, PhoneInput, CountrySelect (box-shadow
+   border approach). TextArea and Select use real border so they
+   don't compose this — future Phase C.1 work.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Container base ── */
+.flow-input-surface {
+  position: relative;
+  display: flex;
+  height: var(--comp-textinput-height);
+  border-radius: var(--comp-textinput-radius);
+  background: var(--comp-textinput-bg);
+  box-shadow: inset 0 0 0 var(--_is-bw, var(--comp-textinput-border-width))
+    var(--_is-bc, var(--comp-textinput-border));
+  border: none;
+  cursor: text;
+  transition:
+    box-shadow var(--comp-textinput-transition),
+    background var(--comp-textinput-transition);
+}
+
+/* ── Container states ── */
+.flow-input-surface:hover:not([data-state="disabled"]) {
+  --_is-bw: var(--comp-textinput-border-width-active);
+}
+
+.flow-input-surface:focus-within:not([data-state="disabled"]) {
+  --_is-bw: var(--comp-textinput-border-width-active);
+  --_is-bc: var(--comp-textinput-border-focus);
+
+  /* Focus ring — double box-shadow (gap fill + ring) matching FlowButton.
+     outline: none suppresses native ring; WHCM fallback below. */
+  outline: none;
+  outline-offset: 0;
+  box-shadow:
+    inset 0 0 0 var(--_is-bw, var(--comp-textinput-border-width))
+      var(--_is-bc, var(--comp-textinput-border)),
+    0 0 0 var(--comp-textinput-focus-ring-offset) var(--comp-textinput-focus-gap-color),
+    0 0 0 calc(var(--comp-textinput-focus-ring-offset) + var(--comp-textinput-focus-ring-width))
+      var(--comp-textinput-focus-ring-color);
+}
+
+.flow-input-surface:active:not([data-state="disabled"], :focus-within) {
+  --_is-bw: var(--comp-textinput-border-width-active);
+
+  background: var(--comp-textinput-bg-pressed);
+}
+
+.flow-input-surface[data-state="error"] {
+  --_is-bc: var(--comp-textinput-border-error);
+}
+
+.flow-input-surface[data-state="error"]:hover,
+.flow-input-surface[data-state="error"]:focus-within {
+  --_is-bw: var(--comp-textinput-border-width-active);
+  --_is-bc: var(--comp-textinput-border-error);
+}
+
+.flow-input-surface[data-state="success"] {
+  --_is-bc: var(--comp-textinput-border-success);
+}
+
+.flow-input-surface[data-state="success"]:hover,
+.flow-input-surface[data-state="success"]:focus-within {
+  --_is-bw: var(--comp-textinput-border-width-active);
+  --_is-bc: var(--comp-textinput-border-success);
+}
+
+.flow-input-surface[data-state="disabled"] {
+  --_is-bc: var(--comp-textinput-border-disabled);
+
+  background: var(--comp-textinput-bg-disabled);
+  cursor: not-allowed;
+}
+
+/* Loading — consistent with FlowButton: no visual change to container,
+   just disable interaction. Dots are rendered per-component. */
+.flow-input-surface[data-state="loading"] {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ── Floating label base ── */
+
+/* Resting state: auto-centered via top:50%+translateY(-50%) — eliminates
+   per-size/density label-offset-y tokens. transform-origin: left center
+   keeps scale symmetry during the float animation. */
+.flow-input-surface-label {
+  position: absolute;
+  top: 50%;
+  font-size: var(--sys-size-voice-caption);
+  font-family: var(--sys-voice-family);
+  line-height: var(--sys-voice-line-height-dense);
+  color: var(--_is-lc, var(--comp-textinput-label));
+  pointer-events: none;
+  transform-origin: left center;
+  transform: translateY(-50%) scale(var(--comp-textinput-label-scale));
+  transition:
+    transform var(--comp-textinput-transition),
+    top var(--comp-textinput-transition),
+    color var(--comp-textinput-transition);
+}
+
+/* Float trigger — focus or has value: slide label to top */
+.flow-input-surface:focus-within .flow-input-surface-label,
+.flow-input-surface[data-has-value] .flow-input-surface-label {
+  top: var(
+    --comp-textinput-padding
+  ); /* inset from top edge — mirrors field margin-bottom for centered pair */
+
+  transform: translateY(0) scale(1);
+}
+
+/* Label color: focus → accent */
+.flow-input-surface:focus-within:not([data-state="disabled"]) .flow-input-surface-label {
+  --_is-lc: var(--comp-textinput-label-focus);
+}
+
+/* Label color: error → danger (overrides focus) */
+.flow-input-surface[data-state="error"] .flow-input-surface-label {
+  --_is-lc: var(--comp-textinput-label-error);
+}
+
+/* Label color: success → green */
+.flow-input-surface[data-state="success"] .flow-input-surface-label {
+  --_is-lc: var(--comp-textinput-hint-success);
+}
+
+/* Label color: disabled → muted */
+.flow-input-surface[data-state="disabled"] .flow-input-surface-label {
+  --_is-lc: var(--comp-textinput-label-disabled);
+}
+
+/* ── Hint / error / success base ── */
+.flow-input-surface-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-textinput-gap);
+  font-size: var(--sys-size-voice-caption);
+  font-family: var(--sys-voice-family);
+  line-height: var(--sys-voice-line-height-relaxed);
+  color: var(--comp-textinput-hint);
+  padding: 0 var(--comp-textinput-padding-x);
+}
+
+.flow-input-surface-hint[data-state="error"] {
+  color: var(--comp-textinput-hint-error);
+}
+
+.flow-input-surface-hint[data-state="success"] {
+  color: var(--comp-textinput-hint-success);
+}
+
+/* ── Native field base (input/textarea) ── */
+.flow-input-surface-field {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  line-height: var(--sys-voice-line-height-normal);
+  color: var(--comp-textinput-text);
+  outline: none;
+  padding: 0;
+  margin-bottom: var(
+    --comp-textinput-padding
+  ); /* inset from bottom edge — mirrors label floated top for centered pair */
+
+  caret-color: var(--comp-textinput-border-focus);
+}
+
+.flow-input-surface-field::placeholder {
+  color: transparent;
+}
+
+.flow-input-surface:focus-within .flow-input-surface-field::placeholder {
+  color: var(--comp-textinput-placeholder);
+}
+
+.flow-input-surface-field:disabled {
+  color: var(--comp-textinput-text-disabled);
+  cursor: not-allowed;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .flow-input-surface,
+  .flow-input-surface-label {
+    transition-duration: 0ms !important;
+  }
+}
+
+/* ── WHCM (forced-colors) focus ring fallback ──
+   box-shadow is invisible in Windows High Contrast Mode.
+   Restore outline so the ring is visible. Matches FlowButton pattern. */
+@media (forced-colors: active) {
+  .flow-input-surface:focus-within:not([data-state="disabled"]) {
+    outline: var(--comp-textinput-focus-ring-width) solid CanvasText;
+    outline-offset: var(--comp-textinput-focus-ring-offset);
+  }
+}
+
+/* ── TextInput: Floating-label input (Figma Edenred) ── */
+
+/* Flex-based layout: container is a flex row (align-items: flex-end)
+   so the native input sits at the bottom naturally. Label remains
+   position: absolute for the float animation. Clear button and loading
+   spinner are natural flex children — eliminates all width calc() chains
+   and the hardcoded 24px spinner offset.
+   All values consume comp-textinput-* vars.
+   NOTE: Phase C — now composes .flow-input-surface for container/label/
+   hint/field base. Per-component class adds only overrides. */
+
+/* Root — vertical stack: container + optional hint */
+.flow-text-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-textinput-gap);
+  width: var(--comp-textinput-width);
+  max-width: var(--comp-textinput-max-width);
+  min-width: var(--comp-textinput-min-width);
+}
+
+/* Container — composes .flow-input-surface; adds align-items + consistent inner gap */
+.flow-text-input-container {
+  align-items: flex-end;
+  gap: var(--ref-frame-space-2);
+}
+
+/* Body — wraps label + field so label positions relative to field start (same as CountrySelect) */
+.flow-text-input-body {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+}
+
+/* ── Leading/trailing icons: TextInput ── */
+.flow-text-input-leading-icon {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  padding-left: var(--comp-textinput-padding-x);
+  color: var(--comp-textinput-label);
+}
+
+.flow-text-input-trailing-icon {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  padding-right: var(--comp-textinput-padding-x);
+  color: var(--comp-textinput-label);
+}
+
+/* Icon color inherits state */
+.flow-input-surface:focus-within:not([data-state="disabled"]) .flow-text-input-leading-icon,
+.flow-input-surface:focus-within:not([data-state="disabled"]) .flow-text-input-trailing-icon {
+  color: var(--comp-textinput-border-focus);
+}
+
+.flow-input-surface[data-state="error"] .flow-text-input-leading-icon,
+.flow-input-surface[data-state="error"] .flow-text-input-trailing-icon {
+  color: var(--comp-textinput-border-error);
+}
+
+.flow-input-surface[data-state="disabled"] .flow-text-input-leading-icon,
+.flow-input-surface[data-state="disabled"] .flow-text-input-trailing-icon {
+  color: var(--comp-textinput-label-disabled);
+}
+
+/* ── Prefix/suffix text: TextInput ── */
+
+/* Collapsed at rest (no space taken), expand on focus/has-value so body
+   stays flush against icon or container edge when prefix is hidden. */
+.flow-text-input-prefix,
+.flow-text-input-suffix {
+  flex-shrink: 0;
+  align-self: flex-end;
+  margin-bottom: var(--comp-textinput-padding);
+  font-size: var(--sys-size-voice-body);
+  font-family: var(--sys-voice-family);
+  line-height: var(--ref-voice-line-height-normal);
+  color: var(--comp-textinput-label);
+  white-space: nowrap;
+  user-select: none;
+
+  /* Collapsed + hidden at rest — display:none avoids flex gap */
+  display: none;
+  opacity: 0;
+  transition: opacity var(--comp-textinput-transition);
+}
+
+.flow-input-surface[data-state="disabled"] .flow-text-input-prefix,
+.flow-input-surface[data-state="disabled"] .flow-text-input-suffix {
+  color: var(--comp-textinput-label-disabled);
+}
+
+/* Expand prefix on focus/has-value */
+.flow-text-input-container:focus-within .flow-text-input-prefix,
+.flow-text-input-container[data-has-value] .flow-text-input-prefix {
+  display: block;
+  opacity: 1;
+  padding-left: var(--comp-textinput-padding-x);
+}
+
+/* With leading icon: no prefix left padding (icon already provides edge spacing) */
+.flow-text-input-container:focus-within:has(.flow-text-input-leading-icon) .flow-text-input-prefix,
+.flow-text-input-container[data-has-value]:has(.flow-text-input-leading-icon)
+  .flow-text-input-prefix {
+  padding-left: 0;
+}
+
+/* Expand suffix on focus/has-value */
+.flow-text-input-container:focus-within .flow-text-input-suffix,
+.flow-text-input-container[data-has-value] .flow-text-input-suffix {
+  display: block;
+  opacity: 1;
+  padding-right: var(--comp-textinput-padding-x);
+}
+
+/* ── Loading spinner: TextInput (flex child — no absolute positioning) ── */
+.flow-text-input-loading {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  padding-right: var(--comp-textinput-padding-x);
+}
+
+/* ── Loading spinner: PhoneInput / CountrySelect (flex child — aligned with TextInput) ── */
+.flow-phone-input-loading {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  padding-right: var(--comp-textinput-padding-x);
+}
+
+.flow-country-select-loading {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Hint success state — legacy per-component selectors ── */
+
+/* Phase C.1 complete: Select and TextArea now compose .flow-input-surface-hint.
+   No legacy hint success selectors remain — all handled by shared IS rule. */
+
+/* ── Floating label ── */
+
+/* Label — inside body wrapper; left: padding-x for plain inputs */
+.flow-text-input-label {
+  left: var(--comp-textinput-padding-x);
+}
+
+/* When leading icon present (always visible): label at left:0 inside body */
+.flow-text-input-container:has(.flow-text-input-leading-icon) .flow-text-input-label {
+  left: 0;
+}
+
+/* When prefix visible (focus/has-value only — collapsed at rest): label at left:0 */
+.flow-text-input-container:focus-within:has(.flow-text-input-prefix) .flow-text-input-label,
+.flow-text-input-container[data-has-value]:has(.flow-text-input-prefix) .flow-text-input-label {
+  left: 0;
+}
+
+/* Float/color states now handled by .flow-input-surface-label rules */
+
+/* Field — composes .flow-input-surface-field; adds horizontal padding */
+.flow-text-input-field {
+  padding: 0 var(--comp-textinput-padding-x);
+}
+
+/* Placeholder/disabled states handled by .flow-input-surface-field rules */
+
+/* Trailing element present: remove input's right padding so
+   text extends to the trailing element's left edge (flex handles spacing). */
+.flow-text-input-container[data-clearable] .flow-text-input-field,
+.flow-text-input-container[data-state="loading"] .flow-text-input-field,
+.flow-text-input-container:has(.flow-text-input-trailing-icon) .flow-text-input-field {
+  padding-right: 0;
+}
+
+/* Suffix visible (focus/has-value only): remove right padding */
+.flow-text-input-container:focus-within:has(.flow-text-input-suffix) .flow-text-input-field,
+.flow-text-input-container[data-has-value]:has(.flow-text-input-suffix) .flow-text-input-field {
+  padding-right: 0;
+}
+
+/* Leading icon present (always visible): remove input's left padding */
+.flow-text-input-container:has(.flow-text-input-leading-icon) .flow-text-input-field {
+  padding-left: 0;
+}
+
+/* Prefix visible (focus/has-value only): remove left padding */
+.flow-text-input-container:focus-within:has(.flow-text-input-prefix) .flow-text-input-field,
+.flow-text-input-container[data-has-value]:has(.flow-text-input-prefix) .flow-text-input-field {
+  padding-left: 0;
+}
+
+/* ── Clear button ── */
+
+/* Flex child: natural width, stretches full container height.
+   No absolute positioning — flex handles layout. */
+.flow-text-input-clear {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: var(--comp-textinput-clear-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--comp-textinput-label);
+  border-radius: 0 var(--comp-textinput-radius) var(--comp-textinput-radius) 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--sys-momentum-transition-fast);
+}
+
+/* Show clear on focus or hover when has value */
+.flow-text-input-container[data-has-value]:focus-within .flow-text-input-clear,
+.flow-text-input-container[data-has-value]:hover .flow-text-input-clear {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.flow-text-input-clear:hover {
+  color: var(--comp-textinput-text);
+}
+
+.flow-text-input-clear:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid transparent;
+  box-shadow: inset 0 0 0 var(--sys-state-focus-ring-width) var(--sys-energy-border-focus);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hint — now composes .flow-input-surface-hint. Keep class for selector compat. */
+
+/* Focus ring — now handled by .flow-input-surface:focus-within */
+
+/* ── Reduced motion (component-specific; container/label → .flow-input-surface) ── */
+@media (prefers-reduced-motion: reduce) {
+  .flow-text-input-clear {
+    transition-duration: 0ms !important;
+  }
+}
+
+/* WHCM: clear button uses transparent outline + box-shadow; restore outline for forced-colors */
+@media (forced-colors: active) {
+  .flow-text-input-clear:focus-visible {
+    outline-color: CanvasText;
+    box-shadow: none;
+  }
+
+  /* Input border uses box-shadow: inset — add real border for WHCM visibility */
+  .flow-input-surface {
+    border: var(--_is-bw) solid ButtonText;
+  }
+}
+
+/* TextInput / PhoneInput / CountrySelect / Select / TextArea: data-size cascade
+   MIGRATED to centralized [data-size] blocks (sys.size).
+   All 9 comp-textinput-* overrides now set in [data-size="sm/md/lg/xl"]. */
+
+/* ══════════════════════════════════════════════
+   FlowPhoneInput — Phone input with country flag
+   Composes FlowTextInput anatomy + prefix area
+   ══════════════════════════════════════════════ */
+
+/* Root — vertical stack: container + optional hint */
+.flow-phone-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-textinput-gap);
+  width: var(--comp-textinput-width);
+  max-width: var(--comp-textinput-max-width);
+  min-width: var(--comp-textinput-min-width);
+}
+
+/* Container — composes .flow-input-surface; adds align-items override */
+.flow-phone-input-container {
+  align-items: center;
+}
+
+/* Container states + focus ring → .flow-input-surface */
+
+/* ── Prefix area (flag + code + chevron) ── */
+.flow-phone-input-prefix {
+  display: flex;
+  align-items: center;
+  gap: var(--comp-phoneinput-prefix-gap);
+  padding: 0 0 0 var(--comp-textinput-padding-x);
+  height: 100%;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-radius: var(--comp-textinput-radius) 0 0 var(--comp-textinput-radius);
+  transition: background var(--sys-momentum-transition-fast);
+  color: var(--comp-phoneinput-prefix-text);
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-body);
+}
+
+.flow-phone-input-prefix:hover:not(:disabled) {
+  background: var(--comp-country-dropdown-item-hover);
+}
+
+.flow-phone-input-prefix:focus-visible {
+  outline: var(--sys-state-focus-ring-width) solid var(--sys-energy-border-focus);
+  outline-offset: calc(-1 * var(--sys-state-focus-ring-width));
+  border-radius: var(--comp-textinput-radius) 0 0 var(--comp-textinput-radius);
+}
+
+/* Chevron icon in prefix */
+.flow-phone-input-chevron {
+  color: var(--comp-phoneinput-chevron-color);
+  transition: transform var(--sys-momentum-transition-fast);
+  flex-shrink: 0;
+}
+
+.flow-phone-input-prefix[aria-expanded="true"] .flow-phone-input-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Vertical divider ── */
+.flow-phone-input-divider {
+  width: var(--comp-phoneinput-divider-width);
+  height: var(--comp-phoneinput-divider-height);
+  background: var(--comp-phoneinput-divider-color);
+  border-radius: var(--comp-phoneinput-divider-radius);
+  flex-shrink: 0;
+  margin: 0 var(--comp-phoneinput-prefix-gap);
+}
+
+/* ── Input area (right of divider) — flex, input at bottom ── */
+.flow-phone-input-body {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+/* Label — composes .flow-input-surface-label; overrides left to 0 (inside body) */
+.flow-phone-input-label {
+  left: 0;
+}
+
+/* Float/color states → .flow-input-surface-label rules */
+
+/* Field — composes .flow-input-surface-field (no overrides needed) */
+
+/* Placeholder/disabled states → .flow-input-surface-field rules */
+
+/* Hint — composes .flow-input-surface-hint (no overrides needed) */
+
+/* ── Reduced motion (component-specific; container/label → .flow-input-surface) ── */
+@media (prefers-reduced-motion: reduce) {
+  .flow-phone-input-chevron,
+  .flow-country-dropdown {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   Shared Country Dropdown — used by PhoneInput + CountrySelect
+   ══════════════════════════════════════════════ */
+
+.flow-country-dropdown {
+  position: absolute;
+  top: calc(100% + var(--ref-frame-space-2));
+  left: 0;
+  right: 0;
+  z-index: var(--sys-depth-layer-dropdown);
+  background: var(--comp-country-dropdown-bg);
+  border-radius: var(--comp-country-dropdown-radius);
+  box-shadow: var(--comp-country-dropdown-shadow);
+  border: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+  overflow: hidden;
+  animation: flowFadeIn var(--ref-momentum-duration-fast) var(--ref-momentum-easing-enter);
+}
+
+.flow-country-dropdown-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-2);
+  padding: var(--ref-frame-space-3);
+  border-bottom: var(--sys-frame-border-thin) solid var(--sys-energy-border-default);
+}
+
+.flow-country-dropdown-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: var(--sys-voice-size-5);
+  font-family: var(--sys-voice-family);
+  color: var(--comp-textinput-text);
+  outline: none;
+  padding: 0;
+}
+
+.flow-country-dropdown-search input::placeholder {
+  color: var(--comp-textinput-placeholder);
+}
+
+.flow-country-dropdown-list {
+  max-height: var(--comp-country-dropdown-max-height);
+  overflow-y: auto;
+  padding: var(--ref-frame-space-1) 0;
+}
+
+.flow-country-dropdown-empty {
+  padding: var(--ref-frame-space-4) var(--ref-frame-space-3);
+  color: var(--sys-energy-text-tertiary);
+  text-align: center;
+  font-size: var(--sys-voice-size-4);
+  font-family: var(--sys-voice-family);
+}
+
+.flow-country-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-frame-space-3);
+  padding: 0 var(--ref-frame-space-3);
+  height: var(--comp-country-dropdown-item-height);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-voice-size-5);
+  color: var(--comp-textinput-text);
+  transition: background var(--sys-momentum-transition-fast);
+  text-align: left;
+}
+
+.flow-country-dropdown-item:hover,
+.flow-country-dropdown-item:focus-visible,
+.flow-country-dropdown-item[data-highlighted] {
+  background: var(--comp-country-dropdown-item-hover);
+}
+
+.flow-country-dropdown-item[data-selected] {
+  background: rgb(var(--ref-energy-blue-500-rgb), var(--ref-state-opacity-selected));
+}
+
+.flow-country-dropdown-item-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flow-country-dropdown-item-code {
+  font-family: var(--sys-voice-family-mono);
+  font-size: var(--sys-voice-size-3);
+  color: var(--sys-energy-text-tertiary);
+  min-width: var(--ref-frame-space-10);
+}
+
+.flow-country-dropdown-item-dial {
+  color: var(--sys-energy-text-secondary);
+  margin-left: auto;
+  font-size: var(--sys-voice-size-4);
+}
+
+/* ══════════════════════════════════════════════
+   FlowCountrySelect — Combobox country picker
+   Figma: 64px, 12px radius, floating label, flag prefix,
+   inline search input, chevron suffix, dropdown list.
+   ══════════════════════════════════════════════ */
+
+/* Root — vertical stack: container + optional hint */
+.flow-country-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--comp-textinput-gap);
+  width: var(--comp-textinput-width);
+  max-width: var(--comp-textinput-max-width);
+  min-width: var(--comp-textinput-min-width);
+}
+
+/* Container — composes .flow-input-surface; default stretch lets body fill height,
+   flag + chevron use align-self: center to stay vertically centered. */
+
+/* Container states + focus ring → .flow-input-surface */
+.flow-country-select-container {
+  gap: var(--ref-frame-space-2);
+  padding-right: var(--comp-textinput-padding-x);
+}
+
+/* ── Flag prefix ── */
+.flow-country-select-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding-left: var(--comp-textinput-padding-x);
+  flex-shrink: 0;
+}
+
+/* ── Input body (label + input) — flex, input at bottom ── */
+.flow-country-select-body {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Label — composes .flow-input-surface-label; overrides left + adds truncation */
+.flow-country-select-label {
+  left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Float/color states → .flow-input-surface-label rules */
+
+/* data-open float trigger (in addition to IS focus-within + data-has-value) */
+.flow-country-select-container[data-open] .flow-country-select-label {
+  top: var(--comp-textinput-padding);
+  transform: translateY(0) scale(1);
+}
+
+/* Field — composes .flow-input-surface-field; adds text-overflow + cursor */
+.flow-country-select-field {
+  cursor: text;
+  text-overflow: ellipsis;
+}
+
+/* Placeholder: IS handles transparent → visible on :focus-within */
+
+/* Disabled state → .flow-input-surface-field rules */
+
+/* ── Chevron suffix ── */
+.flow-country-select-chevron-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.flow-country-select-chevron-btn:disabled {
+  cursor: not-allowed;
+}
+
+.flow-country-select-chevron {
+  color: var(--comp-textinput-label);
+  transition: transform var(--sys-momentum-transition-fast);
+  flex-shrink: 0;
+}
+
+.flow-country-select-container[data-open] .flow-country-select-chevron {
+  transform: rotate(180deg);
+}
+
+.flow-country-select-container[data-state="disabled"] .flow-country-select-chevron {
+  color: var(--comp-countryselect-chevron-disabled);
+}
+
+/* Hint — composes .flow-input-surface-hint (no overrides needed) */
+
+/* Reduced motion (component-specific; container/label → .flow-input-surface) */
+@media (prefers-reduced-motion: reduce) {
+  .flow-country-select-chevron {
+    transition-duration: 0ms !important;
+  }
+}
+
+/* ── FlowDialog — size-responsive layout classes ── */
+
+/* Dialog panel — consumes comp-dialog tokens which cascade via [data-size] */
+.flow-dialog-panel {
+  background: var(--comp-dialog-bg);
+  border-radius: var(--comp-dialog-radius);
+  padding: var(--sys-size-inset);
+  max-width: var(--comp-dialog-max-width);
+  width: 100%;
+  box-shadow: var(--comp-dialog-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sys-size-gap-field);
+  animation: flowScaleIn var(--ref-momentum-duration-fast) var(--ref-momentum-easing-enter);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@media (width <= 575px) {
+  .flow-dialog-panel {
+    max-width: calc(100vw - var(--ref-frame-space-8));
+    border-radius: var(--ref-frame-radius-3);
+  }
+}
+
+.flow-dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ref-frame-space-2);
+}
+
+.flow-dialog-title {
+  font-family: var(--sys-voice-family-brand);
+  font-size: var(--sys-size-voice-headline);
+  font-weight: var(--sys-voice-weight-bold);
+  color: var(--sys-energy-text-primary);
+  line-height: var(--sys-voice-line-height-snug);
+}
+
+.flow-dialog-description {
+  font-family: var(--sys-voice-family);
+  font-size: var(--sys-size-voice-label);
+  color: var(--sys-energy-text-secondary);
+  line-height: var(--sys-voice-line-height-relaxed);
+}
+
+.flow-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ref-frame-space-3);
+  padding-top: var(--sys-size-gap-section);
+}
+
+/* ── DEPRECATED: Backward-compat aliases ──────────── */
+
+/* DEPRECATION: These aliases will be REMOVED in Flow v2.0.
+   Migrate all references to canonical --sys-* / --ref-* tokens.
+   Lint rule flow/no-deprecated-alias will flag new usage as error. */
+:root {
+  --flow-ink: var(--sys-energy-text-primary);
+  --flow-ink-secondary: var(--sys-energy-text-secondary);
+  --flow-ink-tertiary: var(--sys-energy-text-tertiary);
+  --flow-surface-0: var(--sys-energy-surface-primary);
+  --flow-surface-1: var(--sys-energy-surface-secondary);
+  --flow-surface-2: var(--sys-energy-surface-tertiary);
+  --flow-surface-3: var(--sys-energy-surface-sunken);
+  --flow-accent: var(--sys-energy-text-accent);
+  --flow-accent-subtle: var(--sys-energy-status-info-subtle);
+  --flow-accent-muted: var(--sys-energy-status-info-muted);
+  --flow-success: var(--sys-energy-status-success);
+  --flow-success-subtle: var(--sys-energy-status-success-subtle);
+  --flow-warning: var(--sys-energy-status-warning);
+  --flow-warning-subtle: var(--sys-energy-status-warning-subtle);
+  --flow-danger: var(--sys-energy-status-error);
+  --flow-danger-subtle: var(--sys-energy-status-error-subtle);
+  --flow-border: var(--sys-energy-border-default);
+  --flow-border-strong: var(--sys-energy-border-strong);
+  --flow-radius-sm: var(--ref-frame-radius-2);
+  --flow-radius-md: var(--ref-frame-radius-3);
+  --flow-radius-lg: var(--ref-frame-radius-4);
+}
+
+/* end components (input-surface) */

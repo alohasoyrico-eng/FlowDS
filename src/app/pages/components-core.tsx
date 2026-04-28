@@ -1,7 +1,8 @@
 /* FLOW Core Components Page - Layer 5 Template */
-import { FlowChip, Inline, Stack } from "../../lib";
+import { FlowChip, Inline, Stack, Surface } from "@flow/design-system";
 import { type ComponentSpec, ComponentSpecAccordion } from "../components/component-accordion";
 import { PAGE_GAP, PageHeader } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 interface CoreSpec extends ComponentSpec {
   foundations: string[];
@@ -1022,20 +1023,26 @@ const coreComponents: CoreSpec[] = [
 
 export function ComponentsCorePage() {
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 05 — Core" title="Core / Shared Components">
-        Core components are platform-agnostic — they exist in both React (web) and Flutter (mobile)
-        with identical APIs, semantics, and visual output. Each component is built from Flow
-        primitives and styled exclusively through Flow tokens.
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 05 — Core" title="Core / Shared Components">
+              Core components are platform-agnostic — they exist in both React (web) and Flutter
+              (mobile) with identical APIs, semantics, and visual output. Each component is built
+              from Flow primitives and styled exclusively through Flow tokens.
+            </PageHeader>
 
-      <Inline wrap gap={2}>
-        {coreComponents.map((c) => (
-          <FlowChip key={c.name}>{c.name}</FlowChip>
-        ))}
-      </Inline>
+            <Inline wrap gap={2}>
+              {coreComponents.map((c) => (
+                <FlowChip key={c.name}>{c.name}</FlowChip>
+              ))}
+            </Inline>
 
-      <ComponentSpecAccordion items={coreComponents} badge="index" layout="full" />
-    </Stack>
+            <ComponentSpecAccordion items={coreComponents} badge="index" layout="full" />
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }

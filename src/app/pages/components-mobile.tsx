@@ -1,6 +1,7 @@
-import { FlowChip, Inline, Stack } from "../../lib";
+import { FlowChip, Inline, Stack, Surface } from "@flow/design-system";
 import { type ComponentSpec, ComponentSpecAccordion } from "../components/component-accordion";
 import { PAGE_GAP, PageHeader } from "../components/doc-primitives";
+import { LayoutGrid } from "../components/layout-grid";
 
 const mobileComponents: ComponentSpec[] = [
   {
@@ -320,20 +321,26 @@ const mobileComponents: ComponentSpec[] = [
 
 export function ComponentsMobilePage() {
   return (
-    <Stack gap={PAGE_GAP}>
-      <PageHeader chapter="Chapter 05 — Mobile" title="Mobile-First Components">
-        Mobile-first components are designed for touch interaction, gesture-driven navigation, and
-        mobile viewport constraints. They may have web equivalents but their primary implementation
-        targets mobile platforms (React Native / Flutter).
-      </PageHeader>
+    <LayoutGrid>
+      <LayoutGrid.Item span={12} className="component-detail-surface-wrapper">
+        <Surface variant="secondary" radius="surface" className="component-detail-surface">
+          <Stack gap={PAGE_GAP}>
+            <PageHeader chapter="Chapter 05 — Mobile" title="Mobile-First Components">
+              Mobile-first components are designed for touch interaction, gesture-driven navigation,
+              and mobile viewport constraints. They may have web equivalents but their primary
+              implementation targets mobile platforms (React Native / Flutter).
+            </PageHeader>
 
-      <Inline gap={2} wrap>
-        {mobileComponents.map((c) => (
-          <FlowChip key={c.name}>{c.name}</FlowChip>
-        ))}
-      </Inline>
+            <Inline gap={2} wrap>
+              {mobileComponents.map((c) => (
+                <FlowChip key={c.name}>{c.name}</FlowChip>
+              ))}
+            </Inline>
 
-      <ComponentSpecAccordion items={mobileComponents} badge="MOBILE" layout="compact" />
-    </Stack>
+            <ComponentSpecAccordion items={mobileComponents} badge="MOBILE" layout="compact" />
+          </Stack>
+        </Surface>
+      </LayoutGrid.Item>
+    </LayoutGrid>
   );
 }
